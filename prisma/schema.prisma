@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Workspace {
+  id        String     @id
+  name      String
+  slug      String     @unique
+  createdAt DateTime   @default(now())
+  customers Customer[]
+  invoices  Invoice[]
+  disputes  Dispute[]
+}
+
+model Customer {
+  id          String    @id
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  name        String
+  contactName String
+  email       String
+  plan        String
+  createdAt   DateTime  @default(now())
+  invoices    Invoice[]
+}
+
+model Invoice {
+  id              String        @id
+  number          String        @unique
+  workspaceId     String
+  workspace       Workspace     @relation(fields: [workspaceId], references: [id])
+  customerId      String
+  customer        Customer      @relation(fields: [customerId], references: [id])
+  plan            String
+  status          String
+  issuedOn        DateTime
+  dueOn           DateTime
+  paidOn          DateTime?
+  subtotalCents   Int
+  taxCents        Int           @default(0)
+  totalCents      Int
+  memo            String?
+  collectionNote  String?
+  lines           InvoiceLine[]
+  disputes        Dispute[]
+}
+
+model InvoiceLine {
+  id             String  @id
+  invoiceId      String
+  invoice        Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description    String
+  quantity       Int
+  unitPriceCents Int
+  amountCents    Int
+}
+
+model Dispute {
+  id                   String    @id
+  invoiceId            String
+  invoice              Invoice   @relation(fields: [invoiceId], references: [id])
+  workspaceId          String
+  workspace            Workspace @relation(fields: [workspaceId], references: [id])
+  status               String
+  reason               String
+  openedOn             DateTime
+  disputedAmountCents  Int
+  suggestedCreditCents Int
+  reviewerNote         String?
+}

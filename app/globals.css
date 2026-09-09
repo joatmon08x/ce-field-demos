@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+/*
+  Ledgerly design tokens — indigo reference
+  ----------------------------------------
+  Match the attached dashboard mock: white chrome, violet accent.
+  Do not introduce a fourth catalog price. Restyle via these variables.
+*/
+
+:root {
+  --indigo: #4f46e5;
+  --indigo-600: #4f46e5;
+  --indigo-500: #6366f1;
+  --indigo-soft: #eef2ff;
+  --indigo-page: #c7d2fe;
+  --indigo-page-soft: #e0e7ff;
+  --ink: #111827;
+  --ink-soft: #6b7280;
+  --paper: #f7f7fb;
+  --paper-elevated: #ffffff;
+  --line: #e5e7eb;
+  --success: #059669;
+  --success-soft: #d1fae5;
+  --warning: #d97706;
+  --warning-soft: #fef3c7;
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper-elevated);
+  --card-foreground: var(--ink);
+  --popover: var(--paper-elevated);
+  --popover-foreground: var(--ink);
+  --primary: var(--indigo);
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: var(--ink);
+  --muted: #f3f4f6;
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--indigo-soft);
+  --accent-foreground: var(--indigo);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--indigo);
+  --sidebar: #ffffff;
+  --sidebar-foreground: var(--ink);
+  --sidebar-accent: var(--indigo-soft);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-display: 2rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius: 0.625rem;
+  --shadow-card: 0 1px 2px rgba(17, 24, 39, 0.04), 0 8px 24px -12px rgba(17, 24, 39, 0.08);
+}
+
+.dark {
+  --indigo: #818cf8;
+  --indigo-600: #6366f1;
+  --indigo-500: #a5b4fc;
+  --indigo-soft: #222454;
+  --indigo-page: #3730a3;
+  --indigo-page-soft: #1e1b4b;
+  --ink: #e8eaf2;
+  --ink-soft: #9aa3b8;
+  --paper: #12141c;
+  --paper-elevated: #1a1d27;
+  --line: #2a2e3c;
+  --success: #34d399;
+  --success-soft: #064e3b;
+  --warning: #fbbf24;
+  --warning-soft: #78350f;
+  --danger: #f87171;
+  --danger-soft: #7f1d1d;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper-elevated);
+  --card-foreground: var(--ink);
+  --popover: var(--paper-elevated);
+  --popover-foreground: var(--ink);
+  --primary: var(--indigo);
+  --primary-foreground: #12141c;
+  --secondary: #1f2330;
+  --secondary-foreground: var(--ink);
+  --muted: #1f2330;
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--indigo-soft);
+  --accent-foreground: var(--indigo);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--indigo);
+  --sidebar: #161822;
+  --sidebar-foreground: var(--ink);
+  --sidebar-accent: var(--indigo-soft);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.24), 0 12px 28px -16px rgba(0, 0, 0, 0.45);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-indigo: var(--indigo);
+  --color-indigo-soft: var(--indigo-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+
+::selection {
+  background: var(--indigo-soft);
+  color: var(--indigo);
+}

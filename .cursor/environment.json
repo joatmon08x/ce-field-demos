@@ -1,0 +1,18 @@
+{
+  "name": "Ledgerly",
+  "install": "npm i && npx prisma generate",
+  "start": "npx prisma db seed && npx vitest run tests/money.test.ts tests/plans.test.ts",
+  "terminals": [
+    {
+      "name": "Dev server",
+      "command": "npm run dev",
+      "description": "Next.js App Router for Ledgerly on port 43173"
+    }
+  ],
+  "ports": [
+    {
+      "name": "Ledgerly web",
+      "port": 43173
+    }
+  ]
+}
