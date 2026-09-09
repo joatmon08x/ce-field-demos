@@ -16,7 +16,7 @@ The pastes below match the copy-paste blocks on `/runbooks`. Deck and CLI cards 
 4. [Model selection](#7-model-selection-2-min)
 5. [Cloud Agents](#8-cloud-agents-3-min)
 6. [Automations](#9-automations-3-min)
-7. [Choose one 201 workflow](#10-workflow-step-library) — `/multitask`, `/loop`, `/autopilot`, or `/orchestrate`
+7. [Choose one 201 runbook](#10-runbook-command-library) — `/multitask`, `/loop`, `/autopilot`, or `/orchestrate`
 8. [Trust and verification](#11-trust-and-verification-3-min)
 
 **Track 2 — Advanced**
@@ -24,7 +24,7 @@ The pastes below match the copy-paste blocks on `/runbooks`. Deck and CLI cards 
 1. [The planted error](#1-the-demo-error-2-min)
 2. Pick one or more local surfaces: [Ask](#2-ask-3-min), [Cmd-K](#3-cmd-k-2-min), [Agent](#4-agent--repair-the-api-client-5-8-min), [Design Mode](#5-design-mode-3-min)
 3. [Cursor CLI primer](#advanced-cursor-cli-primer-5-min)
-4. [Choose an advanced workflow](#10-workflow-step-library) — `/goal`, `/multitask`, `/loop`, `/autopilot`, or `/orchestrate`
+4. [Choose an advanced runbook](#10-runbook-command-library) — `/goal`, `/multitask`, `/loop`, `/autopilot`, or `/orchestrate`
 5. [Verify](#11-trust-and-verification-3-min) and [reset](#12-close)
 
 Jump directly to any step. Each section states its prerequisite; you do not need to run earlier sections first.
@@ -64,7 +64,7 @@ Open **http://localhost:43173**.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 20 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 31 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, the seed, and the MCP store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -376,9 +376,9 @@ While the session is open:
 
 ---
 
-## 10. Workflow step library
+## 10. Runbook command library
 
-**Open:** [http://127.0.0.1:43173/workflows](http://127.0.0.1:43173/workflows). Each command card already shows the full `prompt`. The short line below is the slug-page demo prompt — it tells the agent to load that same instruction.
+**Open:** [http://127.0.0.1:43173/runbooks](http://127.0.0.1:43173/runbooks). Each command card already shows the full `prompt`. The short line below is the slug-page demo prompt — it tells the agent to load that same instruction.
 
 **Why:** Work has different shapes. **Benefit:** Choose the right ownership boundary. **Why it matters:** Delegate toil without delegating judgment.
 
@@ -412,7 +412,7 @@ Run one, or jump directly to the one named in the deck discussion.
 /multitask Read the multitask entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.
 ```
 
-**Detailed prompt:** [Open `/workflows/multitask`](http://127.0.0.1:43173/workflows/multitask)
+**Detailed prompt:** [Open `/runbooks/commands/multitask`](http://127.0.0.1:43173/runbooks/commands/multitask)
 
 **Fallback:** If Cursor does not open `lib/runbooks/meta.ts`, use **Copy full prompt** on that page.
 
@@ -432,7 +432,7 @@ Run one, or jump directly to the one named in the deck discussion.
 /loop Read the loop entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.
 ```
 
-**Detailed prompt:** [Open `/workflows/loop`](http://127.0.0.1:43173/workflows/loop)
+**Detailed prompt:** [Open `/runbooks/commands/loop`](http://127.0.0.1:43173/runbooks/commands/loop)
 
 **Fallback:** If Cursor does not open `lib/runbooks/meta.ts`, use **Copy full prompt** on that page.
 
@@ -456,7 +456,7 @@ The 201 deck calls this `/babysit`. The current supported name is `/autopilot`.
 /autopilot Read the autopilot entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.
 ```
 
-**Detailed prompt:** [Open `/workflows/autopilot`](http://127.0.0.1:43173/workflows/autopilot)
+**Detailed prompt:** [Open `/runbooks/commands/autopilot`](http://127.0.0.1:43173/runbooks/commands/autopilot)
 
 **Fallback:** If Cursor does not open `lib/runbooks/meta.ts`, use **Copy full prompt** on that page.
 
@@ -476,7 +476,7 @@ The 201 deck calls this `/babysit`. The current supported name is `/autopilot`.
 /goal Read the goal entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.
 ```
 
-**Detailed prompt:** [Open `/workflows/goal`](http://127.0.0.1:43173/workflows/goal)
+**Detailed prompt:** [Open `/runbooks/commands/goal`](http://127.0.0.1:43173/runbooks/commands/goal)
 
 **Fallback:** If Cursor does not open `lib/runbooks/meta.ts`, use **Copy full prompt** on that page.
 
@@ -500,7 +500,7 @@ Need `bun` on PATH and a `CURSOR_API_KEY` (personal key or team service account,
 /orchestrate Read the orchestrate entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.
 ```
 
-**Detailed prompt:** [Open `/workflows/orchestrate`](http://127.0.0.1:43173/workflows/orchestrate)
+**Detailed prompt:** [Open `/runbooks/commands/orchestrate`](http://127.0.0.1:43173/runbooks/commands/orchestrate)
 
 **Fallback:** If Cursor does not open `lib/runbooks/meta.ts`, use **Copy full prompt** on that page.
 
@@ -530,12 +530,12 @@ Need `bun` on PATH and a `CURSOR_API_KEY` (personal key or team service account,
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 20 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 31 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If `/goal` or `/orchestrate` completed dispute resolution:** `npm test` should be fully green. Load dsp_1043 and confirm suggested credit is **$249** from v2, both routes remain, and Accept / Decline work.
 
-**If no client-migration step ran:** `npm test` should remain **1 failed / 20 passed**. That is shipped state, not failed setup. Do not let the agent edit the intentional test.
+**If no client-migration step ran:** `npm test` should remain **1 failed / 31 passed**. That is shipped state, not failed setup. Do not let the agent edit the intentional test.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -561,7 +561,7 @@ npm test
 
 Only run `git checkout -- .` if you mean to drop **all** local changes.
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 20 passed**.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 31 passed**.
 
 ---
 
@@ -595,6 +595,6 @@ Only run `git checkout -- .` if you mean to drop **all** local changes.
 1. Demo error — dsp_1043 ($400 vs $249)
 2. One local surface: Ask, Cmd-K, Agent, or Design
 3. Run the Cursor CLI primer
-4. Run `/goal`, or jump to another workflow from `/workflows`
+4. Run `/goal`, or jump to another runbook from `/runbooks`
 5. Show verifier evidence and review the diff
 6. Reset

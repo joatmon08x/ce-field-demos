@@ -32,7 +32,7 @@ Customers come from the seed only: the ten Fieldnote book accounts (Acme North, 
 - Tab / Cmd-K TODOs in collection notes and settings are intentional.
 - Restyles of KPI cards go through `app/globals.css` tokens only — no new hex, `components/kpi-card.tsx` plus `app/page.tsx` at most. Never commit a restyle to `main`.
 - Skills in `.cursor/skills/` help run the demo or pick a Cursor workflow. Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent.
-- The demo has two jumpable tracks: 201 and Advanced. Prompts live in `lib/workflows/meta.ts`, as copy-paste blocks on `/workflows`, and in `demo-howto.md`.
+- The demo has two jumpable tracks: 201 and Advanced. Prompts live in `lib/runbooks/meta.ts`, as copy-paste blocks on `/runbooks`, and in `demo-howto.md`.
 - The 201 deck's `/babysit` workflow is now `/autopilot`; use the current name while explaining the rename. `/goal` remains a separate durable-objective workflow in the Advanced track.
 - When someone asks to show a Cursor workflow, use `choose-cursor-workflow`, then `dispatch-subagents` or `hand-to-cloud-agent` as the shape of the work requires.
 - Never reintroduce retired pre-remap company or product names anywhere in this tree.

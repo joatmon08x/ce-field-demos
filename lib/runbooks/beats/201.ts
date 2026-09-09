@@ -77,7 +77,7 @@ export const RUNBOOK_SECTIONS_201 = [
         detail:
           "Run the shipped suite and distinguish the expected suggested-credit failure from regressions.",
         example:
-          "Run npm test and report which tests passed and which failed. Do not edit any files.\n\nOn a clean tree, npm test is 1 failed / 20 passed. The red test is tests/suggested-credit-api.test.ts. Do not change it, the suggested-credit client, either versioned route, or the seed.",
+          "Run npm test and report which tests passed and which failed. Do not edit any files.\n\nOn a clean tree, npm test is 1 failed / 31 passed. The red test is tests/suggested-credit-api.test.ts. Do not change it, the suggested-credit client, either versioned route, or the seed.",
       },
     ],
   },

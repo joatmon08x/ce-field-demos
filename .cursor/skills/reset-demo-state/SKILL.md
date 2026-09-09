@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, and `npm test` showing exactly **1 failed / 20 passed**. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
+Goal state: seeded Fieldnote book, dev server on 43173, and `npm test` showing exactly **1 failed / 31 passed**. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
 
 ## Checklist (run what applies)
 
@@ -38,7 +38,7 @@ npm run dev
 4. **Verify shipped state**
 
 ```bash
-npm test    # expect: 1 failed (suggested-credit-api), 20 passed
+npm test    # expect: 1 failed (suggested-credit-api), 31 passed
 ```
 
 Open `http://127.0.0.1:43173` — dashboard shows Fieldnote data, catalog $49/$99/$249, disputes badge on the sidebar.

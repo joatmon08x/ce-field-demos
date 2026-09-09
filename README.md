@@ -2,7 +2,7 @@
 
 Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for two jumpable Cursor demos: a deck-aligned **201** track and a deeper **Advanced** track. Copy-paste prompts live on `/workflows`; the presenter run-of-show and speaker notes are `demo-howto.md`.
+Use it for two jumpable Cursor demos: a deck-aligned **201** track and a deeper **Advanced** track. Copy-paste prompts live on `/runbooks`; the presenter run-of-show and speaker notes are `demo-howto.md`.
 
 ## Run
 
@@ -16,18 +16,18 @@ npm run dev
 
 Open **http://localhost:43173**.
 
-`npm test` is **1 failed / 20 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 31 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
-Dashboard, Invoices, Collections, Disputes, Workflows, Settings. Extra book accounts are in `prisma/extra-accounts.ts`.
+Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accounts are in `prisma/extra-accounts.ts`.
 
 | Demo hook | Where |
 | --- | --- |
-| Workflow prompts | `/workflows` (`/analysis` redirects here) |
+| Runbook prompts | `/runbooks` (`/workflows` and `/analysis` redirect here) |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
-| Skills | `.cursor/skills/` — play the book, or pick/dispatch a workflow |
+| Skills | `.cursor/skills/` — play the book, or pick/dispatch a runbook |
 | Presenter script | `demo-howto.md` — two tracks plus an independent beat library |
 
 ## Starter prompts
@@ -86,9 +86,9 @@ Restyle the four KPI cards on this dashboard using only the existing design toke
 - `/autopilot` drives an open PR to merge-ready — stop if there is no PR
 - `/orchestrate` staffs a planner / worker / verifier tree
 
-Every beat is independent. Open `/workflows`, copy a card, and paste it in Cursor. You still review the result.
+Every beat is independent. Open `/runbooks`, copy a card, and paste it in Cursor. You still review the result.
 
-## Workflow prompt library
+## Runbook prompt library
 
 | Shape | Command | Hands over | Track |
 | --- | --- | --- | --- |

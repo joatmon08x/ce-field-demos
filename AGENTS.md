@@ -14,7 +14,7 @@ Fictional billing ops SaaS. Fieldnote Workspace. Operator Avery Quinn. No auth. 
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
-This is a **Cursor demo app** with jumpable 201 and Advanced tracks. Workflow prompts live in `lib/workflows/meta.ts` and as copy-paste blocks on `/workflows`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills.
+This is a **Cursor demo app** with jumpable 201 and Advanced tracks. Runbook prompts live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills.
 
 ## Cursor Cloud specific instructions
 
@@ -55,7 +55,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 20 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249.
+Shipped suite on a clean tree: **1 failed / 31 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249.
 
 ### Multi-file stub (leave it unless asked)
 
@@ -72,7 +72,7 @@ Incomplete on purpose:
 - Comments in code must not cite Slack, GitHub, or Jira URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
-- Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Workflow prompts live in `lib/workflows/meta.ts`.
+- Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook prompts live in `lib/runbooks/meta.ts`.
 
 ### Agents and skills
 

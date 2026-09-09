@@ -36,7 +36,7 @@ The human reviews the result and decides what ships. These commands change how m
 
 ## Use the matching prompt
 
-Prompts live in `lib/workflows/meta.ts` and as copy-paste blocks on `/workflows`. Use the matching `prompt` verbatim. Do not invent another catalog price.
+Prompts live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`. Use the matching `prompt` verbatim. Do not invent another catalog price.
 
 | Command | Ledgerly target |
 | --- | --- |

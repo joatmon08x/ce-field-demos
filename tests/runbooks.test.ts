@@ -165,4 +165,32 @@ describe("runbook catalog split", () => {
       }
     }
   });
+
+  it("points docs, skills, and rules at /runbooks instead of the retired catalog", () => {
+    const files = {
+      readme: readFileSync(join(root, "README.md"), "utf8"),
+      howto: readFileSync(join(root, "demo-howto.md"), "utf8"),
+      agents: readFileSync(join(root, "AGENTS.md"), "utf8"),
+      rule: readFileSync(join(root, ".cursor/rules/ledgerly.mdc"), "utf8"),
+      skill: readFileSync(join(root, ".cursor/skills/choose-cursor-workflow/SKILL.md"), "utf8"),
+      cloud: readFileSync(join(root, ".cursor/skills/hand-to-cloud-agent/SKILL.md"), "utf8"),
+      reset: readFileSync(join(root, ".cursor/skills/reset-demo-state/SKILL.md"), "utf8"),
+    };
+
+    for (const [name, contents] of Object.entries(files)) {
+      expect(contents, `${name} still cites lib/workflows/meta.ts`).not.toContain(
+        "lib/workflows/meta.ts",
+      );
+    }
+
+    expect(files.readme).toContain("/runbooks");
+    expect(files.howto).toContain("/runbooks/commands/");
+    expect(files.howto).not.toContain("http://127.0.0.1:43173/workflows");
+    expect(files.howto).not.toContain("`/workflows/");
+    expect(files.agents).toContain("lib/runbooks/meta.ts");
+    expect(files.rule).toContain("lib/runbooks/meta.ts");
+    expect(files.skill).toContain("lib/runbooks/meta.ts");
+    expect(files.cloud).toContain("lib/runbooks/meta.ts");
+    expect(files.reset).toContain("1 failed / 31 passed");
+  });
 });
