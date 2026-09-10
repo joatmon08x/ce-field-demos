@@ -60,7 +60,7 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "allowlist",
         title: "Run Mode Allowlist",
         promptType: "none",
-        detail: "Go to Settings → Agents → Executions & Approvals → Run Mode → Allowlist.",
+        detail: "Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
       },
       {
         id: "model-deep",
@@ -73,8 +73,7 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "start-and-stop",
         title: "Redact (partial)",
         promptType: "adaptable",
-        detail:
-          "Update the email feature; security recommended redacting a portion of the customer email.",
+        detail: "",
         example:
           "Redact the customer email in the UI. The first two characters and domain are plaintext.",
       },
@@ -117,7 +116,7 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "test-rule",
         title: "Test the rule",
         promptType: "adaptable",
-        detail: "Check the rule is applied.",
+        detail: "",
         example:
           "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
       },
@@ -134,7 +133,7 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "test-skill",
         title: "Test the skill",
         promptType: "adaptable",
-        detail: "Use the skill (no file edits).",
+        detail: "",
         example: "Use domain-driven design on this application. Do not edit files.",
       },
       {
