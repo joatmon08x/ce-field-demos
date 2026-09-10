@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
  * views something to chew on without touching the original demo beats. */
 function extraInvoiceState(index: number) {
   if (index === 2 || index === 8) {
-    // Alder BioSystems, Blue Harbor Bank — overdue from the July cycle.
+    // Extra accounts at indexes 2 and 8 — overdue from the July cycle.
     return { status: "OVERDUE", issuedOn: "2026-07-05", dueOn: "2026-08-04" };
   }
   if (index % 3 === 0) {
