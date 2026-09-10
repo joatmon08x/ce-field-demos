@@ -68,10 +68,11 @@ describe("runbook catalog", () => {
     expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
-      "Go to Settings → Agents → Executions & Approvals → Run Mode → Allowlist.",
+      "Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
     );
     expect(beat("model-deep")?.example).toBe("/model");
     expect(beat("start-and-stop")?.title).toBe("Redact (partial)");
+    expect(beat("start-and-stop")?.detail).toBe("");
     expect(beat("start-and-stop")?.example).toBe(
       "Redact the customer email in the UI. The first two characters and domain are plaintext.",
     );
@@ -84,12 +85,14 @@ describe("runbook catalog", () => {
     expect(beat("rule")?.example).toBe(
       "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
     );
+    expect(beat("test-rule")?.detail).toBe("");
     expect(beat("test-rule")?.example).toBe(
       "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
     );
     expect(beat("skill")?.example).toBe(
       "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
     );
+    expect(beat("test-skill")?.detail).toBe("");
     expect(beat("test-skill")?.example).toBe("Use domain-driven design on this application. Do not edit files.");
     expect(beat("canvas")?.title).toBe("Canvas");
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
