@@ -18,6 +18,16 @@ export const PROJECT_AGENTS = [
 
 export const PROJECT_SKILLS = [
   {
+    name: "start-application",
+    path: ".cursor/skills/start-application/SKILL.md",
+    when: "Presenter opener. Activate Clinicly, SaaSly, or Packetly from 'Start the X application'. No UI picker.",
+  },
+  {
+    name: "start-ledgerly",
+    path: ".cursor/skills/start-ledgerly/SKILL.md",
+    when: "Bring up the Next.js app on port 43173. Seed only when the database is missing or empty.",
+  },
+  {
     name: "choose-cursor-workflow",
     path: ".cursor/skills/choose-cursor-workflow/SKILL.md",
     when: "Walk the 101 track, then choose the mode, model, rule, or skill from the shape of the work.",

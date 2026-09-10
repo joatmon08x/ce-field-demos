@@ -1,6 +1,6 @@
 ---
 name: choose-cursor-workflow
-description: Walk the 101 Ledgerly track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
+description: Walk the 101 track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
 ---
 
 # Walk the 101 track
@@ -11,7 +11,7 @@ The demo ships one jumpable track: **101**. The deeper tracks were removed as no
 
 101 — You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.
 
-The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101`. Use the matching `example` verbatim. Do not invent another catalog price.
+The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101`. Use the matching `example` verbatim. Do not invent another catalog price. Adaptable examples follow the active brand in `lib/brand/active.ts`.
 
 ## Sections and beats
 

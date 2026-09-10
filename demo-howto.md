@@ -1,8 +1,8 @@
-# Ledgerly demo howto
+# Demo howto
 
 Presenter run-of-show for the **101** track, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
 
-Ledgerly is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
+This repo is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable. The company on screen is Clinicly, SaaSly, or Packetly — chosen by the first prompt, not a UI picker.
 
 The pastes below match the copy-paste blocks on `/runbooks/101`. Each beat is independent; jump directly to any step.
 
@@ -37,6 +37,14 @@ Use these definitions when the audience is new:
 
 ## Before you start
 
+Presenter opener (no in-app picker):
+
+```text
+Start the Clinicly application
+```
+
+Also valid: `Start the SaaSly application` or `Start the Packetly application`. The `start-application` skill writes `lib/brand/active.ts` and reseeds.
+
 ```bash
 npm i
 npx prisma db seed
@@ -47,7 +55,7 @@ Open **http://localhost:43173**.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 31 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 35 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, the seed, and the MCP store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -73,7 +81,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 
 **Say — novice version:**
 
-> Ledgerly is a fictional billing app we use for this demo. It contains one known error on purpose. This invoice costs $249, but the dispute claims $400. The current v2 API caps the suggested credit at $249. The page still calls deprecated v1, which returns the $400 claim. That is why the page shows a red warning and one test is red.
+> This is a fictional billing app we use for this demo. It contains one known error on purpose. This invoice costs $249, but the dispute claims $400. The current v2 API caps the suggested credit at $249. The page still calls deprecated v1, which returns the $400 claim. That is why the page shows a red warning and one test is red.
 
 **How the error correlates:**
 
@@ -98,7 +106,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 **Paste** (same block as the first-prompt card):
 
 ```text
-What are Ledgerly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
+What are SaaSly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
 
 Explain the dispute flow end to end. What is intentionally unfinished? Cite the resolve helper, the resolve API route, and the dispute page. Do not edit any files.
 ```
@@ -196,12 +204,12 @@ Create three slides in Figma Slides outlining how I used Grok Build to develop a
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 31 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 35 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If the client migration ran:** `tests/suggested-credit-api.test.ts` should be green and dsp_1043 should show **$249** from v2, with both routes intact.
 
-**If no migration ran:** `npm test` should remain **1 failed / 31 passed**. That is shipped state, not failed setup.
+**If no migration ran:** `npm test` should remain **1 failed / 35 passed**. That is shipped state, not failed setup.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -222,7 +230,7 @@ npx prisma db seed
 npm test
 ```
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 31 passed**.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 35 passed**.
 
 ---
 

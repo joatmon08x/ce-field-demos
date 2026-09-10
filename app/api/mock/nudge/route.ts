@@ -2,14 +2,14 @@ import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 
 /**
- * Mock Nudge — Ledgerly's dunning/reminder service. Deterministic,
+ * Mock Nudge — dunning/reminder service. Deterministic,
  * side-effect-free, offline. A local stand-in for /multitask and /loop demos.
  */
 
 export async function GET() {
   return NextResponse.json({
     service: "nudge",
-    description: "Ledgerly dunning and reminder service (mock)",
+    description: "Dunning and reminder service (mock)",
     status: "ready",
     accepts: "POST { ticket_id, action, ...details }",
   });

@@ -1,8 +1,9 @@
 import { execSync } from "node:child_process";
 import { PrismaClient } from "@prisma/client";
+import { getActiveBrand } from "../lib/brand";
 import { demoDay } from "../lib/clock";
 import { suggestDisputeCredit } from "../lib/dispute-credit";
-import { planPriceCents } from "../lib/plans";
+import { planLabel, planPriceCents } from "../lib/plans";
 import { EXTRA_ACCOUNTS } from "./extra-accounts";
 
 const prisma = new PrismaClient();
@@ -21,86 +22,8 @@ function extraInvoiceState(index: number) {
   return { status: "OPEN", issuedOn: "2026-08-01", dueOn: "2026-08-31" };
 }
 
-type SeedCustomer = {
-  id: string;
-  name: string;
-  contactName: string;
-  email: string;
-  plan: "STARTER" | "GROWTH" | "SCALE";
-};
-
-const CUSTOMERS: SeedCustomer[] = [
-  {
-    id: "cus_harborline",
-    name: "Acme North",
-    contactName: "Jordan Hale",
-    email: "billing@acmenorth.example",
-    plan: "GROWTH",
-  },
-  {
-    id: "cus_cedarwell",
-    name: "Riverstone Labs",
-    contactName: "Remy Sato",
-    email: "hello@riverstone.example",
-    plan: "STARTER",
-  },
-  {
-    id: "cus_quarrypine",
-    name: "Cobalt Goods",
-    contactName: "Ellis Marlow",
-    email: "accounts@cobaltgoods.example",
-    plan: "SCALE",
-  },
-  {
-    id: "cus_brightwell",
-    name: "Brightwell Labs",
-    contactName: "Priya Nader",
-    email: "ops@brightwell.example",
-    plan: "GROWTH",
-  },
-  {
-    id: "cus_oakiron",
-    name: "Oakiron Supply",
-    contactName: "Chris Bellamy",
-    email: "billing@oakiron.example",
-    plan: "STARTER",
-  },
-  {
-    id: "cus_fieldnote",
-    name: "Fieldnote Press",
-    contactName: "Sam Ortez",
-    email: "ledger@fieldnote.example",
-    plan: "SCALE",
-  },
-  {
-    id: "cus_silverpine",
-    name: "Silverpine Outfitters",
-    contactName: "Noor Voss",
-    email: "pay@silverpine.example",
-    plan: "GROWTH",
-  },
-  {
-    id: "cus_mapleember",
-    name: "Maple & Ember Co",
-    contactName: "Dana Ruiz",
-    email: "hello@mapleember.example",
-    plan: "STARTER",
-  },
-  {
-    id: "cus_tidewatch",
-    name: "Tidewatch Logistics",
-    contactName: "Keir Anand",
-    email: "billing@tidewatch.example",
-    plan: "SCALE",
-  },
-  {
-    id: "cus_copperleaf",
-    name: "Copperleaf Atelier",
-    contactName: "Lila Shore",
-    email: "studio@copperleaf.example",
-    plan: "GROWTH",
-  },
-];
+const brand = getActiveBrand();
+const CUSTOMERS = brand.customers;
 
 const INVOICES = [
   {
@@ -111,7 +34,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-07",
     dueOn: "2026-09-06",
-    memo: "Monthly Growth seat for Acme North.",
+    memo: brand.invoiceMemos.inv_1041,
   },
   {
     id: "inv_1042",
@@ -122,7 +45,7 @@ const INVOICES = [
     issuedOn: "2026-07-08",
     dueOn: "2026-08-07",
     paidOn: "2026-08-04",
-    memo: "Starter plan — July cycle.",
+    memo: brand.invoiceMemos.inv_1042,
   },
   {
     id: "inv_1043",
@@ -132,7 +55,7 @@ const INVOICES = [
     status: "OVERDUE",
     issuedOn: "2026-07-10",
     dueOn: "2026-08-09",
-    memo: "Scale plan. Customer opened a plan-mismatch dispute.",
+    memo: brand.invoiceMemos.inv_1043,
     collectionNote: "",
   },
   {
@@ -144,7 +67,7 @@ const INVOICES = [
     issuedOn: "2026-07-12",
     dueOn: "2026-08-11",
     paidOn: "2026-08-09",
-    memo: "Growth plan — July cycle.",
+    memo: brand.invoiceMemos.inv_1044,
   },
   {
     id: "inv_1045",
@@ -154,7 +77,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-02",
     dueOn: "2026-09-01",
-    memo: "Starter plan for Oakiron Supply.",
+    memo: brand.invoiceMemos.inv_1045,
   },
   {
     id: "inv_1046",
@@ -165,7 +88,7 @@ const INVOICES = [
     issuedOn: "2026-07-14",
     dueOn: "2026-08-13",
     paidOn: "2026-08-12",
-    memo: "Scale plan — July cycle.",
+    memo: brand.invoiceMemos.inv_1046,
   },
   {
     id: "inv_1047",
@@ -175,7 +98,7 @@ const INVOICES = [
     status: "OVERDUE",
     issuedOn: "2026-07-13",
     dueOn: "2026-08-12",
-    memo: "Growth plan. Duplicate-charge dispute is open.",
+    memo: brand.invoiceMemos.inv_1047,
   },
   {
     id: "inv_1048",
@@ -185,7 +108,7 @@ const INVOICES = [
     status: "DRAFT",
     issuedOn: "2026-08-22",
     dueOn: "2026-09-21",
-    memo: "Draft — waiting on a purchase order number.",
+    memo: brand.invoiceMemos.inv_1048,
   },
   {
     id: "inv_1049",
@@ -195,7 +118,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-13",
     dueOn: "2026-09-12",
-    memo: "Scale plan. Service-window dispute needs review.",
+    memo: brand.invoiceMemos.inv_1049,
   },
   {
     id: "inv_1050",
@@ -206,7 +129,7 @@ const INVOICES = [
     issuedOn: "2026-06-16",
     dueOn: "2026-07-16",
     paidOn: "2026-07-18",
-    memo: "Growth plan. Historical dispute was accepted.",
+    memo: brand.invoiceMemos.inv_1050,
   },
   {
     id: "inv_1051",
@@ -216,7 +139,7 @@ const INVOICES = [
     status: "VOID",
     issuedOn: "2026-06-07",
     dueOn: "2026-07-07",
-    memo: "Voided — upgraded to Growth the same week.",
+    memo: brand.invoiceMemos.inv_1051,
   },
   {
     id: "inv_1053",
@@ -227,7 +150,7 @@ const INVOICES = [
     issuedOn: "2026-07-07",
     dueOn: "2026-08-06",
     paidOn: "2026-07-28",
-    memo: "Growth plan — prior cycle for Acme North.",
+    memo: brand.invoiceMemos.inv_1053,
   },
   {
     id: "inv_1054",
@@ -238,7 +161,7 @@ const INVOICES = [
     issuedOn: "2026-07-01",
     dueOn: "2026-07-31",
     paidOn: "2026-07-25",
-    memo: "Starter plan — July cycle for Riverstone Labs.",
+    memo: brand.invoiceMemos.inv_1054,
   },
   {
     id: "inv_1055",
@@ -249,7 +172,7 @@ const INVOICES = [
     issuedOn: "2026-07-18",
     dueOn: "2026-08-17",
     paidOn: "2026-08-15",
-    memo: "Scale plan — paid mid-August.",
+    memo: brand.invoiceMemos.inv_1055,
   },
   {
     id: "inv_1056",
@@ -260,7 +183,7 @@ const INVOICES = [
     issuedOn: "2026-06-07",
     dueOn: "2026-07-07",
     paidOn: "2026-07-02",
-    memo: "Growth plan — June cycle for Acme North.",
+    memo: brand.invoiceMemos.inv_1056,
   },
   {
     id: "inv_1057",
@@ -271,7 +194,7 @@ const INVOICES = [
     issuedOn: "2026-08-10",
     dueOn: "2026-09-09",
     paidOn: "2026-08-18",
-    memo: "Growth plan — August cycle, paid early.",
+    memo: brand.invoiceMemos.inv_1057,
   },
   {
     id: "inv_1052",
@@ -281,7 +204,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-01",
     dueOn: "2026-08-30",
-    memo: "Mid-cycle upgrade from Starter to Growth.",
+    memo: brand.invoiceMemos.inv_1052,
   },
 ];
 
@@ -292,8 +215,7 @@ const DISPUTES = [
     id: "dsp_1043",
     invoiceId: "inv_1043",
     status: "NEEDS_REVIEW",
-    reason:
-      "Billed on Scale. The signed order is Growth. Customer is claiming back more than this invoice charges.",
+    reason: brand.disputeCopy.dsp_1043.reason,
     openedOn: "2026-08-11",
     disputedAmountCents: 40000,
   },
@@ -301,7 +223,7 @@ const DISPUTES = [
     id: "dsp_1047",
     invoiceId: "inv_1047",
     status: "OPEN",
-    reason: "Duplicate charge for the same service period.",
+    reason: brand.disputeCopy.dsp_1047.reason,
     openedOn: "2026-08-14",
     disputedAmountCents: 9900,
   },
@@ -309,7 +231,7 @@ const DISPUTES = [
     id: "dsp_1049",
     invoiceId: "inv_1049",
     status: "NEEDS_REVIEW",
-    reason: "Service window has not started. Asking to hold the invoice.",
+    reason: brand.disputeCopy.dsp_1049.reason,
     openedOn: "2026-08-18",
     disputedAmountCents: 24900,
   },
@@ -317,7 +239,7 @@ const DISPUTES = [
     id: "dsp_1041",
     invoiceId: "inv_1041",
     status: "OPEN",
-    reason: "Tax-exempt certificate is on file. Please confirm the line.",
+    reason: brand.disputeCopy.dsp_1041.reason,
     openedOn: "2026-08-19",
     disputedAmountCents: 9900,
   },
@@ -325,10 +247,10 @@ const DISPUTES = [
     id: "dsp_1050",
     invoiceId: "inv_1050",
     status: "ACCEPTED",
-    reason: "Wrong plan last cycle. Credit issued at the Growth price.",
+    reason: brand.disputeCopy.dsp_1050.reason,
     openedOn: "2026-07-02",
     disputedAmountCents: 9900,
-    reviewerNote: "Accepted. Credit equals the Growth catalog price of $99.",
+    reviewerNote: brand.disputeCopy.dsp_1050.reviewerNote,
   },
 ];
 
@@ -346,7 +268,7 @@ async function main() {
   await prisma.workspace.create({
     data: {
       id: "ws_fieldnote",
-      name: "Fieldnote Workspace",
+      name: brand.workspaceName,
       slug: "fieldnote",
       createdAt: demoDay("2025-11-04"),
     },
@@ -384,7 +306,7 @@ async function main() {
           create: [
             {
               id: `line_${invoice.id}`,
-              description: `${invoice.plan.charAt(0)}${invoice.plan.slice(1).toLowerCase()} plan · monthly`,
+              description: brand.copy.lineItem(planLabel(invoice.plan)),
               quantity: 1,
               unitPriceCents: totalCents,
               amountCents: totalCents,
@@ -447,12 +369,12 @@ async function main() {
         subtotalCents: totalCents,
         taxCents: 0,
         totalCents,
-        memo: `${account.plan.charAt(0)}${account.plan.slice(1).toLowerCase()} plan — August cycle for ${account.name}.`,
+        memo: brand.copy.extraInvoiceMemo(planLabel(account.plan), account.name),
         lines: {
           create: [
             {
               id: `line_${account.invoiceId}`,
-              description: `${account.plan.charAt(0)}${account.plan.slice(1).toLowerCase()} plan · monthly`,
+              description: brand.copy.lineItem(planLabel(account.plan)),
               quantity: 1,
               unitPriceCents: totalCents,
               amountCents: totalCents,
@@ -469,7 +391,7 @@ async function main() {
     prisma.dispute.count(),
   ]);
   console.log(
-    `Seeded Fieldnote Workspace · ${customers} customers (${EXTRA_ACCOUNTS.length} extra book accounts) · ${invoices} invoices · ${disputes} disputes`,
+    `Seeded ${brand.workspaceName} · ${customers} customers (${EXTRA_ACCOUNTS.length} extra book accounts) · ${invoices} invoices · ${disputes} disputes`,
   );
 }
 

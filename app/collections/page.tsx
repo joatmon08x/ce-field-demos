@@ -8,6 +8,7 @@ import { DEMO_AS_OF } from "@/lib/clock";
 import { getInvoices } from "@/lib/data";
 import { daysBetween, formatDate } from "@/lib/dates";
 import { formatUsd } from "@/lib/money";
+import { getActiveBrand } from "@/lib/brand";
 import { isPlanId, planLabel } from "@/lib/plans";
 
 export const metadata = {
@@ -24,15 +25,15 @@ export default async function CollectionsPage() {
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <PageHeader
-        eyebrow="Dunning"
+        eyebrow={getActiveBrand().copy.collectionsEyebrow}
         title="Collections"
-        description="Overdue folios against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249."
+        description={getActiveBrand().copy.collectionsDescription}
       />
 
       {overdue.length === 0 ? (
         <EmptyState
-          title="No overdue invoices"
-          body="Nothing is past due in this book. Open invoices still sit on the invoice list."
+          title={getActiveBrand().copy.collectionsEmptyTitle}
+          body={getActiveBrand().copy.collectionsEmptyBody}
           imageSrc="/images/empty-invoices.svg"
           imageAlt="Empty invoice folder illustration"
           action={

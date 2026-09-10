@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { DEMO_OPERATOR } from "@/lib/demo-session";
 import { formatUsd } from "@/lib/money";
 import { PLAN_IDS, PLAN_LABEL, PLAN_PRICE_CENTS } from "@/lib/plans";
+import { getActiveBrand } from "@/lib/brand";
 import { getWorkspace } from "@/lib/data";
 
 export const metadata = {
@@ -20,7 +21,7 @@ export default async function SettingsPage() {
       <PageHeader
         eyebrow="Workspace"
         title="Settings"
-        description="Fieldnote is fiction. Keep the catalog honest and the names invented."
+        description={getActiveBrand().copy.settingsDescription}
       />
 
       <Card>

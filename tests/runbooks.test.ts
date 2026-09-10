@@ -24,6 +24,12 @@ describe("runbook catalog", () => {
     for (const track of RUNBOOK_TRACKS) {
       expect(track).not.toHaveProperty("runbookSlugs");
     }
+
+    const readme = readFileSync(join(root, "README.md"), "utf8");
+    expect(readme).toContain("Start the Clinicly application");
+    expect(readme).toContain("SaaSly");
+    expect(readme).toContain("Packetly");
+    expect(readme).toContain("/runbooks");
   });
 
   it("keeps the 101 beats intact", () => {
@@ -171,6 +177,6 @@ describe("runbook catalog", () => {
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
-    expect(files.reset).toContain("1 failed / 31 passed");
+    expect(files.reset).toContain("1 failed / 35 passed");
   });
 });

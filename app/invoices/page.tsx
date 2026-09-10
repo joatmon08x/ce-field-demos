@@ -4,6 +4,7 @@ import { InvoiceTable } from "@/components/invoice-table";
 import { PageHeader } from "@/components/page-header";
 import { SearchField } from "@/components/search-field";
 import { Card, CardContent } from "@/components/ui/card";
+import { getActiveBrand } from "@/lib/brand";
 import { getInvoices } from "@/lib/data";
 
 export const metadata = {
@@ -34,7 +35,7 @@ export default async function InvoicesPage({
       <PageHeader
         eyebrow="Receivables"
         title="Invoices"
-        description="Seeded folios only. Amounts are Starter $49, Growth $99, or Scale $249 — never a custom figure."
+        description={getActiveBrand().copy.invoicesDescription}
       />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -49,7 +50,7 @@ export default async function InvoicesPage({
       {invoices.length === 0 ? (
         <EmptyState
           title="No invoices in this slice"
-          body="Clear the filter or search. The seed still has Acme North, Riverstone Labs, Cobalt Goods, and the rest of the Fieldnote book."
+          body={getActiveBrand().copy.invoicesEmpty}
           imageSrc="/images/empty-invoices.svg"
           imageAlt="Empty invoice folder illustration"
         />

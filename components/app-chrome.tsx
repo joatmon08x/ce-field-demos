@@ -19,6 +19,7 @@ import {
 import { NoticeBell, type OpenDisputeNotice } from "@/components/notice-bell";
 import { Wordmark } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { getActiveBrand } from "@/lib/brand";
 import { DEMO_OPERATOR } from "@/lib/demo-session";
 import { cn } from "@/lib/utils";
 
@@ -78,7 +79,7 @@ export function AppChrome({
       >
         <div className="flex h-full flex-col px-4 py-5">
           <div className="flex items-center justify-between">
-            <Link href="/" onClick={() => setOpen(false)} aria-label="Ledgerly home">
+            <Link href="/" onClick={() => setOpen(false)} aria-label={`${getActiveBrand().productName} home`}>
               <Wordmark />
             </Link>
             <button
@@ -130,7 +131,7 @@ export function AppChrome({
               <div>
                 <p className="text-sm font-semibold text-foreground">Collections queue</p>
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                  Overdue invoices and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.
+                  {getActiveBrand().copy.sidebarBlurb}
                 </p>
                 <Link
                   href="/collections"
@@ -177,7 +178,7 @@ export function AppChrome({
               type="search"
               name="q"
               value={query}
-              placeholder="Search invoices, customers, dsp_… or inv_…"
+              placeholder={getActiveBrand().copy.searchPlaceholder}
               className="h-10 w-full rounded-lg border border-transparent bg-muted pr-3 pl-10 text-sm outline-none placeholder:text-muted-foreground focus:border-ring focus:bg-card focus:ring-[3px] focus:ring-ring/20"
               aria-label="Search the book"
               onChange={(event) => {

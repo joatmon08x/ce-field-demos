@@ -1,8 +1,22 @@
-# Ledgerly
+# Vertical billing demo
 
-Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
+Fictional B2B billing ops. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for the jumpable Grok Build **101** track. Copy-paste prompts live on `/runbooks`; the presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
+Use it for the jumpable Grok Build **101** track. There is **no company picker in the UI**. After clone, the presenter’s first prompt selects the vertical:
+
+```text
+Start the Clinicly application
+```
+
+Profiles (each name ends in **ly**):
+
+| Prompt | Industry |
+| --- | --- |
+| `Start the Clinicly application` | Healthcare provider |
+| `Start the SaaSly application` | SaaS |
+| `Start the Packetly application` | Network hardware (routers and switches) |
+
+The `start-application` skill sets `lib/brand/active.ts` and reseeds. Default clone is **SaaSly**. Copy-paste prompts live on `/runbooks`; adaptable examples follow the active brand. The presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
 
 ## Run
 
@@ -16,7 +30,7 @@ npm run dev
 
 Open **http://localhost:43173**.
 
-`npm test` is **1 failed / 31 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 35 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
@@ -35,7 +49,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 Ask:
 
 ```text
-What are Ledgerly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
+What are SaaSly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
 
 Explain the dispute flow end to end. What is intentionally unfinished? Cite the resolve helper, the resolve API route, and the dispute page. Do not edit any files.
 ```
@@ -79,6 +93,8 @@ Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the 
 | `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
+| `start-application` | Presenter opener. Activate Clinicly, SaaSly, or Packetly. No UI picker. |
+| `start-ledgerly` | Start the app on port 43173. Seed only if empty. |
 | `choose-cursor-workflow` | Walk the 101 track and pick the mode or model. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
@@ -87,5 +103,5 @@ Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the 
 
 ## Notes
 
-- Prices and customer names only from `lib/plans.ts`, `prisma/seed.ts`, and `prisma/extra-accounts.ts`.
+- Prices from `lib/plans.ts` only. Customer names from the active profile in `lib/brand/` (seeded via `prisma/seed.ts`).
 - Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`.
