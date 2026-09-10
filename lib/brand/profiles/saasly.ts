@@ -45,7 +45,7 @@ export const SAASLY: BrandProfile = {
       "Overdue invoices and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
     searchPlaceholder: "Search invoices, customers, dsp_… or inv_…",
     lineItem: (planLabel) => `${planLabel} plan · monthly`,
-    extraInvoiceMemo: (planLabel, customerName) =>
+    extraInvoiceMemo: ({ planLabel, customerName }) =>
       `${planLabel} plan — August cycle for ${customerName}.`,
   },
   customers: [

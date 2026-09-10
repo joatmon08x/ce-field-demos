@@ -45,7 +45,7 @@ export const ROUTELY: BrandProfile = {
       "Overdue support contracts and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
     searchPlaceholder: "Search invoices, sites, dsp_… or inv_…",
     lineItem: (planLabel) => `${planLabel} support contract · monthly`,
-    extraInvoiceMemo: (planLabel, customerName) =>
+    extraInvoiceMemo: ({ planLabel, customerName }) =>
       `${planLabel} support contract — August cycle for ${customerName}.`,
   },
   customers: [

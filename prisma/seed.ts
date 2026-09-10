@@ -369,7 +369,10 @@ async function main() {
         subtotalCents: totalCents,
         taxCents: 0,
         totalCents,
-        memo: brand.copy.extraInvoiceMemo(planLabel(account.plan), account.name),
+        memo: brand.copy.extraInvoiceMemo({
+          planLabel: planLabel(account.plan),
+          customerName: account.name,
+        }),
         lines: {
           create: [
             {
