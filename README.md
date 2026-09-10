@@ -5,16 +5,16 @@ Fictional B2B billing ops. Operator **Avery Quinn**. Catalog is Starter **$49**,
 Use it for the jumpable Grok Build **101** track. There is **no company picker in the UI**. After clone, the presenter’s first prompt selects the vertical:
 
 ```text
-Start the Clinicly application
+Start the Medly application
 ```
 
 Profiles (each name ends in **ly**):
 
 | Prompt | Industry |
 | --- | --- |
-| `Start the Clinicly application` | Healthcare provider |
+| `Start the Medly application` | Healthcare provider |
 | `Start the SaaSly application` | SaaS |
-| `Start the Packetly application` | Network hardware (routers and switches) |
+| `Start the Routely application` | Network hardware (routers and switches) |
 
 The `start-application` skill sets `lib/brand/active.ts` and reseeds. Default clone is **SaaSly**. Copy-paste prompts live on `/runbooks`; adaptable examples follow the active brand. The presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
 
@@ -93,7 +93,7 @@ Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the 
 | `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
-| `start-application` | Presenter opener. Activate Clinicly, SaaSly, or Packetly. No UI picker. |
+| `start-application` | Presenter opener. Activate Medly, SaaSly, or Routely. No UI picker. |
 | `start-ledgerly` | Start the app on port 43173. Seed only if empty. |
 | `choose-cursor-workflow` | Walk the 101 track and pick the mode or model. |
 | `dispatch-subagents` | Parallel Task launches. |

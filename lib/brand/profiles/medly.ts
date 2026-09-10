@@ -1,13 +1,13 @@
 import { brandRunbookExamples } from "@/lib/brand/runbook-examples";
 import type { BrandProfile } from "@/lib/brand/types";
 
-export const CLINICLY: BrandProfile = {
-  id: "clinicly",
-  productName: "Clinicly",
+export const MEDLY: BrandProfile = {
+  id: "medly",
+  productName: "Medly",
   industry: "healthcare",
   operatorRole: "Revenue cycle",
-  operatorEmail: "avery.quinn@clinicly.example",
-  workspaceName: "Clinicly Workspace",
+  operatorEmail: "avery.quinn@medly.example",
+  workspaceName: "Medly Workspace",
   tagline: "Membership and statement operations for a fictional healthcare provider.",
   tokens: {
     light: {
@@ -28,11 +28,11 @@ export const CLINICLY: BrandProfile = {
     },
   },
   copy: {
-    dashboardSubtitle: "Clinicly Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.",
+    dashboardSubtitle: "Medly Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.",
     invoicesDescription:
       "Seeded membership statements only. Amounts are Starter $49, Growth $99, or Scale $249 — never a custom figure.",
     invoicesEmpty:
-      "Clear the filter or search. The seed still has Harborline Medical Group, Cedarwell Family Practice, Quarrypine Orthopedics, and the rest of the Clinicly book.",
+      "Clear the filter or search. The seed still has Harborline Medical Group, Cedarwell Family Practice, Quarrypine Orthopedics, and the rest of the Medly book.",
     collectionsEyebrow: "Dunning",
     collectionsDescription:
       "Overdue statements against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249.",
@@ -40,7 +40,7 @@ export const CLINICLY: BrandProfile = {
     collectionsEmptyBody: "Nothing is past due in this book. Open statements still sit on the invoice list.",
     disputesDescription:
       "Claim-credit suggestions must stay inside the catalog. The detail page and resolve API are unfinished — that is the Agent seam.",
-    settingsDescription: "Clinicly is fiction. Keep the catalog honest and the practice names invented.",
+    settingsDescription: "Medly is fiction. Keep the catalog honest and the practice names invented.",
     sidebarBlurb:
       "Overdue statements and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
     searchPlaceholder: "Search statements, practices, dsp_… or inv_…",
@@ -295,7 +295,7 @@ export const CLINICLY: BrandProfile = {
     },
   },
   runbookExamples: brandRunbookExamples({
-    productName: "Clinicly",
+    productName: "Medly",
     planExample:
       "/plan I want a new feature to update the practice email in the statement detail customer card. Don’t implement email validation.",
     redactExample:

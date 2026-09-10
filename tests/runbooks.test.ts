@@ -26,9 +26,9 @@ describe("runbook catalog", () => {
     }
 
     const readme = readFileSync(join(root, "README.md"), "utf8");
-    expect(readme).toContain("Start the Clinicly application");
+    expect(readme).toContain("Start the Medly application");
     expect(readme).toContain("SaaSly");
-    expect(readme).toContain("Packetly");
+    expect(readme).toContain("Routely");
     expect(readme).toContain("/runbooks");
   });
 

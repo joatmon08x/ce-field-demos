@@ -1,13 +1,13 @@
 import { brandRunbookExamples } from "@/lib/brand/runbook-examples";
 import type { BrandProfile } from "@/lib/brand/types";
 
-export const PACKETLY: BrandProfile = {
-  id: "packetly",
-  productName: "Packetly",
+export const ROUTELY: BrandProfile = {
+  id: "routely",
+  productName: "Routely",
   industry: "network hardware",
   operatorRole: "Channel billing",
-  operatorEmail: "avery.quinn@packetly.example",
-  workspaceName: "Packetly Workspace",
+  operatorEmail: "avery.quinn@routely.example",
+  workspaceName: "Routely Workspace",
   tagline: "Support-contract billing for a fictional campus-router and switch vendor.",
   tokens: {
     light: {
@@ -28,11 +28,11 @@ export const PACKETLY: BrandProfile = {
     },
   },
   copy: {
-    dashboardSubtitle: "Packetly Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.",
+    dashboardSubtitle: "Routely Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.",
     invoicesDescription:
       "Seeded support-contract invoices only. Amounts are Starter $49, Growth $99, or Scale $249 — never a custom figure.",
     invoicesEmpty:
-      "Clear the filter or search. The seed still has Harborline Transit, Cedarwell Mills, Quarrypine Fabrication, and the rest of the Packetly book.",
+      "Clear the filter or search. The seed still has Harborline Transit, Cedarwell Mills, Quarrypine Fabrication, and the rest of the Routely book.",
     collectionsEyebrow: "Dunning",
     collectionsDescription:
       "Overdue support contracts against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249.",
@@ -40,7 +40,7 @@ export const PACKETLY: BrandProfile = {
     collectionsEmptyBody: "Nothing is past due in this book. Open invoices still sit on the invoice list.",
     disputesDescription:
       "Credit suggestions must stay inside the catalog. The detail page and resolve API are unfinished — that is the Agent seam.",
-    settingsDescription: "Packetly is fiction. Keep the catalog honest and the site names invented.",
+    settingsDescription: "Routely is fiction. Keep the catalog honest and the site names invented.",
     sidebarBlurb:
       "Overdue support contracts and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
     searchPlaceholder: "Search invoices, sites, dsp_… or inv_…",
@@ -295,7 +295,7 @@ export const PACKETLY: BrandProfile = {
     },
   },
   runbookExamples: brandRunbookExamples({
-    productName: "Packetly",
+    productName: "Routely",
     planExample:
       "/plan I want a new feature to update the site-contact email in the invoice detail customer card. Don’t implement email validation.",
     redactExample:

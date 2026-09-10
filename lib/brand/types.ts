@@ -1,6 +1,6 @@
 import type { PlanId } from "@/lib/plans";
 
-export const BRAND_IDS = ["clinicly", "saasly", "packetly"] as const;
+export const BRAND_IDS = ["medly", "saasly", "routely"] as const;
 
 export type BrandId = (typeof BRAND_IDS)[number];
 

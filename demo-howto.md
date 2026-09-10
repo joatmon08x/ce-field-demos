@@ -2,7 +2,7 @@
 
 Presenter run-of-show for the **101** track, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
 
-This repo is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable. The company on screen is Clinicly, SaaSly, or Packetly — chosen by the first prompt, not a UI picker.
+This repo is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable. The company on screen is Medly, SaaSly, or Routely — chosen by the first prompt, not a UI picker.
 
 The pastes below match the copy-paste blocks on `/runbooks/101`. Each beat is independent; jump directly to any step.
 
@@ -40,10 +40,10 @@ Use these definitions when the audience is new:
 Presenter opener (no in-app picker):
 
 ```text
-Start the Clinicly application
+Start the Medly application
 ```
 
-Also valid: `Start the SaaSly application` or `Start the Packetly application`. The `start-application` skill writes `lib/brand/active.ts` and reseeds.
+Also valid: `Start the SaaSly application` or `Start the Routely application`. The `start-application` skill writes `lib/brand/active.ts` and reseeds.
 
 ```bash
 npm i

@@ -10,11 +10,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Vertical billing demo
 
-Fictional billing ops. Active company is one of Clinicly, SaaSly, or Packetly (`lib/brand/active.ts`). Operator Avery Quinn. No auth. No real companies.
+Fictional billing ops. Active company is one of Medly, SaaSly, or Routely (`lib/brand/active.ts`). Operator Avery Quinn. No auth. No real companies.
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
-This is a **Cursor demo app** with a single jumpable 101 track. The presenter’s first prompt is `Start the Clinicly application` (or SaaSly / Packetly) — there is no in-app picker. Runbook beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. The deeper tracks were removed as not-ready — do not reintroduce them without a request.
+This is a **Cursor demo app** with a single jumpable 101 track. The presenter’s first prompt is `Start the Medly application` (or SaaSly / Routely) — there is no in-app picker. Runbook beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. The deeper tracks were removed as not-ready — do not reintroduce them without a request.
 
 ## Cursor Cloud specific instructions
 
@@ -81,7 +81,7 @@ Incomplete on purpose:
 | `.cursor/agents/ledgerly-reviewer.md` | Verifier after code changes |
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
-| `.cursor/skills/start-application/` | Presenter opener — activate Clinicly, SaaSly, or Packetly. No UI picker. |
+| `.cursor/skills/start-application/` | Presenter opener — activate Medly, SaaSly, or Routely. No UI picker. |
 | `.cursor/skills/start-ledgerly/` | Start the app on port 43173; seed only if the database is empty |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |

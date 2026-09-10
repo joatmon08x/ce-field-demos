@@ -1,6 +1,6 @@
 ---
 name: start-application
-description: Activate a vertical billing profile (Clinicly, SaaSly, or Packetly) from a presenter prompt like "Start the Clinicly application". Use when the user names one of those companies or asks to start the demo app for a healthcare, SaaS, or hardware audience. There is no in-app picker.
+description: Activate a vertical billing profile (Medly, SaaSly, or Routely) from a presenter prompt like "Start the Medly application". Use when the user names one of those companies or asks to start the demo app for a healthcare, SaaS, or hardware audience. There is no in-app picker.
 ---
 
 # Start a vertical application
@@ -11,9 +11,9 @@ The clone has no company picker in the UI. The presenter (or first prompt) names
 
 | Prompt | Id | Industry |
 | --- | --- | --- |
-| Start the Clinicly application | `clinicly` | Healthcare provider — membership statements |
+| Start the Medly application | `medly` | Healthcare provider — membership statements |
 | Start the SaaSly application | `saasly` | SaaS subscription billing |
-| Start the Packetly application | `packetly` | Campus routers and switches — support-contract billing |
+| Start the Routely application | `routely` | Campus routers and switches — support-contract billing |
 
 Names always end in **ly**. Never use a real company (no Cisco, no hospital system, no prospect logo).
 
