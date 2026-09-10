@@ -1,11 +1,11 @@
 {
-  "name": "xdemo-app",
+  "name": "ce-field-demos",
   "version": "0.1.0",
   "private": true,
   "description": "Ledgerly — fictional B2B billing and collections ops SaaS for Cursor demos.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/denchanca/xdemo-app.git"
+    "url": "https://github.com/joatmon08x/ce-field-demos.git"
   },
   "scripts": {
     "dev": "next dev --port 43173",
