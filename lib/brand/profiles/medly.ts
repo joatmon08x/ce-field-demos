@@ -45,7 +45,7 @@ export const MEDLY: BrandProfile = {
       "Overdue statements and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
     searchPlaceholder: "Search statements, practices, dsp_… or inv_…",
     lineItem: (planLabel) => `${planLabel} membership · monthly`,
-    extraInvoiceMemo: (planLabel, customerName) =>
+    extraInvoiceMemo: ({ planLabel, customerName }) =>
       `${planLabel} membership — August cycle for ${customerName}.`,
   },
   customers: [

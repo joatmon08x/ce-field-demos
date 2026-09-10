@@ -50,7 +50,7 @@ export type BrandCopy = {
   sidebarBlurb: string;
   searchPlaceholder: string;
   lineItem: (planLabel: string) => string;
-  extraInvoiceMemo: (planLabel: string, customerName: string) => string;
+  extraInvoiceMemo: (input: { planLabel: string; customerName: string }) => string;
 };
 
 /** Adaptable runbook beat examples. Reusable / none beats stay in the beat files. */
