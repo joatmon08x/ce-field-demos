@@ -1,4 +1,7 @@
 import type { DemoSection } from "@/lib/runbooks/types";
+import { getActiveBrand } from "@/lib/brand";
+
+const examples = getActiveBrand().runbookExamples;
 
 export const RUNBOOK_SECTIONS_ADVANCED = [
   {
@@ -8,6 +11,7 @@ export const RUNBOOK_SECTIONS_ADVANCED = [
       {
         id: "cli-setup",
         title: "Check the CLI",
+        promptType: "reusable",
         detail:
           "Confirm Cursor CLI is installed and signed in. A new clone needs --trust; the app does not need to be running.",
         pasteLabel: "Run in the terminal",
@@ -16,15 +20,16 @@ export const RUNBOOK_SECTIONS_ADVANCED = [
       {
         id: "cli-ask",
         title: "Ask mode",
+        promptType: "adaptable",
         detail:
           "Use read-only Ask mode to explain why the page shows v1's $400 result while v2 and stored state are capped at $249.",
         pasteLabel: "Run in the terminal",
-        example:
-          'agent --trust --mode=ask "Explain why dsp_1043 shows a $400 suggested credit even though the stored credit and v2 response are $249. Cite the source files and do not edit anything."',
+        example: examples["cli-ask"],
       },
       {
         id: "cli-session",
         title: "While the session is open",
+        promptType: "reusable",
         detail:
           "Make model choice explicit, inspect the remaining boundary, and leave the session without editing.",
         pasteLabel: "Paste in the CLI session",

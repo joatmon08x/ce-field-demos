@@ -5,7 +5,7 @@ description: Draft an on-voice customer email (dunning nudge or dispute reply) f
 
 # Draft a collection or dispute email
 
-Write the email Avery Quinn (Billing ops, Fieldnote Workspace) would send. Ground every fact in the seed; invent nothing.
+Write the email Avery Quinn would send from the active workspace. Ground every fact in the seed; invent nothing.
 
 ## Pull facts first
 
@@ -20,7 +20,7 @@ Calm, specific, short. "Invoice" and "credit", never "synergy". No exclamation m
 ## Hard rules
 
 - Name the plan; quote the price only if it is one of the three catalog prices.
-- Fictional parties only — seed customers, `.example` addresses, signed "Avery Quinn, Billing ops, Fieldnote Workspace".
+- Fictional parties only — seed customers from the active brand, `.example` addresses, signed "Avery Quinn" plus the active operator role and workspace name.
 - Dispute replies must not promise a credit above the plan price. Read the catalog from `lib/plans.ts`.
 
 ## Output shape

@@ -11,7 +11,7 @@ The workflows are not interchangeable. Pick on the shape of the work: how many p
 
 - **101** — You will explore different ways to work in Cursor, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.
 - **201** — orient, migrate the v1 client to v2, create the v2-only rule live, then cover customization, models, Cloud Agents, Automations, trust, and one of `/multitask`, `/loop`, `/autopilot`, or `/orchestrate`.
-- **Advanced** — deeper Ledgerly scenarios. Starts with the Cursor CLI primer, then adds `/goal` for a durable product objective.
+- **Advanced** — deeper scenarios. Starts with the Cursor CLI primer, then adds `/goal` for a durable product objective.
 
 Every beat is independent. If the user names a command, jump directly to it.
 
@@ -38,7 +38,7 @@ The human reviews the result and decides what ships. These commands change how m
 
 Prompts live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`. Use the matching `prompt` verbatim. Do not invent another catalog price.
 
-| Command | Ledgerly target |
+| Command | Demo target |
 | --- | --- |
 | `/multitask` | Four API surfaces via `dispatch-subagents` + `api-instrumenter` |
 | `/loop` | `POST` then poll `/api/demo/job` |

@@ -18,6 +18,11 @@ export const PROJECT_AGENTS = [
 
 export const PROJECT_SKILLS = [
   {
+    name: "start-application",
+    path: ".cursor/skills/start-application/SKILL.md",
+    when: "Presenter opener. Activate Medly, SaaSly, or Routely from 'Start the X application'. No UI picker.",
+  },
+  {
     name: "choose-cursor-workflow",
     path: ".cursor/skills/choose-cursor-workflow/SKILL.md",
     when: "Pick the 101, 201, or Advanced track, then choose the command from the shape of the work.",

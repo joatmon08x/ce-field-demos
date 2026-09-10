@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getDisputes } from "@/lib/data";
 import { formatDate } from "@/lib/dates";
 import { formatUsd } from "@/lib/money";
+import { getActiveBrand } from "@/lib/brand";
 import { planLabel } from "@/lib/plans";
 
 export const metadata = {
@@ -35,7 +36,7 @@ export default async function DisputesPage({
       <PageHeader
         eyebrow="Exceptions"
         title="Dispute queue"
-        description="Credit suggestions must stay inside the catalog. The detail page and resolve API are unfinished — that is the Agent seam."
+        description={getActiveBrand().copy.disputesDescription}
       />
 
       <FilterPills pathname="/disputes" value={status} items={FILTERS} />

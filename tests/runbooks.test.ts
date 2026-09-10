@@ -10,6 +10,7 @@ import {
   runbookBeatSequence,
   runbookBeats,
 } from "@/lib/runbooks/meta";
+import { getActiveBrand } from "@/lib/brand";
 
 const root = process.cwd();
 const beats101 = runbookBeats("101");
@@ -20,16 +21,17 @@ describe("runbook catalog split", () => {
     const howto = readFileSync(join(root, "demo-howto.md"), "utf8");
     for (const runbook of RUNBOOKS) {
       expect(
-        readme,
-        `README is missing the ${runbook.slug} prompt from lib/runbooks/meta.ts`,
-      ).toContain(runbook.prompt);
-      expect(
         howto,
         `demo-howto.md is missing the ${runbook.slug} demo prompt from lib/runbooks/meta.ts`,
       ).toContain(runbook.demoPrompt);
       expect(runbook.demoPrompt).toContain("lib/runbooks/meta.ts");
       expect(runbook.demoPrompt).toContain(runbook.slug);
     }
+
+    expect(readme).toContain("Start the Medly application");
+    expect(readme).toContain("SaaSly");
+    expect(readme).toContain("Routely");
+    expect(readme).toContain("/runbooks");
 
     const track101 = RUNBOOK_TRACKS.find((track) => track.id === "101");
     const track201 = RUNBOOK_TRACKS.find((track) => track.id === "201");
@@ -87,44 +89,34 @@ describe("runbook catalog split", () => {
 
     const beat = (id: (typeof beats101)[number]["id"]) => beats101.find((entry) => entry.id === id);
 
+    const examples = getActiveBrand().runbookExamples;
+
     expect(beat("ask")?.example).toBe("/ask Tell me what this application does in 3 sentences");
-    expect(beat("plan")?.example).toBe(
-      "/plan I want a new feature to update the customer email in the invoice detail customer card. Don’t implement email validation.",
-    );
+    expect(beat("plan")?.example).toBe(examples.plan);
     expect(beat("agent-build")?.example).toBeUndefined();
     expect(beat("debug")?.example).toBe("/debug the failing test");
-    expect(beat("model-fast")?.example).toBe("/model.");
-    expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
+    expect(beat("model-fast")?.example).toBe(examples["model-fast"]);
+    expect(beat("fix")?.example).toBe(examples.fix);
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
       "Go to Settings → Agents → Executions & Approvals → Run Mode → Allowlist.",
     );
     expect(beat("model-deep")?.example).toBe("/model");
     expect(beat("start-and-stop")?.title).toBe("Redact (partial)");
-    expect(beat("start-and-stop")?.example).toBe(
-      "Redact the customer email in the UI. The first two characters and domain are plaintext.",
-    );
+    expect(beat("start-and-stop")?.example).toBe(examples["start-and-stop"]);
     expect(beat("stop")?.example).toBeUndefined();
     expect(beat("stop")?.detail).toBe("Stop the prompt with the Stop button.");
-    expect(beat("interrupt-steer")?.example).toBe(
-      "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
-    );
+    expect(beat("interrupt-steer")?.example).toBe(examples["interrupt-steer"]);
     expect(beat("diffs")?.example).toBeUndefined();
-    expect(beat("rule")?.example).toBe(
-      "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
-    );
-    expect(beat("test-rule")?.example).toBe(
-      "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
-    );
-    expect(beat("skill")?.example).toBe(
-      "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
-    );
-    expect(beat("test-skill")?.example).toBe("Use domain-driven design on this application. Do not edit files.");
+    expect(beat("rule")?.example).toBe(examples.rule);
+    expect(beat("test-rule")?.example).toBe(examples["test-rule"]);
+    expect(beat("skill")?.example).toBe(examples.skill);
+    expect(beat("test-skill")?.example).toBe(examples["test-skill"]);
     expect(beat("canvas")?.title).toBe("Canvas");
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
     expect(beat("mcp")?.title).toBe("MCP / Figma");
     expect(beat("mcp")?.detail).toContain("Customize > MCP > Figma");
-    expect(beat("mcp")?.example).toContain("Figma Slides");
+    expect(beat("mcp")?.example).toBe(examples.mcp);
 
     expect(beats101.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(beat("ask")?.promptType).toBe("reusable");
@@ -191,6 +183,6 @@ describe("runbook catalog split", () => {
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("lib/runbooks/meta.ts");
-    expect(files.reset).toContain("1 failed / 31 passed");
+    expect(files.reset).toContain("1 failed / 35 passed");
   });
 });
