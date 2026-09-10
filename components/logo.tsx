@@ -40,7 +40,7 @@ function SaaslyMark({
   );
 }
 
-function CliniclyMark({
+function MedlyMark({
   className,
   variant = "onIndigo",
 }: {
@@ -70,7 +70,7 @@ function CliniclyMark({
   );
 }
 
-function PacketlyMark({
+function RoutelyMark({
   className,
   variant = "onIndigo",
 }: {
@@ -101,8 +101,8 @@ function PacketlyMark({
 
 const MARKS: Record<BrandId, typeof SaaslyMark> = {
   saasly: SaaslyMark,
-  clinicly: CliniclyMark,
-  packetly: PacketlyMark,
+  medly: MedlyMark,
+  routely: RoutelyMark,
 };
 
 export function LogoMark({

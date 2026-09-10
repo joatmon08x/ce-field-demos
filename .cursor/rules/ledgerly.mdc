@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Vertical billing demo
 
-You are working in a fictional B2B billing product. Write like a precise billing-ops tool, not a growth startup. The company on screen is the active profile in `lib/brand/active.ts` — Clinicly, SaaSly, or Packetly. There is no in-app company picker.
+You are working in a fictional B2B billing product. Write like a precise billing-ops tool, not a growth startup. The company on screen is the active profile in `lib/brand/active.ts` — Medly, SaaSly, or Routely. There is no in-app company picker.
 
 ## Never invent prices
 
@@ -23,7 +23,7 @@ The catalog governs **app code, UI copy, and this repo's README**.
 
 Customers come from the active brand only (`lib/brand/profiles/`, seeded by `prisma/seed.ts` and `prisma/extra-accounts.ts`). Emails use `.example`. Operator is Avery Quinn. Do not drop in a prospect's logo, a real customer, or a real person. Do not use Cisco, a real hospital system, or any live vendor mark.
 
-When the user says `Start the Clinicly application` (or SaaSly / Packetly), use the `start-application` skill. Do not add a UI picker.
+When the user says `Start the Medly application` (or SaaSly / Routely), use the `start-application` skill. Do not add a UI picker.
 
 ## Seams
 

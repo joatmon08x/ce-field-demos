@@ -28,9 +28,9 @@ describe("runbook catalog split", () => {
       expect(runbook.demoPrompt).toContain(runbook.slug);
     }
 
-    expect(readme).toContain("Start the Clinicly application");
+    expect(readme).toContain("Start the Medly application");
     expect(readme).toContain("SaaSly");
-    expect(readme).toContain("Packetly");
+    expect(readme).toContain("Routely");
     expect(readme).toContain("/runbooks");
 
     const track101 = RUNBOOK_TRACKS.find((track) => track.id === "101");

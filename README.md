@@ -5,16 +5,16 @@ Fictional B2B billing ops. Operator **Avery Quinn**. Catalog is Starter **$49**,
 There is **no company picker in the UI**. After clone, the presenter’s first prompt selects the vertical:
 
 ```text
-Start the Clinicly application
+Start the Medly application
 ```
 
 Profiles (each name ends in **ly**):
 
 | Prompt | Industry |
 | --- | --- |
-| `Start the Clinicly application` | Healthcare provider |
+| `Start the Medly application` | Healthcare provider |
 | `Start the SaaSly application` | SaaS |
-| `Start the Packetly application` | Network hardware (routers and switches) |
+| `Start the Routely application` | Network hardware (routers and switches) |
 
 The `start-application` skill sets `lib/brand/active.ts` and reseeds. Default clone is **SaaSly**. Copy-paste runbook prompts live on `/runbooks` and interpolate the active name. The presenter run-of-show is `demo-howto.md`.
 
@@ -183,7 +183,7 @@ Launch the dispute-verifier subagent as the verifier: it checks tests/suggested-
 | `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
 | `api-instrumenter` | One API route per `/multitask` worker. |
 | `dispute-verifier` | `/goal` / `/orchestrate` finish line. No product code. |
-| `start-application` | Presenter opener. Activate Clinicly, SaaSly, or Packetly. No UI picker. |
+| `start-application` | Presenter opener. Activate Medly, SaaSly, or Routely. No UI picker. |
 | `choose-cursor-workflow` | Pick the command from the table above. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Cloud `/goal`, `/autopilot`, or `/orchestrate`. |

@@ -20,7 +20,7 @@ export const PROJECT_SKILLS = [
   {
     name: "start-application",
     path: ".cursor/skills/start-application/SKILL.md",
-    when: "Presenter opener. Activate Clinicly, SaaSly, or Packetly from 'Start the X application'. No UI picker.",
+    when: "Presenter opener. Activate Medly, SaaSly, or Routely from 'Start the X application'. No UI picker.",
   },
   {
     name: "choose-cursor-workflow",
