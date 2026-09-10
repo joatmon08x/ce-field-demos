@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ledgerly-db": {
+      "command": "npx",
+      "args": ["tsx", "mcp/ledgerly-db/server.ts"]
+    }
+  }
+}

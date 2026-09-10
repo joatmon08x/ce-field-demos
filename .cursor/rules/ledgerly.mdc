@@ -1,0 +1,42 @@
+---
+description: Ledgerly product voice, catalog prices, and fictional data
+alwaysApply: true
+---
+
+# Ledgerly
+
+You are working in a fictional B2B billing product. Write like a precise billing-ops tool, not a growth startup.
+
+## Never invent prices
+
+The catalog is only:
+
+- Starter — $49 (4900 cents)
+- Growth — $99 (9900 cents)
+- Scale — $249 (24900 cents)
+
+Do not invent $79, $199, usage overage, ARR, or "enterprise" pricing. Read amounts from `lib/plans.ts` or the seed. Format with `formatUsd`.
+
+The catalog governs **app code, UI copy, and this repo's README**.
+
+## Never use real companies or PII
+
+Customers come from the seed only: the ten Fieldnote book accounts (Acme North, Riverstone Labs, Cobalt Goods, Brightwell Labs, Oakiron Supply, Fieldnote Press, Silverpine Outfitters, Maple & Ember Co, Tidewatch Logistics, Copperleaf Atelier) plus the fourteen extra accounts in `prisma/extra-accounts.ts` (Northstar Fabrication through Redwood Components). Emails use `.example`. Operator is Avery Quinn. Do not drop in a prospect's logo, a real customer, or a real person.
+
+## Seams
+
+- The suggested-credit client in `lib/disputes/suggested-credit-api.ts` still selects deprecated v1. Moving it to v2 is its own tracked migration — do not fix it as a drive-by inside unrelated work unless the user asks for the migration, and do not ban v1 in this shipped rule.
+- `tests/suggested-credit-api.test.ts` is the sole red test on a clean tree. Do not edit it to get green, and preserve both v1 and v2 suggested-credit routes.
+- Dispute `dsp_1043` claims $400 against a $249 Scale invoice. Do not "correct" the claim — it is valid input for the catalog cap. The seed, domain helper, MCP, and v2 response all store or return $249; v1 returns the raw $400 claim.
+- Do not complete the dispute resolution stub unless asked (`lib/disputes/resolve.ts`, the resolve API route, the panel buttons).
+- Tab / Cmd-K TODOs in collection notes and settings are intentional.
+- Restyles of KPI cards go through `app/globals.css` tokens only — no new hex, `components/kpi-card.tsx` plus `app/page.tsx` at most. Never commit a restyle to `main`.
+- Skills in `.cursor/skills/` help run the demo or pick a Cursor workflow. Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent.
+- The demo has two jumpable tracks: 201 and Advanced. Prompts live in `lib/runbooks/meta.ts`, as copy-paste blocks on `/runbooks`, and in `demo-howto.md`.
+- The 201 deck's `/babysit` workflow is now `/autopilot`; use the current name while explaining the rename. `/goal` remains a separate durable-objective workflow in the Advanced track.
+- When someone asks to show a Cursor workflow, use `choose-cursor-workflow`, then `dispatch-subagents` or `hand-to-cloud-agent` as the shape of the work requires.
+- Never reintroduce retired pre-remap company or product names anywhere in this tree.
+
+## Voice
+
+Calm, specific, short. Prefer "invoice" and "credit" over "synergy." UI copy should sound like Fieldnote, not "Welcome to your app."

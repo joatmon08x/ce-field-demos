@@ -1,0 +1,31 @@
+export type DemoTrack = "101" | "201" | "advanced";
+
+export type BeatPromptType = "reusable" | "adaptable" | "none";
+
+export type DemoBeat = {
+  id: string;
+  title: string;
+  detail: string;
+  promptType?: BeatPromptType;
+  example?: string;
+  pasteLabel?: string;
+};
+
+export type DemoSection = {
+  id: string;
+  title: string;
+  beats: readonly DemoBeat[];
+};
+
+export type RunbookMeta = {
+  slug: "multitask" | "loop" | "autopilot" | "goal" | "orchestrate";
+  command: string;
+  title: string;
+  handsOver: string;
+  when: string;
+  blurb: string;
+  tracks: DemoTrack[];
+  setup?: string;
+  demoPrompt: string;
+  prompt: string;
+};
