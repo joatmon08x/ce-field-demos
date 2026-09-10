@@ -135,6 +135,7 @@ describe("runbook catalog", () => {
       agents: readFileSync(join(root, "AGENTS.md"), "utf8"),
       rule: readFileSync(join(root, ".cursor/rules/ledgerly.mdc"), "utf8"),
       skill: readFileSync(join(root, ".cursor/skills/choose-cursor-workflow/SKILL.md"), "utf8"),
+      cloud: readFileSync(join(root, ".cursor/skills/hand-to-cloud-agent/SKILL.md"), "utf8"),
       reset: readFileSync(join(root, ".cursor/skills/reset-demo-state/SKILL.md"), "utf8"),
     };
 
@@ -154,6 +155,7 @@ describe("runbook catalog", () => {
     expect(files.agents).toContain("lib/runbooks/meta.ts");
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
+    expect(files.cloud).toContain("Cloud Agent");
     expect(files.reset).toContain("1 failed / 31 passed");
   });
 });

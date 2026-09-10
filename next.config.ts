@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
       { source: "/workflows/:slug", destination: "/runbooks/101", permanent: false },
       { source: "/analysis", destination: "/runbooks/101", permanent: false },
       { source: "/analysis/:path*", destination: "/runbooks/101", permanent: false },
+      { source: "/runbooks/201", destination: "/runbooks/101", permanent: false },
+      { source: "/runbooks/advanced", destination: "/runbooks/101", permanent: false },
+      { source: "/runbooks/commands", destination: "/runbooks/101", permanent: false },
+      { source: "/runbooks/commands/:slug", destination: "/runbooks/101", permanent: false },
     ];
   },
 };

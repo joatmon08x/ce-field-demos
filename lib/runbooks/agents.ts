@@ -35,7 +35,7 @@ export const PROJECT_SKILLS = [
   {
     name: "autopilot",
     path: "~/.cursor/skills-cursor/autopilot/SKILL.md",
-    when: "Current built-in skill for the deck's former /babysit PR workflow.",
+    when: "Built-in skill for Cursor's former /babysit PR workflow.",
   },
   {
     name: "automate",

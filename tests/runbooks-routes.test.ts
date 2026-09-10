@@ -59,15 +59,16 @@ describe("runbooks API", () => {
     await expect(response.json()).resolves.toEqual({ error: "Track not found" });
   });
 
-  it("returns 404 for the retired 201 track", async () => {
-    const response = await getRunbookTrack(request, trackParams("201"));
-
-    expect(response.status).toBe(404);
+  it("returns 404 for the retired 201 and advanced tracks", async () => {
+    for (const retired of ["201", "advanced"]) {
+      const response = await getRunbookTrack(request, trackParams(retired));
+      expect(response.status).toBe(404);
+    }
   });
 });
 
 describe("runbooks redirects", () => {
-  it("sends legacy workflow and analysis URLs to the 101 runbooks track", async () => {
+  it("sends legacy workflow, analysis, and retired-track URLs to the 101 runbooks track", async () => {
     const redirects = (await nextConfig.redirects?.()) ?? [];
 
     expect(redirects).toEqual(
@@ -76,6 +77,10 @@ describe("runbooks redirects", () => {
         { source: "/workflows/:slug", destination: "/runbooks/101", permanent: false },
         { source: "/analysis", destination: "/runbooks/101", permanent: false },
         { source: "/analysis/:path*", destination: "/runbooks/101", permanent: false },
+        { source: "/runbooks/201", destination: "/runbooks/101", permanent: false },
+        { source: "/runbooks/advanced", destination: "/runbooks/101", permanent: false },
+        { source: "/runbooks/commands", destination: "/runbooks/101", permanent: false },
+        { source: "/runbooks/commands/:slug", destination: "/runbooks/101", permanent: false },
       ]),
     );
   });
