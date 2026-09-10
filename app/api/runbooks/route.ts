@@ -8,7 +8,6 @@ export async function GET() {
       title: track.title,
       description: track.description,
       href: runbookTrackHref(track.id),
-      runbookSlugs: [...track.runbookSlugs],
       sections: track.sections.map((section) => ({
         id: section.id,
         title: section.title,

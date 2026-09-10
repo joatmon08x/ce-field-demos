@@ -5,11 +5,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/workflows", destination: "/runbooks/101", permanent: false },
-      {
-        source: "/workflows/:slug",
-        destination: "/runbooks/commands/:slug",
-        permanent: false,
-      },
+      { source: "/workflows/:slug", destination: "/runbooks/101", permanent: false },
       { source: "/analysis", destination: "/runbooks/101", permanent: false },
       { source: "/analysis/:path*", destination: "/runbooks/101", permanent: false },
     ];

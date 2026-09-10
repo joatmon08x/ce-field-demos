@@ -20,7 +20,7 @@ export const PROJECT_SKILLS = [
   {
     name: "choose-cursor-workflow",
     path: ".cursor/skills/choose-cursor-workflow/SKILL.md",
-    when: "Pick the 101, 201, or Advanced track, then choose the command from the shape of the work.",
+    when: "Walk the 101 track, then choose the mode, model, rule, or skill from the shape of the work.",
   },
   {
     name: "dispatch-subagents",

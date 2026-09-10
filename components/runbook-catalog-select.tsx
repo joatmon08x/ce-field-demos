@@ -9,6 +9,8 @@ export function RunbookCatalogSelect({
   tracks: readonly { id: string; title: string }[];
   trackId: string;
 }) {
+  if (tracks.length <= 1) return null;
+
   return (
     <div className="flex max-w-xs flex-col gap-1.5">
       <label htmlFor="runbook-catalog" className="text-xs font-medium text-foreground">

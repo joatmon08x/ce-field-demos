@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRunbook, getRunbookTrack, runbookSectionHref, runbookTrackHref } from "@/lib/runbooks/meta";
+import { getRunbookTrack, runbookSectionHref, runbookTrackHref } from "@/lib/runbooks/meta";
 
 export async function GET(
   _request: Request,
@@ -22,8 +22,5 @@ export async function GET(
       href: runbookSectionHref(selected.id, section.id),
       beats: section.beats,
     })),
-    runbooks: selected.runbookSlugs
-      .map(getRunbook)
-      .filter((runbook) => runbook !== undefined),
   });
 }
