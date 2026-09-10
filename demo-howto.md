@@ -1,8 +1,8 @@
-# Ledgerly demo howto
+# Demo howto
 
 Presenter run-of-show, not a course. There are two tracks, and every step stands on its own, so you can start anywhere. You still review each result before it ships.
 
-Ledgerly is a small, fictional demo app. It exists to give Cursor enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
+This repo is a small, fictional demo app. It exists to give Cursor enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable. The company on screen is Clinicly, SaaSly, or Packetly — chosen by the first prompt, not a UI picker.
 
 The pastes below match the copy-paste blocks on `/runbooks`. Deck and CLI cards show the full step text. Runbook command cards show the full `prompt` from `lib/runbooks/meta.ts`. The short `/command Read the … entry` lines are the slug-page demo prompts — the test requires them verbatim here.
 
@@ -54,6 +54,14 @@ Use these definitions when the audience is new:
 
 ## Before you start
 
+Presenter opener (no in-app picker):
+
+```text
+Start the Clinicly application
+```
+
+Also valid: `Start the SaaSly application` or `Start the Packetly application`. The `start-application` skill writes `lib/brand/active.ts` and reseeds.
+
 ```bash
 npm i
 npx prisma db seed
@@ -64,7 +72,7 @@ Open **http://localhost:43173**.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 31 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 35 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, the seed, and the MCP store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -82,7 +90,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 
 ## Through-line
 
-> Ledgerly is the demo surface, not the lesson. It has one known error that connects the seed, application code, UI, and test. The 201 track uses that surface to explain Cursor concepts. The Advanced track gives Cursor more ownership over the same bounded work. I still review what ships.
+> The billing demo is the surface, not the lesson. It has one known error that connects the seed, application code, UI, and test. The 201 track uses that surface to explain Cursor concepts. The Advanced track gives Cursor more ownership over the same bounded work. I still review what ships.
 
 ---
 
@@ -96,7 +104,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 
 **Say — novice version:**
 
-> Ledgerly is a fictional billing app we use for this demo. It contains one known error on purpose.
+> This is a fictional billing app we use for this demo. It contains one known error on purpose.
 >
 > This invoice costs $249, but the dispute claims $400. The current v2 API caps the suggested credit at $249. The page still calls deprecated v1, which returns the $400 claim. That is why the page shows a red warning and one test is red.
 >
@@ -130,7 +138,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 **Paste** (same block as the Getting oriented card):
 
 ```text
-What are Ledgerly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
+What are SaaSly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
 
 Explain the dispute flow end to end. What is intentionally unfinished? Cite the resolve helper, the resolve API route, and the dispute page. Do not edit any files.
 ```
@@ -261,12 +269,12 @@ Open .cursor/rules/ledgerly.mdc, .cursor/skills/choose-cursor-workflow/SKILL.md,
 
 **Say — novice version:**
 
-> The model picker has named models and, on Teams and Enterprise, Auto. Auto is Cursor Router. Not every request needs a frontier model, so the router classifies the task and sends simple work to faster, cheaper models and harder work to more capable ones. Under Auto you Optimize For Cost, Balance, or Intelligence — Cost favors token spend, Balance mixes quality and cost, Intelligence uses stronger models for harder tasks at less than pinning one frontier model all day. Benefits: you do not memorize which model to use; cost follows the work; you can still pin a model when the split is already known. For this Ledgerly /multitask I would pin a high-reasoning parent to plan and coordinate, and a faster model on each worker that has one route and one check. If Auto is missing, say so — Router may be off for this org — and pick named models instead.
+> The model picker has named models and, on Teams and Enterprise, Auto. Auto is Cursor Router. Not every request needs a frontier model, so the router classifies the task and sends simple work to faster, cheaper models and harder work to more capable ones. Under Auto you Optimize For Cost, Balance, or Intelligence — Cost favors token spend, Balance mixes quality and cost, Intelligence uses stronger models for harder tasks at less than pinning one frontier model all day. Benefits: you do not memorize which model to use; cost follows the work; you can still pin a model when the split is already known. For this /multitask I would pin a high-reasoning parent to plan and coordinate, and a faster model on each worker that has one route and one check. If Auto is missing, say so — Router may be off for this org — and pick named models instead.
 
 **Paste** (same block as the Model selection card):
 
 ```text
-Look at the models available in this Cursor session (the chat picker, and cursor.com/docs/models or cursor.com/docs/cursor-router if you need current labels). Then recommend a concrete split for Ledgerly /multitask:
+Look at the models available in this Cursor session (the chat picker, and cursor.com/docs/models or cursor.com/docs/cursor-router if you need current labels). Then recommend a concrete split for SaaSly /multitask:
 
 1. Parent — one current high-reasoning / thinking model from the picker. It has to decompose four API surfaces, write a dispatch that names files + helper + constraints, and launch ledgerly-reviewer after the diffs.
 2. Each api-instrumenter worker — one current faster focused model from the picker. One named route, a small helper under lib/, no catalog, seed, suggested-credit client, or intentional test edits.
@@ -294,7 +302,7 @@ Name the exact picker labels you would select today and why each fits. If a labe
 **Paste** (same block as the Cloud Agents card):
 
 ```text
-Use the hand-to-cloud-agent skill. Explain how to hand this Ledgerly repo to a Cloud Agent. Cite .cursor/environment.json (install, seed, port 43173). Draft the exact objective you would send: /autopilot if there is an open PR, otherwise a bounded /goal or /orchestrate that switches the suggested-credit client from v1 to v2, preserves both routes, finishes dispute resolution, and gets npm test green. Do not launch a Cloud Agent unless I confirm the environment is ready. Do not invent a fourth price.
+Use the hand-to-cloud-agent skill. Explain how to hand this SaaSly repo to a Cloud Agent. Cite .cursor/environment.json (install, seed, port 43173). Draft the exact objective you would send: /autopilot if there is an open PR, otherwise a bounded /goal or /orchestrate that switches the suggested-credit client from v1 to v2, preserves both routes, finishes dispute resolution, and gets npm test green. Do not launch a Cloud Agent unless I confirm the environment is ready. Do not invent a fourth price.
 ```
 
 **Do:** Review the draft. Launch only if you confirm the environment is ready.
@@ -321,7 +329,7 @@ Use the hand-to-cloud-agent skill. Explain how to hand this Ledgerly repo to a C
 **Paste** (same block as the Automations card):
 
 ```text
-/automate Create a PR-triggered Cursor Automation that reviews Ledgerly guardrails and leaves an evidence-backed comment. Review only; do not modify code, tests, seed, or CI. Use the automate skill. Draft only — do not save or enable the automation. Do not add a GitHub Actions file. If the Automations editor is not available, say so and stop.
+/automate Create a PR-triggered Cursor Automation that reviews SaaSly guardrails and leaves an evidence-backed comment. Review only; do not modify code, tests, seed, or CI. Use the automate skill. Draft only — do not save or enable the automation. Do not add a GitHub Actions file. If the Automations editor is not available, say so and stop.
 ```
 
 **Do:** Review the draft. Open the Automations editor if it appears. Do not save or enable unless that is part of the live demo. If the editor is missing, stop.
@@ -530,12 +538,12 @@ Need `bun` on PATH and a `CURSOR_API_KEY` (personal key or team service account,
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 31 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 35 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If `/goal` or `/orchestrate` completed dispute resolution:** `npm test` should be fully green. Load dsp_1043 and confirm suggested credit is **$249** from v2, both routes remain, and Accept / Decline work.
 
-**If no client-migration step ran:** `npm test` should remain **1 failed / 31 passed**. That is shipped state, not failed setup. Do not let the agent edit the intentional test.
+**If no client-migration step ran:** `npm test` should remain **1 failed / 35 passed**. That is shipped state, not failed setup. Do not let the agent edit the intentional test.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -561,7 +569,7 @@ npm test
 
 Only run `git checkout -- .` if you mean to drop **all** local changes.
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 31 passed**.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 35 passed**.
 
 ---
 

@@ -1,4 +1,7 @@
 import type { DemoSection } from "@/lib/runbooks/types";
+import { getActiveBrand } from "@/lib/brand";
+
+const examples = getActiveBrand().runbookExamples;
 
 export const RUNBOOK_SECTIONS_101 = [
   {
@@ -18,8 +21,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Plan",
         promptType: "adaptable",
         detail: "Let’s plan out the feature. In Plan mode, the agent maps its approach.",
-        example:
-          "/plan I want a new feature to update the customer email in the invoice detail customer card. Don’t implement email validation.",
+        example: examples.plan,
       },
       {
         id: "agent-build",
@@ -41,14 +43,14 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Change to a fast model",
         promptType: "adaptable",
         detail: "Let’s change the model to something faster. Change model from Auto to Fast.",
-        example: "/model.",
+        example: examples["model-fast"],
       },
       {
         id: "fix",
         title: "Plan to fix the bug",
         promptType: "adaptable",
         detail: "Show shift-tab to toggle between modes.",
-        example: "/plan draft a plan to fix the bug",
+        example: examples.fix,
       },
     ],
   },
@@ -75,8 +77,7 @@ export const RUNBOOK_SECTIONS_101 = [
         promptType: "adaptable",
         detail:
           "Update the email feature; security recommended redacting a portion of the customer email.",
-        example:
-          "Redact the customer email in the UI. The first two characters and domain are plaintext.",
+        example: examples["start-and-stop"],
       },
       {
         id: "stop",
@@ -89,8 +90,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Interrupt and steer",
         promptType: "adaptable",
         detail: "Steer the prompt. Show how the agent pauses for your approval. Continue each file.",
-        example:
-          "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
+        example: examples["interrupt-steer"],
       },
       {
         id: "diffs",
@@ -110,16 +110,14 @@ export const RUNBOOK_SECTIONS_101 = [
         promptType: "adaptable",
         detail:
           "Let’s create a user rule so the agent doesn’t do it again. Show the user rule in the UI and how it can be changed.",
-        example:
-          "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
+        example: examples.rule,
       },
       {
         id: "test-rule",
         title: "Test the rule",
         promptType: "adaptable",
         detail: "Check the rule is applied.",
-        example:
-          "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
+        example: examples["test-rule"],
       },
       {
         id: "skill",
@@ -127,15 +125,14 @@ export const RUNBOOK_SECTIONS_101 = [
         promptType: "adaptable",
         detail:
           "Let’s create a user skill that tells me the domain breakdown and available APIs. Show the user skill in the UI and how it can be changed.",
-        example:
-          "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
+        example: examples.skill,
       },
       {
         id: "test-skill",
         title: "Test the skill",
         promptType: "adaptable",
         detail: "Use the skill (no file edits).",
-        example: "Use domain-driven design on this application. Do not edit files.",
+        example: examples["test-skill"],
       },
       {
         id: "canvas",
@@ -150,8 +147,7 @@ export const RUNBOOK_SECTIONS_101 = [
         promptType: "adaptable",
         detail:
           "Ask Cursor to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Cursor. Go to Customize > MCP > Figma.",
-        example:
-          "Create three slides in Figma Slides outlining how I used Cursor to develop a new feature. I want to use this as part of my demo showcase.",
+        example: examples.mcp,
       },
     ],
   },

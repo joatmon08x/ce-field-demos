@@ -2,7 +2,7 @@
   "name": "ce-field-demos",
   "version": "0.1.0",
   "private": true,
-  "description": "Ledgerly — fictional B2B billing and collections ops SaaS for Cursor demos.",
+  "description": "Fictional B2B billing ops demo. Verticals: Clinicly, SaaSly, Packetly.",
   "repository": {
     "type": "git",
     "url": "https://github.com/joatmon08x/ce-field-demos.git"

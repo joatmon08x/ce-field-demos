@@ -6,6 +6,7 @@ import { InvoiceTable } from "@/components/invoice-table";
 import { KpiCard } from "@/components/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboard } from "@/lib/data";
+import { getActiveBrand } from "@/lib/brand";
 import { formatUsd } from "@/lib/money";
 
 export const metadata = {
@@ -25,7 +26,7 @@ export default async function DashboardPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Fieldnote Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.
+            {getActiveBrand().copy.dashboardSubtitle}
           </p>
         </div>
         <p className="inline-flex items-center gap-2 self-start rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium shadow-xs">

@@ -1,4 +1,7 @@
+import { getActiveBrand } from "@/lib/brand";
 import type { RunbookMeta } from "@/lib/runbooks/types";
+
+const productName = getActiveBrand().productName;
 
 export const RUNBOOKS: RunbookMeta[] = [
   {
@@ -12,7 +15,7 @@ export const RUNBOOKS: RunbookMeta[] = [
     tracks: ["201", "advanced"],
     demoPrompt:
       "/multitask Read the multitask entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.",
-    prompt: `/multitask Add the same small request-log helper to Ledgerly's four independent API surfaces: invoices, disputes, Nudge, and Pulse.
+    prompt: `/multitask Add the same small request-log helper to ${productName}'s four independent API surfaces: invoices, disputes, Nudge, and Pulse.
 
 Use the dispatch-subagents skill. Launch four api-instrumenter subagents in one parallel turn — one route each:
 - app/api/invoices/route.ts and app/api/invoices/[id]/route.ts
@@ -37,7 +40,7 @@ A shared helper may live under lib/. Each worker starts with clean context; the 
       "/loop Read the loop entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.",
     prompt: `/loop 10s Start the invoice backfill if it is idle (POST http://127.0.0.1:43173/api/demo/job), then GET that URL until status is complete, or until I stop the loop.
 
-Do not add GitHub Actions. Do not write to the Ledgerly database. I still review the result.`,
+Do not add GitHub Actions. Do not write to the ${productName} database. I still review the result.`,
   },
   {
     slug: "autopilot",
@@ -58,7 +61,7 @@ If this branch has no open pull request, stop and say so. Do not open a PR or me
 
 Refresh the live PR state before every pass. Work in this order: merge conflicts, active unresolved review comments (including Bugbot), then failing required checks. Validate each finding before acting. Fix only issues caused by this PR and keep every change inside its scope.
 
-Never change CI checks, workflows, the Ledgerly catalog, prisma/seed.ts, prisma/extra-accounts.ts, or tests/suggested-credit-api.test.ts to get green. Preserve both suggested-credit API routes. Stop and ask if branch intent is ambiguous or a billing, security, privacy, migration, or concurrency comment needs judgment. Report ready only when the PR is mergeable, required checks are green, and every active comment is triaged. Do not merge or enable auto-merge; I still review and merge.`,
+Never change CI checks, workflows, the ${productName} catalog, prisma/seed.ts, prisma/extra-accounts.ts, or tests/suggested-credit-api.test.ts to get green. Preserve both suggested-credit API routes. Stop and ask if branch intent is ambiguous or a billing, security, privacy, migration, or concurrency comment needs judgment. Report ready only when the PR is mergeable, required checks are green, and every active comment is triaged. Do not merge or enable auto-merge; I still review and merge.`,
   },
   {
     slug: "goal",
@@ -71,7 +74,7 @@ Never change CI checks, workflows, the Ledgerly catalog, prisma/seed.ts, prisma/
     tracks: ["advanced"],
     demoPrompt:
       "/goal Read the goal entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.",
-    prompt: `/goal Make Ledgerly demo-complete for dispute resolution.
+    prompt: `/goal Make ${productName} demo-complete for dispute resolution.
 
 1. Diagnose why the dispute page still uses the deprecated suggested-credit API, then switch lib/disputes/suggested-credit-api.ts from v1 to v2. Preserve both routes.
 2. Implement resolveDispute in lib/disputes/resolve.ts.
@@ -93,7 +96,7 @@ Do not change either suggested-credit route, prisma/seed.ts, prisma/extra-accoun
     setup: "Install the /orchestrate plugin; put bun on PATH and provide a CURSOR_API_KEY.",
     demoPrompt:
       "/orchestrate Read the orchestrate entry in RUNBOOKS from lib/runbooks/meta.ts and run its prompt exactly.",
-    prompt: `/orchestrate Make Ledgerly demo-complete for dispute resolution. This is a plugin workflow — you need bun on PATH and a CURSOR_API_KEY (personal key or team service account, not a team admin key). Slack is optional.
+    prompt: `/orchestrate Make ${productName} demo-complete for dispute resolution. This is a plugin workflow — you need bun on PATH and a CURSOR_API_KEY (personal key or team service account, not a team admin key). Slack is optional.
 
 Decompose the work. The root planner writes no code. Workers are isolated; every handoff points up. Staff at least:
 

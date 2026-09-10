@@ -8,13 +8,13 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Ledgerly
+# Vertical billing demo
 
-Fictional billing ops SaaS. Fieldnote Workspace. Operator Avery Quinn. No auth. No real companies.
+Fictional billing ops. Active company is one of Clinicly, SaaSly, or Packetly (`lib/brand/active.ts`). Operator Avery Quinn. No auth. No real companies.
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
-This is a **Cursor demo app** with jumpable 201 and Advanced tracks. Runbook prompts live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills.
+This is a **Cursor demo app** with jumpable 201 and Advanced tracks. The presenter’s first prompt is `Start the Clinicly application` (or SaaSly / Packetly) — there is no in-app picker. Runbook prompts live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills.
 
 ## Cursor Cloud specific instructions
 
@@ -35,7 +35,7 @@ SQLite file is `prisma/dev.db` (gitignored). Schema URL is hardcoded in `prisma/
 npx prisma db seed
 ```
 
-The seed script runs `prisma db push` first, then reloads deterministic Fieldnote data. Safe to re-run. Demo clock is **2026-08-23**.
+The seed script runs `prisma db push` first, then reloads deterministic data for the active brand. Safe to re-run. Demo clock is **2026-08-23**.
 
 ### Dev server
 
@@ -55,7 +55,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 31 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249.
+Shipped suite on a clean tree: **1 failed / 35 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249.
 
 ### Multi-file stub (leave it unless asked)
 
@@ -68,7 +68,7 @@ Incomplete on purpose:
 ### Product constraints
 
 - Prices only from `lib/plans.ts`.
-- Customer names only from `prisma/seed.ts` and `prisma/extra-accounts.ts`.
+- Customer names only from the active brand in `lib/brand/` (`prisma/seed.ts` / `prisma/extra-accounts.ts`).
 - Comments in code must not cite Slack, GitHub, or Jira URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
@@ -81,6 +81,7 @@ Incomplete on purpose:
 | `.cursor/agents/ledgerly-reviewer.md` | Verifier after code changes |
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
+| `.cursor/skills/start-application/` | Presenter opener — activate Clinicly, SaaSly, or Packetly. No UI picker. |
 | `.cursor/skills/choose-cursor-workflow/` | Pick a track, then `/multitask` `/loop` `/autopilot` `/goal` `/orchestrate` |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |

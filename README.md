@@ -1,8 +1,22 @@
-# Ledgerly
+# Vertical billing demo
 
-Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
+Fictional B2B billing ops. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for two jumpable Cursor demos: a deck-aligned **201** track and a deeper **Advanced** track. Copy-paste prompts live on `/runbooks`; the presenter run-of-show and speaker notes are `demo-howto.md`.
+There is **no company picker in the UI**. After clone, the presenter’s first prompt selects the vertical:
+
+```text
+Start the Clinicly application
+```
+
+Profiles (each name ends in **ly**):
+
+| Prompt | Industry |
+| --- | --- |
+| `Start the Clinicly application` | Healthcare provider |
+| `Start the SaaSly application` | SaaS |
+| `Start the Packetly application` | Network hardware (routers and switches) |
+
+The `start-application` skill sets `lib/brand/active.ts` and reseeds. Default clone is **SaaSly**. Copy-paste runbook prompts live on `/runbooks` and interpolate the active name. The presenter run-of-show is `demo-howto.md`.
 
 ## Run
 
@@ -16,7 +30,7 @@ npm run dev
 
 Open **http://localhost:43173**.
 
-`npm test` is **1 failed / 31 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 35 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
@@ -35,7 +49,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 Ask:
 
 ```text
-What are Ledgerly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
+What are SaaSly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
 
 Explain the dispute flow end to end. What is intentionally unfinished? Cite the resolve helper, the resolve API route, and the dispute page. Do not edit any files.
 ```
@@ -77,7 +91,7 @@ Restyle the four KPI cards on this dashboard using only the existing design toke
 7. `/multitask`, `/loop`, `/autopilot` (the current name for the deck's `/babysit`), and `/orchestrate`
 8. Trust through tests, app behavior, verifiers, and human review
 
-**Advanced** goes deeper on the Ledgerly scenarios:
+**Advanced** goes deeper on the same billing scenarios:
 
 - Cursor CLI primer (`agent --trust --mode=ask` on `dsp_1043`)
 - `/goal` holds dispute resolution as a durable objective
@@ -103,7 +117,7 @@ Every beat is independent. Open `/runbooks`, copy a card, and paste it in Cursor
 **`/multitask`**
 
 ```text
-/multitask Add the same small request-log helper to Ledgerly's four independent API surfaces: invoices, disputes, Nudge, and Pulse.
+/multitask Add the same small request-log helper to SaaSly's four independent API surfaces: invoices, disputes, Nudge, and Pulse.
 
 Use the dispatch-subagents skill. Launch four api-instrumenter subagents in one parallel turn — one route each:
 - app/api/invoices/route.ts and app/api/invoices/[id]/route.ts
@@ -119,7 +133,7 @@ A shared helper may live under lib/. Each worker starts with clean context; the 
 ```text
 /loop 10s Start the invoice backfill if it is idle (POST http://127.0.0.1:43173/api/demo/job), then GET that URL until status is complete, or until I stop the loop.
 
-Do not add GitHub Actions. Do not write to the Ledgerly database. I still review the result.
+Do not add GitHub Actions. Do not write to the SaaSly database. I still review the result.
 ```
 
 **`/autopilot`**
@@ -133,13 +147,13 @@ If this branch has no open pull request, stop and say so. Do not open a PR or me
 
 Refresh the live PR state before every pass. Work in this order: merge conflicts, active unresolved review comments (including Bugbot), then failing required checks. Validate each finding before acting. Fix only issues caused by this PR and keep every change inside its scope.
 
-Never change CI checks, workflows, the Ledgerly catalog, prisma/seed.ts, prisma/extra-accounts.ts, or tests/suggested-credit-api.test.ts to get green. Preserve both suggested-credit API routes. Stop and ask if branch intent is ambiguous or a billing, security, privacy, migration, or concurrency comment needs judgment. Report ready only when the PR is mergeable, required checks are green, and every active comment is triaged. Do not merge or enable auto-merge; I still review and merge.
+Never change CI checks, workflows, the SaaSly catalog, prisma/seed.ts, prisma/extra-accounts.ts, or tests/suggested-credit-api.test.ts to get green. Preserve both suggested-credit API routes. Stop and ask if branch intent is ambiguous or a billing, security, privacy, migration, or concurrency comment needs judgment. Report ready only when the PR is mergeable, required checks are green, and every active comment is triaged. Do not merge or enable auto-merge; I still review and merge.
 ```
 
 **`/goal`**
 
 ```text
-/goal Make Ledgerly demo-complete for dispute resolution.
+/goal Make SaaSly demo-complete for dispute resolution.
 
 1. Diagnose why the dispute page still uses the deprecated suggested-credit API, then switch lib/disputes/suggested-credit-api.ts from v1 to v2. Preserve both routes.
 2. Implement resolveDispute in lib/disputes/resolve.ts.
@@ -153,7 +167,7 @@ Do not change either suggested-credit route, prisma/seed.ts, prisma/extra-accoun
 **`/orchestrate`**
 
 ```text
-/orchestrate Make Ledgerly demo-complete for dispute resolution. This is a plugin workflow — you need bun on PATH and a CURSOR_API_KEY (personal key or team service account, not a team admin key). Slack is optional.
+/orchestrate Make SaaSly demo-complete for dispute resolution. This is a plugin workflow — you need bun on PATH and a CURSOR_API_KEY (personal key or team service account, not a team admin key). Slack is optional.
 
 Decompose the work. The root planner writes no code. Workers are isolated; every handoff points up. Staff at least:
 
@@ -169,6 +183,7 @@ Launch the dispute-verifier subagent as the verifier: it checks tests/suggested-
 | `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
 | `api-instrumenter` | One API route per `/multitask` worker. |
 | `dispute-verifier` | `/goal` / `/orchestrate` finish line. No product code. |
+| `start-application` | Presenter opener. Activate Clinicly, SaaSly, or Packetly. No UI picker. |
 | `choose-cursor-workflow` | Pick the command from the table above. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Cloud `/goal`, `/autopilot`, or `/orchestrate`. |
@@ -177,5 +192,5 @@ Launch the dispute-verifier subagent as the verifier: it checks tests/suggested-
 
 ## Notes
 
-- Prices and customer names only from `lib/plans.ts`, `prisma/seed.ts`, and `prisma/extra-accounts.ts`.
+- Prices from `lib/plans.ts` only. Customer names from the active profile in `lib/brand/` (seeded via `prisma/seed.ts`).
 - Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`.

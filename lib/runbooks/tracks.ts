@@ -24,7 +24,7 @@ export const RUNBOOK_TRACKS = [
     id: "advanced" as const,
     title: "Advanced",
     description:
-      "Deeper Ledgerly scenarios: Cursor CLI primer, durable goals, parallel workers, scheduled checking, PR supervision, planner trees, and verifier evidence.",
+      "Deeper vertical scenarios: Cursor CLI primer, durable goals, parallel workers, scheduled checking, PR supervision, planner trees, and verifier evidence.",
     sections: RUNBOOK_SECTIONS_ADVANCED,
     runbookSlugs: ["goal", "multitask", "loop", "autopilot", "orchestrate"] as const,
   },

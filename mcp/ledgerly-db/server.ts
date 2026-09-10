@@ -1,5 +1,5 @@
 /**
- * Local stdio MCP for Ledgerly's Prisma SQLite book.
+ * Local stdio MCP for the demo Prisma SQLite book.
  * Read-only — no writes, no seed edits, no catalog invention.
  */
 
@@ -39,7 +39,7 @@ export function createLedgerlyDbServer(): McpServer {
     "describe_schema",
     {
       description:
-        "Describe Ledgerly's Prisma models, statuses, and catalog price constraints. Call this before querying.",
+        "Describe the Prisma models, statuses, and catalog price constraints. Call this before querying.",
     },
     async () => textResult(describeSchema()),
   );
@@ -47,7 +47,7 @@ export function createLedgerlyDbServer(): McpServer {
   server.registerTool(
     "list_customers",
     {
-      description: "List Fieldnote customers from the seeded book (read-only).",
+      description: "List seeded customers from the book (read-only).",
       inputSchema: {
         nameContains: z.string().optional().describe("Case-sensitive substring match on customer name"),
         limit: z.number().int().min(1).max(50).optional().describe("Max rows (default 20)"),
