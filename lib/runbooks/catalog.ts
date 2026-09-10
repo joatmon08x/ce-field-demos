@@ -1,8 +1,6 @@
 import { getRunbookTrack } from "@/lib/runbooks/tracks";
 import type { DemoBeat, DemoTrack } from "@/lib/runbooks/types";
 
-export const RUNBOOK_COMMANDS_ANCHOR = "runbook-commands";
-
 export function runbookTrackHref(trackId: string): string {
   return `/runbooks/${trackId}`;
 }

@@ -15,11 +15,11 @@ Local `/loop` lives inside this session and dies when the laptop closes. A Cloud
 
 ## /goal in the cloud
 
-Use the `/goal` prompt from `lib/runbooks/meta.ts` verbatim. Scope the finish line so it is verifiable: the client selects v2, both routes remain, `npm test` is green, `dsp_1043` shows $249, and dispute resolution works. The agent judges when the objective is met; you review.
+Scope the finish line so it is verifiable: the client selects v2, both routes remain, `npm test` is green, `dsp_1043` shows $249, and dispute resolution works. The agent judges when the objective is met; you review.
 
 ## /autopilot
 
-The 201 deck calls this `/babysit`; the current built-in skill is `/autopilot`. It needs a real open PR. Refresh live PR state each pass, handle conflicts before comments before CI, stop on ambiguous intent, and leave the merge decision to the human.
+Cursor's `/babysit` PR workflow is now the `/autopilot` built-in skill. It needs a real open PR. Refresh live PR state each pass, handle conflicts before comments before CI, stop on ambiguous intent, and leave the merge decision to the human.
 
 ## /orchestrate
 

@@ -20,7 +20,7 @@ export const PROJECT_SKILLS = [
   {
     name: "choose-cursor-workflow",
     path: ".cursor/skills/choose-cursor-workflow/SKILL.md",
-    when: "Pick the 101, 201, or Advanced track, then choose the command from the shape of the work.",
+    when: "Walk the 101 track, then choose the mode, model, rule, or skill from the shape of the work.",
   },
   {
     name: "dispatch-subagents",
@@ -35,7 +35,7 @@ export const PROJECT_SKILLS = [
   {
     name: "autopilot",
     path: "~/.cursor/skills-cursor/autopilot/SKILL.md",
-    when: "Current built-in skill for the deck's former /babysit PR workflow.",
+    when: "Built-in skill for Cursor's former /babysit PR workflow.",
   },
   {
     name: "automate",

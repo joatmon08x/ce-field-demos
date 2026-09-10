@@ -14,7 +14,7 @@ Fictional billing ops SaaS. Fieldnote Workspace. Operator Avery Quinn. No auth. 
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
-This is a **Cursor demo app** with jumpable 201 and Advanced tracks. Runbook prompts live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills.
+This is a **Cursor demo app** with a single jumpable 101 track. Runbook beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks`; the presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. The deeper tracks were removed as not-ready — do not reintroduce them without a request.
 
 ## Cursor Cloud specific instructions
 
@@ -72,7 +72,7 @@ Incomplete on purpose:
 - Comments in code must not cite Slack, GitHub, or Jira URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
-- Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook prompts live in `lib/runbooks/meta.ts`.
+- Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
 
 ### Agents and skills
 
@@ -81,7 +81,7 @@ Incomplete on purpose:
 | `.cursor/agents/ledgerly-reviewer.md` | Verifier after code changes |
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
-| `.cursor/skills/choose-cursor-workflow/` | Pick a track, then `/multitask` `/loop` `/autopilot` `/goal` `/orchestrate` |
+| `.cursor/skills/choose-cursor-workflow/` | Walk the 101 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
 | `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. |
