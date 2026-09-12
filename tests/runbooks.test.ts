@@ -101,7 +101,7 @@ describe("runbook catalog", () => {
       "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
     );
     expect(beat("skill")?.detail).toBe(
-      "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the rule.",
+      "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the skill.",
     );
     expect(beat("skill")?.example).toBe(
       "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",

@@ -116,7 +116,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user skill",
         promptType: "adaptable",
         detail:
-          "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the rule.",
+          "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the skill.",
         example:
           "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
       },
