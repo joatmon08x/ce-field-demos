@@ -73,6 +73,7 @@ describe("runbook catalog", () => {
       "Change to a fast model for a small update. Change model from Auto to Fast.",
     );
     expect(beat("model-fast")?.example).toBe("/model.");
+    expect(beat("fix")?.detail).toBe("Use shift-tab to toggle between modes.");
     expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
