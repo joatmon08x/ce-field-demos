@@ -57,12 +57,21 @@ describe("runbook catalog", () => {
 
     const beat = (id: (typeof beats101)[number]["id"]) => beats101.find((entry) => entry.id === id);
 
+    expect(beat("ask")?.detail).toBe("Let’s learn more about the application with Ask mode.");
     expect(beat("ask")?.example).toBe("/ask Tell me what this application does in 3 sentences");
+    expect(beat("plan")?.detail).toBe("Map your approach to building a new feature in Plan mode.");
     expect(beat("plan")?.example).toBe(
       "/plan I want a new feature to update the customer email in the invoice detail customer card. Don’t implement email validation.",
     );
+    expect(beat("agent-build")?.detail).toBe(
+      "Build the feature in Agent mode. Build the plan locally. Check the feature in the UI.",
+    );
     expect(beat("agent-build")?.example).toBeUndefined();
+    expect(beat("debug")?.detail).toBe("Fix the bug using Debug mode.");
     expect(beat("debug")?.example).toBe("/debug the failing test");
+    expect(beat("model-fast")?.detail).toBe(
+      "Change to a fast model for a small update. Change model from Auto to Fast.",
+    );
     expect(beat("model-fast")?.example).toBe("/model.");
     expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
     expect(beat("allowlist")?.example).toBeUndefined();
@@ -80,12 +89,18 @@ describe("runbook catalog", () => {
       "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
     );
     expect(beat("diffs")?.example).toBeUndefined();
+    expect(beat("rule")?.detail).toBe(
+      "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Skills to view the rule.",
+    );
     expect(beat("rule")?.example).toBe(
       "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
     );
     expect(beat("test-rule")?.detail).toBe("");
     expect(beat("test-rule")?.example).toBe(
       "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
+    );
+    expect(beat("skill")?.detail).toBe(
+      "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the rule.",
     );
     expect(beat("skill")?.example).toBe(
       "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",

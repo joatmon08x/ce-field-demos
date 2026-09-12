@@ -9,15 +9,14 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "ask",
         title: "Ask",
         promptType: "reusable",
-        detail:
-          "Let’s ask questions about the application. In Ask mode, the agent understands the files. It is read-only.",
+        detail: "Let’s learn more about the application with Ask mode.",
         example: "/ask Tell me what this application does in 3 sentences",
       },
       {
         id: "plan",
         title: "Plan",
         promptType: "adaptable",
-        detail: "Let’s plan out the feature. In Plan mode, the agent maps its approach.",
+        detail: "Map your approach to building a new feature in Plan mode.",
         example:
           "/plan I want a new feature to update the customer email in the invoice detail customer card. Don’t implement email validation.",
       },
@@ -25,22 +24,20 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "agent-build",
         title: "Build in Agent mode",
         promptType: "none",
-        detail:
-          "Agent mode is the default. It makes the change. Build the plan locally. Check the feature in the UI.",
+        detail: "Build the feature in Agent mode. Build the plan locally. Check the feature in the UI.",
       },
       {
         id: "debug",
         title: "Debug",
         promptType: "reusable",
-        detail:
-          "Let’s try to fix it using Debug mode. In Debug mode, you verify the change and investigate and fix any issues.",
+        detail: "Fix the bug using Debug mode.",
         example: "/debug the failing test",
       },
       {
         id: "model-fast",
         title: "Change to a fast model",
         promptType: "adaptable",
-        detail: "Let’s change the model to something faster. Change model from Auto to Fast.",
+        detail: "Change to a fast model for a small update. Change model from Auto to Fast.",
         example: "/model.",
       },
       {
@@ -102,7 +99,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user rule",
         promptType: "adaptable",
         detail:
-          "Let’s create a user rule so the agent doesn’t do it again. Show the user rule in the UI and how it can be changed.",
+          "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Skills to view the rule.",
         example:
           "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
       },
@@ -119,7 +116,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user skill",
         promptType: "adaptable",
         detail:
-          "Let’s create a user skill that tells me the domain breakdown and available APIs. Show the user skill in the UI and how it can be changed.",
+          "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the rule.",
         example:
           "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
       },
