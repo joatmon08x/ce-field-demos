@@ -90,7 +90,7 @@ describe("runbook catalog", () => {
     );
     expect(beat("diffs")?.example).toBeUndefined();
     expect(beat("rule")?.detail).toBe(
-      "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Skills to view the rule.",
+      "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Rules to view the rule.",
     );
     expect(beat("rule")?.example).toBe(
       "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",

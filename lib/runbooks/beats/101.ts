@@ -99,7 +99,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user rule",
         promptType: "adaptable",
         detail:
-          "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Skills to view the rule.",
+          "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Rules to view the rule.",
         example:
           "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
       },
