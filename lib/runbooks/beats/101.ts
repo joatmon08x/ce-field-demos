@@ -44,7 +44,7 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "fix",
         title: "Plan to fix the bug",
         promptType: "adaptable",
-        detail: "Show shift-tab to toggle between modes.",
+        detail: "Use shift-tab to toggle between modes.",
         example: "/plan draft a plan to fix the bug",
       },
     ],
