@@ -3,7 +3,7 @@ import type { DemoSection } from "@/lib/runbooks/types";
 export const RUNBOOK_SECTIONS_101 = [
   {
     id: "first-prompt",
-    title: "How do I write my first prompt?",
+    title: "What is Cursor?",
     beats: [
       {
         id: "ask",
@@ -54,20 +54,14 @@ export const RUNBOOK_SECTIONS_101 = [
   },
   {
     id: "work-with-agent",
-    title: "How do I work with an AI agent?",
+    title: "How do I work with an agent?",
     beats: [
       {
         id: "allowlist",
         title: "Run Mode Allowlist",
         promptType: "none",
-        detail: "Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
-      },
-      {
-        id: "model-deep",
-        title: "Change to a deep / intelligent model",
-        promptType: "reusable",
-        detail: "Change model to intelligent model.",
-        example: "/model",
+        detail:
+          "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Cursor can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
       },
       {
         id: "start-and-stop",

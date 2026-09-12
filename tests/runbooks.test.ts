@@ -32,7 +32,7 @@ describe("runbook catalog", () => {
     expect(skill).toContain(track101?.description ?? "");
 
     expect(runbookBeatSequence("101")).toBe(
-      "Ask → Plan → Build in Agent mode → Debug → Change to a fast model → Plan to fix the bug → Run Mode Allowlist → Change to a deep / intelligent model → Redact (partial) → Stop the prompt → Interrupt and steer → Review diffs → Create a user rule → Test the rule → Create a user skill → Test the skill → Canvas → MCP / Figma",
+      "Ask → Plan → Build in Agent mode → Debug → Change to a fast model → Plan to fix the bug → Run Mode Allowlist → Redact (partial) → Stop the prompt → Interrupt and steer → Review diffs → Create a user rule → Test the rule → Create a user skill → Test the skill → Canvas → MCP / Figma",
     );
 
     expect(beats101.map((beat) => beat.id)).toEqual([
@@ -43,7 +43,6 @@ describe("runbook catalog", () => {
       "model-fast",
       "fix",
       "allowlist",
-      "model-deep",
       "start-and-stop",
       "stop",
       "interrupt-steer",
@@ -68,9 +67,8 @@ describe("runbook catalog", () => {
     expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
-      "Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
+      "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Cursor can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
     );
-    expect(beat("model-deep")?.example).toBe("/model");
     expect(beat("start-and-stop")?.title).toBe("Redact (partial)");
     expect(beat("start-and-stop")?.detail).toBe("");
     expect(beat("start-and-stop")?.example).toBe(
@@ -105,8 +103,8 @@ describe("runbook catalog", () => {
     expect(beat("plan")?.promptType).toBe("adaptable");
     expect(beat("agent-build")?.promptType).toBe("none");
     expect(RUNBOOK_SECTIONS_101.map((section) => section.title)).toEqual([
-      "How do I write my first prompt?",
-      "How do I work with an AI agent?",
+      "What is Cursor?",
+      "How do I work with an agent?",
       "How do I govern my agent?",
     ]);
     expect(RUNBOOK_SECTIONS_101.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(

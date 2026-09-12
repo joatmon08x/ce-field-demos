@@ -10,8 +10,8 @@ The pastes below match the copy-paste blocks on `/runbooks/101`. Each beat is in
 
 The 101 track has three sections. Open `/runbooks/101` and copy a card for any beat.
 
-1. **How do I write my first prompt?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), model choice
-2. **How do I work with an AI agent?** — allowlist, redact, stop, interrupt and steer, review diffs
+1. **What is Cursor?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), model choice
+2. **How do I work with an agent?** — allowlist, redact, stop, interrupt and steer, review diffs
 3. **How do I govern my agent?** — [create a rule](#create-a-rule), create a skill, [Canvas](#canvas), [MCP / Figma](#mcp--figma)
 
 ---

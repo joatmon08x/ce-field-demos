@@ -15,8 +15,8 @@ The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/
 
 ## Sections and beats
 
-1. **How do I write my first prompt?** — Ask, Plan, Build in Agent mode, Debug, change to a fast model, plan to fix the bug.
-2. **How do I work with an AI agent?** — Run Mode allowlist, change to a deep model, redact, stop, interrupt and steer, review diffs.
+1. **What is Cursor?** — Ask, Plan, Build in Agent mode, Debug, change to a fast model, plan to fix the bug.
+2. **How do I work with an agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs.
 3. **How do I govern my agent?** — create a user rule, test the rule, create a user skill, test the skill, Canvas, MCP / Figma.
 
 ## Choose the mode

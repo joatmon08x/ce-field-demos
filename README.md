@@ -68,8 +68,8 @@ Restyle the four KPI cards on this dashboard using only the existing design toke
 
 Open `/runbooks`, copy a card, and paste it in Cursor. You still review the result.
 
-1. **How do I write my first prompt?** — Ask, Plan, Build in Agent mode, Debug, and model choice.
-2. **How do I work with an AI agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs.
+1. **What is Cursor?** — Ask, Plan, Build in Agent mode, Debug, and model choice.
+2. **How do I work with an agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs.
 3. **How do I govern my agent?** — create and test a rule, create and test a skill, Canvas, MCP / Figma.
 
 ## Agents and skills

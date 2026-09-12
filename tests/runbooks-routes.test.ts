@@ -30,8 +30,8 @@ describe("runbooks API", () => {
     }
 
     expect(body.tracks[0].sections.map((section: { title: string }) => section.title)).toEqual([
-      "How do I write my first prompt?",
-      "How do I work with an AI agent?",
+      "What is Cursor?",
+      "How do I work with an agent?",
       "How do I govern my agent?",
     ]);
   });
