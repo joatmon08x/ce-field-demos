@@ -21,7 +21,7 @@ Parse with `parseStartPrompt` in `lib/brand/index.ts`. If the name is missing or
 
 ## Steps
 
-1. Set `ACTIVE_BRAND_ID` in `lib/brand/active.ts` to the matching id. That is the only switch — there is no dropdown to add.
+1. Set only `ACTIVE_BRAND_ID` in `lib/brand/active.ts` to the matching literal id (for example, `"routerly"`). Never edit `SHIPPED_DEFAULT_BRAND_ID`; it stays `"saasly"` so reset can restore the shipped default. There is no dropdown to add.
 2. Do not change catalog prices, invoice/dispute ids, API routes, `tests/suggested-credit-api.test.ts`, or the resolve stub.
 3. Run `npx prisma db seed` so customer names and memos match the profile.
 4. Confirm `npm run dev` is on **43173**. Ask the user to refresh the browser.
