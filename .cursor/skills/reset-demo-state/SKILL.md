@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded book for the active brand, dev server on 43173, `npm test` showing exactly **1 failed / 36 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
+Goal state: SaaSly is the active default with its seeded book, the dev server is on 43173, and `npm test` shows exactly **1 failed / 36 passed**. There are no leftover personal rules from `/create-rule`, Canvas files from the 101 beat, or Figma Slides from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
 
 ## Checklist (run what applies)
 
@@ -13,6 +13,7 @@ Goal state: seeded book for the active brand, dev server on 43173, `npm test` sh
 
 ```bash
 git status
+git checkout -- lib/brand/active.ts                    # restore tracked SaaSly default
 git checkout -- lib/disputes/suggested-credit-api.ts   # shipped client selects v1
 rm -f .cursor/rules/suggested-credit-api-v2.mdc       # live /create-rule beat only
 git checkout -- .                        # only if the user agrees to drop ALL local changes
@@ -67,6 +68,7 @@ Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip
 5. **Database looks wrong / empty dashboard**
 
 ```bash
+git checkout -- lib/brand/active.ts
 npx prisma db seed        # idempotent: pushes schema + reloads the active brand
 # nuclear option if the file is corrupt:
 npm run db:reset

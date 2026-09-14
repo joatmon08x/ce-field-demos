@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ACTIVE_BRAND_ID,
   BRAND_IDS,
   BRAND_PROFILES,
   getActiveBrand,
@@ -10,7 +11,8 @@ import { PLAN_PRICE_CENTS } from "@/lib/plans";
 describe("vertical brands", () => {
   it("ships exactly three ly companies and a code-only switch", () => {
     expect(BRAND_IDS).toEqual(["medly", "saasly", "routerly"]);
-    expect(getActiveBrand().id).toBe("saasly");
+    expect(BRAND_IDS).toContain(ACTIVE_BRAND_ID);
+    expect(getActiveBrand()).toBe(BRAND_PROFILES[ACTIVE_BRAND_ID]);
     expect(getActiveBrand().productName.endsWith("ly")).toBe(true);
   });
 

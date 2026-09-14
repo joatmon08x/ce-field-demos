@@ -7,9 +7,11 @@ import {
   runbookBeatSequence,
   runbookBeats,
 } from "@/lib/runbooks/meta";
+import { getActiveBrand } from "@/lib/brand";
 
 const root = process.cwd();
 const beats101 = runbookBeats("101");
+const examples = getActiveBrand().runbookExamples;
 
 describe("runbook catalog", () => {
   it("ships only the 101 track", () => {
@@ -66,9 +68,7 @@ describe("runbook catalog", () => {
     expect(beat("ask")?.detail).toBe("Let’s learn more about the application with Ask mode.");
     expect(beat("ask")?.example).toBe("/ask Tell me what this application does in 3 sentences");
     expect(beat("plan")?.detail).toBe("Map your approach to building a new feature in Plan mode.");
-    expect(beat("plan")?.example).toBe(
-      "/plan I want a new feature to update the customer email in the invoice detail customer card. Don’t implement email validation.",
-    );
+    expect(beat("plan")?.example).toBe(examples.plan);
     expect(beat("agent-build")?.detail).toBe(
       "Build the feature in Agent mode. Build the plan locally. Check the feature in the UI.",
     );
@@ -78,45 +78,37 @@ describe("runbook catalog", () => {
     expect(beat("model-fast")?.detail).toBe(
       "Change to a fast model for a small update. Change model from Auto to Fast.",
     );
-    expect(beat("model-fast")?.example).toBe("/model.");
+    expect(beat("model-fast")?.example).toBe(examples["model-fast"]);
     expect(beat("fix")?.detail).toBe("Use shift-tab to toggle between modes.");
-    expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
+    expect(beat("fix")?.example).toBe(examples.fix);
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
       "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
     );
     expect(beat("start-and-stop")?.title).toBe("Redact (partial)");
     expect(beat("start-and-stop")?.detail).toBe("");
-    expect(beat("start-and-stop")?.example).toBe(
-      "Redact the customer email in the UI. The first two characters and domain are plaintext.",
-    );
+    expect(beat("start-and-stop")?.example).toBe(examples["start-and-stop"]);
     expect(beat("stop")?.example).toBeUndefined();
     expect(beat("stop")?.detail).toBe("Stop the prompt with the Stop button.");
-    expect(beat("interrupt-steer")?.example).toBe(
-      "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
-    );
+    expect(beat("interrupt-steer")?.example).toBe(examples["interrupt-steer"]);
     expect(beat("diffs")?.example).toBeUndefined();
     expect(beat("rule")?.detail).toBe(
       "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
     );
-    expect(beat("rule")?.example).toBe(
-      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
-    );
+    expect(beat("rule")?.example).toBe(examples.rule);
     expect(beat("test-rule")?.detail).toBe("");
-    expect(beat("test-rule")?.example).toBe('Change "Line Items" in the UI to something else.');
+    expect(beat("test-rule")?.example).toBe(examples["test-rule"]);
     expect(beat("skill")?.detail).toBe(
       "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the skill.",
     );
-    expect(beat("skill")?.example).toBe(
-      "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
-    );
+    expect(beat("skill")?.example).toBe(examples.skill);
     expect(beat("test-skill")?.detail).toBe("");
-    expect(beat("test-skill")?.example).toBe("Use domain-driven design on this application. Do not edit files.");
+    expect(beat("test-skill")?.example).toBe(examples["test-skill"]);
     expect(beat("canvas")?.title).toBe("Canvas");
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
     expect(beat("mcp")?.title).toBe("MCP / Figma");
     expect(beat("mcp")?.detail).toContain("Customize > MCPs > Figma");
-    expect(beat("mcp")?.example).toContain("Figma Slides");
+    expect(beat("mcp")?.example).toBe(examples.mcp);
 
     expect(beats101.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(beat("ask")?.promptType).toBe("reusable");
@@ -178,5 +170,7 @@ describe("runbook catalog", () => {
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
     expect(files.reset).toContain("1 failed / 36 passed");
+    expect(files.reset).toContain("git checkout -- lib/brand/active.ts");
+    expect(files.reset).toContain("SaaSly");
   });
 });
