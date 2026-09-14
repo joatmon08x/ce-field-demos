@@ -25,9 +25,10 @@ export function getActiveBrand(): BrandProfile {
 }
 
 export function parseStartPrompt(text: string): BrandId | null {
-  const match = text.match(/\b(medly|saasly|routerly)\b/i);
+  const match = text.match(/\b(medly|saasly|routerly|routely)\b/i);
   if (!match) return null;
-  const id = match[1].toLowerCase();
+  const raw = match[1].toLowerCase();
+  const id = raw === "routely" ? "routerly" : raw;
   return isBrandId(id) ? id : null;
 }
 

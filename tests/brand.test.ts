@@ -21,6 +21,7 @@ describe("vertical brands", () => {
   it("parses presenter start prompts", () => {
     expect(parseStartPrompt("Start the Medly application")).toBe("medly");
     expect(parseStartPrompt("start the ROUTERLY application")).toBe("routerly");
+    expect(parseStartPrompt("Start the Routely application")).toBe("routerly");
     expect(parseStartPrompt("Start SaaSly")).toBe("saasly");
     expect(parseStartPrompt("Start the demo")).toBeNull();
   });

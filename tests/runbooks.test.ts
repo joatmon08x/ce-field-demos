@@ -150,6 +150,7 @@ describe("runbook catalog", () => {
       skill: readFileSync(join(root, ".cursor/skills/choose-cursor-workflow/SKILL.md"), "utf8"),
       cloud: readFileSync(join(root, ".cursor/skills/hand-to-cloud-agent/SKILL.md"), "utf8"),
       reset: readFileSync(join(root, ".cursor/skills/reset-demo-state/SKILL.md"), "utf8"),
+      start: readFileSync(join(root, ".cursor/skills/start-application/SKILL.md"), "utf8"),
     };
 
     for (const [name, contents] of Object.entries(files)) {
@@ -172,5 +173,8 @@ describe("runbook catalog", () => {
     expect(files.reset).toContain("1 failed / 36 passed");
     expect(files.reset).toContain("git checkout -- lib/brand/active.ts");
     expect(files.reset).toContain("SaaSly");
+    expect(files.start).toContain("1 failed / 36 passed");
+    expect(files.start).toContain("Medly, SaaSly, and Routerly");
+    expect(files.readme).toContain("Medly, SaaSly, and Routerly");
   });
 });

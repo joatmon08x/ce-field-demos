@@ -21,11 +21,12 @@ Parse with `parseStartPrompt` in `lib/brand/index.ts`. If the name is missing or
 
 ## Steps
 
-1. Set only `ACTIVE_BRAND_ID` in `lib/brand/active.ts` to the matching literal id (for example, `"routerly"`). Never edit `SHIPPED_DEFAULT_BRAND_ID`; it stays `"saasly"` so reset can restore the shipped default. There is no dropdown to add.
+1. Set only `ACTIVE_BRAND_ID` in `lib/brand/active.ts` to the matching literal id (for example, `"routerly"`). Never edit `SHIPPED_DEFAULT_BRAND_ID`; it stays `"saasly"` so reset can restore the shipped default. Treat “Routely” as Routerly. There is no dropdown to add.
 2. Do not change catalog prices, invoice/dispute ids, API routes, `tests/suggested-credit-api.test.ts`, or the resolve stub.
 3. Run `npx prisma db seed` so customer names and memos match the profile.
-4. Confirm `npm run dev` is on **43173**. Ask the user to refresh the browser.
-5. Report: product name, industry, operator role, and that Starter / Growth / Scale remain $49 / $99 / $249.
+4. Run `npm test`. Expect **1 failed / 36 passed**. The sole red test is `tests/suggested-credit-api.test.ts` for Medly, SaaSly, and Routerly alike — the planted v1 client is brand-independent. Do not edit that test to get green.
+5. Confirm `npm run dev` is on **43173**. Ask the user to refresh the browser.
+6. Report: product name, industry, operator role, that Starter / Growth / Scale remain $49 / $99 / $249, and that the suite is still **1 failed / 36 passed**.
 
 ## What the profile already drives
 
@@ -38,5 +39,5 @@ Command runbooks (`/multitask`, `/loop`, `/autopilot`, `/goal`, `/orchestrate`) 
 - Do not add a settings/nav control to pick the company.
 - Do not add a fourth `*ly` brand unless the user explicitly asks.
 - Do not invent prices, ARR, or a real customer.
-- Do not migrate suggested-credit v1→v2 or finish dispute resolution as part of a start prompt.
+- Do not migrate suggested-credit v1→v2 or finish dispute resolution as part of a start prompt. Medly and Routerly keep the same planted red test as SaaSly.
 - Do not add a talk-track skill.

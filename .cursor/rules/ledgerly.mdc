@@ -28,7 +28,7 @@ When the user says `Start the Medly application` (or SaaSly / Routerly), use the
 ## Seams
 
 - The suggested-credit client in `lib/disputes/suggested-credit-api.ts` still selects deprecated v1. Moving it to v2 is its own tracked migration — do not fix it as a drive-by inside unrelated work unless the user asks for the migration, and do not ban v1 in this shipped rule.
-- `tests/suggested-credit-api.test.ts` is the sole red test on a clean tree. Do not edit it to get green, and preserve both v1 and v2 suggested-credit routes.
+- `tests/suggested-credit-api.test.ts` is the sole red test on a clean tree for Medly, SaaSly, and Routerly. Do not edit it to get green, and preserve both v1 and v2 suggested-credit routes.
 - Dispute `dsp_1043` claims $400 against a $249 Scale invoice. Do not "correct" the claim — it is valid input for the catalog cap. The seed, domain helper, MCP, and v2 response all store or return $249; v1 returns the raw $400 claim.
 - Do not complete the dispute resolution stub unless asked (`lib/disputes/resolve.ts`, the resolve API route, the panel buttons).
 - Tab / Cmd-K TODOs in collection notes and settings are intentional.
