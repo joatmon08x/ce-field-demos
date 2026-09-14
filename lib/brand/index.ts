@@ -1,4 +1,4 @@
-import { ACTIVE_BRAND_ID } from "@/lib/brand/active";
+import { ACTIVE_BRAND_ID, SHIPPED_DEFAULT_BRAND_ID } from "@/lib/brand/active";
 import { MEDLY } from "@/lib/brand/profiles/medly";
 import { ROUTERLY } from "@/lib/brand/profiles/routerly";
 import { SAASLY } from "@/lib/brand/profiles/saasly";
@@ -31,5 +31,5 @@ export function parseStartPrompt(text: string): BrandId | null {
   return isBrandId(id) ? id : null;
 }
 
-export { ACTIVE_BRAND_ID, BRAND_IDS, isBrandId };
+export { ACTIVE_BRAND_ID, BRAND_IDS, isBrandId, SHIPPED_DEFAULT_BRAND_ID };
 export type { BrandId, BrandProfile, ExtraAccount };

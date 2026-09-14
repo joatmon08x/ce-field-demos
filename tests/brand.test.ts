@@ -5,12 +5,14 @@ import {
   BRAND_PROFILES,
   getActiveBrand,
   parseStartPrompt,
+  SHIPPED_DEFAULT_BRAND_ID,
 } from "@/lib/brand";
 import { PLAN_PRICE_CENTS } from "@/lib/plans";
 
 describe("vertical brands", () => {
   it("ships exactly three ly companies and a code-only switch", () => {
     expect(BRAND_IDS).toEqual(["medly", "saasly", "routerly"]);
+    expect(SHIPPED_DEFAULT_BRAND_ID).toBe("saasly");
     expect(BRAND_IDS).toContain(ACTIVE_BRAND_ID);
     expect(getActiveBrand()).toBe(BRAND_PROFILES[ACTIVE_BRAND_ID]);
     expect(getActiveBrand().productName.endsWith("ly")).toBe(true);
