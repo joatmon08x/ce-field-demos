@@ -99,17 +99,16 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user rule",
         promptType: "adaptable",
         detail:
-          "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Rules to view the rule.",
+          "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
         example:
-          "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
+          "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change).",
       },
       {
         id: "test-rule",
         title: "Test the rule",
         promptType: "adaptable",
         detail: "",
-        example:
-          "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
+        example: 'Change "Line Items" in the UI to something else.',
       },
       {
         id: "skill",

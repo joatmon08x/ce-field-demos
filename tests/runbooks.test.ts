@@ -91,15 +91,13 @@ describe("runbook catalog", () => {
     );
     expect(beat("diffs")?.example).toBeUndefined();
     expect(beat("rule")?.detail).toBe(
-      "Let’s create a user rule so the agent doesn’t do it again. Go to Customize -> Rules to view the rule.",
+      "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
     );
     expect(beat("rule")?.example).toBe(
-      "/create-rule New features should use the new API instead of the legacy API. This is a personal rule.",
+      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change).",
     );
     expect(beat("test-rule")?.detail).toBe("");
-    expect(beat("test-rule")?.example).toBe(
-      "Add a new feature to show the current cap for dispute credit. Make clear which API you’re referencing.",
-    );
+    expect(beat("test-rule")?.example).toBe('Change "Line Items" in the UI to something else.');
     expect(beat("skill")?.detail).toBe(
       "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the skill.",
     );
