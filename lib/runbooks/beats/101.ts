@@ -3,7 +3,7 @@ import type { DemoSection } from "@/lib/runbooks/types";
 export const RUNBOOK_SECTIONS_101 = [
   {
     id: "first-prompt",
-    title: "What is Cursor?",
+    title: "What is Grok Build?",
     beats: [
       {
         id: "ask",
@@ -58,7 +58,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Run Mode Allowlist",
         promptType: "none",
         detail:
-          "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Cursor can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
+          "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
       },
       {
         id: "start-and-stop",
@@ -139,9 +139,9 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "MCP / Figma",
         promptType: "adaptable",
         detail:
-          "Ask Cursor to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Cursor. Go to Customize > MCPs > Figma.",
+          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
         example:
-          "Create three slides in Figma Slides outlining how I used Cursor to develop a new feature. I want to use this as part of my demo showcase.",
+          "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
       },
     ],
   },

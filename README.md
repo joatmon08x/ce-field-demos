@@ -2,7 +2,7 @@
 
 Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for the jumpable Cursor **101** track. Copy-paste prompts live on `/runbooks`; the presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
+Use it for the jumpable Grok Build **101** track. Copy-paste prompts live on `/runbooks`; the presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
 
 ## Run
 
@@ -66,9 +66,9 @@ Restyle the four KPI cards on this dashboard using only the existing design toke
 
 ## The 101 track
 
-Open `/runbooks`, copy a card, and paste it in Cursor. You still review the result.
+Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the result.
 
-1. **What is Cursor?** — Ask, Plan, Build in Agent mode, Debug, and model choice.
+1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, and model choice.
 2. **How do I work with an agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs.
 3. **How do I govern my agent?** — create and test a rule, create and test a skill, Canvas, MCP / Figma.
 

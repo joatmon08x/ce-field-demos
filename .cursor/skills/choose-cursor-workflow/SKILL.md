@@ -9,13 +9,13 @@ The demo ships one jumpable track: **101**. The deeper tracks were removed as no
 
 ## The track
 
-101 — You will explore different ways to work in Cursor, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.
+101 — You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.
 
 The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101`. Use the matching `example` verbatim. Do not invent another catalog price.
 
 ## Sections and beats
 
-1. **What is Cursor?** — Ask, Plan, Build in Agent mode, Debug, change to a fast model, plan to fix the bug.
+1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, change to a fast model, plan to fix the bug.
 2. **How do I work with an agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs.
 3. **How do I govern my agent?** — create a user rule, test the rule, create a user skill, test the skill, Canvas, MCP / Figma.
 

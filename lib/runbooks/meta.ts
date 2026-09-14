@@ -1,5 +1,5 @@
 /**
- * Cursor runbooks as they appear on /runbooks and in the README.
+ * Grok Build runbooks as they appear on /runbooks and in the README.
  * The 101 track is the only shipped track; its beats are the source of truth.
  */
 

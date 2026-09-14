@@ -18,7 +18,7 @@ describe("runbook catalog", () => {
     const track101 = RUNBOOK_TRACKS.find((track) => track.id === "101");
 
     expect(track101?.description).toBe(
-      "You will explore different ways to work in Cursor, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.",
+      "You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.",
     );
 
     for (const track of RUNBOOK_TRACKS) {
@@ -77,7 +77,7 @@ describe("runbook catalog", () => {
     expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
-      "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Cursor can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
+      "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
     );
     expect(beat("start-and-stop")?.title).toBe("Redact (partial)");
     expect(beat("start-and-stop")?.detail).toBe("");
@@ -119,7 +119,7 @@ describe("runbook catalog", () => {
     expect(beat("plan")?.promptType).toBe("adaptable");
     expect(beat("agent-build")?.promptType).toBe("none");
     expect(RUNBOOK_SECTIONS_101.map((section) => section.title)).toEqual([
-      "What is Cursor?",
+      "What is Grok Build?",
       "How do I work with an agent?",
       "How do I govern my agent?",
     ]);

@@ -2,7 +2,7 @@
 
 Presenter run-of-show for the **101** track, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
 
-Ledgerly is a small, fictional demo app. It exists to give Cursor enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
+Ledgerly is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
 
 The pastes below match the copy-paste blocks on `/runbooks/101`. Each beat is independent; jump directly to any step.
 
@@ -10,7 +10,7 @@ The pastes below match the copy-paste blocks on `/runbooks/101`. Each beat is in
 
 The 101 track has three sections. Open `/runbooks/101` and copy a card for any beat.
 
-1. **What is Cursor?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), model choice
+1. **What is Grok Build?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), model choice
 2. **How do I work with an agent?** — allowlist, redact, stop, interrupt and steer, review diffs
 3. **How do I govern my agent?** — [create a rule](#create-a-rule), create a skill, [Canvas](#canvas), [MCP / Figma](#mcp--figma)
 
@@ -20,11 +20,11 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 
 For a novice audience, narrate each step in this order:
 
-- **Before:** "Here is the task and the boundary I am giving Cursor."
-- **During:** "Cursor is reading, editing, or checking. I can inspect each action."
+- **Before:** "Here is the task and the boundary I am giving Grok Build."
+- **During:** "Grok Build is reading, editing, or checking. I can inspect each action."
 - **After:** "Here is the evidence. I decide whether the result ships."
 
-Then add the engineering point: why the task is hard, what Cursor takes on, and why the evidence matters. Do not read prompts aloud. State the intent, paste from the card, then narrate what changed in plain language.
+Then add the engineering point: why the task is hard, what Grok Build takes on, and why the evidence matters. Do not read prompts aloud. State the intent, paste from the card, then narrate what changed in plain language.
 
 Use these definitions when the audience is new:
 
@@ -69,7 +69,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 
 **Do:** Point at **Suggested credit $400.00**, then **Scale catalog price $249.00**.
 
-**Why:** One concrete error keeps the demo easy to follow. **Benefit:** Every enablement step can use the same visible example. **Why it matters:** The audience can focus on how Cursor works instead of learning a product.
+**Why:** One concrete error keeps the demo easy to follow. **Benefit:** Every enablement step can use the same visible example. **Why it matters:** The audience can focus on how Grok Build works instead of learning a product.
 
 **Say — novice version:**
 
@@ -91,7 +91,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 
 ## Ask
 
-**Open:** Cursor chat in **Ask** mode. Leave the app on the dashboard or the dispute.
+**Open:** Grok Build chat in **Ask** mode. Leave the app on the dashboard or the dispute.
 
 **Why:** Unfamiliar repos are expensive to learn. **Benefit:** Ask explains from source without editing. **Why it matters:** Engineers build confidence before acting.
 
@@ -179,12 +179,12 @@ Create a canvas explaining what we did today.
 
 ## MCP / Figma
 
-**Why:** Cursor can drive external tools through MCP. **Benefit:** Generate slides for a showcase without leaving the editor.
+**Why:** Grok Build can drive external tools through MCP. **Benefit:** Generate slides for a showcase without leaving the editor.
 
 Enable a Figma MCP server: **Customize > MCP > Figma**, then:
 
 ```text
-Create three slides in Figma Slides outlining how I used Cursor to develop a new feature. I want to use this as part of my demo showcase.
+Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.
 ```
 
 ---
