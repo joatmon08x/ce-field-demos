@@ -177,6 +177,6 @@ describe("runbook catalog", () => {
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
-    expect(files.reset).toContain("1 failed / 35 passed");
+    expect(files.reset).toContain("1 failed / 36 passed");
   });
 });

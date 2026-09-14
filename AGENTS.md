@@ -55,7 +55,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 35 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249.
+Shipped suite on a clean tree: **1 failed / 36 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249.
 
 ### Multi-file stub (leave it unless asked)
 

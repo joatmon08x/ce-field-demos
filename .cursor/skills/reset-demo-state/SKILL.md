@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded book for the active brand, dev server on 43173, `npm test` showing exactly **1 failed / 35 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
+Goal state: seeded book for the active brand, dev server on 43173, `npm test` showing exactly **1 failed / 36 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
 
 ## Checklist (run what applies)
 
@@ -84,7 +84,7 @@ npm run dev
 7. **Verify shipped state**
 
 ```bash
-npm test    # expect: 1 failed (suggested-credit-api), 35 passed
+npm test    # expect: 1 failed (suggested-credit-api), 36 passed
 ```
 
 Open `http://127.0.0.1:43173` — dashboard shows the active brand's seed, catalog $49/$99/$249, disputes badge on the sidebar.
