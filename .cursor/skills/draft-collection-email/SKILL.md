@@ -1,6 +1,6 @@
 ---
 name: draft-collection-email
-description: Draft an on-voice customer email (dunning nudge or dispute reply) from Ledgerly seed data. Use when a demo asks for customer-facing copy — e.g. "write the overdue email for INV-1043" — so the model stays in the Fieldnote fiction and never invents a price or a real company.
+description: Draft an on-voice customer email (dunning nudge or dispute reply) from the active brand seed. Use when a demo asks for customer-facing copy — e.g. "write the overdue email for INV-1043" — so the model stays in the fictional book and never invents a price or a real company.
 ---
 
 # Draft a collection or dispute email

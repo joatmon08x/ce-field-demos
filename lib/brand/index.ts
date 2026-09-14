@@ -1,6 +1,6 @@
 import { ACTIVE_BRAND_ID } from "@/lib/brand/active";
 import { MEDLY } from "@/lib/brand/profiles/medly";
-import { ROUTELY } from "@/lib/brand/profiles/routely";
+import { ROUTERLY } from "@/lib/brand/profiles/routerly";
 import { SAASLY } from "@/lib/brand/profiles/saasly";
 import {
   BRAND_IDS,
@@ -13,7 +13,7 @@ import {
 export const BRAND_PROFILES: Record<BrandId, BrandProfile> = {
   medly: MEDLY,
   saasly: SAASLY,
-  routely: ROUTELY,
+  routerly: ROUTERLY,
 };
 
 export function getBrand(id: BrandId): BrandProfile {
@@ -25,7 +25,7 @@ export function getActiveBrand(): BrandProfile {
 }
 
 export function parseStartPrompt(text: string): BrandId | null {
-  const match = text.match(/\b(medly|saasly|routely)\b/i);
+  const match = text.match(/\b(medly|saasly|routerly)\b/i);
   if (!match) return null;
   const id = match[1].toLowerCase();
   return isBrandId(id) ? id : null;

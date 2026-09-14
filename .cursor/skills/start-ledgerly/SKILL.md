@@ -1,13 +1,13 @@
 ---
 name: start-ledgerly
-description: Start the Ledgerly Next.js app on port 43173 and seed SQLite only when the database is missing or empty. Use when the user asks to start the server, start the application, run the demo app, or seed if it has not already been seeded.
+description: Start the Next.js billing demo on port 43173 and seed SQLite only when the database is missing or empty. Use when the user asks to start the server or run the demo app without naming Medly, SaaSly, or Routerly. If they name one of those companies, use start-application instead.
 ---
 
-# Start Ledgerly
+# Start the demo app
 
-Bring up the app. Do not reset demo state, restore files, or kill a healthy server.
+Bring up the app for the currently active brand in `lib/brand/active.ts`. Do not reset demo state, restore files, or kill a healthy server.
 
-Listen on **43173**. Schema URL is `file:./dev.db` in `prisma/schema.prisma`. Seed is idempotent (`prisma db push` then Fieldnote data) but **skip it when data is already there**.
+Listen on **43173**. Schema URL is `file:./dev.db` in `prisma/schema.prisma`. Seed is idempotent (`prisma db push` then the active brand) but **skip it when data is already there**.
 
 ## 1. Dependencies
 

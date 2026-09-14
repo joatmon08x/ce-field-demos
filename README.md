@@ -14,7 +14,7 @@ Profiles (each name ends in **ly**):
 | --- | --- |
 | `Start the Medly application` | Healthcare provider |
 | `Start the SaaSly application` | SaaS |
-| `Start the Routely application` | Network hardware (routers and switches) |
+| `Start the Routerly application` | Network hardware (routers and switches) |
 
 The `start-application` skill sets `lib/brand/active.ts` and reseeds. Default clone is **SaaSly**. Copy-paste prompts live on `/runbooks`; adaptable examples follow the active brand. The presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
 
@@ -93,7 +93,7 @@ Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the 
 | `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
-| `start-application` | Presenter opener. Activate Medly, SaaSly, or Routely. No UI picker. |
+| `start-application` | Presenter opener. Activate Medly, SaaSly, or Routerly. No UI picker. |
 | `start-ledgerly` | Start the app on port 43173. Seed only if empty. |
 | `choose-cursor-workflow` | Walk the 101 track and pick the mode or model. |
 | `dispatch-subagents` | Parallel Task launches. |

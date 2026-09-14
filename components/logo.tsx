@@ -70,7 +70,7 @@ function MedlyMark({
   );
 }
 
-function RoutelyMark({
+function RouterlyMark({
   className,
   variant = "onIndigo",
 }: {
@@ -102,7 +102,7 @@ function RoutelyMark({
 const MARKS: Record<BrandId, typeof SaaslyMark> = {
   saasly: SaaslyMark,
   medly: MedlyMark,
-  routely: RoutelyMark,
+  routerly: RouterlyMark,
 };
 
 export function LogoMark({

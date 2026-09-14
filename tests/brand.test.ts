@@ -9,14 +9,14 @@ import { PLAN_PRICE_CENTS } from "@/lib/plans";
 
 describe("vertical brands", () => {
   it("ships exactly three ly companies and a code-only switch", () => {
-    expect(BRAND_IDS).toEqual(["medly", "saasly", "routely"]);
+    expect(BRAND_IDS).toEqual(["medly", "saasly", "routerly"]);
     expect(getActiveBrand().id).toBe("saasly");
     expect(getActiveBrand().productName.endsWith("ly")).toBe(true);
   });
 
   it("parses presenter start prompts", () => {
     expect(parseStartPrompt("Start the Medly application")).toBe("medly");
-    expect(parseStartPrompt("start the ROUTELY application")).toBe("routely");
+    expect(parseStartPrompt("start the ROUTERLY application")).toBe("routerly");
     expect(parseStartPrompt("Start SaaSly")).toBe("saasly");
     expect(parseStartPrompt("Start the demo")).toBeNull();
   });
