@@ -1,11 +1,11 @@
 ---
 name: reset-demo-state
-description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete Figma slides if this demo created any. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
+description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
 ---
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
 
 ## Checklist (run what applies)
 
@@ -29,7 +29,24 @@ Use `cursor_dialog` in the `cursor-app-control` namespace (`item: "rule"`, `scop
 
 If the list is empty, skip. Report titles you removed. Do not recreate them.
 
-3. **Figma slides (only if this demo created a deck)**
+3. **Delete the Canvas**
+
+Canvases from the 101 beat live outside the repo. Cursor only picks up files in `~/.cursor/projects/<workspace-slug>/canvases/`. The slug is the absolute repo path with `/` replaced by `-` (example: `~/.cursor/projects/Users-rosemary-wang-joatmon08x-ce-field-demos/canvases/`).
+
+Delete leftover canvas artifacts:
+
+```bash
+REPO="$(git rev-parse --show-toplevel)"
+SLUG="${REPO#/}"
+SLUG="${SLUG//\//-}"
+CANVASES="$HOME/.cursor/projects/${SLUG}/canvases"
+ls -1 "$CANVASES"/*.canvas.tsx "$CANVASES"/*.canvas.data.json 2>/dev/null
+rm -f "$CANVASES"/*.canvas.tsx "$CANVASES"/*.canvas.data.json
+```
+
+Report the filenames you removed. If none exist, skip. Do not delete `tsconfig.json`, `node_modules/`, or the `canvases/` directory itself.
+
+4. **Figma slides (only if this demo created a deck)**
 
 If the conversation created a Figma Slides file (101 MCP beat; URL like `https://www.figma.com/slides/<fileKey>`), delete its slides.
 
@@ -47,7 +64,7 @@ return { remaining: figma.getSlideGrid().flat().length };
 
 Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip. Do not hunt other teams' files.
 
-4. **Database looks wrong / empty dashboard**
+5. **Database looks wrong / empty dashboard**
 
 ```bash
 npx prisma db seed        # idempotent: pushes schema + reloads Fieldnote
@@ -57,14 +74,14 @@ npm run db:reset
 
 There are no migrations in this repo — never run `prisma migrate`; the seed's `db push` is the whole story.
 
-5. **Port 43173 busy**
+6. **Port 43173 busy**
 
 ```bash
 lsof -ti :43173 | xargs kill   # macOS/Linux/WSL
 npm run dev
 ```
 
-6. **Verify shipped state**
+7. **Verify shipped state**
 
 ```bash
 npm test    # expect: 1 failed (suggested-credit-api), 31 passed
@@ -79,4 +96,4 @@ Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a
 - Never delete `prisma/seed.ts` data or add customers to "fix" a demo.
 - Never edit `tests/suggested-credit-api.test.ts`, either API route, or the seed to make the shipped red test green.
 - Never leave `.cursor/rules/suggested-credit-api-v2.mdc` in the shipped tree; create and remove it during the live rule beat.
-- Never leave personal `/create-rule` leftovers or a demo Slides deck after reset.
+- Never leave personal `/create-rule` leftovers, a leftover Canvas, or a demo Slides deck after reset.

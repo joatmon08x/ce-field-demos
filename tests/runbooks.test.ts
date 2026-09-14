@@ -94,7 +94,7 @@ describe("runbook catalog", () => {
       "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
     );
     expect(beat("rule")?.example).toBe(
-      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change).",
+      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
     );
     expect(beat("test-rule")?.detail).toBe("");
     expect(beat("test-rule")?.example).toBe('Change "Line Items" in the UI to something else.');
