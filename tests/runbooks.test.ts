@@ -111,7 +111,7 @@ describe("runbook catalog", () => {
     expect(beat("canvas")?.title).toBe("Canvas");
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
     expect(beat("mcp")?.title).toBe("MCP / Figma");
-    expect(beat("mcp")?.detail).toContain("Customize > MCP > Figma");
+    expect(beat("mcp")?.detail).toContain("Customize > MCPs > Figma");
     expect(beat("mcp")?.example).toContain("Figma Slides");
 
     expect(beats101.every((entry) => entry.promptType !== undefined)).toBe(true);

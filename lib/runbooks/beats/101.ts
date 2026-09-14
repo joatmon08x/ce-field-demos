@@ -139,7 +139,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "MCP / Figma",
         promptType: "adaptable",
         detail:
-          "Ask Cursor to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Cursor. Go to Customize > MCP > Figma.",
+          "Ask Cursor to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Cursor. Go to Customize > MCPs > Figma.",
         example:
           "Create three slides in Figma Slides outlining how I used Cursor to develop a new feature. I want to use this as part of my demo showcase.",
       },
