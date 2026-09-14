@@ -14,7 +14,7 @@ Profiles (each name ends in **ly**):
 | --- | --- |
 | `Start the Medly application` | Healthcare provider |
 | `Start the SaaSly application` | SaaS |
-| `Start the Routerly application` | Network hardware (routers and switches) |
+| `Start the Routerly application` | Networking company |
 
 The `start-application` skill sets `lib/brand/active.ts` and reseeds. Default clone is **SaaSly**. Copy-paste prompts live on `/runbooks`; adaptable examples follow the active brand. The presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
 

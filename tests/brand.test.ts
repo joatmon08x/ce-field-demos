@@ -39,4 +39,31 @@ describe("vertical brands", () => {
       expect(blob).not.toContain(banned);
     }
   });
+
+  it("frames Routerly as a general networking company", () => {
+    const routerly = BRAND_PROFILES.routerly;
+    const visibleCopy = [
+      routerly.industry,
+      routerly.operatorRole,
+      routerly.tagline,
+      ...Object.values(routerly.copy).filter((value) => typeof value === "string"),
+      routerly.copy.lineItem("Growth"),
+      routerly.copy.extraInvoiceMemo({
+        planLabel: "Growth",
+        customerName: routerly.customers[0].name,
+      }),
+      ...Object.values(routerly.invoiceMemos),
+      ...Object.values(routerly.disputeCopy).flatMap((copy) => [
+        copy.reason,
+        copy.reviewerNote ?? "",
+      ]),
+      ...routerly.customers.map((customer) => customer.name),
+      ...routerly.extraAccounts.map((customer) => customer.name),
+    ].join(" ");
+
+    expect(routerly.industry).toBe("networking");
+    expect(routerly.tagline).toBe("Billing operations for a fictional networking company.");
+    expect(visibleCopy).toContain("network service");
+    expect(visibleCopy).not.toMatch(/\b(cisco|juniper|routers?|switches?|vendor)\b/i);
+  });
 });

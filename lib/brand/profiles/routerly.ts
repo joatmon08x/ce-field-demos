@@ -4,11 +4,11 @@ import type { BrandProfile } from "@/lib/brand/types";
 export const ROUTERLY: BrandProfile = {
   id: "routerly",
   productName: "Routerly",
-  industry: "network hardware",
-  operatorRole: "Channel billing",
+  industry: "networking",
+  operatorRole: "Billing operations",
   operatorEmail: "avery.quinn@routerly.example",
   workspaceName: "Routerly Workspace",
-  tagline: "Support-contract billing for a fictional campus-router and switch vendor.",
+  tagline: "Billing operations for a fictional networking company.",
   tokens: {
     light: {
       indigo: "#0369a1",
@@ -30,23 +30,23 @@ export const ROUTERLY: BrandProfile = {
   copy: {
     dashboardSubtitle: "Routerly Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.",
     invoicesDescription:
-      "Seeded support-contract invoices only. Amounts are Starter $49, Growth $99, or Scale $249 — never a custom figure.",
+      "Seeded network-service invoices only. Amounts are Starter $49, Growth $99, or Scale $249 — never a custom figure.",
     invoicesEmpty:
       "Clear the filter or search. The seed still has Harborline Transit, Cedarwell Mills, Quarrypine Fabrication, and the rest of the Routerly book.",
     collectionsEyebrow: "Dunning",
     collectionsDescription:
-      "Overdue support contracts against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249.",
+      "Overdue network-service invoices against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249.",
     collectionsEmptyTitle: "No overdue invoices",
     collectionsEmptyBody: "Nothing is past due in this book. Open invoices still sit on the invoice list.",
     disputesDescription:
       "Credit suggestions must stay inside the catalog. The detail page and resolve API are unfinished — that is the Agent seam.",
     settingsDescription: "Routerly is fiction. Keep the catalog honest and the site names invented.",
     sidebarBlurb:
-      "Overdue support contracts and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
+      "Overdue network-service invoices and dunning notes sit in the collections queue. Catalog stays $49 / $99 / $249.",
     searchPlaceholder: "Search invoices, sites, dsp_… or inv_…",
-    lineItem: (planLabel) => `${planLabel} support contract · monthly`,
+    lineItem: (planLabel) => `${planLabel} network service · monthly`,
     extraInvoiceMemo: ({ planLabel, customerName }) =>
-      `${planLabel} support contract — August cycle for ${customerName}.`,
+      `${planLabel} network service — August cycle for ${customerName}.`,
   },
   customers: [
     {
@@ -263,34 +263,34 @@ export const ROUTERLY: BrandProfile = {
     },
   ],
   invoiceMemos: {
-    inv_1041: "Monthly Growth support contract for Harborline Transit.",
-    inv_1042: "Starter support contract — July cycle.",
-    inv_1043: "Scale support contract. Site opened a plan-mismatch dispute.",
-    inv_1044: "Growth support contract — July cycle.",
-    inv_1045: "Starter support contract for Oakiron Supply Yard.",
-    inv_1046: "Scale support contract — July cycle.",
-    inv_1047: "Growth support contract. Duplicate-charge dispute is open.",
+    inv_1041: "Monthly Growth network service for Harborline Transit.",
+    inv_1042: "Starter network service — July cycle.",
+    inv_1043: "Scale network service. Site opened a plan-mismatch dispute.",
+    inv_1044: "Growth network service — July cycle.",
+    inv_1045: "Starter network service for Oakiron Supply Yard.",
+    inv_1046: "Scale network service — July cycle.",
+    inv_1047: "Growth network service. Duplicate-charge dispute is open.",
     inv_1048: "Draft — waiting on a purchase-order number.",
-    inv_1049: "Scale support contract. Maintenance-window dispute needs review.",
-    inv_1050: "Growth support contract. Historical dispute was accepted.",
+    inv_1049: "Scale network service. Service-window dispute needs review.",
+    inv_1050: "Growth network service. Historical dispute was accepted.",
     inv_1051: "Voided — upgraded to Growth the same week.",
-    inv_1053: "Growth support contract — prior cycle for Harborline Transit.",
-    inv_1054: "Starter support contract — July cycle for Cedarwell Mills.",
-    inv_1055: "Scale support contract — paid mid-August.",
-    inv_1056: "Growth support contract — June cycle for Harborline Transit.",
-    inv_1057: "Growth support contract — August cycle, paid early.",
+    inv_1053: "Growth network service — prior cycle for Harborline Transit.",
+    inv_1054: "Starter network service — July cycle for Cedarwell Mills.",
+    inv_1055: "Scale network service — paid mid-August.",
+    inv_1056: "Growth network service — June cycle for Harborline Transit.",
+    inv_1057: "Growth network service — August cycle, paid early.",
     inv_1052: "Mid-cycle upgrade from Starter to Growth.",
   },
   disputeCopy: {
     dsp_1043: {
       reason:
-        "Billed on Scale support. The signed order is Growth. The site is claiming back more than this invoice charges.",
+        "Billed on Scale service. The signed order is Growth. The site is claiming back more than this invoice charges.",
     },
-    dsp_1047: { reason: "Duplicate charge for the same contract period." },
-    dsp_1049: { reason: "Maintenance window has not started. Asking to hold the invoice." },
+    dsp_1047: { reason: "Duplicate charge for the same service period." },
+    dsp_1049: { reason: "Service window has not started. Asking to hold the invoice." },
     dsp_1041: { reason: "Tax-exempt certificate is on file. Please confirm the line." },
     dsp_1050: {
-      reason: "Wrong support plan last cycle. Credit issued at the Growth price.",
+      reason: "Wrong service plan last cycle. Credit issued at the Growth price.",
       reviewerNote: "Accepted. Credit equals the Growth catalog price of $99.",
     },
   },

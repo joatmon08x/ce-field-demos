@@ -1,6 +1,6 @@
 ---
 name: start-application
-description: Activate a vertical billing profile (Medly, SaaSly, or Routerly) from a presenter prompt like "Start the Medly application". Use when the user names one of those companies or asks to start the demo app for a healthcare, SaaS, or hardware audience. There is no in-app picker.
+description: Activate a vertical billing profile (Medly, SaaSly, or Routerly) from a presenter prompt like "Start the Medly application". Use when the user names one of those companies or asks to start the demo app for a healthcare, SaaS, or networking audience. There is no in-app picker.
 ---
 
 # Start a vertical application
@@ -13,9 +13,9 @@ The clone has no company picker in the UI. The presenter (or first prompt) names
 | --- | --- | --- |
 | Start the Medly application | `medly` | Healthcare provider — membership statements |
 | Start the SaaSly application | `saasly` | SaaS subscription billing |
-| Start the Routerly application | `routerly` | Campus routers and switches — support-contract billing |
+| Start the Routerly application | `routerly` | Networking company — network-service billing |
 
-Names always end in **ly**. Never use a real company (no Cisco, no hospital system, no prospect logo).
+Names always end in **ly**. Never use a real company, hospital system, or prospect logo.
 
 Parse with `parseStartPrompt` in `lib/brand/index.ts`. If the name is missing or unknown, list the three rows above and stop.
 
