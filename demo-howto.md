@@ -319,7 +319,7 @@ Add Linear from the marketplace if it is not already connected. Then:
 ```
 
 ```text
-/multitask Implement the three workstreams from this refined plan in parallel. Put each workstream in its own worktree. One agent per workstream: (1) resolve helper — only lib/disputes/resolve.ts, (2) resolve API route - only app/api/disputes/[id]/resolve/route.ts (import resolveDispute, do not inline Prisma), (3) Resolution panel UI - only the dispute detail Resolution panel (+ small client child if needed). Respect file ownership and the shared contract. Don’t touch suggested-credit client/tests, seed, or catalog prices. Mid-run 501 from the UI/API is OK until helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.
+/multitask @resolve-dispute.md
 ```
 
 Open diffs, check tests and linters, open [dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043), then Accept or Decline with a reviewer note.
