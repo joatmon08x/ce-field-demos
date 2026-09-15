@@ -9,12 +9,12 @@ const request = new Request("http://localhost/api/runbooks");
 const trackParams = (track: string) => ({ params: Promise.resolve({ track }) });
 
 describe("runbooks API", () => {
-  it("lists only the 101 track with section-header tabs", async () => {
+  it("lists the 101 and 201 tracks with section-header tabs", async () => {
     const response = await getRunbookCatalog();
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body.tracks.map((track: { id: string }) => track.id)).toEqual(["101"]);
+    expect(body.tracks.map((track: { id: string }) => track.id)).toEqual(["101", "201"]);
 
     for (const track of body.tracks) {
       expect(track).not.toHaveProperty("runbookSlugs");
@@ -33,6 +33,12 @@ describe("runbooks API", () => {
       "What is Grok Build?",
       "How do I work with an agent?",
       "How do I govern my agent?",
+    ]);
+    expect(body.tracks[1].sections.map((section: { title: string }) => section.title)).toEqual([
+      "Why is my agent ignoring my instructions?",
+      "How do I standardize agent behavior?",
+      "How does my agent get more information?",
+      "How do I parallelize a task?",
     ]);
   });
 
@@ -59,11 +65,26 @@ describe("runbooks API", () => {
     await expect(response.json()).resolves.toEqual({ error: "Track not found" });
   });
 
-  it("returns 404 for the retired 201 and advanced tracks", async () => {
-    for (const retired of ["201", "advanced"]) {
-      const response = await getRunbookTrack(request, trackParams(retired));
-      expect(response.status).toBe(404);
-    }
+  it("returns the 201 track catalog with beats", async () => {
+    const response = await getRunbookTrack(request, trackParams("201"));
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.id).toBe("201");
+    expect(body.href).toBe("/runbooks/201");
+    expect(body.sections.map((section: { id: string }) => section.id)).toEqual([
+      "target-context",
+      "standardize-behavior",
+      "mcp-more-info",
+      "parallelize-task",
+    ]);
+    expect(body.sections[0].beats[0].id).toBe("rename-agent-1-all");
+    expect(body).not.toHaveProperty("runbooks");
+  });
+
+  it("returns 404 for the retired advanced track", async () => {
+    const response = await getRunbookTrack(request, trackParams("advanced"));
+    expect(response.status).toBe(404);
   });
 });
 
@@ -77,11 +98,13 @@ describe("runbooks redirects", () => {
         { source: "/workflows/:slug", destination: "/runbooks/101", permanent: false },
         { source: "/analysis", destination: "/runbooks/101", permanent: false },
         { source: "/analysis/:path*", destination: "/runbooks/101", permanent: false },
-        { source: "/runbooks/201", destination: "/runbooks/101", permanent: false },
         { source: "/runbooks/advanced", destination: "/runbooks/101", permanent: false },
         { source: "/runbooks/commands", destination: "/runbooks/101", permanent: false },
         { source: "/runbooks/commands/:slug", destination: "/runbooks/101", permanent: false },
       ]),
+    );
+    expect(redirects).not.toEqual(
+      expect.arrayContaining([{ source: "/runbooks/201", destination: "/runbooks/101", permanent: false }]),
     );
   });
 });
@@ -90,12 +113,14 @@ describe("runbooks catalog hrefs", () => {
   it("builds track and section-header links", () => {
     expect(runbookTrackHref("101")).toBe("/runbooks/101");
     expect(runbookSectionHref("101", "first-prompt")).toBe("/runbooks/101#first-prompt");
+    expect(runbookTrackHref("201")).toBe("/runbooks/201");
+    expect(runbookSectionHref("201", "target-context")).toBe("/runbooks/201#target-context");
   });
 });
 
 describe("runbooks page routes", () => {
-  it("prebuilds only the 101 track page", () => {
-    expect(generateTrackParams()).toEqual([{ track: "101" }]);
-    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101"]);
+  it("prebuilds the 101 and 201 track pages", () => {
+    expect(generateTrackParams()).toEqual([{ track: "101" }, { track: "201" }]);
+    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101", "201"]);
   });
 });
