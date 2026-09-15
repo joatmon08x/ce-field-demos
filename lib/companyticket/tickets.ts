@@ -1,5 +1,5 @@
 /**
- * Mock CompanyTicket book — JIRA-shaped issues for the 201 MCP beat.
+ * Mock CompanyTicket book — sprint board and tickets for the 201 MCP beat.
  * Keys use the LY-000 scheme (zero-padded). No real companies.
  */
 

@@ -1,5 +1,5 @@
 /**
- * Local stdio MCP for CompanyTicket — mock JIRA for Fieldnote Workspace.
+ * Local stdio MCP for CompanyTicket — mock issue tracker for Fieldnote Workspace.
  * Read-only mock backlog. Ticket keys use the LY-000 scheme.
  */
 
@@ -118,7 +118,7 @@ async function main() {
   const server = createCompanyTicketServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("companyticket MCP listening on stdio (read-only mock JIRA)");
+  console.error("companyticket MCP listening on stdio (read-only tickets)");
 }
 
 const isDirectRun =

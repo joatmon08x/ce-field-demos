@@ -69,7 +69,7 @@ Incomplete on purpose:
 
 - Prices only from `lib/plans.ts`.
 - Customer names only from `prisma/seed.ts` and `prisma/extra-accounts.ts`.
-- Comments in code must not cite Slack, GitHub, or Jira URLs.
+- Comments in code must not cite Slack, GitHub, or issue-tracker URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
 - Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
@@ -84,4 +84,4 @@ Incomplete on purpose:
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
-| `.cursor/mcp.json` → `companyticket` | Mock JIRA MCP (`mcp/companyticket/`). Board at `/companyticket`. Keys `LY-000`. Marketplace copy in `plugin/companyticket/`. The 101 track ends on Canvas and a slide-generating MCP, not this server. |
+| `.cursor/mcp.json` → `companyticket` | Mock ticket MCP (`mcp/companyticket/`). Board at `/companyticket`. Keys `LY-000`. Marketplace copy in `plugin/companyticket/`. The 101 track ends on Canvas and a slide-generating MCP, not this server. |

@@ -29,7 +29,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings, CompanyTicket (`
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo or pick a Cursor workflow |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
-| CompanyTicket | `/companyticket` — mock JIRA board, keys `LY-000`. MCP `npm run mcp:companyticket`. Import `plugin/companyticket` from disk for the 201 marketplace beat. |
+| CompanyTicket | `/companyticket` — mock ticket board, keys `LY-000`. MCP `npm run mcp:companyticket`. Import `plugin/companyticket` from disk for the 201 marketplace beat. |
 
 ## Starter prompts
 
