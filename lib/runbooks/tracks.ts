@@ -1,4 +1,5 @@
 import { RUNBOOK_SECTIONS_101 } from "@/lib/runbooks/beats/101";
+import { RUNBOOK_SECTIONS_201 } from "@/lib/runbooks/beats/201";
 import type { DemoSection, DemoTrack } from "@/lib/runbooks/types";
 
 export const RUNBOOK_TRACKS = [
@@ -8,6 +9,13 @@ export const RUNBOOK_TRACKS = [
     description:
       "You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.",
     sections: RUNBOOK_SECTIONS_101,
+  },
+  {
+    id: "201" as const,
+    title: "201",
+    description:
+      "You will curate what belongs in an agent's context, encode conventions as project skills and hooks, connect a curated set of MCP servers, and split one task across parallel agents.",
+    sections: RUNBOOK_SECTIONS_201,
   },
 ] as const satisfies readonly {
   id: DemoTrack;

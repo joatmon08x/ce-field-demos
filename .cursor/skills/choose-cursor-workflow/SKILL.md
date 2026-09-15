@@ -1,23 +1,32 @@
 ---
 name: choose-cursor-workflow
-description: Walk the 101 Ledgerly track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
+description: Walk the 101 or 201 Ledgerly track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
 ---
 
-# Walk the 101 track
+# Walk the 101 or 201 track
 
-The demo ships one jumpable track: **101**. The deeper tracks were removed as not-ready. Every beat is independent — if the user names a beat, jump directly to it. You still review the result.
+The demo ships two jumpable tracks: **101** and **201**. Every beat is independent — if the user names a beat, jump directly to it. You still review the result.
 
-## The track
+## The tracks
 
 101 — You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.
 
-The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101`. Use the matching `example` verbatim. Do not invent another catalog price.
+201 — You will curate what belongs in an agent's context, encode conventions as project skills and hooks, connect a curated set of MCP servers, and split one task across parallel agents.
 
-## Sections and beats
+The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101` and `/runbooks/201`. Use the matching `example` verbatim. Do not invent another catalog price.
+
+## 101 sections and beats
 
 1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, change to a fast model, plan to fix the bug.
 2. **How do I work with an agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs, restore from a checkpoint.
 3. **How do I govern my agent?** — create a user rule, test the rule, create a user skill, test the skill, Canvas, MCP / Figma.
+
+## 201 sections and beats
+
+1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas, ask across chats, check context usage.
+2. **How do I standardize agent behavior?** — personal create-api skill, promote it, ESLint rule and hook.
+3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin, `/standard-bug-fix LY-003`.
+4. **How do I parallelize a task?** — three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 
 ## Choose the mode
 

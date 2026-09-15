@@ -1,10 +1,10 @@
 # Ledgerly demo howto
 
-Presenter run-of-show for the **101** track, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
+Presenter run-of-show for the **101** and **201** tracks, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
 
 Ledgerly is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
 
-The pastes below match the copy-paste blocks on `/runbooks/101`. Each beat is independent; jump directly to any step.
+The pastes below match the copy-paste blocks on `/runbooks/101` and `/runbooks/201`. Each beat is independent; jump directly to any step.
 
 ## Jump menu
 
@@ -13,6 +13,13 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 1. **What is Grok Build?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), model choice
 2. **How do I work with an agent?** — allowlist, redact, stop, interrupt and steer, review diffs, restore from a checkpoint
 3. **How do I govern my agent?** — [create a rule](#create-a-rule), create a skill, [Canvas](#canvas), [MCP / Figma](#mcp--figma)
+
+The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
+
+1. **Why is my agent ignoring my instructions?** — rename agents, Canvas DDD, ask across chats, context usage
+2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, ESLint rule and hook
+3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin
+4. **How do I parallelize a task?** — [three-worktree plan](#refine-the-plan), `/multitask`, verify, `/best-of-n`
 
 ---
 
@@ -223,6 +230,86 @@ npm test
 ```
 
 **Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 31 passed**.
+
+---
+
+## The 201 track
+
+Open `/runbooks/201`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card.
+
+### Why is my agent ignoring my instructions?
+
+Rename two agents, ask each for a Canvas DDD map (whole app vs `@invoice-table.tsx`), then ask across chats:
+
+```text
+/ask @Agent 1 All Does refactoring the table change anything across all contexts?
+```
+
+Then click the Context Usage indicator below the chat.
+
+### How do I standardize agent behavior?
+
+#### Create-api skill
+
+```text
+/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.
+```
+
+Open the skill in `~/.cursor/skills`, then promote it:
+
+```text
+Promote the create-api skill to this project.
+```
+
+Open the project skill in `.cursor/skills`. Skip the room prompt for `/add-dashboard-widget`.
+
+#### ESLint rule and hook
+
+```text
+/create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.
+```
+
+Show `.cursor/hooks.json`, `hooks/eslint-changed.sh`, and `app/disputes/[id]/page.tsx`. Then:
+
+```text
+In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.
+```
+
+### How does my agent get more information?
+
+```text
+Add the CompanyTicket MCP server to this project.
+```
+
+Show Customize → MCPs, then:
+
+```text
+Fix ticket number LY-002
+```
+
+Import the demo plugin from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Then:
+
+```text
+/standard-bug-fix LY-003
+```
+
+### How do I parallelize a task?
+
+#### Refine the plan
+
+```text
+@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.
+```
+
+```text
+/multitask Implement the three workstreams from this refined plan in parallel. Put each workstream in its own worktree. One agent per workstream: (1) resolve helper — only lib/disputes/resolve.ts, (2) resolve API route - only app/api/disputes/[id]/resolve/route.ts (import resolveDispute, do not inline Prisma), (3) Resolution panel UI - only the dispute detail Resolution panel (+ small client child if needed). Respect file ownership and the shared contract. Don’t touch suggested-credit client/tests, seed, or catalog prices. Mid-run 501 from the UI/API is OK until helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.
+```
+
+Open diffs, check tests and linters, open [dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043), then Accept or Decline with a reviewer note.
+
+```text
+/best-of-n Draft a short product release note for finishing Accept/Decline on dispute resolution in Ledgerly. Audience: internal eng + CE. Include what shipped, how to verify on dsp_1043, and that suggested-credit v1→v2 is out of scope. No code changes. ~150 words.
+```
 
 ---
 

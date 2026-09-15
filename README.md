@@ -2,7 +2,7 @@
 
 Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for the jumpable Grok Build **101** track. Copy-paste prompts live on `/runbooks`; the presenter run-of-show and speaker notes are `demo-howto.md`. The deeper tracks were removed as not-ready.
+Use it for the jumpable Grok Build **101** and **201** tracks. Copy-paste prompts live on `/runbooks/101` and `/runbooks/201`; the presenter run-of-show and speaker notes are `demo-howto.md`.
 
 ## Run
 
@@ -24,11 +24,11 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 
 | Demo hook | Where |
 | --- | --- |
-| Runbook beats | `/runbooks` (`/workflows` and `/analysis` redirect here) |
+| Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo or pick a Cursor workflow |
-| Presenter script | `demo-howto.md` — the 101 run-of-show |
+| Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
 
 ## Starter prompts
 
@@ -66,11 +66,20 @@ Restyle the four KPI cards on this dashboard using only the existing design toke
 
 ## The 101 track
 
-Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the result.
+Open `/runbooks/101`, copy a card, and paste it in Grok Build. You still review the result.
 
 1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, and model choice.
 2. **How do I work with an agent?** — Run Mode allowlist, redact, stop, interrupt and steer, review diffs, restore from a checkpoint.
 3. **How do I govern my agent?** — create and test a rule, create and test a skill, Canvas, MCP / Figma.
+
+## The 201 track
+
+Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review the result.
+
+1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas to a file, ask across chats, check context usage.
+2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, ESLint rule and hook.
+3. **How does my agent get more information?** — CompanyTicket MCP, fix LY-002, import a marketplace plugin, `/standard-bug-fix LY-003`.
+4. **How do I parallelize a task?** — refine a three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 
 ## Agents and skills
 
@@ -79,7 +88,7 @@ Open `/runbooks`, copy a card, and paste it in Grok Build. You still review the 
 | `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
-| `choose-cursor-workflow` | Walk the 101 track and pick the mode or model. |
+| `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
 | `autopilot` (built in) | Current PR-to-merge-ready skill; formerly `/babysit`. |

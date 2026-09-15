@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   RUNBOOK_SECTIONS_101,
+  RUNBOOK_SECTIONS_201,
   RUNBOOK_TRACKS,
   runbookBeatSequence,
   runbookBeats,
@@ -10,15 +11,20 @@ import {
 
 const root = process.cwd();
 const beats101 = runbookBeats("101");
+const beats201 = runbookBeats("201");
 
 describe("runbook catalog", () => {
-  it("ships only the 101 track", () => {
-    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101"]);
+  it("ships the 101 and 201 tracks", () => {
+    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101", "201"]);
 
     const track101 = RUNBOOK_TRACKS.find((track) => track.id === "101");
+    const track201 = RUNBOOK_TRACKS.find((track) => track.id === "201");
 
     expect(track101?.description).toBe(
       "You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.",
+    );
+    expect(track201?.description).toBe(
+      "You will curate what belongs in an agent's context, encode conventions as project skills and hooks, connect a curated set of MCP servers, and split one task across parallel agents.",
     );
 
     for (const track of RUNBOOK_TRACKS) {
@@ -145,9 +151,122 @@ describe("runbook catalog", () => {
     );
   });
 
-  it("no longer resolves the retired 201 and advanced tracks", () => {
-    expect(RUNBOOK_TRACKS).toHaveLength(1);
-    for (const retired of ["201", "advanced", "Advanced"]) {
+  it("keeps the 201 beats intact", () => {
+    const skill = readFileSync(join(root, ".cursor/skills/choose-cursor-workflow/SKILL.md"), "utf8");
+    const track201 = RUNBOOK_TRACKS.find((track) => track.id === "201");
+    expect(skill).toContain(track201?.description ?? "");
+
+    expect(RUNBOOK_SECTIONS_201.map((section) => section.title)).toEqual([
+      "Why is my agent ignoring my instructions?",
+      "How do I standardize agent behavior?",
+      "How does my agent get more information?",
+      "How do I parallelize a task?",
+    ]);
+    expect(RUNBOOK_SECTIONS_201.map((section) => section.id)).toEqual([
+      "target-context",
+      "standardize-behavior",
+      "mcp-more-info",
+      "parallelize-task",
+    ]);
+
+    expect(beats201.map((beat) => beat.id)).toEqual([
+      "rename-agent-1-all",
+      "canvas-all-domains",
+      "rename-agent-2-invoices",
+      "canvas-invoice-table",
+      "ask-cross-context",
+      "context-usage",
+      "create-api-personal-skill",
+      "promote-create-api-project",
+      "create-eslint-rule",
+      "test-eslint-hook",
+      "add-companyticket-mcp",
+      "fix-ticket-ly-002",
+      "import-marketplace-plugin",
+      "standard-bug-fix-ly-003",
+      "refine-plan-three-worktrees",
+      "multitask-three-workstreams",
+      "verify-parallel-work",
+      "best-of-n-release-note",
+    ]);
+    expect(RUNBOOK_SECTIONS_201.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
+      beats201.map((entry) => entry.id),
+    );
+
+    const beat = (id: (typeof beats201)[number]["id"]) => beats201.find((entry) => entry.id === id);
+
+    expect(beat("rename-agent-1-all")?.detail).toBe(
+      "Open one agent and ask it for information about the entire codebase.",
+    );
+    expect(beat("rename-agent-1-all")?.example).toBe("/rename-chat Agent 1 All");
+    expect(beat("canvas-all-domains")?.example).toBe(
+      "Show me the domain driven design of the application in Canvas.",
+    );
+    expect(beat("rename-agent-2-invoices")?.example).toBe("/rename-chat Agent 2 Invoices");
+    expect(beat("canvas-invoice-table")?.example).toBe(
+      "Show me the domain driven design of @invoice-table.tsx in Canvas.",
+    );
+    expect(beat("ask-cross-context")?.example).toBe(
+      "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
+    );
+    expect(beat("context-usage")?.promptType).toBe("none");
+    expect(beat("context-usage")?.detail).toBe("Click on the Context Usage indicator below the chat.");
+    expect(beat("context-usage")?.example).toBeUndefined();
+    expect(beat("create-api-personal-skill")?.detail).toContain("Open skill in ~/.cursor/skills.");
+    expect(beat("create-api-personal-skill")?.example).toBe(
+      "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
+    );
+    expect(beat("promote-create-api-project")?.detail).toContain("Open skill in .cursor/skills");
+    expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
+    expect(beat("create-eslint-rule")?.detail).toBe(
+      "Use a linter hook instead of a long TypeScript formatting rule. Show hook in .cursor/hooks.json. Show script in hooks/eslint-changed.sh. Open app/disputes/[id]/page.tsx.",
+    );
+    expect(beat("create-eslint-rule")?.example).toBe(
+      "/create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.",
+    );
+    expect(beat("test-eslint-hook")?.detail).toBe("");
+    expect(beat("test-eslint-hook")?.example).toBe(
+      "In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+    );
+    expect(beat("add-companyticket-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
+    expect(beat("add-companyticket-mcp")?.detail).toContain(
+      "Show CompanyTicket MCP server and the different tools you can enable.",
+    );
+    expect(beat("add-companyticket-mcp")?.example).toBe("Add the CompanyTicket MCP server to this project.");
+    expect(beat("fix-ticket-ly-002")?.detail).toContain(
+      "Explore the tool calls to CompanyTicket MCP server.",
+    );
+    expect(beat("fix-ticket-ly-002")?.example).toBe("Fix ticket number LY-002");
+    expect(beat("import-marketplace-plugin")?.promptType).toBe("none");
+    expect(beat("import-marketplace-plugin")?.example).toBeUndefined();
+    expect(beat("import-marketplace-plugin")?.detail).toBe(
+      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+    );
+    expect(beat("standard-bug-fix-ly-003")?.detail).toBe("");
+    expect(beat("standard-bug-fix-ly-003")?.example).toBe("/standard-bug-fix LY-003");
+    expect(beat("refine-plan-three-worktrees")?.example).toBe(
+      "@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.",
+    );
+    expect(beat("multitask-three-workstreams")?.example).toBe(
+      "/multitask Implement the three workstreams from this refined plan in parallel. Put each workstream in its own worktree. One agent per workstream: (1) resolve helper — only lib/disputes/resolve.ts, (2) resolve API route - only app/api/disputes/[id]/resolve/route.ts (import resolveDispute, do not inline Prisma), (3) Resolution panel UI - only the dispute detail Resolution panel (+ small client child if needed). Respect file ownership and the shared contract. Don’t touch suggested-credit client/tests, seed, or catalog prices. Mid-run 501 from the UI/API is OK until helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.",
+    );
+    expect(beat("verify-parallel-work")?.promptType).toBe("none");
+    expect(beat("verify-parallel-work")?.example).toBeUndefined();
+    expect(beat("verify-parallel-work")?.detail).toBe(
+      "Open diffs for each agent. Check tests and linters. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
+    );
+    expect(beat("best-of-n-release-note")?.example).toBe(
+      "/best-of-n Draft a short product release note for finishing Accept/Decline on dispute resolution in Ledgerly. Audience: internal eng + CE. Include what shipped, how to verify on dsp_1043, and that suggested-credit v1→v2 is out of scope. No code changes. ~150 words.",
+    );
+
+    expect(beats201.every((entry) => entry.promptType !== undefined)).toBe(true);
+    expect(beat("rename-agent-1-all")?.promptType).toBe("adaptable");
+    expect(beat("context-usage")?.promptType).toBe("none");
+  });
+
+  it("does not resolve the retired advanced track", () => {
+    expect(RUNBOOK_TRACKS).toHaveLength(2);
+    for (const retired of ["advanced", "Advanced"]) {
       expect(RUNBOOK_TRACKS.find((track) => track.id === retired)).toBeUndefined();
     }
   });
@@ -162,7 +281,7 @@ describe("runbook catalog", () => {
     }
   });
 
-  it("points docs, skills, and rules at /runbooks and drops the retired tracks", () => {
+  it("points docs, skills, and rules at /runbooks and documents both tracks", () => {
     const files = {
       readme: readFileSync(join(root, "README.md"), "utf8"),
       howto: readFileSync(join(root, "demo-howto.md"), "utf8"),
@@ -177,15 +296,14 @@ describe("runbook catalog", () => {
       expect(contents, `${name} still cites lib/workflows/meta.ts`).not.toContain(
         "lib/workflows/meta.ts",
       );
-      expect(contents, `${name} still references a retired 201 track`).not.toMatch(
-        /\b201\b/,
-      );
       expect(contents, `${name} still references a retired Advanced track`).not.toMatch(
         /Advanced track/,
       );
     }
 
-    expect(files.readme).toContain("/runbooks");
+    expect(files.readme).toContain("/runbooks/201");
+    expect(files.howto).toContain("/runbooks/201");
+    expect(files.skill).toContain("/runbooks/201");
     expect(files.agents).toContain("lib/runbooks/meta.ts");
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
