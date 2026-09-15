@@ -27,7 +27,7 @@ The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not ment
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it, ESLint rule and hook.
-3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin, `/standard-bug-fix LY-003`.
+3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin (`plugins/standard-bug-fix`, Linear MCP), `/standard-bug-fix LY-003`.
 4. **How do I parallelize a task?** — three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 
 ## Choose the mode

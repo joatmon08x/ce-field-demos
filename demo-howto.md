@@ -18,7 +18,7 @@ The 201 track has four sections. Open `/runbooks/201` and copy a card for any be
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Canvas DDD, ask across chats, context usage
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, ESLint rule and hook
-3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin
+3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin (Linear MCP)
 4. **How do I parallelize a task?** — [three-worktree plan](#refine-the-plan), `/multitask`, verify, `/best-of-n`
 
 ---
@@ -290,7 +290,7 @@ Show Customize → MCPs, then:
 Fix ticket number LY-002
 ```
 
-Import the demo plugin from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Then:
+Import `plugins/standard-bug-fix` from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Show the standard-bug-fix skill, rule, and Linear MCP. Then:
 
 ```text
 /standard-bug-fix LY-003

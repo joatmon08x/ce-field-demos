@@ -86,3 +86,4 @@ Incomplete on purpose:
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
 | `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. |
+| `plugins/standard-bug-fix/` | 201-track disk plugin: `/standard-bug-fix` skill, Linear writeback rule, Linear MCP. |

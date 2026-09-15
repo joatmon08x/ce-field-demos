@@ -113,7 +113,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Import marketplace plugin",
         promptType: "none",
         detail:
-          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import plugins/standard-bug-fix from the demo repository. Show that the plugin has skills, rules, and Linear MCP server.",
       },
       {
         id: "standard-bug-fix-ly-003",

@@ -240,7 +240,7 @@ describe("runbook catalog", () => {
     expect(beat("import-marketplace-plugin")?.promptType).toBe("none");
     expect(beat("import-marketplace-plugin")?.example).toBeUndefined();
     expect(beat("import-marketplace-plugin")?.detail).toBe(
-      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import plugins/standard-bug-fix from the demo repository. Show that the plugin has skills, rules, and Linear MCP server.",
     );
     expect(beat("standard-bug-fix-ly-003")?.detail).toBe("");
     expect(beat("standard-bug-fix-ly-003")?.example).toBe("/standard-bug-fix LY-003");
