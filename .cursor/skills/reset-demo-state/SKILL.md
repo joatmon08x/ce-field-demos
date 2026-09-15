@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
 
 ## Checklist (run what applies)
 
@@ -14,6 +14,7 @@ Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exact
 ```bash
 git status
 git checkout -- lib/disputes/suggested-credit-api.ts   # shipped client selects v1
+git checkout -- components/filter-pills.tsx            # shipped pills write state=
 rm -f .cursor/rules/suggested-credit-api-v2.mdc       # live /create-rule beat only
 git checkout -- .                        # only if the user agrees to drop ALL local changes
 ```

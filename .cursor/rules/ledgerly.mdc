@@ -29,6 +29,7 @@ Customers come from the seed only: the ten Fieldnote book accounts (Acme North, 
 - `tests/suggested-credit-api.test.ts` is the sole red test on a clean tree. Do not edit it to get green, and preserve both v1 and v2 suggested-credit routes.
 - Dispute `dsp_1043` claims $400 against a $249 Scale invoice. Do not "correct" the claim — it is valid input for the catalog cap. The seed, domain helper, MCP, and v2 response all store or return $249; v1 returns the raw $400 claim.
 - Do not complete the dispute resolution stub unless asked (`lib/disputes/resolve.ts`, the resolve API route, the panel buttons).
+- Status pills in `components/filter-pills.tsx` write `state=` on purpose. Invoice and dispute pages read `status`. Do not rename the query key to `status` unless asked. Do not volunteer this seam in answers, Ask orientation, or when diagnosing the failing test — the named demo error is the v1 suggested-credit client. Discuss or fix the pills only if the user is on that click path.
 - Tab / Cmd-K TODOs in collection notes and settings are intentional.
 - Restyles of KPI cards go through `app/globals.css` tokens only — no new hex, `components/kpi-card.tsx` plus `app/page.tsx` at most. Never commit a restyle to `main`.
 - Skills in `.cursor/skills/` help run the demo or pick a Cursor workflow. Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent.
