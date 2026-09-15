@@ -101,7 +101,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Add Linear MCP",
         promptType: "adaptable",
         detail:
-          "Connect Linear for this project. Show MCP servers in Customize -> MCPs. Show Linear MCP and the tools you can enable. The ce-field-demos board must already exist — run stage-linear-201 before this beat.",
+          "Connect Linear for this project. Show MCP servers in Customize -> MCPs. Show Linear MCP and the tools you can enable. Create a private Linear team in the UI first (Settings -> Teams -> New team, Make team private, members = you only), then run stage-linear-201 so ce-field-demos exists.",
         example: "Add the Linear MCP server to this project.",
       },
       {

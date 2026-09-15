@@ -27,7 +27,7 @@ The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not ment
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it, ESLint rule and hook.
-3. **How does my agent get more information?** — Linear MCP, dsp_1043 suggested-credit issue on ce-field-demos, marketplace Linear plugin, `/standard-bug-fix` on the filter-pills issue. Run `stage-linear-201` before this section.
+3. **How does my agent get more information?** — Linear MCP, dsp_1043 suggested-credit issue on ce-field-demos, marketplace Linear plugin, `/standard-bug-fix` on the filter-pills issue. The operator creates a private Linear team in the UI first (Settings → Teams → New team, Make team private). Then run `stage-linear-201`.
 4. **How do I parallelize a task?** — three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 
 ## Choose the mode

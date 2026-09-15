@@ -43,6 +43,18 @@ The seed script runs `prisma db push` first, then reloads deterministic Fieldnot
 npm run dev
 ```
 
+### Private Linear team (manual, before 201 MCP)
+
+Linear MCP cannot create teams. The operator creates a private team in the Linear UI, then an agent runs `stage-linear-201`.
+
+1. Open Linear → **Settings → Teams → New team**.
+2. Name it for this operator only (example: `ce-field-demos-private`).
+3. Turn on **Make team private**.
+4. Members: **only the operator**. Do not add Customer Education or any other shared team.
+5. Run `stage-linear-201` to create project `ce-field-demos` on that team and seed the five Fieldnote issues.
+
+Do not `save_project` onto a public team. Do not reintroduce CompanyTicket.
+
 Listens on **43173** (not 3000).
 
 ### Tests

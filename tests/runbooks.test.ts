@@ -315,5 +315,13 @@ describe("runbook catalog", () => {
     expect(files.rule).toContain("stage-linear-201");
     expect(files.skill).toContain("stage-linear-201");
     expect(files.howto).toContain("stage-linear-201");
+    expect(files.readme).toContain("Settings → Teams → New team");
+    expect(files.readme).toContain("Make team private");
+    expect(files.howto).toContain("Settings → Teams → New team");
+    expect(files.howto).toContain("Make team private");
+    expect(files.agents).toContain("Settings → Teams → New team");
+    expect(files.agents).toContain("Make team private");
+    expect(files.rule).toContain("Make team private");
+    expect(files.skill).toContain("Make team private");
   });
 });

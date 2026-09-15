@@ -78,8 +78,20 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas to a file, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, ESLint rule and hook.
-3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, Linear from the marketplace, `/standard-bug-fix` on the filter-pills issue. Stage the board first with `stage-linear-201`.
+3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, Linear from the marketplace, `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
 4. **How do I parallelize a task?** — refine a three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
+
+## Create the private Linear team (manual)
+
+Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the operator’s account only.
+
+1. Open Linear → **Settings → Teams → New team**.
+2. Name it for this operator only (example: `ce-field-demos-private`).
+3. Turn on **Make team private**.
+4. Members: **only you**. Do not add Customer Education or any other shared team.
+5. Then ask an agent to run `stage-linear-201`. That skill creates project `ce-field-demos` on this team and seeds the five Fieldnote issues.
+
+Do not skip the private-team step. A project on a public team is visible to that team.
 
 ## Agents and skills
 

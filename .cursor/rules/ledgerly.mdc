@@ -36,7 +36,7 @@ Customers come from the seed only: the ten Fieldnote book accounts (Acme North, 
 - The demo ships two jumpable tracks: 101 and 201. Their beats live in `lib/runbooks/meta.ts`, as copy-paste blocks on `/runbooks/101` and `/runbooks/201`, and in `demo-howto.md`. Do not reintroduce retired Advanced runbooks without a request.
 - Cursor's `/babysit` PR workflow is now `/autopilot`; use the current name while explaining the rename. `/goal` remains a separate durable-objective workflow.
 - When someone asks to show a Cursor workflow, use `choose-cursor-workflow`, then `dispatch-subagents` or `hand-to-cloud-agent` as the shape of the work requires.
-- Before the 201 MCP section, run `stage-linear-201` on a private Linear team. Do not reintroduce CompanyTicket (`/companyticket`, `mcp/companyticket`, `plugin/companyticket`).
+- Before the 201 MCP section, the operator creates a private Linear team in the Linear UI (Settings → Teams → New team, **Make team private**, members = the operator only). Linear MCP cannot create teams. Then run `stage-linear-201`. Do not reintroduce CompanyTicket (`/companyticket`, `mcp/companyticket`, `plugin/companyticket`).
 - Never reintroduce retired pre-remap company or product names anywhere in this tree.
 
 ## Voice

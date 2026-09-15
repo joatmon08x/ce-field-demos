@@ -15,7 +15,9 @@ Issue bodies live in `lib/runbooks/linear-field-demos.ts`. Do not invent a sixth
 
 Linear privacy is **team** privacy. A project on a public team (Customer Education, FE Demos, FlyLo, Disney DXT, …) is visible to that team.
 
-1. In Linear: **Settings → Teams → New team**.
+The same steps are in `README.md`, `demo-howto.md`, and `AGENTS.md`. Repeat them if the operator has not done this yet:
+
+1. Open Linear → **Settings → Teams → New team**.
 2. Name it for this operator only (example: `ce-field-demos-private` or `{displayName}-field-demos`).
 3. Turn on **Make team private**.
 4. Members: **only the operator**. Do not add Customer Education or any other team.
@@ -23,7 +25,7 @@ Linear privacy is **team** privacy. A project on a public team (Customer Educati
 
 Workspace admins on some plans can still see private-team names in admin settings. That is Linear, not this skill. Do not put the board on Customer Education to “share” it.
 
-If the operator has no private team yet, **stop**. Tell them to create it in the Linear UI. Linear MCP cannot create teams. Do not `save_project` onto Customer Education or any other public team.
+If the operator has no private team yet, **stop**. Point them at those docs. Linear MCP cannot create teams. Do not `save_project` onto Customer Education or any other public team.
 
 ## 1. Linear MCP
 
