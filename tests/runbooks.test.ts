@@ -180,10 +180,10 @@ describe("runbook catalog", () => {
       "promote-create-api-project",
       "create-eslint-rule",
       "test-eslint-hook",
-      "add-companyticket-mcp",
-      "fix-ticket-ly-002",
+      "add-linear-mcp",
+      "fix-linear-suggested-credit",
       "import-marketplace-plugin",
-      "standard-bug-fix-ly-003",
+      "standard-bug-fix-filter",
       "refine-plan-three-worktrees",
       "multitask-three-workstreams",
       "verify-parallel-work",
@@ -228,28 +228,29 @@ describe("runbook catalog", () => {
     expect(beat("test-eslint-hook")?.example).toBe(
       "In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
     );
-    expect(beat("add-companyticket-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
-    expect(beat("add-companyticket-mcp")?.detail).toContain(
-      "Show CompanyTicket MCP server and the different tools you can enable.",
+    expect(beat("add-linear-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
+    expect(beat("add-linear-mcp")?.detail).toContain("Show Linear MCP and the tools you can enable.");
+    expect(beat("add-linear-mcp")?.detail).toContain("Settings -> Teams -> New team");
+    expect(beat("add-linear-mcp")?.example).toBe("Add the Linear MCP server to this project.");
+    expect(beat("fix-linear-suggested-credit")?.detail).toContain(
+      "Explore the Linear MCP tool calls.",
     );
-    expect(beat("add-companyticket-mcp")?.example).toBe("Add the CompanyTicket MCP server to this project.");
-    expect(beat("fix-ticket-ly-002")?.detail).toContain(
-      "Explore the tool calls to CompanyTicket MCP server.",
+    expect(beat("fix-linear-suggested-credit")?.example).toBe(
+      "Fix Linear issue: Dispute dsp_1043 claims $400 against a $249 Scale invoice",
     );
-    expect(beat("fix-ticket-ly-002")?.example).toBe("Fix ticket number LY-002");
     expect(beat("import-marketplace-plugin")?.promptType).toBe("none");
     expect(beat("import-marketplace-plugin")?.example).toBeUndefined();
     expect(beat("import-marketplace-plugin")?.detail).toBe(
-      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import plugins/standard-bug-fix from the demo repository. Show that the plugin has skills, rules, and Linear MCP server.",
     );
-    expect(beat("standard-bug-fix-ly-003")?.detail).toBe("");
-    expect(beat("standard-bug-fix-ly-003")?.example).toBe("/standard-bug-fix LY-003");
+    expect(beat("standard-bug-fix-filter")?.detail).toBe("");
+    expect(beat("standard-bug-fix-filter")?.example).toBe(
+      "/standard-bug-fix Overdue / Needs review filter does not change the list",
+    );
     expect(beat("refine-plan-three-worktrees")?.example).toBe(
       "@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.",
     );
-    expect(beat("multitask-three-workstreams")?.example).toBe(
-      "/multitask Implement the three workstreams from this refined plan in parallel. Put each workstream in its own worktree. One agent per workstream: (1) resolve helper — only lib/disputes/resolve.ts, (2) resolve API route - only app/api/disputes/[id]/resolve/route.ts (import resolveDispute, do not inline Prisma), (3) Resolution panel UI - only the dispute detail Resolution panel (+ small client child if needed). Respect file ownership and the shared contract. Don’t touch suggested-credit client/tests, seed, or catalog prices. Mid-run 501 from the UI/API is OK until helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.",
-    );
+    expect(beat("multitask-three-workstreams")?.example).toBe("/multitask @resolve-dispute.md");
     expect(beat("verify-parallel-work")?.promptType).toBe("none");
     expect(beat("verify-parallel-work")?.example).toBeUndefined();
     expect(beat("verify-parallel-work")?.detail).toBe(
@@ -308,6 +309,20 @@ describe("runbook catalog", () => {
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
-    expect(files.reset).toContain("1 failed / 45 passed");
+    expect(files.reset).toContain("1 failed / 29 passed");
+    expect(files.agents).toContain("stage-linear-201");
+    expect(files.rule).toContain("stage-linear-201");
+    expect(files.skill).toContain("stage-linear-201");
+    expect(files.howto).toContain("stage-linear-201");
+    expect(files.readme).toContain("Settings → Teams → New team");
+    expect(files.readme).toContain("Make team private");
+    expect(files.howto).toContain("Settings → Teams → New team");
+    expect(files.howto).toContain("Make team private");
+    expect(files.agents).toContain("Settings → Teams → New team");
+    expect(files.agents).toContain("Make team private");
+    expect(files.rule).toContain("Make team private");
+    expect(files.readme).toContain("settings/teams/LY");
+    expect(files.howto).toContain("settings/teams/LY");
+    expect(files.agents).toContain("settings/teams/LY");
   });
 });

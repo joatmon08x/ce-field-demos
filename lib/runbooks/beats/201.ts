@@ -1,3 +1,7 @@
+import {
+  FIELD_DEMO_FILTER_TITLE,
+  FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
+} from "@/lib/runbooks/linear-field-demos";
 import type { DemoSection } from "@/lib/runbooks/types";
 
 export const RUNBOOK_SECTIONS_201 = [
@@ -93,34 +97,34 @@ export const RUNBOOK_SECTIONS_201 = [
     title: "How does my agent get more information?",
     beats: [
       {
-        id: "add-companyticket-mcp",
-        title: "Add CompanyTicket MCP",
+        id: "add-linear-mcp",
+        title: "Add Linear MCP",
         promptType: "adaptable",
         detail:
-          "Start the CompanyTicket MCP server for this project. Show MCP servers in Customize -> MCPs. Show CompanyTicket MCP server and the different tools you can enable.",
-        example: "Add the CompanyTicket MCP server to this project.",
+          "Connect Linear for this project. Show MCP servers in Customize -> MCPs. Show Linear MCP and the tools you can enable. Create a private Linear team in the UI first (Settings -> Teams -> New team, Make team private, members = you only), then run stage-linear-201 so ce-field-demos exists.",
+        example: "Add the Linear MCP server to this project.",
       },
       {
-        id: "fix-ticket-ly-002",
-        title: "Fix ticket LY-002",
+        id: "fix-linear-suggested-credit",
+        title: "Fix the suggested-credit Linear issue",
         promptType: "adaptable",
         detail:
-          "Pull a reported bug from the CompanyTicket backlog. Explore the tool calls to CompanyTicket MCP server.",
-        example: "Fix ticket number LY-002",
+          "Pull the dsp_1043 suggested-credit bug from the ce-field-demos Linear project. Explore the Linear MCP tool calls.",
+        example: `Fix Linear issue: ${FIELD_DEMO_SUGGESTED_CREDIT_TITLE}`,
       },
       {
         id: "import-marketplace-plugin",
         title: "Import marketplace plugin",
         promptType: "none",
         detail:
-          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import plugins/standard-bug-fix from the demo repository. Show that the plugin has skills, rules, and Linear MCP server.",
       },
       {
-        id: "standard-bug-fix-ly-003",
-        title: "Standard bug fix LY-003",
+        id: "standard-bug-fix-filter",
+        title: "Standard bug fix — filter pills",
         promptType: "adaptable",
         detail: "",
-        example: "/standard-bug-fix LY-003",
+        example: `/standard-bug-fix ${FIELD_DEMO_FILTER_TITLE}`,
       },
     ],
   },
@@ -141,8 +145,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Multitask three workstreams",
         promptType: "adaptable",
         detail: "Build the feature using the /multitask command.",
-        example:
-          "/multitask Implement the three workstreams from this refined plan in parallel. Put each workstream in its own worktree. One agent per workstream: (1) resolve helper — only lib/disputes/resolve.ts, (2) resolve API route - only app/api/disputes/[id]/resolve/route.ts (import resolveDispute, do not inline Prisma), (3) Resolution panel UI - only the dispute detail Resolution panel (+ small client child if needed). Respect file ownership and the shared contract. Don’t touch suggested-credit client/tests, seed, or catalog prices. Mid-run 501 from the UI/API is OK until helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.",
+        example: "/multitask @resolve-dispute.md",
       },
       {
         id: "verify-parallel-work",

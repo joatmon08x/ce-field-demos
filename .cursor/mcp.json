@@ -1,8 +1,3 @@
 {
-  "mcpServers": {
-    "companyticket": {
-      "command": "npx",
-      "args": ["tsx", "mcp/companyticket/server.ts"]
-    }
-  }
+  "mcpServers": {}
 }
