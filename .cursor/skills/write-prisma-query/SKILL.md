@@ -15,6 +15,7 @@ Produce a query that runs against this repo's real schema and seed, not a generi
 - "Today" is the frozen demo clock: import `DEMO_AS_OF` from `@/lib/clock` (23 Aug 2026). Never use `new Date()` for aging.
 - IDs look like `inv_1043`, `dsp_1043`, `cus_harborline`. Single workspace: `ws_fieldnote`.
 - Existing query helpers live in `lib/data.ts` — extend that file rather than scattering `prisma.` calls inside components.
+- There is no project database MCP and no `mcp/` directory. Do not add `ledgerly-db` or query SQLite over MCP. Use Prisma here, `lib/data.ts`, or `curl` against `/api/invoices` and `/api/disputes`.
 
 ## Recipe
 

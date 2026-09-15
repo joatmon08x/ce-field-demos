@@ -32,7 +32,7 @@ export const FIELD_DEMO_ISSUES: readonly FieldDemoIssue[] = [
     state: "In Progress",
     priority: 2,
     title: "Dispute dsp_1043 claims $400 against a $249 Scale invoice",
-    description: `Dispute dsp_1043 claims $400 against a $249 Scale invoice. Open http://127.0.0.1:43173/disputes/dsp_1043. The page still selects deprecated suggested-credit v1 and shows $400.00. v2, the domain helper, the seed stored credit, and ledgerly-db MCP cap at the Scale catalog price of $249. Do not correct the $400 claim — it is valid input for the catalog cap. Preserve both v1 and v2 routes and tests/suggested-credit-api.test.ts.
+    description: `Dispute dsp_1043 claims $400 against a $249 Scale invoice. Open http://127.0.0.1:43173/disputes/dsp_1043. The page still selects deprecated suggested-credit v1 and shows $400.00. v2, the domain helper, and the seed stored credit cap at the Scale catalog price of $249. Do not correct the $400 claim — it is valid input for the catalog cap. Preserve both v1 and v2 routes and tests/suggested-credit-api.test.ts.
 
 ## Acceptance
 
