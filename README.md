@@ -16,20 +16,19 @@ npm run dev
 
 Open **http://localhost:43173**.
 
-`npm test` is **1 failed / 45 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 34 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
-Dashboard, Invoices, Collections, Disputes, Runbooks, Settings, CompanyTicket (`/companyticket`). Extra book accounts are in `prisma/extra-accounts.ts`.
+Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accounts are in `prisma/extra-accounts.ts`.
 
 | Demo hook | Where |
 | --- | --- |
 | Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
-| Skills | `.cursor/skills/` — run the demo or pick a Cursor workflow |
+| Skills | `.cursor/skills/` — run the demo, stage Linear for 201, or pick a Cursor workflow |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
-| CompanyTicket | `/companyticket` — mock ticket board, keys `LY-000`. MCP `npm run mcp:companyticket`. Import `plugin/companyticket` from disk for the 201 marketplace beat. |
 
 ## Starter prompts
 
@@ -79,8 +78,21 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas to a file, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, ESLint rule and hook.
-3. **How does my agent get more information?** — CompanyTicket MCP, fix LY-002, import a marketplace plugin, `/standard-bug-fix LY-003`.
+3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, Linear from the marketplace, `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
 4. **How do I parallelize a task?** — refine a three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
+
+## Create the private Linear team (manual)
+
+Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the operator’s account only.
+
+1. Open Linear → **Settings → Teams → New team**.
+2. Name it for this operator only (example: `{displayName}-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
+4. Members: **only you**. Do not add any other team.
+5. Then ask an agent to run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
+
+Do not skip the private-team step. A project on a public team is visible to that team.
+During a fresh setup, create issues sequentially: suggested-credit first, **Overdue / Needs review filter does not change the list second**, and invoice-email third.
 
 ## Agents and skills
 
@@ -90,6 +102,8 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
+| `stage-linear-201` | Before 201 MCP: reconcile three issues on the private `ce-field-demos` Linear project. |
+| `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
 | `autopilot` (built in) | Current PR-to-merge-ready skill; formerly `/babysit`. |
