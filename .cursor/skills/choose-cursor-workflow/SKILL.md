@@ -1,6 +1,6 @@
 ---
 name: choose-cursor-workflow
-description: Walk the 101 or 201 Ledgerly track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
+description: Walk the 101 or 201 demo track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
 ---
 
 # Walk the 101 or 201 track

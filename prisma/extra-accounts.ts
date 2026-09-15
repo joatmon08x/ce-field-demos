@@ -1,5 +1,5 @@
 /**
- * Extra Fieldnote book accounts seeded alongside the ten core customers.
+ * Extra Packetline book accounts seeded alongside the ten core customers.
  * Owned by the app. Same ids and rows on every reseed.
  */
 

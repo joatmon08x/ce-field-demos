@@ -19,6 +19,7 @@ import {
 import { NoticeBell, type OpenDisputeNotice } from "@/components/notice-bell";
 import { Wordmark } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { PRODUCT } from "@/lib/brand";
 import { DEMO_OPERATOR } from "@/lib/demo-session";
 import { cn } from "@/lib/utils";
 
@@ -78,7 +79,7 @@ export function AppChrome({
       >
         <div className="flex h-full flex-col px-4 py-5">
           <div className="flex items-center justify-between">
-            <Link href="/" onClick={() => setOpen(false)} aria-label="Ledgerly home">
+            <Link href="/" onClick={() => setOpen(false)} aria-label={`${PRODUCT.name} home`}>
               <Wordmark />
             </Link>
             <button

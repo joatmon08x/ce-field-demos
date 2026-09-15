@@ -64,8 +64,8 @@ export function RevenueChart({
       >
         <defs>
           <linearGradient id="ledgerlyRevenue" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.24" />
-            <stop offset="100%" stopColor="#4F46E5" stopOpacity="0.01" />
+            <stop offset="0%" stopColor="var(--brand)" stopOpacity="0.24" />
+            <stop offset="100%" stopColor="var(--brand)" stopOpacity="0.01" />
           </linearGradient>
         </defs>
         {yTicks.map((tick) => (
@@ -90,11 +90,11 @@ export function RevenueChart({
           </g>
         ))}
         <path d={area} fill="url(#ledgerlyRevenue)" />
-        <path d={line} fill="none" stroke="#4F46E5" strokeWidth="2.5" strokeLinejoin="round" />
+        <path d={line} fill="none" stroke="var(--brand)" strokeWidth="2.5" strokeLinejoin="round" />
         {last ? (
           <g>
-            <circle cx={last.x} cy={last.y} r="7" fill="#4F46E5" opacity="0.15" />
-            <circle cx={last.x} cy={last.y} r="4" fill="#4F46E5" stroke="var(--card)" strokeWidth="2" />
+            <circle cx={last.x} cy={last.y} r="7" fill="var(--brand)" opacity="0.15" />
+            <circle cx={last.x} cy={last.y} r="4" fill="var(--brand)" stroke="var(--card)" strokeWidth="2" />
           </g>
         ) : null}
         {xTicks.map((tick) => (

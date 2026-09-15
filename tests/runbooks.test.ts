@@ -290,6 +290,7 @@ describe("runbook catalog", () => {
       skill: readFileSync(join(root, ".cursor/skills/choose-cursor-workflow/SKILL.md"), "utf8"),
       cloud: readFileSync(join(root, ".cursor/skills/hand-to-cloud-agent/SKILL.md"), "utf8"),
       reset: readFileSync(join(root, ".cursor/skills/reset-demo-state/SKILL.md"), "utf8"),
+      remap: readFileSync(join(root, ".cursor/skills/remap-industry/SKILL.md"), "utf8"),
     };
 
     for (const [name, contents] of Object.entries(files)) {
@@ -309,5 +310,7 @@ describe("runbook catalog", () => {
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
     expect(files.reset).toContain("1 failed / 31 passed");
+    expect(files.remap).toContain("lib/brand.ts");
+    expect(files.remap).toContain("Freeze");
   });
 });

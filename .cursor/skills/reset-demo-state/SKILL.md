@@ -1,11 +1,11 @@
 ---
 name: reset-demo-state
-description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
+description: Put the demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
 ---
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
+Goal state: seeded Packetline book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2.
 
 ## Checklist (run what applies)
 
@@ -67,7 +67,7 @@ Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip
 5. **Database looks wrong / empty dashboard**
 
 ```bash
-npx prisma db seed        # idempotent: pushes schema + reloads Fieldnote
+npx prisma db seed        # idempotent: pushes schema + reloads Packetline
 # nuclear option if the file is corrupt:
 npm run db:reset
 ```
@@ -87,7 +87,7 @@ npm run dev
 npm test    # expect: 1 failed (suggested-credit-api), 31 passed
 ```
 
-Open `http://127.0.0.1:43173` — dashboard shows Fieldnote data, catalog $49/$99/$249, disputes badge on the sidebar.
+Open `http://127.0.0.1:43173` — dashboard shows Packetline data, catalog $49/$99/$249, disputes badge on the sidebar.
 
 Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a red **Suggested credit $400.00** from v1 above the $249 Scale price. Confirm `/api/v2/disputes/dsp_1043/suggested-credit` returns $249.00 and the ledgerly-db MCP reports stored credit $249.00. If the page reads $249.00 from v2, restore `lib/disputes/suggested-credit-api.ts`.
 

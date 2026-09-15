@@ -1,19 +1,28 @@
 @import "tailwindcss";
 
 /*
-  Ledgerly design tokens — indigo reference
+  Routerly brand tokens — network teal
   ----------------------------------------
-  Match the attached dashboard mock: white chrome, violet accent.
+  Industry remaps replace the brand family here and keep the semantic aliases.
   Do not introduce a fourth catalog price. Restyle via these variables.
 */
 
 :root {
-  --indigo: #4f46e5;
-  --indigo-600: #4f46e5;
-  --indigo-500: #6366f1;
-  --indigo-soft: #eef2ff;
-  --indigo-page: #c7d2fe;
-  --indigo-page-soft: #e0e7ff;
+  --brand: #0f766e;
+  --brand-mark: #0f766e;
+  --brand-600: #0f766e;
+  --brand-500: #14b8a6;
+  --brand-accent: #5eead4;
+  --brand-soft: #ccfbf1;
+  --brand-page: #99f6e4;
+  --brand-page-soft: #f0fdfa;
+  /* Keep legacy utility names stable while remapping their values. */
+  --indigo: var(--brand);
+  --indigo-600: var(--brand-600);
+  --indigo-500: var(--brand-500);
+  --indigo-soft: var(--brand-soft);
+  --indigo-page: var(--brand-page);
+  --indigo-page-soft: var(--brand-page-soft);
   --ink: #111827;
   --ink-soft: #6b7280;
   --paper: #f7f7fb;
@@ -77,12 +86,20 @@
 }
 
 .dark {
-  --indigo: #818cf8;
-  --indigo-600: #6366f1;
-  --indigo-500: #a5b4fc;
-  --indigo-soft: #222454;
-  --indigo-page: #3730a3;
-  --indigo-page-soft: #1e1b4b;
+  --brand: #5eead4;
+  --brand-mark: #0f766e;
+  --brand-600: #14b8a6;
+  --brand-500: #99f6e4;
+  --brand-accent: #2dd4bf;
+  --brand-soft: #134e4a;
+  --brand-page: #115e59;
+  --brand-page-soft: #042f2e;
+  --indigo: var(--brand);
+  --indigo-600: var(--brand-600);
+  --indigo-500: var(--brand-500);
+  --indigo-soft: var(--brand-soft);
+  --indigo-page: var(--brand-page);
+  --indigo-page-soft: var(--brand-page-soft);
   --ink: #e8eaf2;
   --ink-soft: #9aa3b8;
   --paper: #12141c;

@@ -1,6 +1,6 @@
 ---
 name: hand-to-cloud-agent
-description: Hands Ledgerly work to Cloud Agents. Use for durable /goal runs, /autopilot PR supervision, or /orchestrate planner/worker/verifier trees. Not for a local /loop.
+description: Hands demo work to Cloud Agents. Use for durable /goal runs, /autopilot PR supervision, or /orchestrate planner/worker/verifier trees. Not for a local /loop.
 ---
 
 # Hand work to a Cloud Agent

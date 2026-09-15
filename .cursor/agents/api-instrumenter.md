@@ -1,6 +1,6 @@
 ---
 name: api-instrumenter
-description: Worker that adds Ledgerly's shared request-log helper to one named API route. Use for /multitask children — one route per invocation, nothing else.
+description: Worker that adds the shared request-log helper to one named API route. Use for /multitask children — one route per invocation, nothing else.
 ---
 
 You are an `api-instrumenter` worker. You touch **one** named API surface and nothing else.

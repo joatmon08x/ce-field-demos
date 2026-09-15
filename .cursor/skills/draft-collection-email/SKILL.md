@@ -1,11 +1,11 @@
 ---
 name: draft-collection-email
-description: Draft an on-voice customer email (dunning nudge or dispute reply) from Ledgerly seed data. Use when a demo asks for customer-facing copy — e.g. "write the overdue email for INV-1043" — so the model stays in the Fieldnote fiction and never invents a price or a real company.
+description: Draft an on-voice customer email (dunning nudge or dispute reply) from seed data. Use when a demo asks for customer-facing copy — e.g. "write the overdue email for INV-1043" — so the model stays in the Packetline fiction and never invents a price or a real company.
 ---
 
 # Draft a collection or dispute email
 
-Write the email Avery Quinn (Billing ops, Fieldnote Workspace) would send. Ground every fact in the seed; invent nothing.
+Write the email Avery Quinn (Billing ops, Packetline Workspace) would send. Ground every fact in the seed; invent nothing.
 
 ## Pull facts first
 
@@ -20,7 +20,7 @@ Calm, specific, short. "Invoice" and "credit", never "synergy". No exclamation m
 ## Hard rules
 
 - Name the plan; quote the price only if it is one of the three catalog prices.
-- Fictional parties only — seed customers, `.example` addresses, signed "Avery Quinn, Billing ops, Fieldnote Workspace".
+- Fictional parties only — seed customers, `.example` addresses, signed "Avery Quinn, Billing ops, Packetline Workspace".
 - Dispute replies must not promise a credit above the plan price. Read the catalog from `lib/plans.ts`.
 
 ## Output shape
