@@ -8,13 +8,43 @@ Chat prompt:
 /multitask @resolve-dispute.md
 ```
 
-Three parallel worktrees, one agent per workstream below. Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.
+Three parallel worktrees, one agent per workstream below. Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI. Run `npm run test:resolve` on the combined tree.
 
 ## Goal
 
 Enable **Accept credit** and **Decline** on the dispute detail Resolution panel so a reviewer note and status persist. Cap any accepted credit with the catalog plan price. Never invent a number.
 
 Catalog only: Starter $49, Growth $99, Scale $249 (`lib/plans.ts`). Dispute `dsp_1043` may claim $400 against a $249 Scale invoice — valid input; stored credit on accept must be **$249**, not $400.
+
+## Testing
+
+TDD fixtures live in `tests/resolve-dispute/`. They are **red until this slice lands**. They are excluded from `npm test` so the planted suggested-credit failure stays the sole shipped red (`1 failed / 45 passed`).
+
+```bash
+npx prisma db seed   # once, if prisma/dev.db is empty
+npm run test:resolve
+```
+
+Per worktree, only that agent’s file. After apply (helper → API → UI): the whole folder green. Do not migrate suggested-credit v1→v2. Do not edit these tests to force green. Fixtures use `dsp_tdd_*` ids and restore `dsp_1043` after each mutating case.
+
+| Agent | Command | Pass |
+|---|---|---|
+| Helper | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/helper.test.ts` | `accept` on a $400 Scale claim stores **24900** cents, note, `ACCEPTED`. Decline → `DECLINED`, credit not raised. Missing id throws `/not found/i`. |
+| API | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/route.test.ts` | Bad `action` (`ACCEPTED`) → 400. File imports `resolveDispute`, no `prisma`. Throw from helper is not 200. The **200 `{ ok: true }` + persist** case stays red until the helper worktree is applied. |
+| UI | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/panel.test.ts` | Accept/Decline enabled (no “Not wired” stub). Source POSTs `{ action, reviewerNote }` to `/api/disputes/.../resolve`. No `resolveDispute` / Prisma in the panel. |
+| Combined | `npm run test:resolve` | Helper + route 200 + panel + `ownership.test.ts` (disjoint persist). |
+
+`npm test` remains **1 failed / 45 passed**. Suggested credit on `/disputes/dsp_1043` may still be v1 **$400**.
+
+## Conflicts
+
+File overlap should be none. Open the three worktree diffs to show disjoint paths, then apply helper → API → UI.
+
+Runtime 501 from UI/API before the helper is applied is expected. `ownership.test.ts` fails if the route or panel inlines Prisma persist.
+
+A git conflict means an agent edited a sibling’s file — revert that hunk and keep ownership.
+
+Contract miss: `action` must be `accept` \| `decline`, not `ACCEPTED` \| `DECLINED` (the route 400 case).
 
 ## Shared contract (do not fork)
 
@@ -40,7 +70,7 @@ Catalog only: Starter $49, Growth $99, Scale $249 (`lib/plans.ts`). Dispute `dsp
 
 **Apply order after the three diffs land:** helper → API → UI.
 
-**Out of scope for every agent:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price.
+**Out of scope for every agent:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, editing `tests/resolve-dispute/` to force green.
 
 Mid-run **501** from UI or API is expected until the helper worktree is applied.
 
@@ -51,9 +81,9 @@ Mid-run **501** from UI or API is expected until the helper worktree is applied.
 | | |
 |---|---|
 | **Owns** | `lib/disputes/resolve.ts` only |
-| **Does not own** | route, page, seed, suggested-credit client/tests |
+| **Does not own** | route, page, seed, suggested-credit client/tests, `tests/resolve-dispute/` |
 | **Contract** | Implement `resolveDispute`. Load dispute + invoice. Cap accept with `suggestDisputeCredit` + `planPriceCents`. Persist status + note (+ capped cents on accept). Import `prisma` from `@/lib/prisma` here — persist lives in this file. |
-| **Verify** | Function no longer throws `resolveDispute is not implemented`. For `dsp_1043` + `accept`, stored credit is **24900** cents (Scale), not 40000. Decline sets `DECLINED` and does not raise the credit. Missing id should throw (route may map it). |
+| **Verify** | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/helper.test.ts` |
 
 ---
 
@@ -62,9 +92,9 @@ Mid-run **501** from UI or API is expected until the helper worktree is applied.
 | | |
 |---|---|
 | **Owns** | `app/api/disputes/[id]/resolve/route.ts` only |
-| **Does not own** | helper Prisma, UI |
+| **Does not own** | helper Prisma, UI, `tests/resolve-dispute/` |
 | **Contract** | Keep `import { resolveDispute } from "@/lib/disputes/resolve"`. Call it with `{ disputeId: id, action, reviewerNote }`. **Do not inline Prisma persist.** Leave 400 validation as-is. Success stays `{ ok: true }`. Optionally map real helper errors so “not implemented” is 501 and a missing dispute is not a fake 200. |
-| **Verify** | Bad `action` → 400. Valid body still calls `resolveDispute` (grep: no `prisma.` in this file). After helper is applied: `POST /api/disputes/dsp_1043/resolve` with `{ "action": "accept", "reviewerNote": "…" }` → 200 `{ ok: true }`. Before helper: 501 is OK. |
+| **Verify** | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/route.test.ts` — contract cases green now; 200 persist red until helper is applied. |
 
 ---
 
@@ -73,6 +103,6 @@ Mid-run **501** from UI or API is expected until the helper worktree is applied.
 | | |
 |---|---|
 | **Owns** | `app/disputes/[id]/page.tsx` + a small client child if the page stays a server component (e.g. `components/disputes/resolution-panel.tsx`) |
-| **Does not own** | helper, route internals, `SuggestedCredit` / v1 client |
+| **Does not own** | helper, route internals, `SuggestedCredit` / v1 client, `tests/resolve-dispute/` |
 | **Contract** | Enable Accept / Decline. Bind the reviewer note. `POST` `{ action, reviewerNote }` to `/api/disputes/{id}/resolve`. Refresh so status badge and note show after save. Do not call `resolveDispute` from the client. Do not invent a credit in the UI. |
-| **Verify** | Buttons are enabled. Note is in the POST body. After helper+API apply: on `/disputes/dsp_1043`, Accept or Decline with a note, reload — status and note persist. Suggested-credit display may still be v1 **$400**; do not “fix” that here. |
+| **Verify** | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/panel.test.ts` |

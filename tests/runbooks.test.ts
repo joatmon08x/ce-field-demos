@@ -251,7 +251,7 @@ describe("runbook catalog", () => {
     expect(beat("verify-parallel-work")?.promptType).toBe("none");
     expect(beat("verify-parallel-work")?.example).toBeUndefined();
     expect(beat("verify-parallel-work")?.detail).toBe(
-      "Open diffs for each agent. Check tests and linters. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
+      "Open diffs for each agent. Run npm run test:resolve. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
     );
     expect(beat("best-of-n-release-note")?.example).toBe(
       "/best-of-n Draft a short product release note for finishing Accept/Decline on dispute resolution in Ledgerly. Audience: internal eng + CE. Include what shipped, how to verify on dsp_1043, and that suggested-credit v1→v2 is out of scope. No code changes. ~150 words.",
