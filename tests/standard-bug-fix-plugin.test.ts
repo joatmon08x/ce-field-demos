@@ -36,13 +36,18 @@ describe("standard-bug-fix disk plugin", () => {
 
     expect(mcp.mcpServers.linear.url).toBe("https://mcp.linear.app/mcp");
     expect(skill).toMatch(/^---\nname: standard-bug-fix\n/m);
-    expect(skill).toContain("/standard-bug-fix LY-003");
+    expect(skill).toContain("FIELD_DEMO_ISSUES");
+    expect(skill).toContain("Match `FIELD_DEMO_ISSUES` titles");
+    expect(skill).not.toContain("/standard-bug-fix LY-003");
+    expect(skill).toContain("Do **not** assume `LY-003` is the filter bug");
     expect(skill).toContain("# Bug Fix Summary: [Service affected] - [Short Description]");
     expect(skill).toContain("## 2. The Core Problem (Why it happened)");
     expect(skill).toContain("## 3. Quick Takeaways");
     expect(skill).toContain("## 4. Fixes");
     expect(rule).toContain("alwaysApply: true");
     expect(rule).toContain("https://mcp.linear.app/mcp");
+    expect(rule).toContain("FIELD_DEMO_ISSUES");
+    expect(rule).not.toContain("/standard-bug-fix LY-003");
     expect(rule).toContain("# Bug Fix Summary: [Service affected] - [Short Description]");
   });
 });

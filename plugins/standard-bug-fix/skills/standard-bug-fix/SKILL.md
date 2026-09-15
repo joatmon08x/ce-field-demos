@@ -1,26 +1,40 @@
 ---
 name: standard-bug-fix
-description: Run a standard Linear bug fix. Use when the user types /standard-bug-fix, names a Linear issue such as LY-003, or asks to fix a ticket and write hypothesis, debug notes, and the fix PR back to Linear.
+description: Pull one ce-field-demos Linear issue by title or identifier, fix only that Ledgerly bug, and write hypothesis, debug notes, and the fix PR back to Linear. Use when the user runs /standard-bug-fix with a field-demo title such as the Overdue / Needs review filter bug.
 ---
 
 # Standard bug fix
 
-Take one Linear issue from report → hypothesis → debug notes → PR. Keep Linear current. Do not invent a second issue.
+Work one Linear issue from the operator’s **ce-field-demos** project. Keep Linear current. Do not invent a second issue. Do not expand scope to catalog migration, dispute resolution, or unrelated UI.
 
 ## Prerequisites
 
-This plugin ships the Linear MCP server (`https://mcp.linear.app/mcp`). If Linear tools are missing, authenticate that MCP, then continue.
+This plugin ships the Linear MCP server (`https://mcp.linear.app/mcp`). If Linear tools are missing, authenticate that MCP, then continue. If the project is empty, tell the operator to run `stage-linear-201`.
 
-## Input
+## 1. Read the ticket
 
-The user passes an issue id (`LY-003`, a Linear URL, or `/standard-bug-fix LY-003`). Fetch that issue with Linear MCP. Work only that ticket.
+Call Linear MCP:
 
-## Ledgerly bounds
+1. `list_projects` query `ce-field-demos` — use the project whose team is the operator’s private field-demos team, not a public or shared team.
+2. `list_issues` on that project. Match `FIELD_DEMO_ISSUES` titles in `lib/runbooks/linear-field-demos.ts` when the user passed a title (the 201 paste uses titles).
+3. `get_issue` only when the user passed a real identifier (for example `CE-16`). Do **not** assume `LY-003` is the filter bug. After `stage-linear-201` on a `LY` team, identifiers follow create order: suggested-credit, then filter, then email — so `LY-003` is the email story.
 
-- Prices only from `lib/plans.ts`: Starter $49, Growth $99, Scale $249.
-- Customers and operator from `prisma/seed.ts` and `prisma/extra-accounts.ts`. Emails use `.example`. Operator is Avery Quinn.
-- Leave `tests/suggested-credit-api.test.ts` and the v1 suggested-credit client alone unless this ticket is that migration.
-- Leave the dispute-resolution stub unfinished unless this ticket is that work.
+Work only the matched ticket.
+
+## 2. Stay inside the ticket
+
+- Reproduce on the URLs in the issue body.
+- Edit only paths named in the issue unless a listed file clearly imports a one-line helper you must touch.
+- Catalog stays Starter **$49**, Growth **$99**, Scale **$249**. Seed names and `.example` emails only. Operator is Avery Quinn.
+- Do not "correct" the $400 claim on `dsp_1043`.
+- Do not edit `tests/suggested-credit-api.test.ts` to force green.
+- Do not finish the dispute resolution stub unless the ticket names it.
+
+## 3. Known 201 cards
+
+- **Change customer email on invoice detail** — skip email validation.
+- **Dispute dsp_1043 claims $400 against a $249 Scale invoice** — switch the suggested-credit client to v2 only.
+- **Overdue / Needs review filter does not change the list** — fix filter selection so the active pill matches the table.
 
 ## Linear comment template
 
@@ -43,8 +57,8 @@ Every Linear writeback uses this shape. Concise. No extra sections.
 
 ## Sequence
 
-1. **Read the issue.** Pull title, description, comments, and assignee from Linear. Reproduce from the repo (tests, seed, running app) — do not treat the ticket text as a license to invent prices or customers.
-2. **Hypothesis (Linear comment).** Before product edits, comment with the template. Fill **Service affected**, **Short Description**, and **Core Problem**. Leave Takeaways/Fixes as `TBD` if unknown. State the potential hypothesis in Immediate Trigger and Underlying Flaw.
+1. **Read the issue** as in §1. Reproduce from the repo (tests, seed, running app).
+2. **Hypothesis (Linear comment).** Before product edits, comment with the template. Fill **Service affected**, **Short Description**, and **Core Problem**. Leave Takeaways/Fixes as `TBD` if unknown.
 3. **Debug.** Instrument or inspect only what you need. Note what confirmed or killed the hypothesis.
 4. **Debugging notes (Linear comment).** Comment again with the template. Keep Core Problem; fill **Quick Takeaways** (Good / Bad) from the actual debug path.
 5. **Fix.** Smallest change that matches the ticket. Verify with the relevant tests (and the UI path if the change is visible).
@@ -52,3 +66,7 @@ Every Linear writeback uses this shape. Concise. No extra sections.
 7. **Fix PR (Linear comment).** Comment with the **full** template. Check the Fixes item (`[x]`). **Action** is what shipped. **Owner** is the Linear assignee, or Avery Quinn. **PR** is the PR number or URL. Link the PR on the Linear issue if the MCP can.
 
 Do not skip the three Linear comments. Do not paste secrets, production PII, or real company names into Linear.
+
+## 4. Finish
+
+Run the tests that cover the files you changed. Leave the planted suggested-credit red test red unless this issue is the dsp_1043 client migration and the user asked to migrate.

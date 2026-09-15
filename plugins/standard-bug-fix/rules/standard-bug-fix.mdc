@@ -5,9 +5,9 @@ alwaysApply: true
 
 # Standard bug fix
 
-When working a Linear bug (for example `/standard-bug-fix LY-003`), use this plugin's Linear MCP (`https://mcp.linear.app/mcp`). Authenticate Linear if its tools are unavailable.
+When working a Linear bug (for example `/standard-bug-fix Overdue / Needs review filter does not change the list`), use this plugin's Linear MCP (`https://mcp.linear.app/mcp`). Authenticate Linear if its tools are unavailable.
 
-Write back to the **existing** issue. Do not open a duplicate. Keep comments short. Use this template for Linear (fill only what you know at that step; the closing comment must be complete):
+Match the **ce-field-demos** issue by title from `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`. Do not assume `LY-003` is the filter bug. Write back to the **existing** issue. Do not open a duplicate. Keep comments short. Use this template for Linear (fill only what you know at that step; the closing comment must be complete):
 
 ```markdown
 # Bug Fix Summary: [Service affected] - [Short Description]
