@@ -86,9 +86,9 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the operator’s account only.
 
 1. Open Linear → **Settings → Teams → New team**.
-2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
+2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
-4. Members: **only you**. Do not add Customer Education or any other shared team.
+4. Members: **only you**. Do not add any other team.
 5. Then ask an agent to run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
 
 Do not skip the private-team step. A project on a public team is visible to that team.

@@ -32,7 +32,7 @@ If the list is empty, skip. Report titles you removed. Do not recreate them.
 
 3. **Delete the Canvas**
 
-Canvases from the 101 beat live outside the repo. Cursor only picks up files in `~/.cursor/projects/<workspace-slug>/canvases/`. The slug is the absolute repo path with `/` replaced by `-` (example: `~/.cursor/projects/Users-rosemary-wang-joatmon08x-ce-field-demos/canvases/`).
+Canvases from the 101 beat live outside the repo. Cursor only picks up files in `~/.cursor/projects/<workspace-slug>/canvases/`. The slug is the absolute repo path with `/` replaced by `-` (example: `~/.cursor/projects/Users-operator-ce-field-demos/canvases/`).
 
 Delete leftover canvas artifacts:
 

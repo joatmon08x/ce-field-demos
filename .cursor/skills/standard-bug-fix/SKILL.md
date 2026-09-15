@@ -11,7 +11,7 @@ Work one Linear issue from the operator’s **ce-field-demos** project. Do not e
 
 Call **Linear** MCP (authenticate if needed):
 
-1. `list_projects` query `ce-field-demos` — use the project whose team is the operator’s private field-demos team, not Customer Education.
+1. `list_projects` query `ce-field-demos` — use the project whose team is the operator’s private field-demos team, not a public or shared team.
 2. `list_issues` on that project, or `get_issue` when the user passed an identifier (for example `CE-16`).
 3. Match `FIELD_DEMO_ISSUES` titles in `lib/runbooks/linear-field-demos.ts` when the user passed a title instead of an ID.
 

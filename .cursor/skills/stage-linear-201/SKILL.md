@@ -13,19 +13,19 @@ Issue bodies live in `lib/runbooks/linear-field-demos.ts`. The board has exactly
 
 ## Isolation (required)
 
-Linear privacy is **team** privacy. A project on a public team (Customer Education, FE Demos, FlyLo, Disney DXT, …) is visible to that team.
+Linear privacy is **team** privacy. A project on a public or shared team is visible to that team.
 
 The same steps are in `README.md`, `demo-howto.md`, and `AGENTS.md`. Repeat them if the operator has not done this yet:
 
 1. Open Linear → **Settings → Teams → New team**.
-2. Name it for this operator only (example: `joatmon08x/ce-field-demos` or `{displayName}-field-demos`).
+2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
-4. Members: **only the operator**. Do not add Customer Education or any other team.
+4. Members: **only the operator**. Do not add any other team.
 5. Do not attach the project to a public team later — that publishes it.
 
-Workspace admins on some plans can still see private-team names in admin settings. That is Linear, not this skill. Do not put the board on Customer Education to “share” it.
+Workspace admins on some plans can still see private-team names in admin settings. That is Linear, not this skill. Do not put the board on a shared team to “share” it.
 
-If the operator has no private team yet, **stop**. Point them at those docs. Linear MCP cannot create teams. Do not `save_project` onto Customer Education or any other public team.
+If the operator has no private team yet, **stop**. Point them at those docs. Linear MCP cannot create teams. Do not `save_project` onto a public or shared team.
 
 ## 1. Linear MCP
 
@@ -100,7 +100,7 @@ The 201 pastes use **titles**, not identifiers, so you do not edit `lib/runbooks
 
 ## Never
 
-- Never stage onto Customer Education, FlyLo, Disney DXT, FE Demos, or any other shared team.
+- Never stage onto a public or shared Linear team.
 - Never complete dispute resolution or migrate suggested-credit as part of staging.
 - Never edit `tests/suggested-credit-api.test.ts` or the seed.
 - Never add local ticket-board routes, MCP servers, or marketplace copies.
