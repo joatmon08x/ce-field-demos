@@ -22,7 +22,7 @@ function textResult(data: unknown) {
   };
 }
 
-function notFound(kind: string, id: string) {
+function notFound({ kind, id }: { kind: string; id: string }) {
   return {
     content: [{ type: "text" as const, text: `${kind} not found: ${id}` }],
     isError: true as const,
@@ -80,7 +80,7 @@ export function createCompanyTicketServer(): McpServer {
     },
     async ({ key }) => {
       const ticket = getTicket(key);
-      return ticket ? textResult(ticket) : notFound("Ticket", key);
+      return ticket ? textResult(ticket) : notFound({ kind: "Ticket", id: key });
     },
   );
 
@@ -106,7 +106,7 @@ export function createCompanyTicketServer(): McpServer {
     },
     async ({ sprintId }) => {
       const board = listSprintBoard(sprintId);
-      if (!board) return notFound("Sprint", sprintId ?? "active");
+      if (!board) return notFound({ kind: "Sprint", id: sprintId ?? "active" });
       return textResult({ ...board, backlog: listBacklog() });
     },
   );

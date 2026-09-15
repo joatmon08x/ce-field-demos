@@ -6,7 +6,7 @@ export function TicketShell({ children }: { children: ReactNode }) {
   return (
     <div className="companyticket-shell min-h-full">
       <header className="sticky top-0 z-20 flex h-14 items-center gap-4 border-b border-border bg-card px-4 sm:px-6">
-        <Link href="/companyticket" className="flex items-center gap-2.5 font-semibold tracking-tight">
+        <Link href="/companyticket" className="flex items-center gap-2.5 font-semibold tracking-tight text-foreground">
           <span className="flex size-7 items-center justify-center rounded-md bg-indigo text-[11px] font-bold text-primary-foreground">
             LY
           </span>
