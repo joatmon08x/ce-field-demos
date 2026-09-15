@@ -1,3 +1,7 @@
+import {
+  FIELD_DEMO_FILTER_TITLE,
+  FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
+} from "@/lib/runbooks/linear-field-demos";
 import type { DemoSection } from "@/lib/runbooks/types";
 
 export const RUNBOOK_SECTIONS_201 = [
@@ -93,34 +97,34 @@ export const RUNBOOK_SECTIONS_201 = [
     title: "How does my agent get more information?",
     beats: [
       {
-        id: "add-companyticket-mcp",
-        title: "Add CompanyTicket MCP",
+        id: "add-linear-mcp",
+        title: "Add Linear MCP",
         promptType: "adaptable",
         detail:
-          "Start the CompanyTicket MCP server for this project. Show MCP servers in Customize -> MCPs. Show CompanyTicket MCP server and the different tools you can enable.",
-        example: "Add the CompanyTicket MCP server to this project.",
+          "Connect Linear for this project. Show MCP servers in Customize -> MCPs. Show Linear MCP and the tools you can enable. The ce-field-demos board must already exist — run stage-linear-201 before this beat.",
+        example: "Add the Linear MCP server to this project.",
       },
       {
-        id: "fix-ticket-ly-002",
-        title: "Fix ticket LY-002",
+        id: "fix-linear-suggested-credit",
+        title: "Fix the suggested-credit Linear issue",
         promptType: "adaptable",
         detail:
-          "Pull a reported bug from the CompanyTicket backlog. Explore the tool calls to CompanyTicket MCP server.",
-        example: "Fix ticket number LY-002",
+          "Pull the dsp_1043 suggested-credit bug from the ce-field-demos Linear project. Explore the Linear MCP tool calls.",
+        example: `Fix Linear issue: ${FIELD_DEMO_SUGGESTED_CREDIT_TITLE}`,
       },
       {
         id: "import-marketplace-plugin",
-        title: "Import marketplace plugin",
+        title: "Linear from the marketplace",
         promptType: "none",
         detail:
-          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+          "Go to Customize -> Browse Marketplace and add the Linear plugin if it is not already connected. Show that Linear MCP is available. Do not import CompanyTicket from disk.",
       },
       {
-        id: "standard-bug-fix-ly-003",
-        title: "Standard bug fix LY-003",
+        id: "standard-bug-fix-filter",
+        title: "Standard bug fix — filter pills",
         promptType: "adaptable",
         detail: "",
-        example: "/standard-bug-fix LY-003",
+        example: `/standard-bug-fix ${FIELD_DEMO_FILTER_TITLE}`,
       },
     ],
   },

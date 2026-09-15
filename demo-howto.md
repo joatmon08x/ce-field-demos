@@ -18,7 +18,7 @@ The 201 track has four sections. Open `/runbooks/201` and copy a card for any be
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Canvas DDD, ask across chats, context usage
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, ESLint rule and hook
-3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin
+3. **How does my agent get more information?** — Linear MCP, ce-field-demos suggested-credit issue, marketplace Linear plugin
 4. **How do I parallelize a task?** — [three-worktree plan](#refine-the-plan), `/multitask`, verify, `/best-of-n`
 
 ---
@@ -280,22 +280,22 @@ In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)
 
 ### How does my agent get more information?
 
-The mock board is [http://127.0.0.1:43173/companyticket](http://127.0.0.1:43173/companyticket). Sprint Fieldnote 26.8 holds **LY-001**, **LY-002**, and **LY-003**. Keys use the **LY-000** scheme. The stdio server is `npm run mcp:companyticket`; the marketplace copy is `plugin/companyticket`.
+Run `stage-linear-201` on a **private** Linear team before this section. CompanyTicket is retired.
 
 ```text
-Add the CompanyTicket MCP server to this project.
+Add the Linear MCP server to this project.
 ```
 
 Show Customize → MCPs, then:
 
 ```text
-Fix ticket number LY-002
+Fix Linear issue: Dispute dsp_1043 claims $400 against a $249 Scale invoice
 ```
 
-Import the demo plugin from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Then:
+Add Linear from the marketplace if it is not already connected. Then:
 
 ```text
-/standard-bug-fix LY-003
+/standard-bug-fix Overdue / Needs review filter does not change the list
 ```
 
 ### How do I parallelize a task?

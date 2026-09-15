@@ -180,10 +180,10 @@ describe("runbook catalog", () => {
       "promote-create-api-project",
       "create-eslint-rule",
       "test-eslint-hook",
-      "add-companyticket-mcp",
-      "fix-ticket-ly-002",
+      "add-linear-mcp",
+      "fix-linear-suggested-credit",
       "import-marketplace-plugin",
-      "standard-bug-fix-ly-003",
+      "standard-bug-fix-filter",
       "refine-plan-three-worktrees",
       "multitask-three-workstreams",
       "verify-parallel-work",
@@ -228,22 +228,24 @@ describe("runbook catalog", () => {
     expect(beat("test-eslint-hook")?.example).toBe(
       "In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
     );
-    expect(beat("add-companyticket-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
-    expect(beat("add-companyticket-mcp")?.detail).toContain(
-      "Show CompanyTicket MCP server and the different tools you can enable.",
+    expect(beat("add-linear-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
+    expect(beat("add-linear-mcp")?.detail).toContain("Show Linear MCP and the tools you can enable.");
+    expect(beat("add-linear-mcp")?.example).toBe("Add the Linear MCP server to this project.");
+    expect(beat("fix-linear-suggested-credit")?.detail).toContain(
+      "Explore the Linear MCP tool calls.",
     );
-    expect(beat("add-companyticket-mcp")?.example).toBe("Add the CompanyTicket MCP server to this project.");
-    expect(beat("fix-ticket-ly-002")?.detail).toContain(
-      "Explore the tool calls to CompanyTicket MCP server.",
+    expect(beat("fix-linear-suggested-credit")?.example).toBe(
+      "Fix Linear issue: Dispute dsp_1043 claims $400 against a $249 Scale invoice",
     );
-    expect(beat("fix-ticket-ly-002")?.example).toBe("Fix ticket number LY-002");
     expect(beat("import-marketplace-plugin")?.promptType).toBe("none");
     expect(beat("import-marketplace-plugin")?.example).toBeUndefined();
     expect(beat("import-marketplace-plugin")?.detail).toBe(
-      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+      "Go to Customize -> Browse Marketplace and add the Linear plugin if it is not already connected. Show that Linear MCP is available. Do not import CompanyTicket from disk.",
     );
-    expect(beat("standard-bug-fix-ly-003")?.detail).toBe("");
-    expect(beat("standard-bug-fix-ly-003")?.example).toBe("/standard-bug-fix LY-003");
+    expect(beat("standard-bug-fix-filter")?.detail).toBe("");
+    expect(beat("standard-bug-fix-filter")?.example).toBe(
+      "/standard-bug-fix Overdue / Needs review filter does not change the list",
+    );
     expect(beat("refine-plan-three-worktrees")?.example).toBe(
       "@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.",
     );
@@ -309,5 +311,9 @@ describe("runbook catalog", () => {
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
     expect(files.reset).toContain("1 failed / 45 passed");
+    expect(files.agents).toContain("stage-linear-201");
+    expect(files.rule).toContain("stage-linear-201");
+    expect(files.skill).toContain("stage-linear-201");
+    expect(files.howto).toContain("stage-linear-201");
   });
 });

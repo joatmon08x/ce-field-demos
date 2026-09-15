@@ -20,7 +20,17 @@ export const PROJECT_SKILLS = [
   {
     name: "choose-cursor-workflow",
     path: ".cursor/skills/choose-cursor-workflow/SKILL.md",
-    when: "Walk the 101 track, then choose the mode, model, rule, or skill from the shape of the work.",
+    when: "Walk the 101 or 201 track, then choose the mode, model, rule, or skill from the shape of the work.",
+  },
+  {
+    name: "stage-linear-201",
+    path: ".cursor/skills/stage-linear-201/SKILL.md",
+    when: "Before the 201 MCP section. Private Linear team + ce-field-demos project + five Fieldnote issues.",
+  },
+  {
+    name: "standard-bug-fix",
+    path: ".cursor/skills/standard-bug-fix/SKILL.md",
+    when: "/standard-bug-fix on one ce-field-demos Linear issue.",
   },
   {
     name: "dispatch-subagents",

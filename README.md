@@ -20,16 +20,15 @@ Open **http://localhost:43173**.
 
 ## App
 
-Dashboard, Invoices, Collections, Disputes, Runbooks, Settings, CompanyTicket (`/companyticket`). Extra book accounts are in `prisma/extra-accounts.ts`.
+Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accounts are in `prisma/extra-accounts.ts`.
 
 | Demo hook | Where |
 | --- | --- |
 | Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
-| Skills | `.cursor/skills/` — run the demo or pick a Cursor workflow |
+| Skills | `.cursor/skills/` — run the demo, stage Linear for 201, or pick a Cursor workflow |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
-| CompanyTicket | `/companyticket` — mock ticket board, keys `LY-000`. MCP `npm run mcp:companyticket`. Import `plugin/companyticket` from disk for the 201 marketplace beat. |
 
 ## Starter prompts
 
@@ -79,7 +78,7 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas to a file, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, ESLint rule and hook.
-3. **How does my agent get more information?** — CompanyTicket MCP, fix LY-002, import a marketplace plugin, `/standard-bug-fix LY-003`.
+3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, Linear from the marketplace, `/standard-bug-fix` on the filter-pills issue. Stage the board first with `stage-linear-201`.
 4. **How do I parallelize a task?** — refine a three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 
 ## Agents and skills
@@ -90,6 +89,8 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
+| `stage-linear-201` | Before 201 MCP: private Linear team, project `ce-field-demos`, five Fieldnote issues. |
+| `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
 | `autopilot` (built in) | Current PR-to-merge-ready skill; formerly `/babysit`. |

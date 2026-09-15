@@ -83,6 +83,8 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
+| `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: private Linear team, project `ce-field-demos`, five Fieldnote issues |
+| `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
-| `.cursor/mcp.json` → `companyticket` | Mock ticket MCP (`mcp/companyticket/`). Board at `/companyticket`. Keys `LY-000`. Marketplace copy in `plugin/companyticket/`. The 101 track ends on Canvas and a slide-generating MCP, not this server. |
+| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. The 201 MCP beat uses Linear, not CompanyTicket. |

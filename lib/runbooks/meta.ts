@@ -9,6 +9,12 @@ export { RUNBOOK_SECTIONS_201 } from "@/lib/runbooks/beats/201";
 export { PROJECT_AGENTS, PROJECT_SKILLS } from "@/lib/runbooks/agents";
 export { RUNBOOK_TRACKS, getRunbookTrack, type RunbookTrack } from "@/lib/runbooks/tracks";
 export {
+  FIELD_DEMO_FILTER_TITLE,
+  FIELD_DEMO_ISSUES,
+  FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
+  LINEAR_FIELD_DEMOS_PROJECT,
+} from "@/lib/runbooks/linear-field-demos";
+export {
   runbookBeatSequence,
   runbookBeats,
   runbookSectionHref,
