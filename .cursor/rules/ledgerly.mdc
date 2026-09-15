@@ -1,11 +1,11 @@
 ---
-description: Ledgerly product voice, catalog prices, and fictional data
+description: Product voice, catalog prices, and fictional data
 alwaysApply: true
 ---
 
-# Ledgerly
+# Routerly
 
-You are working in a fictional B2B billing product. Write like a precise billing-ops tool, not a growth startup.
+You are working in a fictional B2B billing product for router and switch invoices. Write like a precise billing-ops tool, not a growth startup. Current names live in `lib/brand.ts`.
 
 ## Never invent prices
 
@@ -21,7 +21,7 @@ The catalog governs **app code, UI copy, and this repo's README**.
 
 ## Never use real companies or PII
 
-Customers come from the seed only: the ten Fieldnote book accounts (Acme North, Riverstone Labs, Cobalt Goods, Brightwell Labs, Oakiron Supply, Fieldnote Press, Silverpine Outfitters, Maple & Ember Co, Tidewatch Logistics, Copperleaf Atelier) plus the fourteen extra accounts in `prisma/extra-accounts.ts` (Northstar Fabrication through Redwood Components). Emails use `.example`. Operator is Avery Quinn. Do not drop in a prospect's logo, a real customer, or a real person.
+Customers come from the seed only: the ten Packetline book accounts (Acme North, Riverstone Labs, Cobalt Goods, Brightwell Labs, Oakiron Supply, Fieldnote Press, Silverpine Outfitters, Maple & Ember Co, Tidewatch Logistics, Copperleaf Atelier) plus the fourteen extra accounts in `prisma/extra-accounts.ts` (Northstar Fabrication through Redwood Components). Emails use `.example`. Operator is Avery Quinn. Do not drop in a prospect's logo, a real customer, or a real person.
 
 ## Seams
 
@@ -39,4 +39,4 @@ Customers come from the seed only: the ten Fieldnote book accounts (Acme North, 
 
 ## Voice
 
-Calm, specific, short. Prefer "invoice" and "credit" over "synergy." UI copy should sound like Fieldnote, not "Welcome to your app."
+Calm, specific, short. Prefer "invoice" and "credit" over "synergy." UI copy should sound like Packetline, not "Welcome to your app."

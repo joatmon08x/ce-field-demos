@@ -1,3 +1,4 @@
+import { PRODUCT } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 /**
@@ -44,7 +45,7 @@ export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
       <LogoMark className="size-8 shrink-0" />
-      <span className="text-[17px] font-semibold tracking-tight text-foreground">Ledgerly</span>
+      <span className="text-[17px] font-semibold tracking-tight text-foreground">{PRODUCT.name}</span>
     </span>
   );
 }

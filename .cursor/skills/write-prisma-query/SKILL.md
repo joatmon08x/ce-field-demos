@@ -1,9 +1,9 @@
 ---
 name: write-prisma-query
-description: Write a correct Prisma query against Ledgerly's seeded SQLite database. Use when someone asks to pull, count, or aggregate invoices, disputes, or customers from the demo seed — e.g. "which invoices are overdue" or "total open receivables".
+description: Write a correct Prisma query against the seeded SQLite database. Use when someone asks to pull, count, or aggregate invoices, disputes, or customers from the demo seed — e.g. "which invoices are overdue" or "total open receivables".
 ---
 
-# Write a Prisma query for Ledgerly
+# Write a Prisma query for the demo book
 
 Produce a query that runs against this repo's real schema and seed, not a generic Prisma example.
 

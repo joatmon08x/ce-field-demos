@@ -1,6 +1,6 @@
 ---
 name: dispatch-subagents
-description: Launches isolated Task subagents in one parallel turn for independent Ledgerly work. Use for /multitask, when the user asks to run workers at the same time, or when naming api-instrumenter or ledgerly-reviewer.
+description: Launches isolated Task subagents in one parallel turn for independent work on this billing demo. Use for /multitask, when the user asks to run workers at the same time, or when naming api-instrumenter or ledgerly-reviewer.
 ---
 
 # Dispatch subagents

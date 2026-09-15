@@ -1,8 +1,9 @@
 import { execSync } from "node:child_process";
 import { PrismaClient } from "@prisma/client";
 import { demoDay } from "../lib/clock";
+import { cycleMemo, monthlySupportLine, PRODUCT } from "../lib/brand";
 import { suggestDisputeCredit } from "../lib/dispute-credit";
-import { planPriceCents } from "../lib/plans";
+import { planLabel, planPriceCents } from "../lib/plans";
 import { EXTRA_ACCOUNTS } from "./extra-accounts";
 
 const prisma = new PrismaClient();
@@ -111,7 +112,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-07",
     dueOn: "2026-09-06",
-    memo: "Monthly Growth seat for Acme North.",
+    memo: `Monthly Growth ${PRODUCT.lineItemNoun} for Acme North.`,
   },
   {
     id: "inv_1042",
@@ -122,7 +123,7 @@ const INVOICES = [
     issuedOn: "2026-07-08",
     dueOn: "2026-08-07",
     paidOn: "2026-08-04",
-    memo: "Starter plan — July cycle.",
+    memo: `Starter plan — July cycle ${PRODUCT.lineItemNoun}.`,
   },
   {
     id: "inv_1043",
@@ -144,7 +145,7 @@ const INVOICES = [
     issuedOn: "2026-07-12",
     dueOn: "2026-08-11",
     paidOn: "2026-08-09",
-    memo: "Growth plan — July cycle.",
+    memo: `Growth plan — July cycle ${PRODUCT.lineItemNoun}.`,
   },
   {
     id: "inv_1045",
@@ -154,7 +155,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-02",
     dueOn: "2026-09-01",
-    memo: "Starter plan for Oakiron Supply.",
+    memo: `Starter plan ${PRODUCT.lineItemNoun} for Oakiron Supply.`,
   },
   {
     id: "inv_1046",
@@ -165,7 +166,7 @@ const INVOICES = [
     issuedOn: "2026-07-14",
     dueOn: "2026-08-13",
     paidOn: "2026-08-12",
-    memo: "Scale plan — July cycle.",
+    memo: `Scale plan — July cycle ${PRODUCT.lineItemNoun}.`,
   },
   {
     id: "inv_1047",
@@ -227,7 +228,7 @@ const INVOICES = [
     issuedOn: "2026-07-07",
     dueOn: "2026-08-06",
     paidOn: "2026-07-28",
-    memo: "Growth plan — prior cycle for Acme North.",
+    memo: `Growth plan — prior cycle ${PRODUCT.lineItemNoun} for Acme North.`,
   },
   {
     id: "inv_1054",
@@ -238,7 +239,7 @@ const INVOICES = [
     issuedOn: "2026-07-01",
     dueOn: "2026-07-31",
     paidOn: "2026-07-25",
-    memo: "Starter plan — July cycle for Riverstone Labs.",
+    memo: `Starter plan — July cycle ${PRODUCT.lineItemNoun} for Riverstone Labs.`,
   },
   {
     id: "inv_1055",
@@ -249,7 +250,7 @@ const INVOICES = [
     issuedOn: "2026-07-18",
     dueOn: "2026-08-17",
     paidOn: "2026-08-15",
-    memo: "Scale plan — paid mid-August.",
+    memo: `Scale plan — paid mid-August ${PRODUCT.lineItemNoun}.`,
   },
   {
     id: "inv_1056",
@@ -260,7 +261,7 @@ const INVOICES = [
     issuedOn: "2026-06-07",
     dueOn: "2026-07-07",
     paidOn: "2026-07-02",
-    memo: "Growth plan — June cycle for Acme North.",
+    memo: `Growth plan — June cycle ${PRODUCT.lineItemNoun} for Acme North.`,
   },
   {
     id: "inv_1057",
@@ -271,7 +272,7 @@ const INVOICES = [
     issuedOn: "2026-08-10",
     dueOn: "2026-09-09",
     paidOn: "2026-08-18",
-    memo: "Growth plan — August cycle, paid early.",
+    memo: `Growth plan — August cycle ${PRODUCT.lineItemNoun}, paid early.`,
   },
   {
     id: "inv_1052",
@@ -345,9 +346,9 @@ async function main() {
 
   await prisma.workspace.create({
     data: {
-      id: "ws_fieldnote",
-      name: "Fieldnote Workspace",
-      slug: "fieldnote",
+      id: PRODUCT.workspaceId,
+      name: PRODUCT.workspaceName,
+      slug: PRODUCT.workspaceSlug,
       createdAt: demoDay("2025-11-04"),
     },
   });
@@ -356,7 +357,7 @@ async function main() {
     await prisma.customer.create({
       data: {
         ...customer,
-        workspaceId: "ws_fieldnote",
+        workspaceId: PRODUCT.workspaceId,
         createdAt: demoDay("2026-01-15"),
       },
     });
@@ -368,7 +369,7 @@ async function main() {
       data: {
         id: invoice.id,
         number: invoice.number,
-        workspaceId: "ws_fieldnote",
+        workspaceId: PRODUCT.workspaceId,
         customerId: invoice.customerId,
         plan: invoice.plan,
         status: invoice.status,
@@ -384,7 +385,7 @@ async function main() {
           create: [
             {
               id: `line_${invoice.id}`,
-              description: `${invoice.plan.charAt(0)}${invoice.plan.slice(1).toLowerCase()} plan · monthly`,
+              description: monthlySupportLine(planLabel(invoice.plan)),
               quantity: 1,
               unitPriceCents: totalCents,
               amountCents: totalCents,
@@ -404,7 +405,7 @@ async function main() {
       data: {
         id: dispute.id,
         invoiceId: dispute.invoiceId,
-        workspaceId: "ws_fieldnote",
+        workspaceId: PRODUCT.workspaceId,
         status: dispute.status,
         reason: dispute.reason,
         openedOn: demoDay(dispute.openedOn),
@@ -423,7 +424,7 @@ async function main() {
     await prisma.customer.create({
       data: {
         id: account.customerId,
-        workspaceId: "ws_fieldnote",
+        workspaceId: PRODUCT.workspaceId,
         name: account.name,
         contactName: account.contactName,
         email: account.email,
@@ -437,7 +438,7 @@ async function main() {
       data: {
         id: account.invoiceId,
         number: account.invoiceNumber,
-        workspaceId: "ws_fieldnote",
+        workspaceId: PRODUCT.workspaceId,
         customerId: account.customerId,
         plan: account.plan,
         status: state.status,
@@ -447,12 +448,12 @@ async function main() {
         subtotalCents: totalCents,
         taxCents: 0,
         totalCents,
-        memo: `${account.plan.charAt(0)}${account.plan.slice(1).toLowerCase()} plan — August cycle for ${account.name}.`,
+        memo: cycleMemo(planLabel(account.plan), account.name),
         lines: {
           create: [
             {
               id: `line_${account.invoiceId}`,
-              description: `${account.plan.charAt(0)}${account.plan.slice(1).toLowerCase()} plan · monthly`,
+              description: monthlySupportLine(planLabel(account.plan)),
               quantity: 1,
               unitPriceCents: totalCents,
               amountCents: totalCents,
@@ -469,7 +470,7 @@ async function main() {
     prisma.dispute.count(),
   ]);
   console.log(
-    `Seeded Fieldnote Workspace · ${customers} customers (${EXTRA_ACCOUNTS.length} extra book accounts) · ${invoices} invoices · ${disputes} disputes`,
+    `Seeded ${PRODUCT.workspaceName} · ${customers} customers (${EXTRA_ACCOUNTS.length} extra book accounts) · ${invoices} invoices · ${disputes} disputes`,
   );
 }
 

@@ -1,9 +1,9 @@
 ---
 name: ledgerly-reviewer
-description: Expert Ledgerly diff reviewer. Use proactively after writing or modifying code in this repo. Checks catalog prices, seed names, and protected paths. Does not silently migrate the suggested-credit client or change the seed.
+description: Expert diff reviewer for this billing demo. Use proactively after writing or modifying code. Checks catalog prices, seed names, lib/brand.ts, and protected paths. Does not silently migrate the suggested-credit client or change the seed.
 ---
 
-You are a Ledgerly reviewer. When invoked, review the current diff only. Do not implement product changes unless the parent explicitly asked you to fix a finding you just reported.
+You are reviewing this billing demo (current product name is `lib/brand.ts`). When invoked, review the current diff only. Do not implement product changes unless the parent explicitly asked you to fix a finding you just reported.
 
 When invoked:
 

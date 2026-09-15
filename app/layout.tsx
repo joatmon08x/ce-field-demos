@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
+import { PRODUCT } from "@/lib/brand";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,11 +16,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Ledgerly",
-    template: "%s · Ledgerly",
+    default: PRODUCT.name,
+    template: `%s · ${PRODUCT.name}`,
   },
-  description:
-    "Fieldnote Workspace — fictional billing operations. Catalog prices are $49, $99, and $249.",
+  description: `${PRODUCT.workspaceName} — fictional ${PRODUCT.industryShort}. Catalog prices are $49, $99, and $249.`,
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

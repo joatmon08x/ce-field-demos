@@ -1,6 +1,6 @@
-# Ledgerly
+# Routerly
 
-Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
+Fictional B2B billing ops for **router and switch invoices**. Packetline Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies. Identity is `lib/brand.ts`.
 
 Use it for the jumpable Grok Build **101** and **201** tracks. Copy-paste prompts live on `/runbooks/101` and `/runbooks/201`; the presenter run-of-show and speaker notes are `demo-howto.md`.
 
@@ -35,7 +35,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 Ask:
 
 ```text
-What are Ledgerly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
+What are Routerly's only plan prices, and which seeded invoices are overdue? Cite lib/plans.ts, prisma/seed.ts, and prisma/extra-accounts.ts.
 
 Explain the dispute flow end to end. What is intentionally unfinished? Cite the resolve helper, the resolve API route, and the dispute page. Do not edit any files.
 ```
@@ -89,6 +89,7 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
+| `remap-industry` | Change the demo to another industry without rewriting invoices or beats. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
 | `autopilot` (built in) | Current PR-to-merge-ready skill; formerly `/babysit`. |

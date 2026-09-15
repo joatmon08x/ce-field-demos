@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 
 /**
- * Mock Pulse — Ledgerly's account-health and reliability signal service.
+ * Mock Pulse — account-health and reliability signal service.
  * Deterministic, side-effect-free, offline. A local stand-in for /multitask
  * and /loop demos.
  */
@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   return NextResponse.json({
     service: "pulse",
-    description: "Ledgerly account-health and reliability signals (mock)",
+    description: "Account-health and reliability signals (mock)",
     status: "ready",
     accepts: "POST { ticket_id, signal, ...details }",
   });

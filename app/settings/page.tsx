@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PRODUCT } from "@/lib/brand";
 import { DEMO_OPERATOR } from "@/lib/demo-session";
 import { formatUsd } from "@/lib/money";
 import { PLAN_IDS, PLAN_LABEL, PLAN_PRICE_CENTS } from "@/lib/plans";
@@ -20,7 +21,7 @@ export default async function SettingsPage() {
       <PageHeader
         eyebrow="Workspace"
         title="Settings"
-        description="Fieldnote is fiction. Keep the catalog honest and the names invented."
+        description={`${PRODUCT.workspaceShort} is fiction. Keep the catalog honest and the names invented.`}
       />
 
       <Card>

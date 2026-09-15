@@ -5,6 +5,7 @@ import { RevenueChart } from "@/components/charts/revenue-chart";
 import { InvoiceTable } from "@/components/invoice-table";
 import { KpiCard } from "@/components/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PRODUCT } from "@/lib/brand";
 import { getDashboard } from "@/lib/data";
 import { formatUsd } from "@/lib/money";
 
@@ -25,7 +26,8 @@ export default async function DashboardPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Fieldnote Workspace · catalog $49 / $99 / $249 · clock frozen 23 Aug 2026.
+            {PRODUCT.workspaceName} · {PRODUCT.industryShort} · catalog $49 / $99 / $249 · clock
+            frozen 23 Aug 2026.
           </p>
         </div>
         <p className="inline-flex items-center gap-2 self-start rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium shadow-xs">

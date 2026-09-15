@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/page-header";
 import { InvoiceStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { PRODUCT } from "@/lib/brand";
 import { DEMO_AS_OF } from "@/lib/clock";
 import { getInvoices } from "@/lib/data";
 import { daysBetween, formatDate } from "@/lib/dates";
@@ -26,7 +27,7 @@ export default async function CollectionsPage() {
       <PageHeader
         eyebrow="Dunning"
         title="Collections"
-        description="Overdue folios against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249."
+        description={`Overdue ${PRODUCT.industryShort} against the frozen 23 Aug 2026 clock. Amounts stay on the catalog — Starter $49, Growth $99, Scale $249.`}
       />
 
       {overdue.length === 0 ? (

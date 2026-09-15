@@ -1,6 +1,6 @@
 ---
 name: add-dashboard-widget
-description: Add a new KPI card or panel to the Ledgerly dashboard using the existing indigo design tokens and seed data. Use when someone asks to "add a widget/card/stat to the dashboard" during a demo — it keeps the result on-brand instead of hand-rolled.
+description: Add a new KPI card or panel to the dashboard using the existing indigo design tokens and seed data. Use when someone asks to "add a widget/card/stat to the dashboard" during a demo — it keeps the result on-brand instead of hand-rolled.
 ---
 
 # Add a dashboard widget

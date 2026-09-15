@@ -8,9 +8,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Ledgerly
+# Routerly
 
-Fictional billing ops SaaS. Fieldnote Workspace. Operator Avery Quinn. No auth. No real companies.
+Fictional billing ops SaaS for **router and switch invoices**. Packetline Workspace. Operator Avery Quinn. No auth. No real companies. Identity is `lib/brand.ts`. Remap to another industry with `.cursor/skills/remap-industry/`.
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
@@ -35,7 +35,7 @@ SQLite file is `prisma/dev.db` (gitignored). Schema URL is hardcoded in `prisma/
 npx prisma db seed
 ```
 
-The seed script runs `prisma db push` first, then reloads deterministic Fieldnote data. Safe to re-run. Demo clock is **2026-08-23**.
+The seed script runs `prisma db push` first, then reloads deterministic Packetline data. Safe to re-run. Demo clock is **2026-08-23**.
 
 ### Dev server
 
@@ -82,6 +82,7 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
+| `.cursor/skills/remap-industry/` | Swap branding and seed copy to another industry; keep invoices, catalog, and demo beats |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
 | `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. |

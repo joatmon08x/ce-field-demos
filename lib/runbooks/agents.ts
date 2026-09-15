@@ -23,6 +23,11 @@ export const PROJECT_SKILLS = [
     when: "Walk the 101 track, then choose the mode, model, rule, or skill from the shape of the work.",
   },
   {
+    name: "remap-industry",
+    path: ".cursor/skills/remap-industry/SKILL.md",
+    when: "Swap branding and seed copy to another industry without changing invoices, catalog, or 101/201 beats.",
+  },
+  {
     name: "dispatch-subagents",
     path: ".cursor/skills/dispatch-subagents/SKILL.md",
     when: "Many independent pieces. Launch Task subagents in one parallel turn.",
