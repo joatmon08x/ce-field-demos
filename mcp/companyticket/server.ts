@@ -123,8 +123,7 @@ async function main() {
 
 const isDirectRun =
   process.argv[1]?.endsWith("mcp/companyticket/server.ts") ||
-  process.argv[1]?.endsWith("mcp/companyticket/server.js") ||
-  process.argv[1]?.endsWith("plugin/companyticket/mcp/server.ts");
+  process.argv[1]?.endsWith("mcp/companyticket/server.js");
 
 if (isDirectRun) {
   main().catch((error) => {

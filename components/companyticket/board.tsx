@@ -51,8 +51,9 @@ export function Board({ board, backlog }: { board: BoardData; backlog: readonly 
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Board also at <Link href="/api/companyticket/tickets?sprintId=spr_268">/api/companyticket/tickets</Link>
-        . MCP server name <span className="font-mono">companyticket</span>.
+        Board also at{" "}
+        <Link href={`/api/companyticket/tickets?sprintId=${board.sprint.id}`}>/api/companyticket/tickets</Link>.
+        MCP server name <span className="font-mono">companyticket</span>.
       </p>
     </div>
   );
