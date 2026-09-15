@@ -251,6 +251,12 @@ describe("runbook catalog", () => {
     expect(beat("bypass-formatter-test")?.example).toBe(
       'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
     );
+    const disputePage = readFileSync(join(root, "app/disputes/[id]/page.tsx"), "utf8");
+    expect(disputePage).toContain(
+      '// let capUsd = "$" + (catalogPrice / 100).toFixed(2);',
+    );
+    expect(disputePage).toContain("{/* capUsd */ formatUsd(catalogPrice)}");
+    expect(disputePage).not.toMatch(/^\s*let capUsd = /m);
     expect(beat("add-linear-mcp")?.detail).toBe(
       "Check MCP servers in Customize -> MCPs. Review the Linear MCP server and the different tools you can enable.",
     );
