@@ -27,32 +27,6 @@ export type FieldDemoIssue = {
 
 export const FIELD_DEMO_ISSUES: readonly FieldDemoIssue[] = [
   {
-    slug: "email-on-invoice",
-    type: "Story",
-    state: "Todo",
-    priority: 3,
-    title: "Change customer email on invoice detail",
-    description: `Add a control on the invoice detail customer card so Avery Quinn can update the customer email. Do not implement email validation. Invoice amounts stay on the catalog: Starter $49, Growth $99, Scale $249.
-
-## Acceptance
-
-- Invoice detail customer card can change the seeded contact email.
-- No email-format validation is added.
-- Customer names and .example addresses stay on the Fieldnote book.
-
-## Paths
-
-- \`app/invoices/[id]/page.tsx\`
-
-## Verify
-
-- http://127.0.0.1:43173/invoices
-
-Matches the 101 Plan beat. Keep the change on the invoice detail customer card.`,
-    ledgerlyPaths: ["app/invoices/[id]/page.tsx"],
-    ledgerlyUrls: ["http://127.0.0.1:43173/invoices"],
-  },
-  {
     slug: "suggested-credit-v1",
     type: "Bug",
     state: "In Progress",
@@ -114,6 +88,32 @@ The $400 figure is the claim, not a fourth catalog price. Scale stays $249.`,
 Same control on invoices (Overdue) and disputes (Needs review). Treat them as one filter bug.`,
     ledgerlyPaths: ["components/filter-pills.tsx", "app/invoices/page.tsx", "app/disputes/page.tsx"],
     ledgerlyUrls: ["http://127.0.0.1:43173/invoices", "http://127.0.0.1:43173/disputes"],
+  },
+  {
+    slug: "email-on-invoice",
+    type: "Story",
+    state: "Todo",
+    priority: 3,
+    title: "Change customer email on invoice detail",
+    description: `Add a control on the invoice detail customer card so Avery Quinn can update the customer email. Do not implement email validation. Invoice amounts stay on the catalog: Starter $49, Growth $99, Scale $249.
+
+## Acceptance
+
+- Invoice detail customer card can change the seeded contact email.
+- No email-format validation is added.
+- Customer names and .example addresses stay on the Fieldnote book.
+
+## Paths
+
+- \`app/invoices/[id]/page.tsx\`
+
+## Verify
+
+- http://127.0.0.1:43173/invoices
+
+Matches the 101 Plan beat. Keep the change on the invoice detail customer card.`,
+    ledgerlyPaths: ["app/invoices/[id]/page.tsx"],
+    ledgerlyUrls: ["http://127.0.0.1:43173/invoices"],
   },
 ] as const;
 

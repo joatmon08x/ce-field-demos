@@ -59,7 +59,13 @@ Do not add initiatives, Slack channels, or extra teams.
 
 `list_issues` on that project. Match existing issues by **exact title** from `FIELD_DEMO_ISSUES`.
 
-For each of the three catalog issues, if missing, `save_issue`:
+Create missing issues **sequentially** in the `FIELD_DEMO_ISSUES` array order. Never create them in parallel:
+
+1. `Dispute dsp_1043 claims $400 against a $249 Scale invoice`
+2. `Overdue / Needs review filter does not change the list`
+3. `Change customer email on invoice detail`
+
+The filter issue must always be the second issue created. For each missing issue, `save_issue`:
 
 - `team`: the private team
 - `project`: the project name or ID
@@ -81,6 +87,7 @@ Report:
 - Three issue identifiers + titles + URLs
 - That `teams` on the project is only the private team
 - That `list_issues` on the project returns exactly the three catalog titles
+- That the filter issue is second in creation order
 
 The 201 pastes use **titles**, not identifiers, so you do not edit `lib/runbooks/beats/201.ts` after minting IDs.
 
