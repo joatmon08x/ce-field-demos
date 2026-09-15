@@ -8,11 +8,22 @@ Chat prompt:
 /multitask @resolve-dispute.md
 ```
 
-**Exactly three** parallel worktrees — one agent per workstream below. Do **not** fan out a fourth agent to write tests. Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.
+Use `.cursor/skills/dispatch-subagents/SKILL.md`. **Exactly three** parallel worktrees — one isolated Task worker per workstream below. Do **not** implement in the parent chat. Do **not** fan out a fourth agent to write tests. Each worker starts with a clean context — put owned files, the shared contract, constraints, and how to verify **in that worker’s prompt**. Do not start a sibling after another sibling “so it has context.”
+
+The three files in `.cursor/agents/` are **not** the three implementers. Map them by role:
+
+| Role | Agent | When |
+| --- | --- | --- |
+| Implementer (×3) | Isolated Task workers, one per workstream below | Same turn, `/multitask` or “in parallel” |
+| Request-log worker | `api-instrumenter` | **Out of this slice.** It only adds the shared request-log helper to one named API route. Do not send it `resolve.ts` or the Resolution panel. |
+| Diff review | `ledgerly-reviewer` | After the three diffs land (one review of the combined result, not one per sibling mid-flight) |
+| Finish line | `dispute-verifier` | After apply/merge, against the running app on port 43173. Writes no product code. |
+
+Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI. Then `ledgerly-reviewer`, then `dispute-verifier`.
 
 End-to-end tests are a **sequential completion step** after those diffs are applied — not part of `/multitask`.
 
-Do not change 101: `npm test` stays **1 failed / 45 passed** (`tests/suggested-credit-api.test.ts` only). Do not add a red suite to the default run.
+Do not change 101: `npm test` stays **1 failed / 29 passed** (`tests/suggested-credit-api.test.ts` only). Do not add a red suite to the default run.
 
 ## Goal
 
@@ -41,7 +52,7 @@ Then open `/disputes/dsp_1043`, Accept or Decline with a note, confirm status + 
 | Agent 1 done | `resolveDispute` no longer throws `not implemented`. Accept cap / decline / missing id as in the contract. |
 | Agent 2 done | Bad `action` → 400. `grep`: no `prisma.` in the route. Valid body still calls `resolveDispute`. 501 until helper is applied. |
 | Agent 3 done | Buttons enabled. POST body is `{ action, reviewerNote }`. 501 until helper is applied is OK. |
-| After apply | Write + run the e2e file above. Browser on `dsp_1043`. `npm test` still **1 failed / 45 passed**. |
+| After apply | Write + run the e2e file above. Browser on `dsp_1043`. `npm test` still **1 failed / 29 passed**. `ledgerly-reviewer` then `dispute-verifier` (do not “fix” suggested-credit gates in this slice). |
 
 ## Conflicts
 
@@ -75,9 +86,9 @@ Contract miss: `action` must be `accept` \| `decline`, not `ACCEPTED` \| `DECLIN
 - On accept only: `suggestedCreditCents = suggestDisputeCredit({ disputedAmountCents, planPriceCents: planPriceCents(invoice.plan) })`
 - Do not persist a credit above the plan
 
-**Apply order after the three diffs land:** helper → API → UI. Then the e2e file.
+**Apply order after the three diffs land:** helper → API → UI. Then the e2e file. Then `ledgerly-reviewer`. Then `dispute-verifier`.
 
-**Out of scope for the three `/multitask` agents:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, writing tests, a fourth worktree.
+**Out of scope for the three `/multitask` agents:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, writing tests, a fourth worktree, using `api-instrumenter` as a dispute-resolution worker, implementing in the parent agent instead of dispatching.
 
 Mid-run **501** from UI or API is expected until the helper worktree is applied.
 
