@@ -88,6 +88,13 @@ export const RUNBOOK_SECTIONS_101 = [
         promptType: "none",
         detail: "Show diffs from agent’s last turn.",
       },
+      {
+        id: "checkpoint-restore",
+        title: "Restore from a checkpoint",
+        promptType: "none",
+        detail:
+          "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Click on the restore icon next to the prompt.",
+      },
     ],
   },
   {
