@@ -16,11 +16,11 @@ npm run dev
 
 Open **http://localhost:43173**.
 
-`npm test` is **1 failed / 31 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 42 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Restore the code seam with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
-Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accounts are in `prisma/extra-accounts.ts`.
+Dashboard, Invoices, Collections, Disputes, Runbooks, Settings, CompanyTicket (`/companyticket`). Extra book accounts are in `prisma/extra-accounts.ts`.
 
 | Demo hook | Where |
 | --- | --- |
@@ -29,6 +29,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo or pick a Cursor workflow |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
+| CompanyTicket | `/companyticket` — mock JIRA board, keys `LY-000`. MCP `npm run mcp:companyticket`. Import `plugin/companyticket` from disk for the 201 marketplace beat. |
 
 ## Starter prompts
 

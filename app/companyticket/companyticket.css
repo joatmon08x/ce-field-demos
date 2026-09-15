@@ -1,0 +1,9 @@
+.companyticket-shell {
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.companyticket-shell a {
+  color: inherit;
+}

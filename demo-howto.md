@@ -54,7 +54,7 @@ Open **http://localhost:43173**.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 31 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 42 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, the seed, and the MCP store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -203,12 +203,12 @@ Create three slides in Figma Slides outlining how I used Grok Build to develop a
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 31 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 42 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If the client migration ran:** `tests/suggested-credit-api.test.ts` should be green and dsp_1043 should show **$249** from v2, with both routes intact.
 
-**If no migration ran:** `npm test` should remain **1 failed / 31 passed**. That is shipped state, not failed setup.
+**If no migration ran:** `npm test` should remain **1 failed / 42 passed**. That is shipped state, not failed setup.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -229,7 +229,7 @@ npx prisma db seed
 npm test
 ```
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 31 passed**.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 42 passed**.
 
 ---
 
@@ -276,6 +276,8 @@ In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)
 ```
 
 ### How does my agent get more information?
+
+The mock board is [http://127.0.0.1:43173/companyticket](http://127.0.0.1:43173/companyticket). Sprint Fieldnote 26.8 holds **LY-001**, **LY-002**, and **LY-003**. Keys use the **LY-000** scheme. The stdio server is `npm run mcp:companyticket`; the marketplace copy is `plugin/companyticket`.
 
 ```text
 Add the CompanyTicket MCP server to this project.
