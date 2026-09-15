@@ -1,5 +1,6 @@
-import { planPriceCents } from "@/lib/plans";
 import { suggestDisputeCredit } from "@/lib/dispute-credit";
+import { planPriceCents } from "@/lib/plans";
+import { prisma } from "@/lib/prisma";
 
 export type ResolveDisputeInput = {
   disputeId: string;
@@ -8,17 +9,42 @@ export type ResolveDisputeInput = {
 };
 
 /**
- * Multi-file Agent seam.
- * Wire this helper from `app/api/disputes/[id]/resolve/route.ts`
- * and the unfinished panel on `app/disputes/[id]/page.tsx`.
- *
- * When you implement it: persist status, and if accepting a credit,
- * cap it with the catalog plan price. Never invent a number.
+ * Persist ACCEPTED or DECLINED. On accept, cap suggested credit at the
+ * invoice catalog plan price. Never invent a number above that price.
  */
-export async function resolveDispute(input: ResolveDisputeInput): Promise<never> {
-  // TODO(agent): load the dispute + invoice, cap credit with suggestDisputeCredit + planPriceCents, persist ACCEPTED or DECLINED.
-  void input;
-  void planPriceCents;
-  void suggestDisputeCredit;
-  throw new Error("resolveDispute is not implemented");
+export async function resolveDispute(input: ResolveDisputeInput) {
+  const dispute = await prisma.dispute.findUnique({
+    where: { id: input.disputeId },
+    include: { invoice: true },
+  });
+
+  if (!dispute) {
+    throw new Error(`Dispute ${input.disputeId} not found`);
+  }
+
+  const reviewerNote = input.reviewerNote ?? dispute.reviewerNote ?? null;
+
+  if (input.action === "decline") {
+    return prisma.dispute.update({
+      where: { id: dispute.id },
+      data: {
+        status: "DECLINED",
+        reviewerNote,
+      },
+    });
+  }
+
+  const suggestedCreditCents = suggestDisputeCredit({
+    disputedAmountCents: dispute.disputedAmountCents,
+    planPriceCents: planPriceCents(dispute.invoice.plan),
+  });
+
+  return prisma.dispute.update({
+    where: { id: dispute.id },
+    data: {
+      status: "ACCEPTED",
+      suggestedCreditCents,
+      reviewerNote,
+    },
+  });
 }
