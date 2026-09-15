@@ -17,7 +17,7 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Canvas DDD, ask across chats, context usage
-2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, money-formatting rule and hook
+2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, money-formatting hook
 3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, ce-field-demos suggested-credit issue, import `plugins/standard-bug-fix` from disk
 4. **How do I parallelize a task?** — [three-worktree plan](#refine-the-plan), `/multitask`, verify, `/best-of-n`
 
@@ -278,13 +278,9 @@ Promote the create-api skill to this project.
 
 Open the project skill in `.cursor/skills`. Skip the room prompt for `/add-dashboard-widget`.
 
-#### Money-formatting rule and hook
+#### Money-formatting hook
 
-```text
-/create-rule Catalog plan amounts stay in integer cents and customer-facing values must use formatUsd. Never concatenate "$", divide catalogPrice by 100, or call toFixed(2). The afterFileEdit hook runs hooks/check-money-formatting.mjs on the changed file.
-```
-
-Show `.cursor/hooks.json`, `hooks/check-money-formatting.mjs`, and `app/disputes/[id]/page.tsx`. The page stages an unsafe manual formatter in a comment and a `{/* capUsd */}` mark on the Resolution CardDescription. Then:
+Do not create a Cursor rule. Show `.cursor/hooks.json`, `hooks/check-money-formatting.mjs`, and `app/disputes/[id]/page.tsx`. The page stages an unsafe manual formatter in a comment and a `{/* capUsd */}` mark on the Resolution CardDescription. Then:
 
 ```text
 In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.

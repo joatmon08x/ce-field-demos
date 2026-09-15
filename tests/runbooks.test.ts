@@ -178,7 +178,6 @@ describe("runbook catalog", () => {
       "context-usage",
       "create-api-personal-skill",
       "promote-create-api-project",
-      "create-money-rule",
       "test-money-hook",
       "add-linear-mcp",
       "fix-linear-suggested-credit",
@@ -218,14 +217,8 @@ describe("runbook catalog", () => {
     );
     expect(beat("promote-create-api-project")?.detail).toContain("Open skill in .cursor/skills");
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
-    expect(beat("create-money-rule")?.detail).toBe(
-      "Pair a short billing rule with a custom afterFileEdit check. Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx.",
-    );
-    expect(beat("create-money-rule")?.example).toBe(
-      '/create-rule Catalog plan amounts stay in integer cents and customer-facing values must use formatUsd. Never concatenate "$", divide catalogPrice by 100, or call toFixed(2). The afterFileEdit hook runs hooks/check-money-formatting.mjs on the changed file.',
-    );
     expect(beat("test-money-hook")?.detail).toBe(
-      "The dispute page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd.",
+      "Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx. The page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd. Do not create a Cursor rule.",
     );
     expect(beat("test-money-hook")?.example).toBe(
       'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.',

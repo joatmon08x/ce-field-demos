@@ -78,7 +78,7 @@ Open `/runbooks/101`, copy a card, and paste it in Grok Build. You still review 
 Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review the result.
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas to a file, ask across chats, check context usage.
-2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, money-formatting rule and hook.
+2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, money-formatting hook.
 3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, import `plugins/standard-bug-fix` from disk (skill, rule, Linear MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
 4. **How do I parallelize a task?** — refine a three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 

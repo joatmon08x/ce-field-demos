@@ -74,20 +74,11 @@ export const RUNBOOK_SECTIONS_201 = [
         example: "Promote the create-api skill to this project.",
       },
       {
-        id: "create-money-rule",
-        title: "Create money-formatting rule",
-        promptType: "adaptable",
-        detail:
-          "Pair a short billing rule with a custom afterFileEdit check. Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx.",
-        example:
-          '/create-rule Catalog plan amounts stay in integer cents and customer-facing values must use formatUsd. Never concatenate "$", divide catalogPrice by 100, or call toFixed(2). The afterFileEdit hook runs hooks/check-money-formatting.mjs on the changed file.',
-      },
-      {
         id: "test-money-hook",
         title: "Test the money-formatting hook",
         promptType: "adaptable",
         detail:
-          "The dispute page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd.",
+          "Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx. The page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd. Do not create a Cursor rule.",
         example:
           'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.',
       },
