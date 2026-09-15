@@ -1,27 +1,23 @@
-/**
- * Ledgerly 201 Linear book — same five cards as the retired CompanyTicket board.
- * Keys were LY-001…LY-005. Linear identifiers are minted per operator when
- * `stage-linear-201` runs. Titles stay stable so runbook pastes work before IDs exist.
- */
+/** Ledgerly 201 Linear board. Titles stay stable across per-operator setup. */
 
 export const LINEAR_FIELD_DEMOS_PROJECT = {
   name: "ce-field-demos",
-  summary: "Personal Ledgerly 201 board. Same five cards as the retired CompanyTicket book.",
+  summary: "Personal Ledgerly 201 board with three scoped Fieldnote issues.",
   workspace: "Fieldnote Workspace",
   operator: "Avery Quinn",
   catalogPricesUsd: ["$49", "$99", "$249"] as const,
   ledgerlyUrl: "http://127.0.0.1:43173",
 } as const;
 
-export type FieldDemoIssueType = "Story" | "Bug" | "Task";
-export type FieldDemoIssueStatus = "Backlog" | "Todo" | "In Progress";
-export type FieldDemoPriority = 2 | 3 | 4;
+export type FieldDemoIssueType = "Story" | "Bug";
+export type FieldDemoIssueStatus = "Todo" | "In Progress";
+export type FieldDemoPriority = 2 | 3;
 
 export type FieldDemoIssue = {
-  slug: "email-on-invoice" | "suggested-credit-v1" | "filter-pills" | "tidewatch-dunning" | "settings-clock";
+  slug: "email-on-invoice" | "suggested-credit-v1" | "filter-pills";
   type: FieldDemoIssueType;
   state: FieldDemoIssueStatus;
-  /** Linear: 2=High, 3=Medium, 4=Low */
+  /** Linear: 2=High, 3=Medium */
   priority: FieldDemoPriority;
   title: string;
   description: string;
@@ -118,50 +114,6 @@ The $400 figure is the claim, not a fourth catalog price. Scale stays $249.`,
 Same control on invoices (Overdue) and disputes (Needs review). Treat them as one filter bug.`,
     ledgerlyPaths: ["components/filter-pills.tsx", "app/invoices/page.tsx", "app/disputes/page.tsx"],
     ledgerlyUrls: ["http://127.0.0.1:43173/invoices", "http://127.0.0.1:43173/disputes"],
-  },
-  {
-    slug: "tidewatch-dunning",
-    type: "Task",
-    state: "Backlog",
-    priority: 4,
-    title: "Draft a Tidewatch Logistics dunning note",
-    description: `Use the draft-collection-email skill. Tidewatch Logistics is on the Fieldnote book. Do not invent a price; keep the folio on Starter $49, Growth $99, or Scale $249 as seeded.
-
-## Acceptance
-
-- Copy names Tidewatch Logistics and stays inside the catalog.
-
-## Paths
-
-- \`app/collections/page.tsx\`
-
-## Verify
-
-- http://127.0.0.1:43173/collections`,
-    ledgerlyPaths: ["app/collections/page.tsx"],
-    ledgerlyUrls: ["http://127.0.0.1:43173/collections"],
-  },
-  {
-    slug: "settings-clock",
-    type: "Task",
-    state: "Backlog",
-    priority: 4,
-    title: "Record Harborbill remittance window on Settings",
-    description: `Settings already has a Cmd-K TODO. Leave that seam unless a later ticket names it. This card is backlog filler only.
-
-## Acceptance
-
-- No settings rewrite unless a later field-demo issue asks for it.
-
-## Paths
-
-- \`app/settings/page.tsx\`
-
-## Verify
-
-- http://127.0.0.1:43173/settings`,
-    ledgerlyPaths: ["app/settings/page.tsx"],
-    ledgerlyUrls: ["http://127.0.0.1:43173/settings"],
   },
 ] as const;
 

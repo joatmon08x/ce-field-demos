@@ -1,15 +1,15 @@
 ---
 name: stage-linear-201
-description: Stage a personal Linear project named ce-field-demos with the five Ledgerly 201 issues before the MCP section of the 201 track. Use when preparing a demo machine, replacing CompanyTicket, or the user asks to set up Linear for 201.
+description: Create or reconcile the private ce-field-demos Linear board with its three Ledgerly 201 issues before the MCP section.
 ---
 
 # Stage Linear for the 201 track
 
-Do this **before** the 201 section “How does my agent get more information?” CompanyTicket (`/companyticket`, `mcp/companyticket`, `plugin/companyticket`) is retired. The agent reads tickets from Linear.
+Do this **before** the 201 section “How does my agent get more information?” The agent reads issues from Linear.
 
 Catalog stays Starter **$49**, Growth **$99**, Scale **$249**. Operator Avery Quinn. No real customers.
 
-Issue bodies live in `lib/runbooks/linear-field-demos.ts`. Do not invent a sixth card or a fourth price.
+Issue bodies live in `lib/runbooks/linear-field-demos.ts`. The board has exactly three issues. Do not invent another issue or a fourth price.
 
 ## Isolation (required)
 
@@ -36,22 +36,22 @@ Authenticate the Linear plugin (`mcp_auth` if tools are gated). Confirm `get_use
 
 If `teams` is only public teams, stop.
 
-## 2. Reuse or create the project
+## 2. Reconcile the project
 
 Search `list_projects` with query `ce-field-demos`.
 
 - Reuse a project **only** when its `teams` are exactly the operator’s private team and `lead` is the operator (`me`).
 - If `ce-field-demos` already exists on a public team, do **not** reuse it. Create `ce-field-demos ({displayName})` on the private team instead.
 
-Otherwise `save_project`:
+Create it with `save_project` only when it is missing. Otherwise update the existing private project in place:
 
 - `name`: `ce-field-demos` (or the uniqued name above)
 - `setTeams`: the private team name or ID
 - `leadTeam`: that same team
 - `lead`: `"me"`
-- `state`: `Backlog` or `Planned` — not a company initiative
+- `state`: `Backlog` — not a company initiative
 - `summary`: from `LINEAR_FIELD_DEMOS_PROJECT.summary`
-- `description`: Fieldnote 201 board. Five issues. Personal. Not Customer Education.
+- `description`: Fieldnote 201 board. Three scoped issues. Personal. Private team only.
 
 Do not add initiatives, Slack channels, or extra teams.
 
@@ -59,16 +59,18 @@ Do not add initiatives, Slack channels, or extra teams.
 
 `list_issues` on that project. Match existing issues by **exact title** from `FIELD_DEMO_ISSUES`.
 
-For each of the five cards, if missing, `save_issue`:
+For each of the three catalog issues, if missing, `save_issue`:
 
 - `team`: the private team
 - `project`: the project name or ID
 - `title`, `description`, `priority`, `state` from the catalog
 - `assignee`: `"me"` (the operator). Never create Avery Quinn as a Linear user.
 
-Do not create workspace-wide labels. Put type (Story / Bug / Task) in the description heading if useful.
+Do not create workspace-wide labels. Put type (Story / Bug) in the description heading if useful.
 
 Do not comment as a fake reporter. Avery Quinn copy is already in the description.
+
+After seeding, remove any issue whose exact title is not in `FIELD_DEMO_ISSUES` from the project and cancel it. This keeps repeat runs idempotent and prevents stale filler issues from returning.
 
 ## 4. Confirm
 
@@ -76,8 +78,9 @@ Report:
 
 - Private team name
 - Project URL
-- Five issue identifiers + titles + URLs
+- Three issue identifiers + titles + URLs
 - That `teams` on the project is only the private team
+- That `list_issues` on the project returns exactly the three catalog titles
 
 The 201 pastes use **titles**, not identifiers, so you do not edit `lib/runbooks/beats/201.ts` after minting IDs.
 
@@ -93,4 +96,4 @@ The 201 pastes use **titles**, not identifiers, so you do not edit `lib/runbooks
 - Never stage onto Customer Education, FlyLo, Disney DXT, FE Demos, or any other shared team.
 - Never complete dispute resolution or migrate suggested-credit as part of staging.
 - Never edit `tests/suggested-credit-api.test.ts` or the seed.
-- Never reintroduce CompanyTicket routes, MCP, or `plugin/companyticket`.
+- Never add local ticket-board routes, MCP servers, or marketplace copies.

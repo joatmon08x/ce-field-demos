@@ -25,7 +25,7 @@ export const PROJECT_SKILLS = [
   {
     name: "stage-linear-201",
     path: ".cursor/skills/stage-linear-201/SKILL.md",
-    when: "Before the 201 MCP section. Private Linear team + ce-field-demos project + five Fieldnote issues.",
+    when: "Before the 201 MCP section. Reconcile three issues on the private ce-field-demos Linear project.",
   },
   {
     name: "standard-bug-fix",

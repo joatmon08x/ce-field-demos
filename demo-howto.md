@@ -78,9 +78,9 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add Customer Education or any other shared team.
-5. In Grok Build, run `stage-linear-201`. That skill creates project `ce-field-demos` on this team and seeds the five Fieldnote issues.
+5. In Grok Build, run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
 
-Do not skip the private-team step. A project on a public team is visible to that team. CompanyTicket is retired.
+Do not skip the private-team step. A project on a public team is visible to that team.
 
 ---
 
@@ -292,7 +292,7 @@ In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)
 
 ### How does my agent get more information?
 
-Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear-201`. CompanyTicket is retired.
+Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear-201`.
 
 ```text
 Add the Linear MCP server to this project.

@@ -53,9 +53,9 @@ Linear MCP cannot create teams. The operator creates a private team in the Linea
 2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only the operator**. Do not add Customer Education or any other shared team.
-5. Run `stage-linear-201` to create project `ce-field-demos` on that team and seed the five Fieldnote issues.
+5. Run `stage-linear-201` to create or reconcile project `ce-field-demos` on that team with exactly three Fieldnote issues.
 
-Do not `save_project` onto a public team. Do not reintroduce CompanyTicket.
+Do not `save_project` onto a public team. Do not add a local ticket board, ticket API, ticket MCP, or ticket marketplace plugin.
 
 ### Tests
 
@@ -95,8 +95,8 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
-| `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: private Linear team, project `ce-field-demos`, five Fieldnote issues |
+| `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: reconcile three issues on the private `ce-field-demos` Linear project |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
-| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. The 201 MCP beat uses Linear, not CompanyTicket. |
+| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. The 201 MCP beat uses Linear. |

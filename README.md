@@ -89,7 +89,7 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add Customer Education or any other shared team.
-5. Then ask an agent to run `stage-linear-201`. That skill creates project `ce-field-demos` on this team and seeds the five Fieldnote issues.
+5. Then ask an agent to run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
 
 Do not skip the private-team step. A project on a public team is visible to that team.
 
@@ -101,7 +101,7 @@ Do not skip the private-team step. A project on a public team is visible to that
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
-| `stage-linear-201` | Before 201 MCP: private Linear team, project `ce-field-demos`, five Fieldnote issues. |
+| `stage-linear-201` | Before 201 MCP: reconcile three issues on the private `ce-field-demos` Linear project. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |

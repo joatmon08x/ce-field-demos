@@ -117,7 +117,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Linear from the marketplace",
         promptType: "none",
         detail:
-          "Go to Customize -> Browse Marketplace and add the Linear plugin if it is not already connected. Show that Linear MCP is available. Do not import CompanyTicket from disk.",
+          "Go to Customize -> Browse Marketplace and add the Linear plugin if it is not already connected. Show that Linear MCP is available.",
       },
       {
         id: "standard-bug-fix-filter",
