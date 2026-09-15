@@ -74,22 +74,22 @@ export const RUNBOOK_SECTIONS_201 = [
         example: "Promote the create-api skill to this project.",
       },
       {
-        id: "create-eslint-rule",
-        title: "Create ESLint rule",
+        id: "create-money-rule",
+        title: "Create money-formatting rule",
         promptType: "adaptable",
         detail:
-          "Use a linter hook instead of a long TypeScript formatting rule. Show hook in .cursor/hooks.json. Show script in hooks/eslint-changed.sh. Open app/disputes/[id]/page.tsx.",
+          "Pair a short billing rule with a custom afterFileEdit check. Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx.",
         example:
-          "/create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.",
+          '/create-rule Catalog plan amounts stay in integer cents and customer-facing values must use formatUsd. Never concatenate "$", divide catalogPrice by 100, or call toFixed(2). The afterFileEdit hook runs hooks/check-money-formatting.mjs on the changed file.',
       },
       {
-        id: "test-eslint-hook",
-        title: "Test the ESLint hook",
+        id: "test-money-hook",
+        title: "Test the money-formatting hook",
         promptType: "adaptable",
         detail:
-          "The dispute page already stages `let capUsd`. Uncomment it and use capUsd in Resolution CardDescription so the afterFileEdit hook can rewrite let to const.",
+          "The dispute page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd.",
         example:
-          "In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+          'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.',
       },
     ],
   },

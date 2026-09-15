@@ -25,8 +25,8 @@ export default async function DisputeDetailPage({ params }: { params: Promise<{ 
   if (!isPlanId(dispute.invoice.plan)) notFound();
 
   const catalogPrice = planPriceCents(dispute.invoice.plan);
-  // 201 test-eslint-hook — uncomment the next line and use {capUsd} in Resolution CardDescription.
-  // let capUsd = formatUsd(catalogPrice);
+  // 201 test-money-hook — uncomment this unsafe formatter and use {capUsd} in Resolution CardDescription.
+  // let capUsd = "$" + (catalogPrice / 100).toFixed(2);
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">

@@ -178,8 +178,8 @@ describe("runbook catalog", () => {
       "context-usage",
       "create-api-personal-skill",
       "promote-create-api-project",
-      "create-eslint-rule",
-      "test-eslint-hook",
+      "create-money-rule",
+      "test-money-hook",
       "add-linear-mcp",
       "fix-linear-suggested-credit",
       "import-marketplace-plugin",
@@ -218,22 +218,24 @@ describe("runbook catalog", () => {
     );
     expect(beat("promote-create-api-project")?.detail).toContain("Open skill in .cursor/skills");
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
-    expect(beat("create-eslint-rule")?.detail).toBe(
-      "Use a linter hook instead of a long TypeScript formatting rule. Show hook in .cursor/hooks.json. Show script in hooks/eslint-changed.sh. Open app/disputes/[id]/page.tsx.",
+    expect(beat("create-money-rule")?.detail).toBe(
+      "Pair a short billing rule with a custom afterFileEdit check. Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx.",
     );
-    expect(beat("create-eslint-rule")?.example).toBe(
-      "/create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.",
+    expect(beat("create-money-rule")?.example).toBe(
+      '/create-rule Catalog plan amounts stay in integer cents and customer-facing values must use formatUsd. Never concatenate "$", divide catalogPrice by 100, or call toFixed(2). The afterFileEdit hook runs hooks/check-money-formatting.mjs on the changed file.',
     );
-    expect(beat("test-eslint-hook")?.detail).toBe(
-      "The dispute page already stages `let capUsd`. Uncomment it and use capUsd in Resolution CardDescription so the afterFileEdit hook can rewrite let to const.",
+    expect(beat("test-money-hook")?.detail).toBe(
+      "The dispute page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd.",
     );
-    expect(beat("test-eslint-hook")?.example).toBe(
-      "In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+    expect(beat("test-money-hook")?.example).toBe(
+      'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.',
     );
     const disputePage = readFileSync(join(root, "app/disputes/[id]/page.tsx"), "utf8");
-    expect(disputePage).toContain("// let capUsd = formatUsd(catalogPrice);");
+    expect(disputePage).toContain(
+      '// let capUsd = "$" + (catalogPrice / 100).toFixed(2);',
+    );
     expect(disputePage).toContain("{/* capUsd */ formatUsd(catalogPrice)}");
-    expect(disputePage).not.toMatch(/^\s*let capUsd = formatUsd\(catalogPrice\);/m);
+    expect(disputePage).not.toMatch(/^\s*let capUsd = /m);
     expect(beat("add-linear-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
     expect(beat("add-linear-mcp")?.detail).toContain("Show Linear MCP and the tools you can enable.");
     expect(beat("add-linear-mcp")?.detail).toContain("Settings -> Teams -> New team");
