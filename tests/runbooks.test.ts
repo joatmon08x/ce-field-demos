@@ -101,7 +101,7 @@ describe("runbook catalog", () => {
     expect(beat("checkpoint-restore")?.promptType).toBe("none");
     expect(beat("checkpoint-restore")?.example).toBeUndefined();
     expect(beat("checkpoint-restore")?.detail).toBe(
-      "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Click on the restore icon next to the prompt.",
+      "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Select the restore icon next to the prompt.",
     );
     expect(beat("rule")?.detail).toBe(
       "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
