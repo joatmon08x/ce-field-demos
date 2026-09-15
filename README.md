@@ -28,6 +28,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear for 201, or pick a Cursor workflow |
+| Disk plugin | `plugins/standard-bug-fix/` — import from disk; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
 
 ## Starter prompts
@@ -78,7 +79,7 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 
 1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas to a file, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, ESLint rule and hook.
-3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, Linear from the marketplace, `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
+3. **How does my agent get more information?** — Linear MCP, fix the dsp_1043 suggested-credit issue on ce-field-demos, import `plugins/standard-bug-fix` from disk (skill, rule, Linear MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
 4. **How do I parallelize a task?** — refine a three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
 
 ## Create the private Linear team (manual)
