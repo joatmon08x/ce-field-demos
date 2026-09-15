@@ -148,7 +148,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Verify parallel work",
         promptType: "none",
         detail:
-          "Open diffs for each agent. Run npm run test:resolve. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
+          "Open diffs for each agent. Check tests and linters. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
       },
       {
         id: "best-of-n-release-note",

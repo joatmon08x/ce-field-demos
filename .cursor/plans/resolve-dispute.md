@@ -8,7 +8,11 @@ Chat prompt:
 /multitask @resolve-dispute.md
 ```
 
-Three parallel worktrees, one agent per workstream below. Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI. Run `npm run test:resolve` on the combined tree.
+**Exactly three** parallel worktrees — one agent per workstream below. Do **not** fan out a fourth agent to write tests. Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.
+
+End-to-end tests are a **sequential completion step** after those diffs are applied — not part of `/multitask`.
+
+Do not change 101: `npm test` stays **1 failed / 45 passed** (`tests/suggested-credit-api.test.ts` only). Do not add a red suite to the default run.
 
 ## Goal
 
@@ -18,33 +22,36 @@ Catalog only: Starter $49, Growth $99, Scale $249 (`lib/plans.ts`). Dispute `dsp
 
 ## Testing
 
-TDD fixtures live in `tests/resolve-dispute/`. They are **red until this slice lands**. They are excluded from `npm test` so the planted suggested-credit failure stays the sole shipped red (`1 failed / 45 passed`).
+**During `/multitask`:** no new test files. Each agent verifies only its row (source/curl). `npm test` is the 101 planted suite — leave it alone.
 
-```bash
-npx prisma db seed   # once, if prisma/dev.db is empty
-npm run test:resolve
-```
+**After apply (coordinator or a follow-up, not a fourth worktree):** add one end-to-end file, e.g. `tests/resolve-dispute.e2e.test.ts`, and keep it **out of** `npm test` (exclude it, or run it with an explicit path). Use `dsp_tdd_*` fixtures; restore `dsp_1043` after each mutating case. Do not migrate suggested-credit v1→v2.
 
-Per worktree, only that agent’s file. After apply (helper → API → UI): the whole folder green. Do not migrate suggested-credit v1→v2. Do not edit these tests to force green. Fixtures use `dsp_tdd_*` ids and restore `dsp_1043` after each mutating case.
+The e2e file should cover:
 
-| Agent | Command | Pass |
-|---|---|---|
-| Helper | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/helper.test.ts` | `accept` on a $400 Scale claim stores **24900** cents, note, `ACCEPTED`. Decline → `DECLINED`, credit not raised. Missing id throws `/not found/i`. |
-| API | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/route.test.ts` | Bad `action` (`ACCEPTED`) → 400. File imports `resolveDispute`, no `prisma`. Throw from helper is not 200. The **200 `{ ok: true }` + persist** case stays red until the helper worktree is applied. |
-| UI | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/panel.test.ts` | Accept/Decline enabled (no “Not wired” stub). Source POSTs `{ action, reviewerNote }` to `/api/disputes/.../resolve`. No `resolveDispute` / Prisma in the panel. |
-| Combined | `npm run test:resolve` | Helper + route 200 + panel + `ownership.test.ts` (disjoint persist). |
+- `POST` `{ action: "accept", reviewerNote }` on a $400 Scale claim → 200 `{ ok: true }`, status `ACCEPTED`, stored credit **24900** cents, note saved
+- `POST` decline → `DECLINED`, credit not raised
+- `POST` `{ action: "ACCEPTED" }` → 400 `{ error: "action must be accept or decline" }`
+- Route still imports `resolveDispute` and has no `prisma.` persist
+- Panel POSTs `{ action, reviewerNote }` (optional source check)
 
-`npm test` remains **1 failed / 45 passed**. Suggested credit on `/disputes/dsp_1043` may still be v1 **$400**.
+Then open `/disputes/dsp_1043`, Accept or Decline with a note, confirm status + note persist. Suggested credit on the page may still be v1 **$400**.
+
+| When | Check |
+|---|---|
+| Agent 1 done | `resolveDispute` no longer throws `not implemented`. Accept cap / decline / missing id as in the contract. |
+| Agent 2 done | Bad `action` → 400. `grep`: no `prisma.` in the route. Valid body still calls `resolveDispute`. 501 until helper is applied. |
+| Agent 3 done | Buttons enabled. POST body is `{ action, reviewerNote }`. 501 until helper is applied is OK. |
+| After apply | Write + run the e2e file above. Browser on `dsp_1043`. `npm test` still **1 failed / 45 passed**. |
 
 ## Conflicts
 
 File overlap should be none. Open the three worktree diffs to show disjoint paths, then apply helper → API → UI.
 
-Runtime 501 from UI/API before the helper is applied is expected. `ownership.test.ts` fails if the route or panel inlines Prisma persist.
+Runtime 501 from UI/API before the helper is applied is expected.
 
 A git conflict means an agent edited a sibling’s file — revert that hunk and keep ownership.
 
-Contract miss: `action` must be `accept` \| `decline`, not `ACCEPTED` \| `DECLINED` (the route 400 case).
+Contract miss: `action` must be `accept` \| `decline`, not `ACCEPTED` \| `DECLINED`.
 
 ## Shared contract (do not fork)
 
@@ -68,9 +75,9 @@ Contract miss: `action` must be `accept` \| `decline`, not `ACCEPTED` \| `DECLIN
 - On accept only: `suggestedCreditCents = suggestDisputeCredit({ disputedAmountCents, planPriceCents: planPriceCents(invoice.plan) })`
 - Do not persist a credit above the plan
 
-**Apply order after the three diffs land:** helper → API → UI.
+**Apply order after the three diffs land:** helper → API → UI. Then the e2e file.
 
-**Out of scope for every agent:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, editing `tests/resolve-dispute/` to force green.
+**Out of scope for the three `/multitask` agents:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, writing tests, a fourth worktree.
 
 Mid-run **501** from UI or API is expected until the helper worktree is applied.
 
@@ -81,9 +88,9 @@ Mid-run **501** from UI or API is expected until the helper worktree is applied.
 | | |
 |---|---|
 | **Owns** | `lib/disputes/resolve.ts` only |
-| **Does not own** | route, page, seed, suggested-credit client/tests, `tests/resolve-dispute/` |
+| **Does not own** | route, page, seed, suggested-credit client/tests, tests |
 | **Contract** | Implement `resolveDispute`. Load dispute + invoice. Cap accept with `suggestDisputeCredit` + `planPriceCents`. Persist status + note (+ capped cents on accept). Import `prisma` from `@/lib/prisma` here — persist lives in this file. |
-| **Verify** | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/helper.test.ts` |
+| **Verify** | Function no longer throws `resolveDispute is not implemented`. For a $400 Scale claim + `accept`, stored credit is **24900** cents, not 40000. Decline sets `DECLINED` and does not raise the credit. Missing id should throw (route may map it). |
 
 ---
 
@@ -92,9 +99,9 @@ Mid-run **501** from UI or API is expected until the helper worktree is applied.
 | | |
 |---|---|
 | **Owns** | `app/api/disputes/[id]/resolve/route.ts` only |
-| **Does not own** | helper Prisma, UI, `tests/resolve-dispute/` |
+| **Does not own** | helper Prisma, UI, tests |
 | **Contract** | Keep `import { resolveDispute } from "@/lib/disputes/resolve"`. Call it with `{ disputeId: id, action, reviewerNote }`. **Do not inline Prisma persist.** Leave 400 validation as-is. Success stays `{ ok: true }`. Optionally map real helper errors so “not implemented” is 501 and a missing dispute is not a fake 200. |
-| **Verify** | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/route.test.ts` — contract cases green now; 200 persist red until helper is applied. |
+| **Verify** | Bad `action` → 400. Valid body still calls `resolveDispute` (grep: no `prisma.` in this file). After helper is applied: `POST /api/disputes/dsp_1043/resolve` with `{ "action": "accept", "reviewerNote": "…" }` → 200 `{ ok: true }`. Before helper: 501 is OK. |
 
 ---
 
@@ -103,6 +110,6 @@ Mid-run **501** from UI or API is expected until the helper worktree is applied.
 | | |
 |---|---|
 | **Owns** | `app/disputes/[id]/page.tsx` + a small client child if the page stays a server component (e.g. `components/disputes/resolution-panel.tsx`) |
-| **Does not own** | helper, route internals, `SuggestedCredit` / v1 client, `tests/resolve-dispute/` |
+| **Does not own** | helper, route internals, `SuggestedCredit` / v1 client, tests |
 | **Contract** | Enable Accept / Decline. Bind the reviewer note. `POST` `{ action, reviewerNote }` to `/api/disputes/{id}/resolve`. Refresh so status badge and note show after save. Do not call `resolveDispute` from the client. Do not invent a credit in the UI. |
-| **Verify** | `npx vitest run --config vitest.resolve.config.ts tests/resolve-dispute/panel.test.ts` |
+| **Verify** | Buttons are enabled. Note is in the POST body. After helper+API apply: on `/disputes/dsp_1043`, Accept or Decline with a note, reload — status and note persist. Suggested-credit display may still be v1 **$400**; do not “fix” that here. |
