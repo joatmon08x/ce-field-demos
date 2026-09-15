@@ -25,10 +25,10 @@ The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not ment
 
 ## 201 sections and beats
 
-1. **Why is my agent ignoring my instructions?** — rename agents, target Canvas, ask across chats, check context usage.
-2. **How do I standardize agent behavior?** — personal create-api skill, promote it, money-formatting hook.
-3. **How does my agent get more information?** — Linear MCP, dsp_1043 suggested-credit issue on ce-field-demos, marketplace plugin (`plugins/standard-bug-fix`, Linear MCP), `/standard-bug-fix` on the filter-pills issue. The operator creates a private Linear team in the UI first (Settings → Teams → New team, Make team private). Then run `stage-linear-201`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
-4. **How do I parallelize a task?** — three-worktree plan, `/multitask`, verify diffs, `/best-of-n` release note.
+1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD, ask across chats, check context usage.
+2. **How do I standardize agent behavior?** — personal create-api skill, promote it, money-format hook and script, bypass-formatter test.
+3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, marketplace plugin (`plugins/standard-bug-fix`, CompanyTicket MCP), `/standard-bug-fix` on the filter-pills issue. The operator creates a private Linear team in the UI first (Settings → Teams → New team, Make team private). Then run `stage-linear-201`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
+4. **How do I parallelize a task?** — resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, ledgerly-reviewer check.
 
 ## Choose the mode
 

@@ -171,22 +171,26 @@ describe("runbook catalog", () => {
 
     expect(beats201.map((beat) => beat.id)).toEqual([
       "rename-agent-1-all",
-      "canvas-all-domains",
-      "rename-agent-2-invoices",
-      "canvas-invoice-table",
+      "ask-ddd-all",
+      "rename-agent-2-target",
+      "ask-ddd-invoice-table",
       "ask-cross-context",
       "context-usage",
       "create-api-personal-skill",
       "promote-create-api-project",
-      "test-money-hook",
+      "show-money-hook",
+      "show-money-script",
+      "bypass-formatter-test",
       "add-linear-mcp",
-      "fix-linear-suggested-credit",
+      "mcp-allowlist",
+      "ask-linear-bug",
       "import-marketplace-plugin",
-      "standard-bug-fix-filter",
-      "refine-plan-three-worktrees",
-      "multitask-three-workstreams",
-      "verify-parallel-work",
-      "best-of-n-release-note",
+      "standard-bug-fix",
+      "open-resolve-dispute-plan",
+      "open-ledgerly-reviewer",
+      "open-dispatch-subagents-skill",
+      "multitask-resolve-dispute",
+      "ledgerly-reviewer-check",
     ]);
     expect(RUNBOOK_SECTIONS_201.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
       beats201.map((entry) => entry.id),
@@ -198,12 +202,22 @@ describe("runbook catalog", () => {
       "Open one agent and ask it for information about the entire codebase.",
     );
     expect(beat("rename-agent-1-all")?.example).toBe("/rename-chat Agent 1 All");
-    expect(beat("canvas-all-domains")?.example).toBe(
-      "Show me the domain driven design of the application in Canvas.",
+    expect(beat("ask-ddd-all")?.detail).toBe("Ask the all-codebase agent for domain-driven design.");
+    expect(beat("ask-ddd-all")?.example).toBe(
+      "/ask what is the domain driven design of the application.",
     );
-    expect(beat("rename-agent-2-invoices")?.example).toBe("/rename-chat Agent 2 Invoices");
-    expect(beat("canvas-invoice-table")?.example).toBe(
-      "Show me the domain driven design of @invoice-table.tsx in Canvas.",
+    expect(beat("rename-agent-2-target")?.detail).toBe(
+      "Open a second agent for a new targeted context window.",
+    );
+    expect(beat("rename-agent-2-target")?.example).toBe("/rename-chat Agent 2 Target");
+    expect(beat("ask-ddd-invoice-table")?.detail).toBe(
+      "Ask for domain-driven design of the invoice table only.",
+    );
+    expect(beat("ask-ddd-invoice-table")?.example).toBe(
+      "/ask what is the domain driven design of the @invoice-table.tsx",
+    );
+    expect(beat("ask-cross-context")?.detail).toBe(
+      "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
     );
     expect(beat("ask-cross-context")?.example).toBe(
       "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
@@ -211,17 +225,31 @@ describe("runbook catalog", () => {
     expect(beat("context-usage")?.promptType).toBe("none");
     expect(beat("context-usage")?.detail).toBe("Click on the Context Usage indicator below the chat.");
     expect(beat("context-usage")?.example).toBeUndefined();
-    expect(beat("create-api-personal-skill")?.detail).toContain("Open skill in ~/.cursor/skills.");
+    expect(beat("create-api-personal-skill")?.detail).toBe(
+      "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",
+    );
     expect(beat("create-api-personal-skill")?.example).toBe(
       "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
     );
-    expect(beat("promote-create-api-project")?.detail).toContain("Open skill in .cursor/skills");
-    expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
-    expect(beat("test-money-hook")?.detail).toBe(
-      "Show .cursor/hooks.json, hooks/check-money-formatting.mjs, and app/disputes/[id]/page.tsx. The page stages unsafe manual dollar formatting in a comment. Uncommenting it makes the hook reject the edit and point back to formatUsd. Do not create a Cursor rule.",
+    expect(beat("promote-create-api-project")?.detail).toBe(
+      "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository.",
     );
-    expect(beat("test-money-hook")?.example).toBe(
-      'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.',
+    expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
+    expect(beat("show-money-hook")?.promptType).toBe("none");
+    expect(beat("show-money-hook")?.example).toBeUndefined();
+    expect(beat("show-money-hook")?.detail).toBe(
+      "Use CMD/CTRL+P to open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
+    );
+    expect(beat("show-money-script")?.promptType).toBe("none");
+    expect(beat("show-money-script")?.example).toBeUndefined();
+    expect(beat("show-money-script")?.detail).toBe(
+      "Use CMD/CTRL+P to open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
+    );
+    expect(beat("bypass-formatter-test")?.detail).toBe(
+      "Use CMD/CTRL+P to open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
+    );
+    expect(beat("bypass-formatter-test")?.example).toBe(
+      'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
     );
     const disputePage = readFileSync(join(root, "app/disputes/[id]/page.tsx"), "utf8");
     expect(disputePage).toContain(
@@ -229,41 +257,65 @@ describe("runbook catalog", () => {
     );
     expect(disputePage).toContain("{/* capUsd */ formatUsd(catalogPrice)}");
     expect(disputePage).not.toMatch(/^\s*let capUsd = /m);
-    expect(beat("add-linear-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
-    expect(beat("add-linear-mcp")?.detail).toContain("Show Linear MCP and the tools you can enable.");
-    expect(beat("add-linear-mcp")?.detail).toContain("Settings -> Teams -> New team");
-    expect(beat("add-linear-mcp")?.example).toBe("Add the Linear MCP server to this project.");
-    expect(beat("fix-linear-suggested-credit")?.detail).toContain(
-      "Explore the Linear MCP tool calls.",
+    expect(beat("add-linear-mcp")?.detail).toBe(
+      "Check MCP servers in Customize -> MCPs. Review the Linear MCP server and the different tools you can enable.",
     );
-    expect(beat("fix-linear-suggested-credit")?.example).toBe(
-      "Fix Linear issue: Dispute dsp_1043 claims $400 against a $249 Scale invoice",
+    expect(beat("add-linear-mcp")?.example).toBe("Add the Linear MCP server to this project.");
+    expect(beat("mcp-allowlist")?.promptType).toBe("none");
+    expect(beat("mcp-allowlist")?.example).toBeUndefined();
+    expect(beat("mcp-allowlist")?.detail).toBe(
+      "Go to Settings -> Agents -> Execution and Approvals -> Allowlist Options -> MCP Allowlist to check valid MCP servers and tools from your administrator.",
+    );
+    expect(beat("ask-linear-bug")?.detail).toBe("Explore the tool calls to Linear MCP server.");
+    expect(beat("ask-linear-bug")?.example).toBe(
+      "/ask “Overdue / Needs review filter does not change the list”",
     );
     expect(beat("import-marketplace-plugin")?.promptType).toBe("none");
     expect(beat("import-marketplace-plugin")?.example).toBeUndefined();
     expect(beat("import-marketplace-plugin")?.detail).toBe(
-      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import plugins/standard-bug-fix from the demo repository. Show that the plugin has skills, rules, and Linear MCP server.",
+      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
     );
-    expect(beat("standard-bug-fix-filter")?.detail).toBe("");
-    expect(beat("standard-bug-fix-filter")?.example).toBe(
-      "/standard-bug-fix Overdue / Needs review filter does not change the list",
+    expect(beat("standard-bug-fix")?.detail).toBe("");
+    expect(beat("standard-bug-fix")?.example).toBe(
+      "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
     );
-    expect(beat("refine-plan-three-worktrees")?.example).toBe(
-      "@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.",
+    expect(beat("open-resolve-dispute-plan")?.promptType).toBe("none");
+    expect(beat("open-resolve-dispute-plan")?.example).toBeUndefined();
+    expect(beat("open-resolve-dispute-plan")?.detail).toBe(
+      "Use CMD/CTRL+P to open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
     );
-    expect(beat("multitask-three-workstreams")?.example).toBe("/multitask @resolve-dispute.md");
-    expect(beat("verify-parallel-work")?.promptType).toBe("none");
-    expect(beat("verify-parallel-work")?.example).toBeUndefined();
-    expect(beat("verify-parallel-work")?.detail).toBe(
-      "Open diffs for each agent. Check tests and linters. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
+    expect(beat("open-ledgerly-reviewer")?.promptType).toBe("none");
+    expect(beat("open-ledgerly-reviewer")?.example).toBeUndefined();
+    expect(beat("open-ledgerly-reviewer")?.detail).toBe(
+      "Use CMD/CTRL+P to open .cursor/agents/ledgerly-reviewer.md",
     );
-    expect(beat("best-of-n-release-note")?.example).toBe(
-      "/best-of-n Draft a short product release note for finishing Accept/Decline on dispute resolution in Ledgerly. Audience: internal eng + CE. Include what shipped, how to verify on dsp_1043, and that suggested-credit v1→v2 is out of scope. No code changes. ~150 words.",
+    expect(beat("open-dispatch-subagents-skill")?.promptType).toBe("none");
+    expect(beat("open-dispatch-subagents-skill")?.example).toBeUndefined();
+    expect(beat("open-dispatch-subagents-skill")?.detail).toBe(
+      "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md. This skill gives clear guidance to your agents that they should avoid making changes with conflicts.",
     );
+    expect(beat("multitask-resolve-dispute")?.detail).toBe(
+      "Build the feature using the /multitask command.",
+    );
+    expect(beat("multitask-resolve-dispute")?.example).toBe("/multitask @resolve-dispute.md");
+    expect(beat("ledgerly-reviewer-check")?.detail).toBe("");
+    expect(beat("ledgerly-reviewer-check")?.example).toBe("ledgerly-reviewer check my work");
 
     expect(beats201.every((entry) => entry.promptType !== undefined)).toBe(true);
-    expect(beat("rename-agent-1-all")?.promptType).toBe("adaptable");
+    expect(beat("rename-agent-1-all")?.promptType).toBe("reusable");
+    expect(beat("ask-ddd-all")?.promptType).toBe("reusable");
+    expect(beat("rename-agent-2-target")?.promptType).toBe("reusable");
+    expect(beat("ask-ddd-invoice-table")?.promptType).toBe("reusable");
+    expect(beat("ask-cross-context")?.promptType).toBe("reusable");
     expect(beat("context-usage")?.promptType).toBe("none");
+    expect(beat("create-api-personal-skill")?.promptType).toBe("reusable");
+    expect(beat("promote-create-api-project")?.promptType).toBe("reusable");
+    expect(beat("bypass-formatter-test")?.promptType).toBe("adaptable");
+    expect(beat("add-linear-mcp")?.promptType).toBe("adaptable");
+    expect(beat("ask-linear-bug")?.promptType).toBe("adaptable");
+    expect(beat("standard-bug-fix")?.promptType).toBe("adaptable");
+    expect(beat("multitask-resolve-dispute")?.promptType).toBe("reusable");
+    expect(beat("ledgerly-reviewer-check")?.promptType).toBe("adaptable");
   });
 
   it("does not resolve the retired advanced track", () => {

@@ -16,10 +16,10 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 
 The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
 
-1. **Why is my agent ignoring my instructions?** — rename agents, Canvas DDD, ask across chats, context usage
-2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, money-formatting hook
-3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, ce-field-demos suggested-credit issue, import `plugins/standard-bug-fix` from disk
-4. **How do I parallelize a task?** — [three-worktree plan](#refine-the-plan), `/multitask`, verify, `/best-of-n`
+1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD, ask across chats, context usage
+2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, money-format hook
+3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, Ask Linear, import plugin from disk
+4. **How do I parallelize a task?** — [resolve-dispute plan](#open-the-plan), `/multitask`, ledgerly-reviewer check
 
 ---
 
@@ -254,7 +254,15 @@ Open `/runbooks/201`. Four section tabs match the Outline Show headings. Copy a 
 
 ### Why is my agent ignoring my instructions?
 
-Rename two agents, ask each for a Canvas DDD map (whole app vs `@invoice-table.tsx`), then ask across chats:
+Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`), then ask across chats:
+
+```text
+/ask what is the domain driven design of the application.
+```
+
+```text
+/ask what is the domain driven design of the @invoice-table.tsx
+```
 
 ```text
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
@@ -276,14 +284,14 @@ Open the skill in `~/.cursor/skills`, then promote it:
 Promote the create-api skill to this project.
 ```
 
-Open the project skill in `.cursor/skills`. Skip the room prompt for `/add-dashboard-widget`.
+Open the project skill in `.cursor/skills`. Explore the other project skills for this repository.
 
-#### Money-formatting hook
+#### Money-format hook
 
-Do not create a Cursor rule. Show `.cursor/hooks.json`, `hooks/check-money-formatting.mjs`, and `app/disputes/[id]/page.tsx`. The page stages an unsafe manual formatter in a comment and a `{/* capUsd */}` mark on the Resolution CardDescription. Then:
+Use CMD/CTRL+P to open `.cursor/hooks.json` and `hooks/check-money-formatting.mjs`. Then:
 
 ```text
-In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription. Do not run the money-formatting checker directly. Do not enable Accept or Decline. Keep rendered output and behavior otherwise unchanged.
+In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.
 ```
 
 ### How does my agent get more information?
@@ -294,34 +302,30 @@ Create the private Linear team by hand first ([steps above](#create-the-private-
 Add the Linear MCP server to this project.
 ```
 
-Show Customize → MCPs, then:
+Check MCP servers in Customize → MCPs. Check the MCP allowlist under Settings → Agents → Execution and Approvals. Then:
 
 ```text
-Fix Linear issue: Dispute dsp_1043 claims $400 against a $249 Scale invoice
+/ask “Overdue / Needs review filter does not change the list”
 ```
 
-Import `plugins/standard-bug-fix` from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Show the standard-bug-fix skill, rule, and Linear MCP. Then:
+Import the plugin directory from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Show the skills, rules, and CompanyTicket MCP. Then:
 
 ```text
-/standard-bug-fix Overdue / Needs review filter does not change the list
+/standard-bug-fix “Overdue / Needs review filter does not change the list”
 ```
 
 ### How do I parallelize a task?
 
-#### Refine the plan
+#### Open the plan
 
-```text
-@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.
-```
+Use CMD/CTRL+P to open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/ledgerly-reviewer.md`, and `.cursor/skills/dispatch-subagents/SKILL.md`. Then:
 
 ```text
 /multitask @resolve-dispute.md
 ```
 
-Open diffs, check tests and linters, open [dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043), then Accept or Decline with a reviewer note.
-
 ```text
-/best-of-n Draft a short product release note for finishing Accept/Decline on dispute resolution in Ledgerly. Audience: internal eng + CE. Include what shipped, how to verify on dsp_1043, and that suggested-credit v1→v2 is out of scope. No code changes. ~150 words.
+ledgerly-reviewer check my work
 ```
 
 ---
