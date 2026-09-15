@@ -1,7 +1,3 @@
-import {
-  FIELD_DEMO_FILTER_TITLE,
-  FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
-} from "@/lib/runbooks/linear-field-demos";
 import type { DemoSection } from "@/lib/runbooks/types";
 
 export const RUNBOOK_SECTIONS_201 = [
@@ -12,37 +8,37 @@ export const RUNBOOK_SECTIONS_201 = [
       {
         id: "rename-agent-1-all",
         title: "Rename Agent 1 All",
-        promptType: "adaptable",
+        promptType: "reusable",
         detail: "Open one agent and ask it for information about the entire codebase.",
         example: "/rename-chat Agent 1 All",
       },
       {
-        id: "canvas-all-domains",
-        title: "Canvas: full codebase DDD",
-        promptType: "adaptable",
-        detail: "Ask the all-codebase agent to map domain-driven design in Canvas.",
-        example: "Show me the domain driven design of the application in Canvas.",
+        id: "ask-ddd-all",
+        title: "Ask DDD of the application",
+        promptType: "reusable",
+        detail: "Ask the all-codebase agent for domain-driven design.",
+        example: "/ask what is the domain driven design of the application.",
       },
       {
-        id: "rename-agent-2-invoices",
-        title: "Rename Agent 2 Invoices",
-        promptType: "adaptable",
-        detail: "Open a second agent for a new context window focused on invoices.",
-        example: "/rename-chat Agent 2 Invoices",
+        id: "rename-agent-2-target",
+        title: "Rename Agent 2 Target",
+        promptType: "reusable",
+        detail: "Open a second agent for a new targeted context window.",
+        example: "/rename-chat Agent 2 Target",
       },
       {
-        id: "canvas-invoice-table",
-        title: "Canvas: invoice table DDD",
-        promptType: "adaptable",
-        detail: "Target context to @invoice-table.tsx and map domains in Canvas.",
-        example: "Show me the domain driven design of @invoice-table.tsx in Canvas.",
+        id: "ask-ddd-invoice-table",
+        title: "Ask DDD of the invoice table",
+        promptType: "reusable",
+        detail: "Ask for domain-driven design of the invoice table only.",
+        example: "/ask what is the domain driven design of the @invoice-table.tsx",
       },
       {
         id: "ask-cross-context",
         title: "Ask across agents",
-        promptType: "adaptable",
+        promptType: "reusable",
         detail:
-          "Agent 1 mapped all domains; Agent 2 can reuse that summary without scanning the whole codebase again.",
+          "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
         example: "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
       },
       {
@@ -60,35 +56,42 @@ export const RUNBOOK_SECTIONS_201 = [
       {
         id: "create-api-personal-skill",
         title: "Create personal create-api skill",
-        promptType: "adaptable",
+        promptType: "reusable",
         detail:
-          "Create a personal skill for how to create a new API so the agent does less scanning. Open skill in ~/.cursor/skills.",
+          "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",
         example:
           "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
       },
       {
         id: "promote-create-api-project",
         title: "Promote create-api to project",
-        promptType: "adaptable",
-        detail: "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills",
+        promptType: "reusable",
+        detail:
+          "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository.",
         example: "Promote the create-api skill to this project.",
       },
       {
-        id: "create-eslint-rule",
-        title: "Create ESLint rule",
-        promptType: "adaptable",
+        id: "show-money-hook",
+        title: "Review money-format hook",
+        promptType: "none",
         detail:
-          "Use a linter hook instead of a long TypeScript formatting rule. Show hook in .cursor/hooks.json. Show script in hooks/eslint-changed.sh. Open app/disputes/[id]/page.tsx.",
-        example:
-          "/create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.",
+          "Use CMD/CTRL+P to open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
       },
       {
-        id: "test-eslint-hook",
-        title: "Test the ESLint hook",
+        id: "show-money-script",
+        title: "Review money-format script",
+        promptType: "none",
+        detail:
+          "Use CMD/CTRL+P to open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
+      },
+      {
+        id: "bypass-formatter-test",
+        title: "Bypass formatter test",
         promptType: "adaptable",
-        detail: "",
+        detail:
+          "Use CMD/CTRL+P to open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
         example:
-          "In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+          'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
       },
     ],
   },
@@ -101,30 +104,36 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Add Linear MCP",
         promptType: "adaptable",
         detail:
-          "Connect Linear for this project. Show MCP servers in Customize -> MCPs. Show Linear MCP and the tools you can enable. Create a private Linear team in the UI first (Settings -> Teams -> New team, Make team private, members = you only), then run stage-linear-201 so ce-field-demos exists.",
+          "Check MCP servers in Customize -> MCPs. Review the Linear MCP server and the different tools you can enable.",
         example: "Add the Linear MCP server to this project.",
       },
       {
-        id: "fix-linear-suggested-credit",
-        title: "Fix the suggested-credit Linear issue",
-        promptType: "adaptable",
+        id: "mcp-allowlist",
+        title: "Check MCP allowlist",
+        promptType: "none",
         detail:
-          "Pull the dsp_1043 suggested-credit bug from the ce-field-demos Linear project. Explore the Linear MCP tool calls.",
-        example: `Fix Linear issue: ${FIELD_DEMO_SUGGESTED_CREDIT_TITLE}`,
+          "Go to Settings -> Agents -> Execution and Approvals -> Allowlist Options -> MCP Allowlist to check valid MCP servers and tools from your administrator.",
+      },
+      {
+        id: "ask-linear-bug",
+        title: "Ask Linear for the filter bug",
+        promptType: "adaptable",
+        detail: "Explore the tool calls to Linear MCP server.",
+        example: "/ask “Overdue / Needs review filter does not change the list”",
       },
       {
         id: "import-marketplace-plugin",
         title: "Import marketplace plugin",
         promptType: "none",
         detail:
-          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import plugins/standard-bug-fix from the demo repository. Show that the plugin has skills, rules, and Linear MCP server.",
+          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
       },
       {
-        id: "standard-bug-fix-filter",
-        title: "Standard bug fix — filter pills",
+        id: "standard-bug-fix",
+        title: "Standard bug fix",
         promptType: "adaptable",
         detail: "",
-        example: `/standard-bug-fix ${FIELD_DEMO_FILTER_TITLE}`,
+        example: "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
       },
     ],
   },
@@ -133,34 +142,38 @@ export const RUNBOOK_SECTIONS_201 = [
     title: "How do I parallelize a task?",
     beats: [
       {
-        id: "refine-plan-three-worktrees",
-        title: "Refine plan for three worktrees",
-        promptType: "adaptable",
-        detail: "Split a resolve-disputes plan across three parallel worktree agents.",
-        example:
-          "@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.",
+        id: "open-resolve-dispute-plan",
+        title: "Open resolve-dispute plan",
+        promptType: "none",
+        detail:
+          "Use CMD/CTRL+P to open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
       },
       {
-        id: "multitask-three-workstreams",
-        title: "Multitask three workstreams",
-        promptType: "adaptable",
+        id: "open-ledgerly-reviewer",
+        title: "Open ledgerly-reviewer",
+        promptType: "none",
+        detail: "Use CMD/CTRL+P to open .cursor/agents/ledgerly-reviewer.md",
+      },
+      {
+        id: "open-dispatch-subagents-skill",
+        title: "Open dispatch-subagents skill",
+        promptType: "none",
+        detail:
+          "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md. This skill gives clear guidance to your agents that they should avoid making changes with conflicts.",
+      },
+      {
+        id: "multitask-resolve-dispute",
+        title: "Multitask resolve-dispute",
+        promptType: "reusable",
         detail: "Build the feature using the /multitask command.",
         example: "/multitask @resolve-dispute.md",
       },
       {
-        id: "verify-parallel-work",
-        title: "Verify parallel work",
-        promptType: "none",
-        detail:
-          "Open diffs for each agent. Check tests and linters. Open http://127.0.0.1:43173/disputes/dsp_1043. Add a reviewer note → Accept or Decline.",
-      },
-      {
-        id: "best-of-n-release-note",
-        title: "Best-of-n release note",
+        id: "ledgerly-reviewer-check",
+        title: "ledgerly-reviewer check",
         promptType: "adaptable",
-        detail: "Compare models for an ambiguous release-note draft.",
-        example:
-          "/best-of-n Draft a short product release note for finishing Accept/Decline on dispute resolution in Ledgerly. Audience: internal eng + CE. Include what shipped, how to verify on dsp_1043, and that suggested-credit v1→v2 is out of scope. No code changes. ~150 words.",
+        detail: "",
+        example: "ledgerly-reviewer check my work",
       },
     ],
   },
