@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "companyticket": {
+    "ledgerly-db": {
       "command": "npx",
-      "args": ["tsx", "mcp/companyticket/server.ts"]
+      "args": ["tsx", "mcp/ledgerly-db/server.ts"]
     }
   }
 }

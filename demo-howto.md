@@ -54,7 +54,7 @@ Open **http://localhost:43173**.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 45 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 34 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -75,8 +75,8 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the presenter’s account only.
 
 1. Open Linear → **Settings → Teams → New team**.
-2. Name it for this operator only (example: `ce-field-demos-private`).
-3. Turn on **Make team private**.
+2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add Customer Education or any other shared team.
 5. In Grok Build, run `stage-linear-201`. That skill creates project `ce-field-demos` on this team and seeds the five Fieldnote issues.
 
@@ -217,12 +217,12 @@ Create three slides in Figma Slides outlining how I used Grok Build to develop a
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 45 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 34 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If the client migration ran:** `tests/suggested-credit-api.test.ts` should be green and dsp_1043 should show **$249** from v2, with both routes intact.
 
-**If no migration ran:** `npm test` should remain **1 failed / 45 passed**. That is shipped state, not failed setup.
+**If no migration ran:** `npm test` should remain **1 failed / 34 passed**. That is shipped state, not failed setup.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -244,7 +244,7 @@ npx prisma db seed
 npm test
 ```
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 45 passed**, status pills still writing `state=`.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 34 passed**, status pills still writing `state=`.
 
 ---
 

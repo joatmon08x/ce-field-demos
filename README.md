@@ -16,7 +16,7 @@ npm run dev
 
 Open **http://localhost:43173**.
 
-`npm test` is **1 failed / 45 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 34 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
@@ -86,8 +86,8 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the operator’s account only.
 
 1. Open Linear → **Settings → Teams → New team**.
-2. Name it for this operator only (example: `ce-field-demos-private`).
-3. Turn on **Make team private**.
+2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add Customer Education or any other shared team.
 5. Then ask an agent to run `stage-linear-201`. That skill creates project `ce-field-demos` on this team and seeds the five Fieldnote issues.
 

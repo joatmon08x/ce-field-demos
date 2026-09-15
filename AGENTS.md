@@ -43,19 +43,19 @@ The seed script runs `prisma db push` first, then reloads deterministic Fieldnot
 npm run dev
 ```
 
+Listens on **43173** (not 3000).
+
 ### Private Linear team (manual, before 201 MCP)
 
 Linear MCP cannot create teams. The operator creates a private team in the Linear UI, then an agent runs `stage-linear-201`.
 
 1. Open Linear → **Settings → Teams → New team**.
-2. Name it for this operator only (example: `ce-field-demos-private`).
-3. Turn on **Make team private**.
+2. Name it for this operator only (example: `joatmon08x/ce-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only the operator**. Do not add Customer Education or any other shared team.
 5. Run `stage-linear-201` to create project `ce-field-demos` on that team and seed the five Fieldnote issues.
 
 Do not `save_project` onto a public team. Do not reintroduce CompanyTicket.
-
-Listens on **43173** (not 3000).
 
 ### Tests
 
@@ -67,7 +67,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 45 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
+Shipped suite on a clean tree: **1 failed / 34 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
 
 ### Multi-file stub (leave it unless asked)
 

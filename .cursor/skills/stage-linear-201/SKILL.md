@@ -18,8 +18,8 @@ Linear privacy is **team** privacy. A project on a public team (Customer Educati
 The same steps are in `README.md`, `demo-howto.md`, and `AGENTS.md`. Repeat them if the operator has not done this yet:
 
 1. Open Linear → **Settings → Teams → New team**.
-2. Name it for this operator only (example: `ce-field-demos-private` or `{displayName}-field-demos`).
-3. Turn on **Make team private**.
+2. Name it for this operator only (example: `joatmon08x/ce-field-demos` or `{displayName}-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only the operator**. Do not add Customer Education or any other team.
 5. Do not attach the project to a public team later — that publishes it.
 

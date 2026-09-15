@@ -230,6 +230,7 @@ describe("runbook catalog", () => {
     );
     expect(beat("add-linear-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
     expect(beat("add-linear-mcp")?.detail).toContain("Show Linear MCP and the tools you can enable.");
+    expect(beat("add-linear-mcp")?.detail).toContain("Settings -> Teams -> New team");
     expect(beat("add-linear-mcp")?.example).toBe("Add the Linear MCP server to this project.");
     expect(beat("fix-linear-suggested-credit")?.detail).toContain(
       "Explore the Linear MCP tool calls.",
@@ -310,7 +311,7 @@ describe("runbook catalog", () => {
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
-    expect(files.reset).toContain("1 failed / 45 passed");
+    expect(files.reset).toContain("1 failed / 34 passed");
     expect(files.agents).toContain("stage-linear-201");
     expect(files.rule).toContain("stage-linear-201");
     expect(files.skill).toContain("stage-linear-201");
@@ -322,6 +323,8 @@ describe("runbook catalog", () => {
     expect(files.agents).toContain("Settings → Teams → New team");
     expect(files.agents).toContain("Make team private");
     expect(files.rule).toContain("Make team private");
-    expect(files.skill).toContain("Make team private");
+    expect(files.readme).toContain("settings/teams/LY");
+    expect(files.howto).toContain("settings/teams/LY");
+    expect(files.agents).toContain("settings/teams/LY");
   });
 });
