@@ -9,6 +9,6 @@ describe("project MCP map", () => {
     const mcp = JSON.parse(readFileSync(join(root, ".cursor/mcp.json"), "utf8"));
     expect(mcp.mcpServers).toEqual({});
     expect(mcp.mcpServers["ledgerly-db"]).toBeUndefined();
-    expect(existsSync(join(root, "mcp/ledgerly-db"))).toBe(false);
+    expect(existsSync(join(root, "mcp"))).toBe(false);
   });
 });

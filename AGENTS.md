@@ -86,7 +86,7 @@ Incomplete on purpose:
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
 - Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
 - Do not rename the FilterPills query key from `state` to `status` unless asked.
-- Do not add a Prisma/SQLite MCP or restore `mcp/ledgerly-db`. Query the seed with Prisma (`write-prisma-query`) or the HTTP API.
+- Do not add a Prisma/SQLite MCP or restore the `mcp/` directory. Query the seed with Prisma (`write-prisma-query`) or the HTTP API.
 
 ### Agents and skills
 
