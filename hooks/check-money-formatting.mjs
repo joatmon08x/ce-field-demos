@@ -20,17 +20,24 @@ if (!existsSync(absolutePath)) process.exit(0);
 const unsafeCatalogFormatting =
   /(?:\bcatalogPrice\s*\/\s*100\b|\.toFixed\s*\(\s*2\s*\)|Intl\.NumberFormat|["'`]\$["'`]\s*\+)/;
 
-const violations = readFileSync(absolutePath, "utf8")
-  .split("\n")
-  .map((line, index) => ({ line, lineNumber: index + 1 }))
-  .filter(({ line }) => {
-    const trimmed = line.trimStart();
-    return (
-      !trimmed.startsWith("//") &&
-      line.includes("catalogPrice") &&
-      unsafeCatalogFormatting.test(line)
-    );
-  });
+let insideBlockComment = false;
+const violations = [];
+
+for (const [index, line] of readFileSync(absolutePath, "utf8").split("\n").entries()) {
+  const trimmed = line.trimStart();
+  if (insideBlockComment) {
+    if (trimmed.includes("*/")) insideBlockComment = false;
+    continue;
+  }
+  if (trimmed.startsWith("/*")) {
+    if (!trimmed.includes("*/")) insideBlockComment = true;
+    continue;
+  }
+  if (trimmed.startsWith("//")) continue;
+  if (line.includes("catalogPrice") && unsafeCatalogFormatting.test(line)) {
+    violations.push({ line, lineNumber: index + 1 });
+  }
+}
 
 if (violations.length === 0) process.exit(0);
 

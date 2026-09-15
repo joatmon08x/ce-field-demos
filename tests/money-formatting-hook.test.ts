@@ -30,6 +30,9 @@ describe("money-formatting afterFileEdit hook", () => {
   it("allows the staged comment and formatUsd", () => {
     const result = runHook(`
       // let capUsd = "$" + (catalogPrice / 100).toFixed(2);
+      /*
+       * let oldCapUsd = "$" + (catalogPrice / 100).toFixed(2);
+       */
       const capUsd = formatUsd(catalogPrice);
     `);
 
