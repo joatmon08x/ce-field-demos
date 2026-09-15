@@ -67,7 +67,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 34 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
+Shipped suite on a clean tree: **1 failed / 29 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
 
 ### Multi-file stub (leave it unless asked)
 
@@ -86,6 +86,7 @@ Incomplete on purpose:
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
 - Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
 - Do not rename the FilterPills query key from `state` to `status` unless asked.
+- Do not add a Prisma/SQLite MCP or restore the `mcp/` directory. Query the seed with Prisma (`write-prisma-query`) or the HTTP API.
 
 ### Agents and skills
 
@@ -99,5 +100,6 @@ Incomplete on purpose:
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
-| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. The 201 MCP beat uses Linear. |
+| `.cursor/skills/write-prisma-query/` | Invoice, dispute, and customer lookups against SQLite — not an MCP |
+| `.cursor/mcp.json` | Empty project MCP map. 101 uses Figma (user MCP). 201 uses Linear (user MCP or `plugins/standard-bug-fix`). |
 | `plugins/standard-bug-fix/` | 201-track disk plugin: `/standard-bug-fix` skill, Linear writeback rule, Linear MCP. |

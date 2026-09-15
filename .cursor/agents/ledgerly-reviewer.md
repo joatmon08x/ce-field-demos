@@ -22,6 +22,7 @@ Checklist:
 - Tab / Cmd-K TODOs in collection notes and settings were not silently finished.
 - KPI restyles use existing tokens in `app/globals.css` only — no new hex.
 - No talk-track or speaker-note files were added.
+- `.cursor/mcp.json` does not register `ledgerly-db`, and there is no `mcp/` directory. Invoice/dispute lookups stay on Prisma, not a database MCP.
 
 Report findings by priority:
 
