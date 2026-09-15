@@ -58,11 +58,13 @@ Check shipped state:
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
+- Invoice and dispute status pills write `?state=` while the pages read `status` — clicking Overdue / Needs review does not filter. That is a planted UI seam, not a second red test. Restore with `git checkout -- components/filter-pills.tsx`
 
-If the credit reads $249.00 or the suite is all green, a prior run switched the client to v2. Restore with the `reset-demo-state` skill, or:
+If the credit reads $249.00 or the suite is all green, a prior run switched the client to v2. If status pills filter the list, a prior run renamed `state` to `status`. Restore with the `reset-demo-state` skill, or:
 
 ```bash
 git checkout -- lib/disputes/suggested-credit-api.ts
+git checkout -- components/filter-pills.tsx
 npx prisma db seed
 ```
 
@@ -92,7 +94,7 @@ Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`
 | Faulty client selection | `lib/disputes/suggested-credit-api.ts` | Selects deprecated v1, so the UI displays $400 |
 | Expected behavior | `tests/suggested-credit-api.test.ts` | Expects the client to select v2 |
 
-**Look for:** Red **Suggested credit $400.00**, copy stating it came from v1 and is above **$249.00**, and disabled Accept / Decline buttons. Those buttons are a separate unfinished seam; do not confuse them with the API-version error.
+**Look for:** Red **Suggested credit $400.00**, copy stating it came from v1 and is above **$249.00**, and disabled Accept / Decline buttons. Those buttons are a separate unfinished seam; do not confuse them with the API-version error. Status pills on `/invoices` and `/disputes` are a third seam: they write `state=` so a click does not filter.
 
 ---
 
@@ -218,18 +220,19 @@ On a clean tree, npm test is 1 failed / 36 passed. The sole red test is tests/su
 
 **Say:**
 
-> I reviewed the result. Now I am resetting the demo app so the next session starts with the same planted v1 client, the same $400 UI result, and the same expected red test.
+> I reviewed the result. Now I am resetting the demo app so the next session starts with the same planted v1 client, the same $400 UI result, the same expected red test, and status pills that still write `state=`.
 
 **Do:** Ask the agent to run `reset-demo-state`, or:
 
 ```bash
 git checkout -- lib/disputes/suggested-credit-api.ts
+git checkout -- components/filter-pills.tsx
 rm -f .cursor/rules/suggested-credit-api-v2.mdc
 npx prisma db seed
 npm test
 ```
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 36 passed**.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 36 passed**, status pills still writing `state=`.
 
 ---
 

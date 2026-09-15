@@ -18,6 +18,7 @@ Checklist:
 - Unless the user asked for the migration, `lib/disputes/suggested-credit-api.ts` still selects v1. If migration was requested, the client selects v2 while both API routes remain unchanged.
 - Stored credit, the domain helper, and v2 remain capped at $249. The deprecated v1 route returns the raw $400 claim.
 - The dispute-resolution stub (`lib/disputes/resolve.ts`, the resolve API route, the panel buttons) was not completed unless the user asked.
+- Unless the user asked to fix the filter pills, `components/filter-pills.tsx` still writes `state=` (pages read `status`).
 - Tab / Cmd-K TODOs in collection notes and settings were not silently finished.
 - KPI restyles use existing tokens in `app/globals.css` only — no new hex.
 - No talk-track or speaker-note files were added.

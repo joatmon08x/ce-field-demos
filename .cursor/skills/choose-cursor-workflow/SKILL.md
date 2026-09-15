@@ -15,6 +15,8 @@ The demo ships two jumpable tracks: **101** and **201**. Every beat is independe
 
 The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101` and `/runbooks/201`. Use the matching `example` verbatim. Do not invent another catalog price.
 
+The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not mention the invoice or dispute filter-pill `state=` seam unless the user is on that click path.
+
 ## 101 sections and beats
 
 1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, change to a fast model, plan to fix the bug.
