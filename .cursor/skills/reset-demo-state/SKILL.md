@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 45 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
 
 ## Checklist (run what applies)
 
@@ -85,12 +85,12 @@ npm run dev
 7. **Verify shipped state**
 
 ```bash
-npm test    # expect: 1 failed (suggested-credit-api), 31 passed
+npm test    # expect: 1 failed (suggested-credit-api), 45 passed
 ```
 
 Open `http://127.0.0.1:43173` — dashboard shows Fieldnote data, catalog $49/$99/$249, disputes badge on the sidebar.
 
-Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a red **Suggested credit $400.00** from v1 above the $249 Scale price. Confirm `/api/v2/disputes/dsp_1043/suggested-credit` returns $249.00 and the ledgerly-db MCP reports stored credit $249.00. If the page reads $249.00 from v2, restore `lib/disputes/suggested-credit-api.ts`.
+Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a red **Suggested credit $400.00** from v1 above the $249 Scale price. Confirm `/api/v2/disputes/dsp_1043/suggested-credit` returns $249.00. If the page reads $249.00 from v2, restore `lib/disputes/suggested-credit-api.ts`.
 
 ## Never
 

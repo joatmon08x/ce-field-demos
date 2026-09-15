@@ -55,7 +55,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 31 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
+Shipped suite on a clean tree: **1 failed / 45 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
 
 ### Multi-file stub (leave it unless asked)
 
@@ -69,7 +69,7 @@ Incomplete on purpose:
 
 - Prices only from `lib/plans.ts`.
 - Customer names only from `prisma/seed.ts` and `prisma/extra-accounts.ts`.
-- Comments in code must not cite Slack, GitHub, or Jira URLs.
+- Comments in code must not cite Slack, GitHub, or issue-tracker URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
 - Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
@@ -85,4 +85,4 @@ Incomplete on purpose:
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
-| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. |
+| `.cursor/mcp.json` → `companyticket` | Mock ticket MCP (`mcp/companyticket/`). Board at `/companyticket`. Keys `LY-000`. Marketplace copy in `plugin/companyticket/`. The 101 track ends on Canvas and a slide-generating MCP, not this server. |

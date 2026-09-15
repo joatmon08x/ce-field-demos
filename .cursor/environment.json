@@ -6,7 +6,7 @@
     {
       "name": "Dev server",
       "command": "npm run dev",
-      "description": "Next.js App Router for Ledgerly on port 43173"
+      "description": "Next.js App Router for Ledgerly and CompanyTicket on port 43173"
     }
   ],
   "ports": [

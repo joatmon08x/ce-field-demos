@@ -47,6 +47,10 @@ export function AppChrome({
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
+  if (pathname.startsWith("/companyticket")) {
+    return children;
+  }
+
   function searchBook(next: string) {
     const trimmed = next.trim();
     startTransition(() => {

@@ -17,7 +17,7 @@
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "db:reset": "prisma db push --force-reset && prisma db seed",
-    "mcp:ledgerly-db": "tsx mcp/ledgerly-db/server.ts"
+    "mcp:companyticket": "tsx mcp/companyticket/server.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
