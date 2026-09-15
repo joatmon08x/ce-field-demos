@@ -89,7 +89,11 @@ export default async function DisputeDetailPage({ params }: { params: Promise<{ 
             planName={planLabel(dispute.invoice.plan)}
           />
 
-          <ResolutionForm disputeId={dispute.id} initialReviewerNote={dispute.reviewerNote} />
+          <ResolutionForm
+            key={dispute.id}
+            disputeId={dispute.id}
+            initialReviewerNote={dispute.reviewerNote}
+          />
           <p className="text-xs text-muted-foreground">
             Recorded when this dispute was opened: {formatUsd(dispute.suggestedCreditCents)}.
           </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,13 @@ export function ResolutionForm({ disputeId, initialReviewerNote }: ResolutionFor
   const [pendingAction, setPendingAction] = useState<ResolveAction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [hint, setHint] = useState<string | null>(null);
+
+  useEffect(() => {
+    setReviewerNote(initialReviewerNote ?? "");
+    setPendingAction(null);
+    setError(null);
+    setHint(null);
+  }, [disputeId, initialReviewerNote]);
 
   async function submit(action: ResolveAction) {
     setPendingAction(action);
