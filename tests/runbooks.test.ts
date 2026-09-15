@@ -32,7 +32,7 @@ describe("runbook catalog", () => {
     expect(skill).toContain(track101?.description ?? "");
 
     expect(runbookBeatSequence("101")).toBe(
-      "Ask → Plan → Build in Agent mode → Debug → Change to a fast model → Plan to fix the bug → Run Mode Allowlist → Redact (partial) → Stop the prompt → Interrupt and steer → Review diffs → Create a user rule → Test the rule → Create a user skill → Test the skill → Canvas → MCP / Figma",
+      "Ask → Plan → Build in Agent mode → Debug → Change to a fast model → Plan to fix the bug → Run Mode Allowlist → Redact (partial) → Stop the prompt → Interrupt and steer → Review diffs → Restore from a checkpoint → Create a user rule → Test the rule → Create a user skill → Test the skill → Canvas → MCP / Figma",
     );
 
     expect(beats101.map((beat) => beat.id)).toEqual([
@@ -47,6 +47,7 @@ describe("runbook catalog", () => {
       "stop",
       "interrupt-steer",
       "diffs",
+      "checkpoint-restore",
       "rule",
       "test-rule",
       "skill",
@@ -90,6 +91,12 @@ describe("runbook catalog", () => {
       "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
     );
     expect(beat("diffs")?.example).toBeUndefined();
+    expect(beat("checkpoint-restore")?.title).toBe("Restore from a checkpoint");
+    expect(beat("checkpoint-restore")?.promptType).toBe("none");
+    expect(beat("checkpoint-restore")?.example).toBeUndefined();
+    expect(beat("checkpoint-restore")?.detail).toBe(
+      "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Click on the restore icon next to the prompt.",
+    );
     expect(beat("rule")?.detail).toBe(
       "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
     );
@@ -120,6 +127,18 @@ describe("runbook catalog", () => {
       "What is Grok Build?",
       "How do I work with an agent?",
       "How do I govern my agent?",
+    ]);
+    expect(
+      RUNBOOK_SECTIONS_101.find((section) => section.id === "work-with-agent")?.beats.map(
+        (entry) => entry.id,
+      ),
+    ).toEqual([
+      "allowlist",
+      "start-and-stop",
+      "stop",
+      "interrupt-steer",
+      "diffs",
+      "checkpoint-restore",
     ]);
     expect(RUNBOOK_SECTIONS_101.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
       beats101.map((entry) => entry.id),
