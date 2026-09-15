@@ -72,12 +72,13 @@ describe("CompanyTicket mock book", () => {
 });
 
 describe("CompanyTicket wiring", () => {
-  it("registers the stdio MCP next to ledgerly-db", () => {
+  it("registers the companyticket stdio MCP", () => {
     const mcp = JSON.parse(readFileSync(join(root, ".cursor/mcp.json"), "utf8"));
     expect(mcp.mcpServers.companyticket).toEqual({
       command: "npx",
       args: ["tsx", "mcp/companyticket/server.ts"],
     });
+    expect(mcp.mcpServers["ledgerly-db"]).toBeUndefined();
   });
 
   it("ships a marketplace plugin with skill, rule, and MCP", () => {
