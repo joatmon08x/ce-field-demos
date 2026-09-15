@@ -1,6 +1,6 @@
 ---
 name: add-dashboard-widget
-description: Add a new KPI card or panel to the dashboard using the existing indigo design tokens and seed data. Use when someone asks to "add a widget/card/stat to the dashboard" during a demo — it keeps the result on-brand instead of hand-rolled.
+description: Add a new KPI card or panel to the dashboard using the existing brand design tokens and seed data. Use when someone asks to "add a widget/card/stat to the dashboard" during a demo — it keeps the result on-brand instead of hand-rolled.
 ---
 
 # Add a dashboard widget
@@ -12,7 +12,7 @@ Ship one new widget on `app/page.tsx` that looks native to the existing dashboar
 - Page: `app/page.tsx` (server component, data from `getDashboard()` in `lib/data.ts`).
 - KPI primitive: `components/kpi-card.tsx` (`label`, `value`, `hint`, optional `change`, `icon`, `tone: "indigo" | "success" | "danger"`).
 - Cards/tables: `components/ui/card.tsx`, `components/ui/table.tsx`. Charts: `components/charts/`.
-- Tokens: CSS variables in `app/globals.css` (`--indigo`, `--success`, `--danger`, radius, shadow). Use Tailwind classes bound to them (`bg-indigo-soft`, `text-indigo`, `text-muted-foreground`). Never hard-code a new hex.
+- Tokens: CSS variables in `app/globals.css` (`--brand`, legacy alias `--indigo`, `--success`, `--danger`, radius, shadow). Use Tailwind classes bound to them (`bg-indigo-soft`, `text-indigo`, `text-muted-foreground`). The indigo-named utilities resolve to the current industry palette. Never hard-code a new hex.
 
 ## Rules
 

@@ -2,19 +2,19 @@ import { PRODUCT } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 /**
- * Folded-ledger L. Keep this geometry in sync with public/logo.svg,
- * public/favicon.svg, and public/images/logo-mark.svg.
+ * Router chassis with twin antennae. Keep this geometry in sync with
+ * public/logo.svg, public/favicon.svg, and public/images/logo-mark.svg.
  */
 export function LogoMark({
   className,
-  variant = "onIndigo",
+  variant = "onBrand",
 }: {
   className?: string;
-  variant?: "onIndigo" | "onLight";
+  variant?: "onBrand" | "onLight";
 }) {
-  const onIndigo = variant === "onIndigo";
-  const bar = onIndigo ? "#ffffff" : "#4F46E5";
-  const seam = onIndigo ? "#4F46E5" : "#ffffff";
+  const onBrand = variant === "onBrand";
+  const chassis = onBrand ? "#ffffff" : "var(--brand)";
+  const port = onBrand ? "var(--brand-mark)" : "#ffffff";
   return (
     <svg
       viewBox="0 0 64 64"
@@ -23,20 +23,15 @@ export function LogoMark({
       className={className}
       aria-hidden="true"
     >
-      <rect width="64" height="64" rx="16" fill={onIndigo ? "#4F46E5" : "#ffffff"} />
-      <path d="M36 40.5V21.8c0-1.9 1-3.6 2.7-4.4l6.3-3.2v26.3H36Z" fill="#8B85F0" />
-      <path d="M44 40.5V17.4c0-1.9 1-3.6 2.7-4.4l5.3-2.7v30.2H44Z" fill="#CDC9F9" />
-      <rect x="14" y="11" width="13" height="34" rx="6.5" fill={bar} />
-      <rect
-        x="13.25"
-        y="37.25"
-        width="40.5"
-        height="13.5"
-        rx="6.75"
-        fill={bar}
-        stroke={seam}
-        strokeWidth="2.5"
-      />
+      <rect width="64" height="64" rx="16" fill={onBrand ? "var(--brand-mark)" : "#ffffff"} />
+      <path d="M19 27V16M45 27V16" stroke={chassis} strokeWidth="4" strokeLinecap="round" />
+      <circle cx="19" cy="14" r="3" fill="var(--brand-accent)" />
+      <circle cx="45" cy="14" r="3" fill="var(--brand-accent)" />
+      <rect x="10" y="25" width="44" height="27" rx="8" fill={chassis} />
+      {[20, 28, 36, 44].map((cx) => (
+        <circle key={cx} cx={cx} cy="41" r="2.5" fill={port} />
+      ))}
+      <path d="M19 33h10M35 33h10" stroke="var(--brand-accent)" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 }

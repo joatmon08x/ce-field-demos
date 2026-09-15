@@ -91,7 +91,7 @@ export function disputeBreakdown(disputes: DisputeLike[]) {
   return [
     { id: "needs", label: "Needs response", count: needsResponse, color: "#dc2626" },
     { id: "review", label: "In review", count: inReview, color: "#d97706" },
-    { id: "resolved", label: "Resolved", color: "#4f46e5", count: resolved },
+    { id: "resolved", label: "Resolved", color: "#0f766e", count: resolved },
   ] as const;
 }
 
