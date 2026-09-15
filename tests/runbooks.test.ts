@@ -174,6 +174,7 @@ describe("runbook catalog", () => {
       "ask-ddd-all",
       "rename-agent-2-target",
       "ask-ddd-invoice-table",
+      "compare-agents",
       "ask-cross-context",
       "context-usage",
       "create-api-personal-skill",
@@ -215,6 +216,11 @@ describe("runbook catalog", () => {
     );
     expect(beat("ask-ddd-invoice-table")?.example).toBe(
       "/ask what is the domain driven design of the @invoice-table.tsx",
+    );
+    expect(beat("compare-agents")?.promptType).toBe("none");
+    expect(beat("compare-agents")?.example).toBeUndefined();
+    expect(beat("compare-agents")?.detail).toBe(
+      "Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context.",
     );
     expect(beat("ask-cross-context")?.detail).toBe(
       "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
@@ -275,7 +281,7 @@ describe("runbook catalog", () => {
     expect(beat("import-marketplace-plugin")?.detail).toBe(
       "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
     );
-    expect(beat("standard-bug-fix")?.detail).toBe("");
+    expect(beat("standard-bug-fix")?.detail).toBe("Let’s fix the bug with the standard template.");
     expect(beat("standard-bug-fix")?.example).toBe(
       "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
     );
@@ -292,7 +298,7 @@ describe("runbook catalog", () => {
     expect(beat("open-dispatch-subagents-skill")?.promptType).toBe("none");
     expect(beat("open-dispatch-subagents-skill")?.example).toBeUndefined();
     expect(beat("open-dispatch-subagents-skill")?.detail).toBe(
-      "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md. This skill gives clear guidance to your agents that they should avoid making changes with conflicts.",
+      "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md.",
     );
     expect(beat("multitask-resolve-dispute")?.detail).toBe(
       "Build the feature using the /multitask command.",

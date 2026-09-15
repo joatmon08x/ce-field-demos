@@ -34,6 +34,13 @@ export const RUNBOOK_SECTIONS_201 = [
         example: "/ask what is the domain driven design of the @invoice-table.tsx",
       },
       {
+        id: "compare-agents",
+        title: "Compare agents",
+        promptType: "none",
+        detail:
+          "Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context.",
+      },
+      {
         id: "ask-cross-context",
         title: "Ask across agents",
         promptType: "reusable",
@@ -132,7 +139,7 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "standard-bug-fix",
         title: "Standard bug fix",
         promptType: "adaptable",
-        detail: "",
+        detail: "Let’s fix the bug with the standard template.",
         example: "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
       },
     ],
@@ -158,8 +165,7 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "open-dispatch-subagents-skill",
         title: "Open dispatch-subagents skill",
         promptType: "none",
-        detail:
-          "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md. This skill gives clear guidance to your agents that they should avoid making changes with conflicts.",
+        detail: "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md.",
       },
       {
         id: "multitask-resolve-dispute",

@@ -77,7 +77,7 @@ Open `/runbooks/101`, copy a card, and paste it in Grok Build. You still review 
 
 Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review the result.
 
-1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), ask across chats, check context usage.
+1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), compare agents, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, money-format hook and script, bypass-formatter test.
 3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, import the disk plugin (skill, rule, CompanyTicket MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
 4. **How do I parallelize a task?** — open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, ledgerly-reviewer check.

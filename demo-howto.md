@@ -16,7 +16,7 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 
 The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
 
-1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD, ask across chats, context usage
+1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD, compare agents, ask across chats, context usage
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, money-format hook
 3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, Ask Linear, import plugin from disk
 4. **How do I parallelize a task?** — [resolve-dispute plan](#open-the-plan), `/multitask`, ledgerly-reviewer check
@@ -254,7 +254,7 @@ Open `/runbooks/201`. Four section tabs match the Outline Show headings. Copy a 
 
 ### Why is my agent ignoring my instructions?
 
-Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`), then ask across chats:
+Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Compare agents: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
 
 ```text
 /ask what is the domain driven design of the application.
