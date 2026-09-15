@@ -22,7 +22,20 @@ export function monthlySupportLine(planTitleCase: string): string {
   return `${planTitleCase} plan · monthly ${PRODUCT.lineItemNoun}`;
 }
 
-export function cycleMemo(planTitleCase: string, customerName?: string, cycle = "August"): string {
+type CycleMemoOptions = {
+  planTitleCase: string;
+  customerName?: string;
+  cycle?: string;
+  paymentTiming?: string;
+};
+
+export function cycleMemo({
+  planTitleCase,
+  customerName,
+  cycle = "August",
+  paymentTiming,
+}: CycleMemoOptions): string {
   const who = customerName ? ` for ${customerName}` : "";
-  return `${planTitleCase} ${PRODUCT.lineItemNoun} — ${cycle} cycle${who}.`;
+  const payment = paymentTiming ? `, ${paymentTiming}` : "";
+  return `${planTitleCase} ${PRODUCT.lineItemNoun} — ${cycle} cycle${who}${payment}.`;
 }

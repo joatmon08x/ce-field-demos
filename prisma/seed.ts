@@ -123,7 +123,7 @@ const INVOICES = [
     issuedOn: "2026-07-08",
     dueOn: "2026-08-07",
     paidOn: "2026-08-04",
-    memo: cycleMemo(planLabel("STARTER"), undefined, "July"),
+    memo: cycleMemo({ planTitleCase: planLabel("STARTER"), cycle: "July" }),
   },
   {
     id: "inv_1043",
@@ -145,7 +145,7 @@ const INVOICES = [
     issuedOn: "2026-07-12",
     dueOn: "2026-08-11",
     paidOn: "2026-08-09",
-    memo: cycleMemo(planLabel("GROWTH"), undefined, "July"),
+    memo: cycleMemo({ planTitleCase: planLabel("GROWTH"), cycle: "July" }),
   },
   {
     id: "inv_1045",
@@ -166,7 +166,7 @@ const INVOICES = [
     issuedOn: "2026-07-14",
     dueOn: "2026-08-13",
     paidOn: "2026-08-12",
-    memo: cycleMemo(planLabel("SCALE"), undefined, "July"),
+    memo: cycleMemo({ planTitleCase: planLabel("SCALE"), cycle: "July" }),
   },
   {
     id: "inv_1047",
@@ -228,7 +228,11 @@ const INVOICES = [
     issuedOn: "2026-07-07",
     dueOn: "2026-08-06",
     paidOn: "2026-07-28",
-    memo: cycleMemo(planLabel("GROWTH"), "Acme North", "prior"),
+    memo: cycleMemo({
+      planTitleCase: planLabel("GROWTH"),
+      customerName: "Acme North",
+      cycle: "prior",
+    }),
   },
   {
     id: "inv_1054",
@@ -239,7 +243,11 @@ const INVOICES = [
     issuedOn: "2026-07-01",
     dueOn: "2026-07-31",
     paidOn: "2026-07-25",
-    memo: cycleMemo(planLabel("STARTER"), "Riverstone Labs", "July"),
+    memo: cycleMemo({
+      planTitleCase: planLabel("STARTER"),
+      customerName: "Riverstone Labs",
+      cycle: "July",
+    }),
   },
   {
     id: "inv_1055",
@@ -250,7 +258,11 @@ const INVOICES = [
     issuedOn: "2026-07-18",
     dueOn: "2026-08-17",
     paidOn: "2026-08-15",
-    memo: cycleMemo(planLabel("SCALE"), undefined, "mid-August"),
+    memo: cycleMemo({
+      planTitleCase: planLabel("SCALE"),
+      cycle: "July",
+      paymentTiming: "paid mid-August",
+    }),
   },
   {
     id: "inv_1056",
@@ -261,7 +273,11 @@ const INVOICES = [
     issuedOn: "2026-06-07",
     dueOn: "2026-07-07",
     paidOn: "2026-07-02",
-    memo: cycleMemo(planLabel("GROWTH"), "Acme North", "June"),
+    memo: cycleMemo({
+      planTitleCase: planLabel("GROWTH"),
+      customerName: "Acme North",
+      cycle: "June",
+    }),
   },
   {
     id: "inv_1057",
@@ -448,7 +464,10 @@ async function main() {
         subtotalCents: totalCents,
         taxCents: 0,
         totalCents,
-        memo: cycleMemo(planLabel(account.plan), account.name),
+        memo: cycleMemo({
+          planTitleCase: planLabel(account.plan),
+          customerName: account.name,
+        }),
         lines: {
           create: [
             {
