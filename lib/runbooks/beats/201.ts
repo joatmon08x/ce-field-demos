@@ -86,9 +86,10 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "test-eslint-hook",
         title: "Test the ESLint hook",
         promptType: "adaptable",
-        detail: "",
+        detail:
+          "The dispute page already stages `let capUsd`. Uncomment it and use capUsd in Resolution CardDescription so the afterFileEdit hook can rewrite let to const.",
         example:
-          "In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+          "In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
       },
     ],
   },

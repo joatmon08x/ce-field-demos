@@ -284,10 +284,10 @@ Open the project skill in `.cursor/skills`. Skip the room prompt for `/add-dashb
 /create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.
 ```
 
-Show `.cursor/hooks.json`, `hooks/eslint-changed.sh`, and `app/disputes/[id]/page.tsx`. Then:
+Show `.cursor/hooks.json`, `hooks/eslint-changed.sh`, and `app/disputes/[id]/page.tsx`. The page already stages a commented `let capUsd` and a `{/* capUsd */}` mark on the Resolution CardDescription. Then:
 
 ```text
-In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.
+In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.
 ```
 
 ### How does my agent get more information?

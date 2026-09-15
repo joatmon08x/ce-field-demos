@@ -224,10 +224,16 @@ describe("runbook catalog", () => {
     expect(beat("create-eslint-rule")?.example).toBe(
       "/create-rule After editing .ts / .tsx files, leave them ESLint-clean. Do not add eslint-disable to silence new issues. Prefer fixing the code. The afterFileEdit hook runs ESLint on the file you changed.",
     );
-    expect(beat("test-eslint-hook")?.detail).toBe("");
-    expect(beat("test-eslint-hook")?.example).toBe(
-      "In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription instead of calling formatUsd(catalogPrice) inline. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+    expect(beat("test-eslint-hook")?.detail).toBe(
+      "The dispute page already stages `let capUsd`. Uncomment it and use capUsd in Resolution CardDescription so the afterFileEdit hook can rewrite let to const.",
     );
+    expect(beat("test-eslint-hook")?.example).toBe(
+      "In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = formatUsd(catalogPrice)` and use capUsd in the Resolution CardDescription. Do not run eslint or prettier. Do not enable Accept or Decline. Do not change behavior otherwise.",
+    );
+    const disputePage = readFileSync(join(root, "app/disputes/[id]/page.tsx"), "utf8");
+    expect(disputePage).toContain("// let capUsd = formatUsd(catalogPrice);");
+    expect(disputePage).toContain("{/* capUsd */ formatUsd(catalogPrice)}");
+    expect(disputePage).not.toMatch(/^\s*let capUsd = formatUsd\(catalogPrice\);/m);
     expect(beat("add-linear-mcp")?.detail).toContain("Show MCP servers in Customize -> MCPs");
     expect(beat("add-linear-mcp")?.detail).toContain("Show Linear MCP and the tools you can enable.");
     expect(beat("add-linear-mcp")?.detail).toContain("Settings -> Teams -> New team");
