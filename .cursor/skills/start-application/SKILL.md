@@ -1,6 +1,6 @@
 ---
 name: start-application
-description: Activate a vertical billing profile (Medly, SaaSly, or Routerly) from a presenter prompt like "Start the Medly application". Use when the user names one of those companies or asks to start the demo app for a healthcare, SaaS, or networking audience. There is no in-app picker.
+description: Activate a vertical billing profile (Medly, SaaSly, or Routerly) from a presenter prompt like "Start the Medly application". Treat "Routely" as Routerly. Use when the user names one of those companies or asks to start the demo app for a healthcare, SaaS, or networking audience. There is no in-app picker.
 ---
 
 # Start a vertical application
