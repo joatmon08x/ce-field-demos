@@ -247,9 +247,7 @@ describe("runbook catalog", () => {
     expect(beat("refine-plan-three-worktrees")?.example).toBe(
       "@resolve-dispute.md Refine this plan for three parallel worktree agents. Split into exactly: (1) resolve helper (2) resolve API route (3) Resolution panel UI. For each, name owned files, the shared contract, and what I’ll verify when it finishes. Keep the same thin slice. Don’t implement. Don’t touch suggested-credit client/tests, seed, or catalog prices. API must import resolveDispute — do not inline Prisma persist.",
     );
-    expect(beat("multitask-three-workstreams")?.example).toBe(
-      "/multitask Implement the three workstreams from this refined plan in parallel. Put each workstream in its own worktree. One agent per workstream: (1) resolve helper — only lib/disputes/resolve.ts, (2) resolve API route - only app/api/disputes/[id]/resolve/route.ts (import resolveDispute, do not inline Prisma), (3) Resolution panel UI - only the dispute detail Resolution panel (+ small client child if needed). Respect file ownership and the shared contract. Don’t touch suggested-credit client/tests, seed, or catalog prices. Mid-run 501 from the UI/API is OK until helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.",
-    );
+    expect(beat("multitask-three-workstreams")?.example).toBe("/multitask @resolve-dispute.md");
     expect(beat("verify-parallel-work")?.promptType).toBe("none");
     expect(beat("verify-parallel-work")?.example).toBeUndefined();
     expect(beat("verify-parallel-work")?.detail).toBe(

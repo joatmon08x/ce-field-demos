@@ -1,5 +1,15 @@
 # Finish dispute resolution — three parallel agents
 
+## Dispatch
+
+Chat prompt:
+
+```
+/multitask @resolve-dispute.md
+```
+
+Three parallel worktrees, one agent per workstream below. Respect file ownership and the shared contract. Do not touch suggested-credit client/tests, seed, or catalog prices. API must import `resolveDispute` — do not inline Prisma persist. Mid-run 501 from UI/API is OK until the helper is applied. When all three finish, summarize each worktree’s diff and the apply order: helper → API → UI.
+
 ## Goal
 
 Enable **Accept credit** and **Decline** on the dispute detail Resolution panel so a reviewer note and status persist. Cap any accepted credit with the catalog plan price. Never invent a number.
