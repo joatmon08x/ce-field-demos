@@ -123,7 +123,7 @@ const INVOICES = [
     issuedOn: "2026-07-08",
     dueOn: "2026-08-07",
     paidOn: "2026-08-04",
-    memo: `Starter plan — July cycle ${PRODUCT.lineItemNoun}.`,
+    memo: cycleMemo(planLabel("STARTER"), undefined, "July"),
   },
   {
     id: "inv_1043",
@@ -145,7 +145,7 @@ const INVOICES = [
     issuedOn: "2026-07-12",
     dueOn: "2026-08-11",
     paidOn: "2026-08-09",
-    memo: `Growth plan — July cycle ${PRODUCT.lineItemNoun}.`,
+    memo: cycleMemo(planLabel("GROWTH"), undefined, "July"),
   },
   {
     id: "inv_1045",
@@ -155,7 +155,7 @@ const INVOICES = [
     status: "OPEN",
     issuedOn: "2026-08-02",
     dueOn: "2026-09-01",
-    memo: `Starter plan ${PRODUCT.lineItemNoun} for Oakiron Supply.`,
+    memo: `Starter ${PRODUCT.lineItemNoun} for Oakiron Supply.`,
   },
   {
     id: "inv_1046",
@@ -166,7 +166,7 @@ const INVOICES = [
     issuedOn: "2026-07-14",
     dueOn: "2026-08-13",
     paidOn: "2026-08-12",
-    memo: `Scale plan — July cycle ${PRODUCT.lineItemNoun}.`,
+    memo: cycleMemo(planLabel("SCALE"), undefined, "July"),
   },
   {
     id: "inv_1047",
@@ -228,7 +228,7 @@ const INVOICES = [
     issuedOn: "2026-07-07",
     dueOn: "2026-08-06",
     paidOn: "2026-07-28",
-    memo: `Growth plan — prior cycle ${PRODUCT.lineItemNoun} for Acme North.`,
+    memo: cycleMemo(planLabel("GROWTH"), "Acme North", "prior"),
   },
   {
     id: "inv_1054",
@@ -239,7 +239,7 @@ const INVOICES = [
     issuedOn: "2026-07-01",
     dueOn: "2026-07-31",
     paidOn: "2026-07-25",
-    memo: `Starter plan — July cycle ${PRODUCT.lineItemNoun} for Riverstone Labs.`,
+    memo: cycleMemo(planLabel("STARTER"), "Riverstone Labs", "July"),
   },
   {
     id: "inv_1055",
@@ -250,7 +250,7 @@ const INVOICES = [
     issuedOn: "2026-07-18",
     dueOn: "2026-08-17",
     paidOn: "2026-08-15",
-    memo: `Scale plan — paid mid-August ${PRODUCT.lineItemNoun}.`,
+    memo: cycleMemo(planLabel("SCALE"), undefined, "mid-August"),
   },
   {
     id: "inv_1056",
@@ -261,7 +261,7 @@ const INVOICES = [
     issuedOn: "2026-06-07",
     dueOn: "2026-07-07",
     paidOn: "2026-07-02",
-    memo: `Growth plan — June cycle ${PRODUCT.lineItemNoun} for Acme North.`,
+    memo: cycleMemo(planLabel("GROWTH"), "Acme North", "June"),
   },
   {
     id: "inv_1057",
@@ -272,7 +272,7 @@ const INVOICES = [
     issuedOn: "2026-08-10",
     dueOn: "2026-09-09",
     paidOn: "2026-08-18",
-    memo: `Growth plan — August cycle ${PRODUCT.lineItemNoun}, paid early.`,
+    memo: `Growth ${PRODUCT.lineItemNoun} — August cycle, paid early.`,
   },
   {
     id: "inv_1052",
