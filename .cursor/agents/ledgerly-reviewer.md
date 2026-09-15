@@ -16,7 +16,7 @@ Checklist:
 - Customer and operator names come from `prisma/seed.ts` and `prisma/extra-accounts.ts`. Emails use `.example`. Operator is Avery Quinn.
 - `tests/suggested-credit-api.test.ts` and `prisma/seed.ts` were not "corrected." Dispute `dsp_1043` claiming $400 against a $249 Scale invoice is valid input for the catalog cap.
 - Unless the user asked for the migration, `lib/disputes/suggested-credit-api.ts` still selects v1. If migration was requested, the client selects v2 while both API routes remain unchanged.
-- Stored credit, the domain helper, the MCP, and v2 remain capped at $249. The deprecated v1 route returns the raw $400 claim.
+- Stored credit, the domain helper, and v2 remain capped at $249. The deprecated v1 route returns the raw $400 claim.
 - The dispute-resolution stub (`lib/disputes/resolve.ts`, the resolve API route, the panel buttons) was not completed unless the user asked.
 - Unless the user asked to fix the filter pills, `components/filter-pills.tsx` still writes `state=` (pages read `status`).
 - Tab / Cmd-K TODOs in collection notes and settings were not silently finished.

@@ -18,7 +18,7 @@ The 201 track has four sections. Open `/runbooks/201` and copy a card for any be
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Canvas DDD, ask across chats, context usage
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it, ESLint rule and hook
-3. **How does my agent get more information?** — CompanyTicket MCP, LY-002, marketplace plugin (Linear MCP)
+3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, ce-field-demos suggested-credit issue, import `plugins/standard-bug-fix` from disk
 4. **How do I parallelize a task?** — [three-worktree plan](#refine-the-plan), `/multitask`, verify, `/best-of-n`
 
 ---
@@ -54,9 +54,9 @@ Open **http://localhost:43173**.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 31 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 34 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
-- The deprecated v1 route returns the $400 claim; v2, the domain helper, the seed, and the MCP store the correct $249 credit
+- The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
 - Invoice and dispute status pills write `?state=` while the pages read `status` — clicking Overdue / Needs review does not filter. That is a planted UI seam, not a second red test. Restore with `git checkout -- components/filter-pills.tsx`
 
@@ -69,6 +69,18 @@ npx prisma db seed
 ```
 
 Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`.
+
+### Create the private Linear team (manual)
+
+Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the presenter’s account only.
+
+1. Open Linear → **Settings → Teams → New team**.
+2. Name it for this operator only (example: `{displayName}-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
+4. Members: **only you**. Do not add any other team.
+5. In Grok Build, run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
+
+Do not skip the private-team step. A project on a public team is visible to that team.
 
 ---
 
@@ -205,12 +217,12 @@ Create three slides in Figma Slides outlining how I used Grok Build to develop a
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 31 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 34 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If the client migration ran:** `tests/suggested-credit-api.test.ts` should be green and dsp_1043 should show **$249** from v2, with both routes intact.
 
-**If no migration ran:** `npm test` should remain **1 failed / 31 passed**. That is shipped state, not failed setup.
+**If no migration ran:** `npm test` should remain **1 failed / 34 passed**. That is shipped state, not failed setup.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -232,7 +244,7 @@ npx prisma db seed
 npm test
 ```
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 31 passed**, status pills still writing `state=`.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 34 passed**, status pills still writing `state=`.
 
 ---
 
@@ -280,20 +292,22 @@ In app/disputes/[id]/page.tsx, add a local `let capUsd = formatUsd(catalogPrice)
 
 ### How does my agent get more information?
 
+Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear-201`.
+
 ```text
-Add the CompanyTicket MCP server to this project.
+Add the Linear MCP server to this project.
 ```
 
 Show Customize → MCPs, then:
 
 ```text
-Fix ticket number LY-002
+Fix Linear issue: Dispute dsp_1043 claims $400 against a $249 Scale invoice
 ```
 
 Import `plugins/standard-bug-fix` from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Show the standard-bug-fix skill, rule, and Linear MCP. Then:
 
 ```text
-/standard-bug-fix LY-003
+/standard-bug-fix Overdue / Needs review filter does not change the list
 ```
 
 ### How do I parallelize a task?

@@ -45,6 +45,18 @@ npm run dev
 
 Listens on **43173** (not 3000).
 
+### Private Linear team (manual, before 201 MCP)
+
+Linear MCP cannot create teams. The operator creates a private team in the Linear UI, then an agent runs `stage-linear-201`.
+
+1. Open Linear → **Settings → Teams → New team**.
+2. Name it for this operator only (example: `{displayName}-field-demos`).
+3. Turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
+4. Members: **only the operator**. Do not add any other team.
+5. Run `stage-linear-201` to create or reconcile project `ce-field-demos` on that team with exactly three Fieldnote issues.
+
+Do not `save_project` onto a public team. Do not add a local ticket board, ticket API, ticket MCP, or ticket marketplace plugin.
+
 ### Tests
 
 ```bash
@@ -55,7 +67,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 31 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
+Shipped suite on a clean tree: **1 failed / 34 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
 
 ### Multi-file stub (leave it unless asked)
 
@@ -69,7 +81,7 @@ Incomplete on purpose:
 
 - Prices only from `lib/plans.ts`.
 - Customer names only from `prisma/seed.ts` and `prisma/extra-accounts.ts`.
-- Comments in code must not cite Slack, GitHub, or Jira URLs.
+- Comments in code must not cite Slack, GitHub, or issue-tracker URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
 - Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
@@ -83,7 +95,9 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
+| `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: reconcile three issues on the private `ce-field-demos` Linear project |
+| `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
-| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. |
+| `.cursor/mcp.json` → `ledgerly-db` | Local read-only Prisma MCP (`mcp/ledgerly-db/`). The 101 track ends on Canvas and a slide-generating MCP, not this server. The 201 MCP beat uses Linear. |
 | `plugins/standard-bug-fix/` | 201-track disk plugin: `/standard-bug-fix` skill, Linear writeback rule, Linear MCP. |
