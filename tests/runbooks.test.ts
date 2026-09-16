@@ -369,6 +369,9 @@ describe("runbook catalog", () => {
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
     expect(files.reset).toContain("1 failed / 29 passed");
+    expect(files.reset).toContain("stage-linear-201");
+    expect(files.reset).toContain("FIELD_DEMO_ISSUES");
+    expect(files.reset).toContain("Canceled");
     expect(files.agents).toContain("stage-linear-201");
     expect(files.rule).toContain("stage-linear-201");
     expect(files.skill).toContain("stage-linear-201");
