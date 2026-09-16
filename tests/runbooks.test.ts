@@ -104,10 +104,10 @@ describe("runbook catalog", () => {
       "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Select the restore icon next to the prompt.",
     );
     expect(beat("rule")?.detail).toBe(
-      "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
+      "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules -> User to edit the rule.",
     );
     expect(beat("rule")?.example).toBe(
-      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
+      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule. Show me the rule so I can copy it manually.",
     );
     expect(beat("test-rule")?.detail).toBe("");
     expect(beat("test-rule")?.example).toBe('Change "Line Items" in the UI to something else.');
