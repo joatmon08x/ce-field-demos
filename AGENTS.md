@@ -110,6 +110,7 @@ Incomplete on purpose until change `resolve-dispute` is applied:
 | `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: reconcile three issues on the private `ce-field-demos` Linear project |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches; `resolve-dispute` maps one worker per OpenSpec delta spec |
+| `.cursor/skills/plan-to-openspec/` | `/plan-to-openspec` — translate a plan or mocked 201 Linear issue into an OpenSpec change |
 | `.cursor/skills/openspec-propose/` | `/opsx-propose` — planning artifacts only |
 | `.cursor/skills/openspec-apply-change/` | `/opsx-apply` — implement an OpenSpec change |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
