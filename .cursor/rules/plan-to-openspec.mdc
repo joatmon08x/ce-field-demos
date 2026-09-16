@@ -1,0 +1,22 @@
+---
+description: Every Cursor plan must become an OpenSpec change before implementation
+alwaysApply: true
+---
+
+# Plans become OpenSpec
+
+Do not implement from a Cursor plan, Plan-mode doc, or `.cursor/plans/*.md` until it exists as an OpenSpec change under `openspec/changes/<id>/` (proposal, design, tasks, delta specs). Convert with `/plan-to-openspec`. Then implement with `/opsx-apply` or `/multitask` against those specs.
+
+```
+# ❌ BAD — edit product code from the plan file only
+Implement @.cursor/plans/resolve-dispute.md
+
+# ✅ GOOD — OpenSpec change first
+/plan-to-openspec @.cursor/plans/resolve-dispute.md
+# artifacts: openspec/changes/resolve-dispute/
+/multitask @.cursor/plans/resolve-dispute.md
+```
+
+Example already converted: `.cursor/plans/resolve-dispute.md` → `openspec/changes/resolve-dispute/`.
+
+201 Fieldnote issues: treat `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts` as the plan source (no Linear MCP). One OpenSpec change per issue. Do not archive unless asked.

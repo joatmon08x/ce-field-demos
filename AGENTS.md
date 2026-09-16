@@ -71,6 +71,8 @@ Shipped suite on a clean tree: **1 failed / 29 passed**. The `dsp_1043` page sho
 
 ### OpenSpec
 
+Always-on rule: `.cursor/rules/plan-to-openspec.mdc` — convert every plan to an OpenSpec change before product code (`/plan-to-openspec`).
+
 Change `resolve-dispute` lives in `openspec/changes/resolve-dispute/`. Specs are the contract; do not implement that stub unless the user applies the change (`/opsx-apply`, `/multitask @resolve-dispute.md`, or an Agent SDK spawn from `openspec/sdk-kickoff.md`).
 
 ```bash
