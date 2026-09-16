@@ -1,11 +1,11 @@
 ---
 name: reset-demo-state
-description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
+description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any, cancel Linear issues if this demo staged them. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
 ---
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 29 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, and no leftover Figma Slides deck from the MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 29 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and no leftover issues on the private `ce-field-demos` Linear project. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
 
 ## Checklist (run what applies)
 
@@ -65,7 +65,30 @@ return { remaining: figma.getSlideGrid().flat().length };
 
 Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip. Do not hunt other teams' files.
 
-5. **Database looks wrong / empty dashboard**
+5. **Linear issues (only if this demo staged the board)**
+
+If this session ran `stage-linear` or created issues on `ce-field-demos`, cancel them so the next run starts with an empty private board. Linear MCP has no issue-delete tool.
+
+Authenticate Linear (`mcp_auth` if tools are gated). Confirm `get_user` with `"me"`:
+
+- `isGuest` is false
+- The **private** field-demos team is in `teams`
+
+If Linear MCP is missing, auth fails, or `teams` is only public teams, skip.
+
+`list_projects` with query `ce-field-demos`. Act **only** when the project’s `teams` are exactly the operator’s private team and `lead` is the operator (`me`). If the only match is on a public or shared team, skip. Do not cancel other teams’ issues.
+
+`list_issues` on that project. For every issue on it (catalog titles from `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`, plus any leftover filler), `save_issue`:
+
+- `id`: the issue identifier
+- `project`: `null` (unlink from the board)
+- `state`: `Canceled`
+
+Leave the private team and the empty project in place. `stage-linear` recreates the catalog issues next time. Do not delete the team — Linear MCP cannot create teams.
+
+If this session never staged Linear, or the private project has no issues, skip. Report identifiers and titles you canceled. Do not hunt other workspaces.
+
+6. **Database looks wrong / empty dashboard**
 
 ```bash
 npx prisma db seed        # idempotent: pushes schema + reloads Fieldnote
@@ -75,14 +98,14 @@ npm run db:reset
 
 There are no migrations in this repo — never run `prisma migrate`; the seed's `db push` is the whole story.
 
-6. **Port 43173 busy**
+7. **Port 43173 busy**
 
 ```bash
 lsof -ti :43173 | xargs kill   # macOS/Linux/WSL
 npm run dev
 ```
 
-7. **Verify shipped state**
+8. **Verify shipped state**
 
 ```bash
 npm test    # expect: 1 failed (suggested-credit-api), 29 passed
@@ -97,4 +120,5 @@ Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a
 - Never delete `prisma/seed.ts` data or add customers to "fix" a demo.
 - Never edit `tests/suggested-credit-api.test.ts`, either API route, or the seed to make the shipped red test green.
 - Never leave `.cursor/rules/suggested-credit-api-v2.mdc` in the shipped tree; create and remove it during the live rule beat.
-- Never leave personal `/create-rule` leftovers, a leftover Canvas, or a demo Slides deck after reset.
+- Never leave personal `/create-rule` leftovers, a leftover Canvas, a demo Slides deck, or active `ce-field-demos` Linear issues after reset when those apply.
+- Never cancel Linear issues on a public or shared team. Never delete the operator’s private team.
