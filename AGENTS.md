@@ -69,9 +69,20 @@ Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environme
 
 Shipped suite on a clean tree: **1 failed / 29 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
 
+### OpenSpec
+
+Change `resolve-dispute` lives in `openspec/changes/resolve-dispute/`. Specs are the contract; do not implement that stub unless the user applies the change (`/opsx-apply`, `/multitask @resolve-dispute.md`, or an Agent SDK spawn from `openspec/sdk-kickoff.md`).
+
+```bash
+npx openspec validate resolve-dispute --strict
+npx openspec status --change resolve-dispute
+```
+
+Cursor Desktop slash commands are `/opsx-propose`, `/opsx-apply`, `/opsx-archive` (hyphen form). Parent agents do not implement `resolve-dispute`; they dispatch one worker per delta spec. Do not archive unless asked. CLI: `@fission-ai/openspec` (devDependency) or `npx @fission-ai/openspec`.
+
 ### Multi-file stub (leave it unless asked)
 
-Incomplete on purpose:
+Incomplete on purpose until change `resolve-dispute` is applied:
 
 - `lib/disputes/resolve.ts`
 - `app/api/disputes/[id]/resolve/route.ts`
@@ -98,7 +109,9 @@ Incomplete on purpose:
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: reconcile three issues on the private `ce-field-demos` Linear project |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
-| `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
+| `.cursor/skills/dispatch-subagents/` | Parallel Task launches; `resolve-dispute` maps one worker per OpenSpec delta spec |
+| `.cursor/skills/openspec-propose/` | `/opsx-propose` — planning artifacts only |
+| `.cursor/skills/openspec-apply-change/` | `/opsx-apply` — implement an OpenSpec change |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
 | `.cursor/skills/write-prisma-query/` | Invoice, dispute, and customer lookups against SQLite — not an MCP |
 | `.cursor/mcp.json` | Empty project MCP map. 101 uses Figma (user MCP). 201 uses Linear (user MCP or `plugins/standard-bug-fix`). |

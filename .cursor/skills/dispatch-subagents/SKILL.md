@@ -22,6 +22,18 @@ Do **not** queue four jobs in one agent. Do **not** start a sibling after anothe
 4. After the diffs land, launch `ledgerly-reviewer` on the combined diff.
 5. Tell the user there is one review per task.
 
+## OpenSpec (`resolve-dispute`)
+
+When the user pastes `/multitask @resolve-dispute.md` or names change `resolve-dispute`, the parent reads `openspec/changes/resolve-dispute/tasks.md` and `design.md`. Launch **exactly three** workers in one turn. Each worker prompt is that worker's delta spec (the whole file) plus the shared contract in `design.md`:
+
+| Worker | Spec |
+| --- | --- |
+| Helper | `openspec/changes/resolve-dispute/specs/dispute-resolution-helper/spec.md` |
+| API | `openspec/changes/resolve-dispute/specs/dispute-resolution-api/spec.md` |
+| UI | `openspec/changes/resolve-dispute/specs/dispute-resolution-ui/spec.md` |
+
+Do not implement in the parent. Sequential e2e / reviewer / verifier wait until those diffs are applied (helper → API → UI). Cloud spawn: `openspec/sdk-kickoff.md`.
+
 ## Constraints
 
 - No sibling cross-talk. A planner or parent only sees its own children.

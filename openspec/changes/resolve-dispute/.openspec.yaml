@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-09-16
+goal: Enable Accept credit and Decline on the dispute Resolution panel; persist
+  note and status; cap accepted credit at the catalog plan price.
