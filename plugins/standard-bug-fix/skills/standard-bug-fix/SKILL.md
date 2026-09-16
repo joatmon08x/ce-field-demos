@@ -43,15 +43,15 @@ Every Linear writeback uses this shape. Concise. No extra sections.
 ```markdown
 # Bug Fix Summary: [Service affected] - [Short Description]
 
-## 2. The Core Problem (Why it happened)
+## 1. The Core Problem (Why it happened)
 * **Immediate Trigger:** [e.g., A missing environment variable after deployment.]
 * **Underlying Flaw:** [e.g., The deployment script lacked a validation step to ensure keys existed before spinning up containers.]
 
-## 3. Quick Takeaways
+## 2. Quick Takeaways
 * **Good:** Detection was instant; rollback process worked flawlessly.
 * **Bad:** Debugging took too long because logs lacked contextual request IDs.
 
-## 4. Fixes
+## 3. Fixes
 - [ ] **Action:** Add check to deployment script | **Owner:** @name | **PR:** #123
 ```
 
