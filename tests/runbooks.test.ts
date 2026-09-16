@@ -229,7 +229,7 @@ describe("runbook catalog", () => {
       "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
     );
     expect(beat("context-usage")?.promptType).toBe("none");
-    expect(beat("context-usage")?.detail).toBe("Click on the Context Usage indicator below the chat.");
+    expect(beat("context-usage")?.detail).toBe("Select the Context Usage indicator below the chat.");
     expect(beat("context-usage")?.example).toBeUndefined();
     expect(beat("create-api-personal-skill")?.detail).toBe(
       "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",

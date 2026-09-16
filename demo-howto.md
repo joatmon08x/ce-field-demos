@@ -268,7 +268,7 @@ Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). A
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
 ```
 
-Then click the Context Usage indicator below the chat.
+Then select the Context Usage indicator below the chat.
 
 ### How do I standardize agent behavior?
 
