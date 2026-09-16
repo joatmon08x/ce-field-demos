@@ -18,4 +18,4 @@ Do not use Cursor Plan mode or `/plan` for spec-driven work. Start with `/opsx-e
 
 Cursor Desktop spelling is hyphenated (`/opsx-explore`). After propose, implement with `/opsx-apply` or `/multitask` against the delta specs. Do not archive unless asked.
 
-201 Fieldnote issues: read `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts` (no Linear MCP). One OpenSpec change per issue after explore. `/plan-to-openspec` only after `/opsx-explore`.
+201 Fieldnote issues: Linear project [openspec](https://linear.app/anysphere/project/openspec-05fc3d7dba89) (LY-6, LY-7, LY-8). One OpenSpec change per issue after `/opsx-explore`. Cloud Agents: `openspec/sdk-kickoff.md`.

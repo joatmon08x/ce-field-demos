@@ -24,8 +24,8 @@ Cursor Desktop spells those commands with hyphens: `/opsx-explore`, `/opsx-propo
 Pick **one** source. Do not invent a fourth Fieldnote issue or a fourth catalog price.
 
 1. A scoped request the user already explored with `/opsx-explore`.
-2. A 201 issue title or slug. **Pretend Linear**: read `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`. Do not call Linear MCP. Do not run `stage-linear-201`. Do not add a ticket board, ticket API, or ticket MCP.
-3. If the user says “201”, “Linear”, or “field demos” and names no issue, explore then propose all three catalog issues **sequentially** in array order (suggested-credit, then filter, then email). Never in parallel. Filter must be second.
+2. A 201 issue from Linear project [openspec](https://linear.app/anysphere/project/openspec-05fc3d7dba89) (team `LY`). Prefer live issues **LY-6**, **LY-7**, **LY-8** via Linear MCP (`list_issues` project `openspec`). Fallback: `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`. Do not add a ticket board, ticket API, or ticket MCP.
+3. If the user says “201”, “Linear”, or “openspec project” and names no issue, explore then propose catalog issues **sequentially** in this order: LY-6 suggested-credit, LY-7 filter, LY-8 email. Never in parallel. Filter must be second.
 
 Exact titles:
 
