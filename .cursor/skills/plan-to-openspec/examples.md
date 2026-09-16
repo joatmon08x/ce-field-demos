@@ -71,6 +71,6 @@ The invoice detail customer card SHALL let Avery Quinn update the seeded contact
 - **AND** the customer name is unchanged
 ```
 
-## Already converted (not a Linear card)
+## After explore
 
-`.cursor/plans/resolve-dispute.md` → `openspec/changes/resolve-dispute/` with three capabilities (helper, api, ui) for `/multitask`. Reuse that shape when a plan splits disjoint files.
+`/opsx-explore` first. Then `/opsx-propose`. If the work splits disjoint files, one capability per `/multitask` worker (same shape as a helper / API / UI split). There is no shipped `resolve-dispute` OpenSpec change; start from scratch.

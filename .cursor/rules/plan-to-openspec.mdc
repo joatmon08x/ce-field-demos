@@ -1,22 +1,21 @@
 ---
-description: Every Cursor plan must become an OpenSpec change before implementation
+description: Spec work starts with /opsx-explore, not Cursor Plan mode
 alwaysApply: true
 ---
 
-# Plans become OpenSpec
+# OpenSpec starts at explore
 
-Do not implement from a Cursor plan, Plan-mode doc, or `.cursor/plans/*.md` until it exists as an OpenSpec change under `openspec/changes/<id>/` (proposal, design, tasks, delta specs). Convert with `/plan-to-openspec`. Then implement with `/opsx-apply` or `/multitask` against those specs.
+Do not use Cursor Plan mode or `/plan` for spec-driven work. Start with `/opsx-explore`, then `/opsx-propose` → `/opsx-apply` → `/opsx-archive`. Do not edit product code until an OpenSpec change exists under `openspec/changes/<id>/`.
 
 ```
-# ❌ BAD — edit product code from the plan file only
-Implement @.cursor/plans/resolve-dispute.md
+# ❌ BAD
+/plan enable Accept and Decline on the dispute Resolution panel
 
-# ✅ GOOD — OpenSpec change first
-/plan-to-openspec @.cursor/plans/resolve-dispute.md
-# artifacts: openspec/changes/resolve-dispute/
-/multitask @.cursor/plans/resolve-dispute.md
+# ✅ GOOD
+/opsx-explore enable Accept and Decline on the dispute Resolution panel
+/opsx-propose
 ```
 
-Example already converted: `.cursor/plans/resolve-dispute.md` → `openspec/changes/resolve-dispute/`.
+Cursor Desktop spelling is hyphenated (`/opsx-explore`). After propose, implement with `/opsx-apply` or `/multitask` against the delta specs. Do not archive unless asked.
 
-201 Fieldnote issues: treat `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts` as the plan source (no Linear MCP). One OpenSpec change per issue. Do not archive unless asked.
+201 Fieldnote issues: read `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts` (no Linear MCP). One OpenSpec change per issue after explore. `/plan-to-openspec` only after `/opsx-explore`.

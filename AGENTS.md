@@ -71,20 +71,18 @@ Shipped suite on a clean tree: **1 failed / 29 passed**. The `dsp_1043` page sho
 
 ### OpenSpec
 
-Always-on rule: `.cursor/rules/plan-to-openspec.mdc` — convert every plan to an OpenSpec change before product code (`/plan-to-openspec`).
-
-Change `resolve-dispute` lives in `openspec/changes/resolve-dispute/`. Specs are the contract; do not implement that stub unless the user applies the change (`/opsx-apply`, `/multitask @resolve-dispute.md`, or an Agent SDK spawn from `openspec/sdk-kickoff.md`).
+Always-on rule: `.cursor/rules/plan-to-openspec.mdc` — start spec work with `/opsx-explore`, not Cursor Plan mode. Then `/opsx-propose` before product code.
 
 ```bash
-npx openspec validate resolve-dispute --strict
-npx openspec status --change resolve-dispute
+npx openspec validate --changes --strict
+npx openspec list
 ```
 
-Cursor Desktop slash commands are `/opsx-propose`, `/opsx-apply`, `/opsx-archive` (hyphen form). Parent agents do not implement `resolve-dispute`; they dispatch one worker per delta spec. Do not archive unless asked. CLI: `@fission-ai/openspec` (devDependency) or `npx @fission-ai/openspec`.
+Cursor Desktop slash commands are `/opsx-explore`, `/opsx-propose`, `/opsx-apply`, `/opsx-archive` (hyphen form). Do not archive unless asked. CLI: `@fission-ai/openspec` (devDependency) or `npx @fission-ai/openspec`. Cloud spawn: `openspec/sdk-kickoff.md`.
 
 ### Multi-file stub (leave it unless asked)
 
-Incomplete on purpose until change `resolve-dispute` is applied:
+Incomplete on purpose:
 
 - `lib/disputes/resolve.ts`
 - `app/api/disputes/[id]/resolve/route.ts`
@@ -111,8 +109,8 @@ Incomplete on purpose until change `resolve-dispute` is applied:
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: reconcile three issues on the private `ce-field-demos` Linear project |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
-| `.cursor/skills/dispatch-subagents/` | Parallel Task launches; `resolve-dispute` maps one worker per OpenSpec delta spec |
-| `.cursor/skills/plan-to-openspec/` | `/plan-to-openspec` — translate a plan or mocked 201 Linear issue into an OpenSpec change |
+| `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
+| `.cursor/skills/plan-to-openspec/` | `/plan-to-openspec` — after `/opsx-explore`, write OpenSpec artifacts (mocked 201 Linear issues) |
 | `.cursor/skills/openspec-propose/` | `/opsx-propose` — planning artifacts only |
 | `.cursor/skills/openspec-apply-change/` | `/opsx-apply` — implement an OpenSpec change |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |
