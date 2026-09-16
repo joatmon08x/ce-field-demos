@@ -106,9 +106,9 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user rule",
         promptType: "adaptable",
         detail:
-          "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules to view the rule.",
+          "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules -> User to edit the rule.",
         example:
-          "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
+          "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule. Show me the rule so I can copy it manually.",
       },
       {
         id: "test-rule",
