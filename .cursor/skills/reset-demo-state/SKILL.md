@@ -1,11 +1,11 @@
 ---
 name: reset-demo-state
-description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any, cancel Linear 201 issues if this demo staged them. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
+description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any, cancel Linear issues if this demo staged them. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
 ---
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 29 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and no leftover issues on the private `ce-field-demos` Linear project from the 201 MCP beat. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 29 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and no leftover issues on the private `ce-field-demos` Linear project. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
 
 ## Checklist (run what applies)
 
@@ -65,9 +65,9 @@ return { remaining: figma.getSlideGrid().flat().length };
 
 Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip. Do not hunt other teams' files.
 
-5. **Linear issues (only if this demo staged the 201 board)**
+5. **Linear issues (only if this demo staged the board)**
 
-If this session ran `stage-linear-201` or created issues on `ce-field-demos`, cancel them so the next 201 starts with an empty private board. Linear MCP has no issue-delete tool.
+If this session ran `stage-linear` or created issues on `ce-field-demos`, cancel them so the next run starts with an empty private board. Linear MCP has no issue-delete tool.
 
 Authenticate Linear (`mcp_auth` if tools are gated). Confirm `get_user` with `"me"`:
 
@@ -84,7 +84,7 @@ If Linear MCP is missing, auth fails, or `teams` is only public teams, skip.
 - `project`: `null` (unlink from the board)
 - `state`: `Canceled`
 
-Leave the private team and the empty project in place. `stage-linear-201` recreates the three catalog issues next time. Do not delete the team — Linear MCP cannot create teams.
+Leave the private team and the empty project in place. `stage-linear` recreates the catalog issues next time. Do not delete the team — Linear MCP cannot create teams.
 
 If this session never staged Linear, or the private project has no issues, skip. Report identifiers and titles you canceled. Do not hunt other workspaces.
 

@@ -1,8 +1,8 @@
-/** Ledgerly 201 Linear board. Titles stay stable across per-operator setup. */
+/** Ledgerly Linear board. Titles stay stable across per-operator setup. */
 
 export const LINEAR_FIELD_DEMOS_PROJECT = {
   name: "ce-field-demos",
-  summary: "Personal Ledgerly 201 board with three scoped Fieldnote issues.",
+  summary: "Personal Ledgerly board with three scoped Fieldnote issues.",
   workspace: "Fieldnote Workspace",
   operator: "Avery Quinn",
   catalogPricesUsd: ["$49", "$99", "$249"] as const,

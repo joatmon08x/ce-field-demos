@@ -27,7 +27,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
-| Skills | `.cursor/skills/` — run the demo, stage Linear for 201, or pick a Cursor workflow |
+| Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
 | Disk plugin | `plugins/standard-bug-fix/` — import from disk; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
 
@@ -79,7 +79,7 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), compare agents, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, money-format hook and script, bypass-formatter test.
-3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, import the disk plugin (skill, rule, CompanyTicket MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear-201`.
+3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, import the disk plugin (skill, rule, CompanyTicket MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear`.
 4. **How do I parallelize a task?** — open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, ledgerly-reviewer check.
 
 ## Create the private Linear team (manual)
@@ -90,7 +90,7 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add any other team.
-5. Then ask an agent to run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
+5. Then ask an agent to run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
 
 Do not skip the private-team step. A project on a public team is visible to that team.
 During a fresh setup, create issues sequentially: suggested-credit first, **Overdue / Needs review filter does not change the list second**, and invoice-email third.
@@ -103,7 +103,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Over
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
-| `stage-linear-201` | Before 201 MCP: reconcile three issues on the private `ce-field-demos` Linear project. |
+| `stage-linear` | Reconcile Fieldnote issues on the private `ce-field-demos` Linear project. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
