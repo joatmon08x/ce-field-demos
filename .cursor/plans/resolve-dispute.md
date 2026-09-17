@@ -23,7 +23,7 @@ Respect file ownership and the shared contract. Do not touch suggested-credit cl
 
 End-to-end tests are a **sequential completion step** after those diffs are applied — not part of `/multitask`.
 
-Do not change 101: `npm test` stays **1 failed / 29 passed** (`tests/suggested-credit-api.test.ts` only). Do not add a red suite to the default run.
+Do not change 101: `npm test` stays **1 failed / 33 passed** (`tests/suggested-credit-api.test.ts` only). Do not add a red suite to the default run.
 
 ## Goal
 
@@ -52,7 +52,7 @@ Then open `/disputes/dsp_1043`, Accept or Decline with a note, confirm status + 
 | Agent 1 done | `resolveDispute` no longer throws `not implemented`. Accept cap / decline / missing id as in the contract. |
 | Agent 2 done | Bad `action` → 400. `grep`: no `prisma.` in the route. Valid body still calls `resolveDispute`. 501 until helper is applied. |
 | Agent 3 done | Buttons enabled. POST body is `{ action, reviewerNote }`. 501 until helper is applied is OK. |
-| After apply | Write + run the e2e file above. Browser on `dsp_1043`. `npm test` still **1 failed / 29 passed**. `ledgerly-reviewer` then `dispute-verifier` (do not “fix” suggested-credit gates in this slice). |
+| After apply | Write + run the e2e file above. Browser on `dsp_1043`. `npm test` still **1 failed / 33 passed**. `ledgerly-reviewer` then `dispute-verifier` (do not “fix” suggested-credit gates in this slice). |
 
 ## Conflicts
 
