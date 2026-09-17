@@ -10,8 +10,8 @@ The pastes below match the copy-paste blocks on `/runbooks/101` and `/runbooks/2
 
 The 101 track has three sections. Open `/runbooks/101` and copy a card for any beat.
 
-1. **What is Grok Build?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), model choice
-2. **How do I work with an agent?** — allowlist, redact, stop, interrupt and steer, review diffs, restore from a checkpoint
+1. **What is Grok Build?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), check the models
+2. **How do I work with an agent?** — allowlist, verify the email feature, redact, stop, interrupt and steer, continue to the end, review diffs, restore from a checkpoint
 3. **How do I govern my agent?** — [create a rule](#create-a-rule), create a skill, [Canvas](#canvas), [MCP / Figma](#mcp--figma)
 
 The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.

@@ -30,22 +30,23 @@ export const RUNBOOK_SECTIONS_101 = [
         id: "debug",
         title: "Debug",
         promptType: "reusable",
-        detail: "Fix the bug using Debug mode.",
+        detail:
+          "Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose",
         example: "/debug the failing test",
       },
       {
         id: "model-fast",
-        title: "Change to a fast model",
-        promptType: "adaptable",
-        detail: "Change to a fast model for a small update. Change model from Auto to Fast.",
-        example: "/model.",
+        title: "Check the models",
+        promptType: "none",
+        detail:
+          "Check the models available for use. Select Auto in the chat and review the models available for use.",
       },
       {
         id: "fix",
         title: "Plan to fix the bug",
         promptType: "adaptable",
-        detail: "Use shift-tab to toggle between modes.",
-        example: "/plan draft a plan to fix the bug",
+        detail: "Use shift-tab to toggle to Agent mode.",
+        example: "Fix the failing test.",
       },
     ],
   },
@@ -61,32 +62,47 @@ export const RUNBOOK_SECTIONS_101 = [
           "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
       },
       {
+        id: "verify-email",
+        title: "Verify the email feature",
+        promptType: "none",
+        detail:
+          "Go to http://localhost:43173/invoices/inv_1048. Find the edit email feature you implemented in the Customer box.",
+      },
+      {
         id: "start-and-stop",
         title: "Redact (partial)",
         promptType: "adaptable",
         detail: "",
         example:
-          "Redact the customer email in the UI. The first two characters and domain are plaintext.",
+          "Redact the customer email in the UI. The first two characters and domain are plaintext. When I click to type in the box, clear it and save the new email.",
       },
       {
         id: "stop",
         title: "Stop the prompt",
         promptType: "none",
-        detail: "Stop the prompt with the Stop button.",
+        detail: "Stop the prompt with the Stop button in the chat.",
       },
       {
         id: "interrupt-steer",
         title: "Interrupt and steer",
         promptType: "adaptable",
-        detail: "Steer the prompt. Show how the agent pauses for your approval. Continue each file.",
+        detail:
+          "Steer the prompt. Show how the agent pauses for your approval. Continue running after reviewing the first file.",
         example:
-          "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
+          "Redact the customer email in the UI. Show it in plaintext when I click the box to edit it. Stop every time you change a file for me to review.",
+      },
+      {
+        id: "continue-no-approval",
+        title: "Continue to the end",
+        promptType: "adaptable",
+        detail: "",
+        example: "Continue to the end, do not wait for my approval.",
       },
       {
         id: "diffs",
         title: "Review diffs",
         promptType: "none",
-        detail: "Show diffs from agent’s last turn.",
+        detail: "Select Changes in the right hand panel. Show diffs from agent’s last turn.",
       },
       {
         id: "checkpoint-restore",
@@ -106,9 +122,9 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user rule",
         promptType: "adaptable",
         detail:
-          "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules -> User to edit the rule.",
+          "Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize -> Rules -> User to view the rule.",
         example:
-          "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule. Show me the rule so I can copy it manually.",
+          "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
       },
       {
         id: "test-rule",
@@ -145,7 +161,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "MCP / Figma",
         promptType: "adaptable",
         detail:
-          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
+          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize -> MCPs -> Figma.",
         example:
           "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
       },
