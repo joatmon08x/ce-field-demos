@@ -38,7 +38,7 @@ describe("runbook catalog", () => {
     expect(skill).toContain(track101?.description ?? "");
 
     expect(runbookBeatSequence("101")).toBe(
-      "Ask → Plan → Build in Agent mode → Debug → Change to a fast model → Plan to fix the bug → Run Mode Allowlist → Redact (partial) → Stop the prompt → Interrupt and steer → Review diffs → Restore from a checkpoint → Create a user rule → Test the rule → Create a user skill → Test the skill → Canvas → MCP / Figma",
+      "Ask → Plan → Build in Agent mode → Debug → Check the models → Plan to fix the bug → Run Mode Allowlist → Verify the email feature → Redact (partial) → Stop the prompt → Interrupt and steer → Continue to the end → Review diffs → Restore from a checkpoint → Create a user rule → Test the rule → Create a user skill → Test the skill → Canvas → MCP / Figma",
     );
 
     expect(beats101.map((beat) => beat.id)).toEqual([
@@ -49,9 +49,11 @@ describe("runbook catalog", () => {
       "model-fast",
       "fix",
       "allowlist",
+      "verify-email",
       "start-and-stop",
       "stop",
       "interrupt-steer",
+      "continue-no-approval",
       "diffs",
       "checkpoint-restore",
       "rule",
@@ -74,29 +76,48 @@ describe("runbook catalog", () => {
       "Build the feature in Agent mode. Build the plan locally. Check the feature in the UI.",
     );
     expect(beat("agent-build")?.example).toBeUndefined();
-    expect(beat("debug")?.detail).toBe("Fix the bug using Debug mode.");
-    expect(beat("debug")?.example).toBe("/debug the failing test");
-    expect(beat("model-fast")?.detail).toBe(
-      "Change to a fast model for a small update. Change model from Auto to Fast.",
+    expect(beat("debug")?.detail).toBe(
+      "Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose",
     );
-    expect(beat("model-fast")?.example).toBe("/model.");
-    expect(beat("fix")?.detail).toBe("Use shift-tab to toggle between modes.");
-    expect(beat("fix")?.example).toBe("/plan draft a plan to fix the bug");
+    expect(beat("debug")?.example).toBe("/debug the failing test");
+    expect(beat("model-fast")?.title).toBe("Check the models");
+    expect(beat("model-fast")?.promptType).toBe("none");
+    expect(beat("model-fast")?.detail).toBe(
+      "Check the models available for use. Select Auto in the chat and review the models available for use.",
+    );
+    expect(beat("model-fast")?.example).toBeUndefined();
+    expect(beat("fix")?.detail).toBe("Use shift-tab to toggle to Agent mode.");
+    expect(beat("fix")?.example).toBe("Fix the failing test.");
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
       "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
     );
+    expect(beat("verify-email")?.promptType).toBe("none");
+    expect(beat("verify-email")?.example).toBeUndefined();
+    expect(beat("verify-email")?.detail).toBe(
+      "Go to http://localhost:43173/invoices/inv_1048. Find the edit email feature you implemented in the Customer box.",
+    );
     expect(beat("start-and-stop")?.title).toBe("Redact (partial)");
     expect(beat("start-and-stop")?.detail).toBe("");
     expect(beat("start-and-stop")?.example).toBe(
-      "Redact the customer email in the UI. The first two characters and domain are plaintext.",
+      "Redact the customer email in the UI. The first two characters and domain are plaintext. When I click to type in the box, clear it and save the new email.",
     );
     expect(beat("stop")?.example).toBeUndefined();
-    expect(beat("stop")?.detail).toBe("Stop the prompt with the Stop button.");
+    expect(beat("stop")?.detail).toBe("Stop the prompt with the Stop button in the chat.");
+    expect(beat("interrupt-steer")?.detail).toBe(
+      "Steer the prompt. Show how the agent pauses for your approval. Continue running after reviewing the first file.",
+    );
     expect(beat("interrupt-steer")?.example).toBe(
-      "Redact the customer email in the UI. Show it in plaintext if I click an icon. Stop every time you change a file for me to review.",
+      "Redact the customer email in the UI. Show it in plaintext when I click the box to edit it. Stop every time you change a file for me to review.",
+    );
+    expect(beat("continue-no-approval")?.detail).toBe("");
+    expect(beat("continue-no-approval")?.example).toBe(
+      "Continue to the end, do not wait for my approval.",
     );
     expect(beat("diffs")?.example).toBeUndefined();
+    expect(beat("diffs")?.detail).toBe(
+      "Select Changes in the right hand panel. Show diffs from agent’s last turn.",
+    );
     expect(beat("checkpoint-restore")?.title).toBe("Restore from a checkpoint");
     expect(beat("checkpoint-restore")?.promptType).toBe("none");
     expect(beat("checkpoint-restore")?.example).toBeUndefined();
@@ -104,10 +125,10 @@ describe("runbook catalog", () => {
       "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Select the restore icon next to the prompt.",
     );
     expect(beat("rule")?.detail).toBe(
-      "Let’s create a user rule so the agent doesn’t try to improve the invoice schema without our approval. Go to Customize -> Rules -> User to edit the rule.",
+      "Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize -> Rules -> User to view the rule.",
     );
     expect(beat("rule")?.example).toBe(
-      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule. Show me the rule so I can copy it manually.",
+      "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
     );
     expect(beat("test-rule")?.detail).toBe("");
     expect(beat("test-rule")?.example).toBe('Change "Line Items" in the UI to something else.');
@@ -122,7 +143,7 @@ describe("runbook catalog", () => {
     expect(beat("canvas")?.title).toBe("Canvas");
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
     expect(beat("mcp")?.title).toBe("MCP / Figma");
-    expect(beat("mcp")?.detail).toContain("Customize > MCPs > Figma");
+    expect(beat("mcp")?.detail).toContain("Customize -> MCPs -> Figma");
     expect(beat("mcp")?.example).toContain("Figma Slides");
 
     expect(beats101.every((entry) => entry.promptType !== undefined)).toBe(true);
@@ -140,9 +161,11 @@ describe("runbook catalog", () => {
       ),
     ).toEqual([
       "allowlist",
+      "verify-email",
       "start-and-stop",
       "stop",
       "interrupt-steer",
+      "continue-no-approval",
       "diffs",
       "checkpoint-restore",
     ]);
