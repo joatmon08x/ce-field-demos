@@ -19,7 +19,7 @@ Scope the finish line so it is verifiable: the client selects v2, both routes re
 
 ## /autopilot
 
-Cursor's `/babysit` PR workflow is now the `/autopilot` built-in skill. It needs a real open PR. Refresh live PR state each pass, handle conflicts before comments before CI, stop on ambiguous intent, and leave the merge decision to the human.
+Grok Build's `/babysit` PR workflow is now the `/autopilot` built-in skill. It needs a real open PR. Refresh live PR state each pass, handle conflicts before comments before CI, stop on ambiguous intent, and leave the merge decision to the human.
 
 ## /orchestrate
 
