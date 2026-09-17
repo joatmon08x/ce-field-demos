@@ -161,7 +161,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "MCP / Figma",
         promptType: "adaptable",
         detail:
-          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Enable a MCP server for slideshow generation in Grok Build. Go to Customize -> MCPs -> Figma.",
+          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize -> MCPs -> Figma.",
         example:
           "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
       },
