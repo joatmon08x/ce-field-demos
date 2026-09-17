@@ -47,13 +47,13 @@ Listens on **43173** (not 3000).
 
 ### Private Linear team (manual, before 201 MCP)
 
-Linear MCP cannot create teams. The operator creates a private team in the Linear UI, then an agent runs `stage-linear-201`.
+Linear MCP cannot create teams. The operator creates a private team in the Linear UI, then an agent runs `stage-linear`.
 
 1. Open Linear → **Settings → Teams → New team**.
 2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only the operator**. Do not add any other team.
-5. Run `stage-linear-201` to create or reconcile project `ce-field-demos` on that team with exactly three Fieldnote issues.
+5. Run `stage-linear` to create or reconcile project `ce-field-demos` on that team with exactly three Fieldnote issues.
 
 Do not `save_project` onto a public team. Do not add a local ticket board, ticket API, ticket MCP, or ticket marketplace plugin.
 
@@ -96,7 +96,7 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
-| `.cursor/skills/stage-linear-201/` | Before the 201 MCP section: reconcile three issues on the private `ce-field-demos` Linear project |
+| `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the private `ce-field-demos` Linear project |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |

@@ -15,7 +15,7 @@ Call **Linear** MCP (authenticate if needed):
 2. `list_issues` on that project, or `get_issue` when the user passed an identifier (for example `CE-16`).
 3. Match `FIELD_DEMO_ISSUES` titles in `lib/runbooks/linear-field-demos.ts` when the user passed a title instead of an ID.
 
-If Linear MCP is missing, tell the operator to add Linear from the marketplace and to run `stage-linear-201` if the project is empty.
+If Linear MCP is missing, tell the operator to add Linear from the marketplace and to run `stage-linear` if the project is empty.
 
 ## 2. Stay inside the ticket
 

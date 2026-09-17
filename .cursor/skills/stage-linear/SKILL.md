@@ -1,11 +1,11 @@
 ---
-name: stage-linear-201
-description: Create or reconcile the private ce-field-demos Linear board with its three Ledgerly 201 issues before the MCP section.
+name: stage-linear
+description: Create or reconcile the private ce-field-demos Linear board with its Fieldnote issues.
 ---
 
-# Stage Linear for the 201 track
+# Stage Linear
 
-Do this **before** the 201 section “How does my agent get more information?” The agent reads issues from Linear.
+The agent reads issues from Linear. Run this before a beat that needs the Fieldnote board.
 
 Catalog stays Starter **$49**, Growth **$99**, Scale **$249**. Operator Avery Quinn. No real customers.
 
@@ -51,7 +51,7 @@ Create it with `save_project` only when it is missing. Otherwise update the exis
 - `lead`: `"me"`
 - `state`: `Backlog` — not a company initiative
 - `summary`: from `LINEAR_FIELD_DEMOS_PROJECT.summary`
-- `description`: Fieldnote 201 board. Three scoped issues. Personal. Private team only.
+- `description`: Fieldnote demo board. Three scoped issues. Personal. Private team only.
 
 Do not add initiatives, Slack channels, or extra teams.
 
@@ -89,9 +89,9 @@ Report:
 - That `list_issues` on the project returns exactly the three catalog titles
 - That the filter issue is second in creation order
 
-The 201 pastes use **titles**, not identifiers, so you do not edit `lib/runbooks/beats/201.ts` after minting IDs.
+Runbook pastes use **titles**, not identifiers, so you do not edit runbook beats after minting IDs.
 
-## 201 beats this unblocks
+## What this unblocks
 
 1. Add Linear MCP (Customize → MCPs).
 2. Fix the suggested-credit bug (`FIELD_DEMO_SUGGESTED_CREDIT_TITLE`).

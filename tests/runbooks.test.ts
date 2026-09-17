@@ -229,7 +229,7 @@ describe("runbook catalog", () => {
       "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
     );
     expect(beat("context-usage")?.promptType).toBe("none");
-    expect(beat("context-usage")?.detail).toBe("Click on the Context Usage indicator below the chat.");
+    expect(beat("context-usage")?.detail).toBe("Select the Context Usage indicator below the chat.");
     expect(beat("context-usage")?.example).toBeUndefined();
     expect(beat("create-api-personal-skill")?.detail).toBe(
       "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",
@@ -395,10 +395,18 @@ describe("runbook catalog", () => {
       `shipped-suite count disagrees across docs: ${[...passedCounts].join(", ")}`,
     ).toBe(1);
 
-    expect(files.agents).toContain("stage-linear-201");
-    expect(files.rule).toContain("stage-linear-201");
-    expect(files.skill).toContain("stage-linear-201");
-    expect(files.howto).toContain("stage-linear-201");
+    expect(files.reset).toContain("stage-linear");
+    expect(files.reset).not.toContain("stage-linear-201");
+    expect(files.reset).toContain("FIELD_DEMO_ISSUES");
+    expect(files.reset).toContain("Canceled");
+    expect(files.agents).toContain("stage-linear");
+    expect(files.agents).not.toContain("stage-linear-201");
+    expect(files.rule).toContain("stage-linear");
+    expect(files.rule).not.toContain("stage-linear-201");
+    expect(files.skill).toContain("stage-linear");
+    expect(files.skill).not.toContain("stage-linear-201");
+    expect(files.howto).toContain("stage-linear");
+    expect(files.howto).not.toContain("stage-linear-201");
     expect(files.readme).toContain("Settings → Teams → New team");
     expect(files.readme).toContain("Make team private");
     expect(files.howto).toContain("Settings → Teams → New team");

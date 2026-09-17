@@ -9,7 +9,7 @@ Work one Linear issue from the operator’s **ce-field-demos** project. Keep Lin
 
 ## Prerequisites
 
-This plugin ships the Linear MCP server (`https://mcp.linear.app/mcp`). If Linear tools are missing, authenticate that MCP, then continue. If the project is empty, tell the operator to run `stage-linear-201`.
+This plugin ships the Linear MCP server (`https://mcp.linear.app/mcp`). If Linear tools are missing, authenticate that MCP, then continue. If the project is empty, tell the operator to run `stage-linear`.
 
 ## 1. Read the ticket
 
@@ -17,7 +17,7 @@ Call Linear MCP:
 
 1. `list_projects` query `ce-field-demos` — use the project whose team is the operator’s private field-demos team, not a public or shared team.
 2. `list_issues` on that project. Match `FIELD_DEMO_ISSUES` titles in `lib/runbooks/linear-field-demos.ts` when the user passed a title (the 201 paste uses titles).
-3. `get_issue` only when the user passed a real identifier (for example `CE-16`). Do **not** assume `LY-003` is the filter bug. After `stage-linear-201` on a `LY` team, identifiers follow create order: suggested-credit, then filter, then email — so `LY-003` is the email story.
+3. `get_issue` only when the user passed a real identifier (for example `CE-16`). Do **not** assume `LY-003` is the filter bug. After `stage-linear` on a `LY` team, identifiers follow create order: suggested-credit, then filter, then email — so `LY-003` is the email story.
 
 Work only the matched ticket.
 
@@ -43,15 +43,15 @@ Every Linear writeback uses this shape. Concise. No extra sections.
 ```markdown
 # Bug Fix Summary: [Service affected] - [Short Description]
 
-## 2. The Core Problem (Why it happened)
+## 1. The Core Problem (Why it happened)
 * **Immediate Trigger:** [e.g., A missing environment variable after deployment.]
 * **Underlying Flaw:** [e.g., The deployment script lacked a validation step to ensure keys existed before spinning up containers.]
 
-## 3. Quick Takeaways
+## 2. Quick Takeaways
 * **Good:** Detection was instant; rollback process worked flawlessly.
 * **Bad:** Debugging took too long because logs lacked contextual request IDs.
 
-## 4. Fixes
+## 3. Fixes
 - [ ] **Action:** Add check to deployment script | **Owner:** @name | **PR:** #123
 ```
 

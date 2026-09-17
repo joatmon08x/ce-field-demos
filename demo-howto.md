@@ -79,7 +79,7 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add any other team.
-5. In Grok Build, run `stage-linear-201`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
+5. In Grok Build, run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
 
 Do not skip the private-team step. A project on a public team is visible to that team.
 
@@ -269,7 +269,7 @@ Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). A
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
 ```
 
-Then click the Context Usage indicator below the chat.
+Then select the Context Usage indicator below the chat.
 
 ### How do I standardize agent behavior?
 
@@ -297,7 +297,7 @@ In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogP
 
 ### How does my agent get more information?
 
-Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear-201`.
+Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear`.
 
 ```text
 Add the Linear MCP server to this project.

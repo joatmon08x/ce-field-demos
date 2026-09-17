@@ -23,9 +23,9 @@ export const PROJECT_SKILLS = [
     when: "Walk the 101 or 201 track, then choose the mode, model, rule, or skill from the shape of the work.",
   },
   {
-    name: "stage-linear-201",
-    path: ".cursor/skills/stage-linear-201/SKILL.md",
-    when: "Before the 201 MCP section. Reconcile three issues on the private ce-field-demos Linear project.",
+    name: "stage-linear",
+    path: ".cursor/skills/stage-linear/SKILL.md",
+    when: "Reconcile Fieldnote issues on the private ce-field-demos Linear project.",
   },
   {
     name: "standard-bug-fix",

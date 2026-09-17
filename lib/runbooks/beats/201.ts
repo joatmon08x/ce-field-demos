@@ -52,7 +52,7 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "context-usage",
         title: "Check context usage",
         promptType: "none",
-        detail: "Click on the Context Usage indicator below the chat.",
+        detail: "Select the Context Usage indicator below the chat.",
       },
     ],
   },
