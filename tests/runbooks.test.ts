@@ -374,7 +374,33 @@ describe("runbook catalog", () => {
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
-    expect(files.reset).toContain("1 failed / 29 passed");
+
+    // Shipped-suite count must stay consistent across the docs that cite it
+    // (see the sync rule in .cursor/rules/ledgerly.mdc). Assert the
+    // "1 failed / <n> passed" format is present in each and that every file
+    // agrees, so changing the count only means updating the docs — not this
+    // assertion.
+    const countPattern = /1 failed \/ (\d+) passed/g;
+    const countSources: Record<string, string> = {
+      readme: files.readme,
+      howto: files.howto,
+      agents: files.agents,
+      reset: files.reset,
+      plan: readFileSync(join(root, ".cursor/plans/resolve-dispute.md"), "utf8"),
+    };
+    const passedCounts = new Set<string>();
+    for (const [name, contents] of Object.entries(countSources)) {
+      const matches = [...contents.matchAll(countPattern)].map((match) => match[1]);
+      expect(matches.length, `${name} is missing a "1 failed / <n> passed" count`).toBeGreaterThan(
+        0,
+      );
+      for (const passed of matches) passedCounts.add(passed);
+    }
+    expect(
+      passedCounts.size,
+      `shipped-suite count disagrees across docs: ${[...passedCounts].join(", ")}`,
+    ).toBe(1);
+
     expect(files.reset).toContain("stage-linear");
     expect(files.reset).not.toContain("stage-linear-201");
     expect(files.reset).toContain("FIELD_DEMO_ISSUES");
