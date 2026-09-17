@@ -288,7 +288,7 @@ Open the project skill in `.cursor/skills`. Explore the other project skills for
 
 #### Money-format hook
 
-Use CMD/CTRL+P to open `.cursor/hooks.json` and `hooks/check-money-formatting.mjs`. Then:
+Open `.cursor/hooks.json` and `hooks/check-money-formatting.mjs`. Then:
 
 ```text
 In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.
@@ -308,7 +308,7 @@ Check MCP servers in Customize → MCPs. Check the MCP allowlist under Settings 
 /ask “Overdue / Needs review filter does not change the list”
 ```
 
-Import the plugin directory from disk (Customize → Browse Marketplace → Add Marketplace → Import from Disk). Show the skills, rules, and CompanyTicket MCP. Then:
+Add the plugin from the local repository (Customize → Plugins → Add → From Local Repository, then `plugins/standard-bug-fix`). Check Customize → Plugins, add “Standard bug fix”, and review skills, rules, and Linear MCP. Then:
 
 ```text
 /standard-bug-fix “Overdue / Needs review filter does not change the list”
@@ -318,7 +318,7 @@ Import the plugin directory from disk (Customize → Browse Marketplace → Add 
 
 #### Open the plan
 
-Use CMD/CTRL+P to open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/ledgerly-reviewer.md`, and `.cursor/skills/dispatch-subagents/SKILL.md`. Then:
+Open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/ledgerly-reviewer.md`, and `.cursor/skills/dispatch-subagents/SKILL.md`. Then:
 
 ```text
 /multitask @resolve-dispute.md

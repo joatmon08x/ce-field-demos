@@ -28,7 +28,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
-| Disk plugin | `plugins/standard-bug-fix/` — import from disk; `/standard-bug-fix`, Linear MCP |
+| Disk plugin | `plugins/standard-bug-fix/` — add from local repository; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
 
 ## Starter prompts
@@ -79,7 +79,7 @@ Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review 
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), compare agents, ask across chats, check context usage.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, money-format hook and script, bypass-formatter test.
-3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, import the disk plugin (skill, rule, CompanyTicket MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear`.
+3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, add `plugins/standard-bug-fix` from the local repository, check the plugin (skills, rules, Linear MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear`.
 4. **How do I parallelize a task?** — open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, ledgerly-reviewer check.
 
 ## Create the private Linear team (manual)
