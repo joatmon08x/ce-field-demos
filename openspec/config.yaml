@@ -9,7 +9,7 @@ context: |
   Do not migrate lib/disputes/suggested-credit-api.ts from v1 to v2 unless the change says so. Preserve both suggested-credit routes. Do not edit tests/suggested-credit-api.test.ts to get green.
   npm test on a clean tree is 1 failed / 29 passed. Do not add a red suite to the default run.
   Spec work starts with /opsx-explore, not Cursor Plan mode. Do not implement until /opsx-propose has written openspec/changes/<id>/.
-  This branch uses Linear project https://linear.app/anysphere/project/openspec-05fc3d7dba89 (team LY). Backlog issues LY-6, LY-7, LY-8. Cloud Agents start from git ref cursor/openspec-resolve-dispute-3068.
+  This repo uses Linear project https://linear.app/anysphere/project/openspec-05fc3d7dba89 (team LY). Backlog issues LY-6, LY-7, LY-8. Cloud Agents start from git ref main on https://github.com/joatmon08x/spec-demo.
 
 rules:
   proposal:

@@ -5,7 +5,7 @@
   "description": "Ledgerly — fictional B2B billing and collections ops SaaS for Cursor demos.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joatmon08x/ce-field-demos.git"
+    "url": "https://github.com/joatmon08x/spec-demo.git"
   },
   "scripts": {
     "dev": "next dev --port 43173",

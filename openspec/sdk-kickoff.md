@@ -1,8 +1,8 @@
-# Fully autonomous Cloud Agent on this branch
+# Fully autonomous Cloud Agent (spec-demo)
 
-Linear project: [openspec](https://linear.app/anysphere/project/openspec-05fc3d7dba89) (team `LY`). Git starting ref: `cursor/openspec-resolve-dispute-3068`, not `main`. Do not merge to `main`.
+Linear project: [openspec](https://linear.app/anysphere/project/openspec-05fc3d7dba89) (team `LY`). Git repo: [joatmon08x/spec-demo](https://github.com/joatmon08x/spec-demo). Starting ref: **`main`**. Do not merge unless the operator asks.
 
-## Backlog (populated from the Fieldnote 201 example)
+## Backlog
 
 | Issue | Title |
 | --- | --- |
@@ -47,15 +47,15 @@ const agent = await Agent.create({
   apiKey: process.env.CURSOR_API_KEY!,
   cloud: {
     repos: [{
-      url: "https://github.com/joatmon08x/ce-field-demos",
-      startingRef: "cursor/openspec-resolve-dispute-3068",
+      url: "https://github.com/joatmon08x/spec-demo",
+      startingRef: "main",
     }],
     autoCreatePR: true,
   },
 });
 
 const run = await agent.send(`
-You are a fully autonomous Cloud Agent on branch cursor/openspec-resolve-dispute-3068.
+You are a fully autonomous Cloud Agent on https://github.com/joatmon08x/spec-demo (startingRef main).
 Linear project: https://linear.app/anysphere/project/openspec-05fc3d7dba89 (team LY).
 
 1. list_issues on project openspec, state Backlog. Pick the oldest High-priority bug (LY-6 if still Backlog).

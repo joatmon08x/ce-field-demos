@@ -2,7 +2,7 @@
 
 Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for the jumpable Grok Build **101** and **201** tracks. Copy-paste prompts live on `/runbooks/101` and `/runbooks/201`; the presenter run-of-show and speaker notes are `demo-howto.md`.
+Use it for the jumpable Grok Build **101** and **201** tracks, and for the OpenSpec Cloud Agent loop on [spec-demo](https://github.com/joatmon08x/spec-demo) (`openspec/README.md`). Copy-paste prompts live on `/runbooks/101` and `/runbooks/201`; the presenter run-of-show and speaker notes are `demo-howto.md`.
 
 ## Run
 

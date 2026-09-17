@@ -73,7 +73,7 @@ Shipped suite on a clean tree: **1 failed / 29 passed**. The `dsp_1043` page sho
 
 Always-on rule: `.cursor/rules/plan-to-openspec.mdc` — start spec work with `/opsx-explore`, not Cursor Plan mode. Then `/opsx-propose` before product code.
 
-This branch’s Cloud Agent backlog is Linear project [openspec](https://linear.app/anysphere/project/openspec-05fc3d7dba89): **LY-6**, **LY-7**, **LY-8**. Start git from `cursor/openspec-resolve-dispute-3068`. See `openspec/sdk-kickoff.md`.
+This repo’s Cloud Agent backlog is Linear project [openspec](https://linear.app/anysphere/project/openspec-05fc3d7dba89): **LY-6**, **LY-7**, **LY-8**. Git: [joatmon08x/spec-demo](https://github.com/joatmon08x/spec-demo) `main`. See `openspec/sdk-kickoff.md`.
 
 ```bash
 npx openspec validate --changes --strict
