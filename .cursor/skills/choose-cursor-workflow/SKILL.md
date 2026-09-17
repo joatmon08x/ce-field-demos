@@ -39,7 +39,7 @@ The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not ment
 
 ## Choose the model
 
-Use a high-reasoning model to plan and coordinate, and a faster model for narrow, well-scoped edits. On Teams and Enterprise, Auto (Cursor Router) classifies each request for you. Pin a model when the role is already known.
+Use a high-reasoning model to plan and coordinate, and a faster model for narrow, well-scoped edits. On Teams and Enterprise, Auto (Grok Build Router) classifies each request for you. Pin a model when the role is already known.
 
 ## What does not change
 

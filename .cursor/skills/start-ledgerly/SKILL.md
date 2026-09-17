@@ -1,6 +1,6 @@
 ---
 name: start-ledgerly
-description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when the database is missing or empty, then open it in the Cursor Browser with a second tab on the runbooks view. Use when the user asks to start the server, start the application, run the demo app, open Ledgerly in the browser, or seed if it has not already been seeded.
+description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when the database is missing or empty, then open it in the Grok Build Browser with a second tab on the runbooks view. Use when the user asks to start the server, start the application, run the demo app, open Ledgerly in the browser, or seed if it has not already been seeded.
 ---
 
 # Start Ledgerly
@@ -56,9 +56,9 @@ Request host/`all` permissions if bind fails (`uv_interface_addresses` or simila
 
 Do not `lsof | kill` a busy 43173 — that is a reset, not a start.
 
-## 4. Open the Cursor Browser
+## 4. Open the Grok Build Browser
 
-After the server is Ready (or already responding), open the app in the Cursor Browser (`cursor-ide-browser`). Do this even when the server was already running. Use `position: "active"` so the browser is visible.
+After the server is Ready (or already responding), open the app in the Grok Build Browser (`cursor-ide-browser`). Do this even when the server was already running. Use `position: "active"` so the browser is visible.
 
 1. Navigate to **http://localhost:43173** (the application).
 2. Open a **second tab** (`newTab: true`) to the runbooks view: **http://localhost:43173/runbooks**.

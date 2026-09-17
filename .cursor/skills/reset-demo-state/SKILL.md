@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 29 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and no leftover issues on the private `ce-field-demos` Linear project. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 33 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and no leftover issues on the private `ce-field-demos` Linear project. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
 
 ## Checklist (run what applies)
 
@@ -32,7 +32,7 @@ If the list is empty, skip. Report titles you removed. Do not recreate them.
 
 3. **Delete the Canvas**
 
-Canvases from the 101 beat live outside the repo. Cursor only picks up files in `~/.cursor/projects/<workspace-slug>/canvases/`. The slug is the absolute repo path with `/` replaced by `-` (example: `~/.cursor/projects/Users-operator-ce-field-demos/canvases/`).
+Canvases from the 101 beat live outside the repo. Grok Build only picks up files in `~/.cursor/projects/<workspace-slug>/canvases/`. The slug is the absolute repo path with `/` replaced by `-` (example: `~/.cursor/projects/Users-operator-ce-field-demos/canvases/`).
 
 Delete leftover canvas artifacts:
 
@@ -108,7 +108,7 @@ npm run dev
 8. **Verify shipped state**
 
 ```bash
-npm test    # expect: 1 failed (suggested-credit-api), 29 passed
+npm test    # expect: 1 failed (suggested-credit-api), 33 passed
 ```
 
 Open `http://127.0.0.1:43173` — dashboard shows Fieldnote data, catalog $49/$99/$249, disputes badge on the sidebar.

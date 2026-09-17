@@ -45,11 +45,11 @@ export const PROJECT_SKILLS = [
   {
     name: "autopilot",
     path: "~/.cursor/skills-cursor/autopilot/SKILL.md",
-    when: "Built-in skill for Cursor's former /babysit PR workflow.",
+    when: "Built-in skill for Grok Build's former /babysit PR workflow.",
   },
   {
     name: "automate",
     path: "~/.cursor/skills-cursor/automate/SKILL.md",
-    when: "Open the Cursor Automations editor with a reviewed event- or schedule-driven draft.",
+    when: "Open the Grok Build Automations editor with a reviewed event- or schedule-driven draft.",
   },
 ] as const;

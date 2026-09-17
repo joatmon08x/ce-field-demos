@@ -10,13 +10,14 @@ Node 20. Nothing else global.
 
 ```bash
 npm i
+npx prisma generate
 npx prisma db seed
 npm run dev
 ```
 
-Open **http://localhost:43173**.
+Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` skill — it starts the app on 43173 and seeds only when the database is missing or empty.
 
-`npm test` is **1 failed / 29 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 33 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
@@ -27,7 +28,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
-| Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
+| Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Grok Build workflow |
 | Disk plugin | `plugins/standard-bug-fix/` — import from disk; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
 
@@ -108,7 +109,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Over
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
 | `autopilot` (built in) | Current PR-to-merge-ready skill; formerly `/babysit`. |
-| `automate` (built in) | Draft a scheduled or event-triggered Cursor Automation. |
+| `automate` (built in) | Draft a scheduled or event-triggered Grok Build Automation. |
 
 ## Notes
 
