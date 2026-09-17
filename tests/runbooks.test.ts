@@ -185,7 +185,8 @@ describe("runbook catalog", () => {
       "add-linear-mcp",
       "mcp-allowlist",
       "ask-linear-bug",
-      "import-marketplace-plugin",
+      "add-local-plugin",
+      "check-plugin",
       "standard-bug-fix",
       "open-resolve-dispute-plan",
       "open-ledgerly-reviewer",
@@ -244,15 +245,15 @@ describe("runbook catalog", () => {
     expect(beat("show-money-hook")?.promptType).toBe("none");
     expect(beat("show-money-hook")?.example).toBeUndefined();
     expect(beat("show-money-hook")?.detail).toBe(
-      "Use CMD/CTRL+P to open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
+      "Open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
     );
     expect(beat("show-money-script")?.promptType).toBe("none");
     expect(beat("show-money-script")?.example).toBeUndefined();
     expect(beat("show-money-script")?.detail).toBe(
-      "Use CMD/CTRL+P to open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
+      "Open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
     );
     expect(beat("bypass-formatter-test")?.detail).toBe(
-      "Use CMD/CTRL+P to open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
+      "Open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
     );
     expect(beat("bypass-formatter-test")?.example).toBe(
       'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
@@ -276,29 +277,34 @@ describe("runbook catalog", () => {
     expect(beat("ask-linear-bug")?.example).toBe(
       "/ask “Overdue / Needs review filter does not change the list”",
     );
-    expect(beat("import-marketplace-plugin")?.promptType).toBe("none");
-    expect(beat("import-marketplace-plugin")?.example).toBeUndefined();
-    expect(beat("import-marketplace-plugin")?.detail).toBe(
-      "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+    expect(beat("add-local-plugin")?.promptType).toBe("none");
+    expect(beat("add-local-plugin")?.example).toBeUndefined();
+    expect(beat("add-local-plugin")?.detail).toBe(
+      "A teammate created a plugin for standardizing bug fixes. Go to Customize -> Plugins -> Add -> From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
     );
-    expect(beat("standard-bug-fix")?.detail).toBe("Let’s fix the bug with the standard template.");
+    expect(beat("check-plugin")?.promptType).toBe("none");
+    expect(beat("check-plugin")?.example).toBeUndefined();
+    expect(beat("check-plugin")?.detail).toBe(
+      "Go to Customize -> Plugins. Add the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server. Select Manage. Review standard bug fix plugin. It has the Linear MCP server, skills, and rules.",
+    );
+    expect(beat("standard-bug-fix")?.detail).toBe(
+      "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
+    );
     expect(beat("standard-bug-fix")?.example).toBe(
       "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
     );
     expect(beat("open-resolve-dispute-plan")?.promptType).toBe("none");
     expect(beat("open-resolve-dispute-plan")?.example).toBeUndefined();
     expect(beat("open-resolve-dispute-plan")?.detail).toBe(
-      "Use CMD/CTRL+P to open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
+      "Open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
     );
     expect(beat("open-ledgerly-reviewer")?.promptType).toBe("none");
     expect(beat("open-ledgerly-reviewer")?.example).toBeUndefined();
-    expect(beat("open-ledgerly-reviewer")?.detail).toBe(
-      "Use CMD/CTRL+P to open .cursor/agents/ledgerly-reviewer.md",
-    );
+    expect(beat("open-ledgerly-reviewer")?.detail).toBe("Open .cursor/agents/ledgerly-reviewer.md");
     expect(beat("open-dispatch-subagents-skill")?.promptType).toBe("none");
     expect(beat("open-dispatch-subagents-skill")?.example).toBeUndefined();
     expect(beat("open-dispatch-subagents-skill")?.detail).toBe(
-      "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md.",
+      "Open .cursor/skills/dispatch-subagents/SKILL.md.",
     );
     expect(beat("multitask-resolve-dispute")?.detail).toBe(
       "Build the feature using the /multitask command.",

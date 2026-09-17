@@ -1,6 +1,6 @@
 # Standard bug fix (201 track)
 
-Load from disk: **Customize → Browse Marketplace → Add Marketplace → Import from Disk**, then choose this directory (`plugins/standard-bug-fix`).
+Add from the local repository: **Customize → Plugins → Add → From Local Repository**, then choose this directory (`plugins/standard-bug-fix`).
 
 Ships:
 

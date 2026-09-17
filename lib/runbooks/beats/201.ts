@@ -81,22 +81,21 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "show-money-hook",
         title: "Review money-format hook",
         promptType: "none",
-        detail:
-          "Use CMD/CTRL+P to open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
+        detail: "Open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
       },
       {
         id: "show-money-script",
         title: "Review money-format script",
         promptType: "none",
         detail:
-          "Use CMD/CTRL+P to open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
+          "Open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
       },
       {
         id: "bypass-formatter-test",
         title: "Bypass formatter test",
         promptType: "adaptable",
         detail:
-          "Use CMD/CTRL+P to open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
+          "Open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
         example:
           'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
       },
@@ -129,17 +128,25 @@ export const RUNBOOK_SECTIONS_201 = [
         example: "/ask “Overdue / Needs review filter does not change the list”",
       },
       {
-        id: "import-marketplace-plugin",
-        title: "Import marketplace plugin",
+        id: "add-local-plugin",
+        title: "Add plugin",
         promptType: "none",
         detail:
-          "Go to Customize -> Browse Marketplace -> Add Marketplace -> Import from Disk. Import the plugin directory from the demo repository. Show that the plugin has skills, rules, and CompanyTicket MCP server.",
+          "A teammate created a plugin for standardizing bug fixes. Go to Customize -> Plugins -> Add -> From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
+      },
+      {
+        id: "check-plugin",
+        title: "Check plugin",
+        promptType: "none",
+        detail:
+          "Go to Customize -> Plugins. Add the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server. Select Manage. Review standard bug fix plugin. It has the Linear MCP server, skills, and rules.",
       },
       {
         id: "standard-bug-fix",
         title: "Standard bug fix",
         promptType: "adaptable",
-        detail: "Let’s fix the bug with the standard template.",
+        detail:
+          "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
         example: "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
       },
     ],
@@ -153,19 +160,19 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Open resolve-dispute plan",
         promptType: "none",
         detail:
-          "Use CMD/CTRL+P to open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
+          "Open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
       },
       {
         id: "open-ledgerly-reviewer",
         title: "Open ledgerly-reviewer",
         promptType: "none",
-        detail: "Use CMD/CTRL+P to open .cursor/agents/ledgerly-reviewer.md",
+        detail: "Open .cursor/agents/ledgerly-reviewer.md",
       },
       {
         id: "open-dispatch-subagents-skill",
         title: "Open dispatch-subagents skill",
         promptType: "none",
-        detail: "Use CMD/CTRL+P to open .cursor/skills/dispatch-subagents/SKILL.md.",
+        detail: "Open .cursor/skills/dispatch-subagents/SKILL.md.",
       },
       {
         id: "multitask-resolve-dispute",
