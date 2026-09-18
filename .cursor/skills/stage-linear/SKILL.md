@@ -32,26 +32,38 @@ If the operator has no private team yet, **stop**. Point them at those docs. Lin
 Authenticate the Linear plugin (`mcp_auth` if tools are gated). Confirm `get_user` with `"me"`:
 
 - `isGuest` is false
-- The **private** team from Isolation is in `teams`
 
-If `teams` is only public teams, stop.
+If the user is a guest, stop.
+
+## 1a. Confirm the target private team (required)
+
+Never **assume** which team to write to — not even when only one private team exists, and not from a name that looks like `{displayName}-field-demos`. An operator may name the team anything; confirm it, do not guess.
+
+1. Build the candidate list: every **private** team on `me` (from `get_user` → `teams`, or `list_teams`). Public and shared teams are never candidates. Free-form names are fine — any team name is valid, not just `{displayName}-field-demos`.
+2. Present each candidate with: team name, team key (e.g. `LY`), privacy, and the settings URL `https://linear.app/<workspace>/settings/teams/<KEY>`.
+3. **Interactive run:** stop and have the operator confirm exactly one team before any write.
+   **Non-interactive run (cloud/background):** require an explicit team name or ID in the request. If none was given, or more than one candidate matches it, stop and print the candidates — do not guess.
+4. If there are no private teams, stop and point the operator at the Isolation steps. Linear MCP cannot create teams.
+5. Pin the confirmed team for the rest of the run. Every `save_project` and `save_issue` uses only that confirmed team ID or name.
 
 ## 2. Reconcile the project
 
-Search `list_projects` with query `ce-field-demos`.
+Search `list_projects` with query `ce-field-demos`, scoped to the confirmed team.
 
-- Reuse a project **only** when its `teams` are exactly the operator’s private team and `lead` is the operator (`me`).
-- If `ce-field-demos` already exists on a public team, do **not** reuse it. Create `ce-field-demos ({displayName})` on the private team instead.
+- Reuse a project **only** when its `teams` are exactly the confirmed private team and `lead` is the operator (`me`).
+- If `ce-field-demos` already exists on a public or a different team, do **not** reuse it. Create `ce-field-demos ({displayName})` on the confirmed private team instead.
 
 Create it with `save_project` only when it is missing. Otherwise update the existing private project in place:
 
 - `name`: `ce-field-demos` (or the uniqued name above)
-- `setTeams`: the private team name or ID
+- `setTeams`: the confirmed private team name or ID
 - `leadTeam`: that same team
 - `lead`: `"me"`
 - `state`: `Backlog` — not a company initiative
 - `summary`: from `LINEAR_FIELD_DEMOS_PROJECT.summary`
 - `description`: Fieldnote demo board. Three scoped issues. Personal. Private team only.
+
+A prior `reset-demo-state` may leave this project `Canceled` with its issues `Canceled` and still attached (they are not unlinked on reset). Reactivate it: setting `state`: `Backlog` here reopens the board, and §3 reopens the issues by title.
 
 Do not add initiatives, Slack channels, or extra teams.
 
@@ -67,27 +79,31 @@ Create missing issues **sequentially** in the `FIELD_DEMO_ISSUES` array order. N
 
 The filter issue must always be the second issue created. For each missing issue, `save_issue`:
 
-- `team`: the private team
+- `team`: the confirmed private team
 - `project`: the project name or ID
 - `title`, `description`, `priority`, `state` from the catalog
 - `assignee`: `"me"` (the operator). Never create Avery Quinn as a Linear user.
+
+If a matched issue already exists but is `Canceled` (left by a prior `reset-demo-state`), reuse it — `save_issue` with its `id` and set `state` back to its catalog value (`Todo` / `In Progress`). Do not create a duplicate.
 
 Do not create workspace-wide labels. Put type (Story / Bug) in the description heading if useful.
 
 Do not comment as a fake reporter. Avery Quinn copy is already in the description.
 
-After seeding, remove any issue whose exact title is not in `FIELD_DEMO_ISSUES` from the project and cancel it. This keeps repeat runs idempotent and prevents stale filler issues from returning.
+After seeding, list any **active** (non-`Canceled`) issue on the project whose exact title is not in `FIELD_DEMO_ISSUES`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently. Leave canceled extras linked to the project — do not reopen them, and do not unlink them.
 
 ## 4. Confirm
 
 Report:
 
-- Private team name
+- The confirmed team: name, key, and settings URL
+- That every write used only the confirmed team
 - Project URL
 - Three issue identifiers + titles + URLs
-- That `teams` on the project is only the private team
-- That `list_issues` on the project returns exactly the three catalog titles
+- That `teams` on the project is only the confirmed private team
+- That the **active** (non-`Canceled`) issues on the project are exactly the three catalog titles — ignore canceled leftovers still linked from a prior reset or reconcile
 - That the filter issue is second in creation order
+- Any canceled non-catalog leftovers still on the project (titles only), if present
 
 Runbook pastes use **titles**, not identifiers, so you do not edit runbook beats after minting IDs.
 
