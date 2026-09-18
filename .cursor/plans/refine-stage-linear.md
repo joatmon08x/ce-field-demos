@@ -28,7 +28,7 @@ Decisions locked with the operator: **all option A, mirror everywhere.**
 | 4 | `ce-field-demos` already on the wrong team | **A** — never reuse; create `ce-field-demos ({displayName})` on the confirmed private team. |
 | 5 | Destructive reconcile of non-catalog issues | **A** — list the extras and confirm before canceling/removing any. |
 | 6 | Doc mirror | **Yes, everywhere** — `README.md`, `demo-howto.md`, `AGENTS.md`, `.cursor/rules/ledgerly.mdc`. |
-| 7 | reset "clean" teardown | **A** — cancel every issue on the matched project, unlink (`project: null`), then set the project `state` to Canceled. Team retained. |
+| 7 | reset "clean" teardown | **A (amended)** — cancel every issue on the matched project (`state: Canceled`), then set the project `state` to Canceled. **Do not unlink issues** (`project: null`); leave them attached to the canceled project. Team retained. |
 | 8 | Which project(s) reset touches | **A** — only projects on the confirmed private team named `ce-field-demos` / `ce-field-demos (*)` with `lead` = `me`. |
 | 9 | When reset runs Linear | **A** — always offer Linear cleanup when the MCP is connected; skip only on auth failure or no confirmed team. |
 | 10 | Symmetry | **A** — reset reuses the same confirm-team gate as `stage-linear`. |
@@ -62,6 +62,12 @@ similarity. Confirmation is required even for a single match (decision 1).
 - **A3. Reconcile issues (decision 5).** Keep sequential create order (filter second). Before
   canceling/removing any issue whose title is not in `FIELD_DEMO_ISSUES`, **list the extras and
   confirm**. Replaces today's silent cancel.
+- **A3b. Reactivate a torn-down board (interaction with Plan B).** Because reset leaves canceled
+  issues linked to a canceled project (decision 7 amended), a matched project may come back
+  `Canceled` with `Canceled` issues attached. When reusing it, set the project `state` back to
+  `Backlog` and, for each catalog issue matched by exact title, set its `state` back to the
+  catalog value (`Todo` / `In Progress`). This is what keeps repeat runs idempotent now that
+  issues are no longer unlinked on reset.
 - **A4. Confirm report** adds: confirmed team name + key + settings URL, and an explicit line
   "writes used only this team."
 - **A5.** Reference issue #37 in the PR/commit: the skill asks which private team; it does not
@@ -73,13 +79,17 @@ similarity. Confirmation is required even for a single match (decision 1).
   team or a project whose `teams` ≠ confirmed team.
 - **B2. Find demo project(s)** on the confirmed team: name `ce-field-demos` or
   `ce-field-demos (*)`, `lead` = `me` (decision 8). If several match, list and confirm which.
-- **B3. Teardown order (decision 7), idempotent:** for each matched project — `list_issues`,
-  then per issue `save_issue { state: Canceled }` then `save_issue { project: null }`; finally
-  `save_project { state: Canceled }`. Do not delete the team. (Verify the exact Canceled
-  status string on the operator's team during the dry run and record it in the skill.)
+- **B3. Teardown order (decision 7 amended), idempotent:** for each matched project —
+  `list_issues`, then per issue `save_issue { state: Canceled }`; finally
+  `save_project { state: Canceled }`. **Do not** set `project: null` — leave issues attached to
+  the canceled project. Canceling the project alone does not clear its issues from the operator's
+  "My Issues" / backlog views, so the issue `state` is still set to Canceled; the redundant
+  unlink is dropped. `stage-linear` reactivates the project and re-opens matched issues on the
+  next run (see A3b). Do not delete the team. (Verify the exact Canceled status string on the
+  operator's team during the dry run and record it in the skill.)
 - **B4. Reporting** lists confirmed team, project name + URL, canceled issue identifiers/titles,
-  the canceled project, and the note "issues remain as Canceled; project canceled; team retained
-  for the next `stage-linear`."
+  the canceled project, and the note "issues remain as Canceled and stay linked to the canceled
+  project; team retained for the next `stage-linear`, which reactivates the board."
 - **B5. Header goal** updated from "no leftover active issues" to "no open catalog issues; demo
   project canceled; team unchanged."
 - **B6. When to run (decision 9):** always offer Linear cleanup when the MCP is connected; skip
