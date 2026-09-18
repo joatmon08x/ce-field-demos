@@ -14,7 +14,7 @@ export const RUNBOOK_TRACKS = [
     id: "201" as const,
     title: "201",
     description:
-      "You will curate what belongs in an agent's context, encode conventions as project skills and hooks, connect a curated set of MCP servers, and split one task across parallel agents.",
+      "You will curate what belongs in an agent's context, encode conventions as project skills, connect a curated set of MCP servers, and split one task across parallel agents.",
     sections: RUNBOOK_SECTIONS_201,
   },
 ] as const satisfies readonly {

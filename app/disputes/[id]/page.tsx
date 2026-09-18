@@ -25,8 +25,6 @@ export default async function DisputeDetailPage({ params }: { params: Promise<{ 
   if (!isPlanId(dispute.invoice.plan)) notFound();
 
   const catalogPrice = planPriceCents(dispute.invoice.plan);
-  // 201 bypass-formatter-test — uncomment this unsafe formatter and use {capUsd} in Resolution CardDescription.
-  // let capUsd = "$" + (catalogPrice / 100).toFixed(2);
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
@@ -86,7 +84,7 @@ export default async function DisputeDetailPage({ params }: { params: Promise<{ 
           <CardDescription>
             This panel is unfinished. Accept and Decline should call{" "}
             <span className="font-mono text-foreground">POST /api/disputes/{dispute.id}/resolve</span>{" "}
-            once the helper exists. Do not invent a credit above {/* capUsd */ formatUsd(catalogPrice)}.
+            once the helper exists. Do not invent a credit above {formatUsd(catalogPrice)}.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">

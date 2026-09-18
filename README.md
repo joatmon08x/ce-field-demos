@@ -17,7 +17,7 @@ npm run dev
 
 Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` skill — it starts the app on 43173 and seeds only when the database is missing or empty.
 
-`npm test` is **1 failed / 33 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
+`npm test` is **1 failed / 31 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Restore both code seams with the `reset-demo-state` skill; use `npm run db:reset` only for data.
 
 ## App
 
@@ -79,7 +79,7 @@ Open `/runbooks/101`, copy a card, and paste it in Grok Build. You still review 
 Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review the result.
 
 1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), compare agents, ask across chats, check context usage.
-2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project, money-format hook and script, bypass-formatter test.
+2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project.
 3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, add `plugins/standard-bug-fix` from the local repository, check the plugin (skills, rules, Linear MCP), `/standard-bug-fix` on the filter-pills issue. Create a private Linear team by hand, then run `stage-linear`.
 4. **How do I parallelize a task?** — open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, ledgerly-reviewer check.
 
