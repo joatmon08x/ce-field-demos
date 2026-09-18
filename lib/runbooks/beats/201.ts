@@ -77,28 +77,6 @@ export const RUNBOOK_SECTIONS_201 = [
           "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository.",
         example: "Promote the create-api skill to this project.",
       },
-      {
-        id: "show-money-hook",
-        title: "Review money-format hook",
-        promptType: "none",
-        detail: "Open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
-      },
-      {
-        id: "show-money-script",
-        title: "Review money-format script",
-        promptType: "none",
-        detail:
-          "Open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
-      },
-      {
-        id: "bypass-formatter-test",
-        title: "Bypass formatter test",
-        promptType: "adaptable",
-        detail:
-          "Open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
-        example:
-          'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
-      },
     ],
   },
   {

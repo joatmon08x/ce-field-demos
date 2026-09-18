@@ -24,7 +24,7 @@ describe("runbook catalog", () => {
       "You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.",
     );
     expect(track201?.description).toBe(
-      "You will curate what belongs in an agent's context, encode conventions as project skills and hooks, connect a curated set of MCP servers, and split one task across parallel agents.",
+      "You will curate what belongs in an agent's context, encode conventions as project skills, connect a curated set of MCP servers, and split one task across parallel agents.",
     );
 
     for (const track of RUNBOOK_TRACKS) {
@@ -206,9 +206,6 @@ describe("runbook catalog", () => {
       "context-usage",
       "create-api-personal-skill",
       "promote-create-api-project",
-      "show-money-hook",
-      "show-money-script",
-      "bypass-formatter-test",
       "add-linear-mcp",
       "mcp-allowlist",
       "ask-linear-bug",
@@ -269,28 +266,6 @@ describe("runbook catalog", () => {
       "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository.",
     );
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
-    expect(beat("show-money-hook")?.promptType).toBe("none");
-    expect(beat("show-money-hook")?.example).toBeUndefined();
-    expect(beat("show-money-hook")?.detail).toBe(
-      "Open .cursor/hooks.json. Review the hook to fix money-formatted fields.",
-    );
-    expect(beat("show-money-script")?.promptType).toBe("none");
-    expect(beat("show-money-script")?.example).toBeUndefined();
-    expect(beat("show-money-script")?.detail).toBe(
-      "Open hooks/check-money-formatting.mjs. Review the script that always enforces ESLint.",
-    );
-    expect(beat("bypass-formatter-test")?.detail).toBe(
-      "Open app/disputes/[id]/page.tsx. The agent runs the hook and recognizes unsafe formatting.",
-    );
-    expect(beat("bypass-formatter-test")?.example).toBe(
-      'In app/disputes/[id]/page.tsx, uncomment the local `let capUsd = "$" + (catalogPrice / 100).toFixed(2)` and use capUsd in the Resolution CardDescription.',
-    );
-    const disputePage = readFileSync(join(root, "app/disputes/[id]/page.tsx"), "utf8");
-    expect(disputePage).toContain(
-      '// let capUsd = "$" + (catalogPrice / 100).toFixed(2);',
-    );
-    expect(disputePage).toContain("{/* capUsd */ formatUsd(catalogPrice)}");
-    expect(disputePage).not.toMatch(/^\s*let capUsd = /m);
     expect(beat("add-linear-mcp")?.detail).toBe(
       "Check MCP servers in Customize -> MCPs. Review the Linear MCP server and the different tools you can enable.",
     );
@@ -349,7 +324,6 @@ describe("runbook catalog", () => {
     expect(beat("context-usage")?.promptType).toBe("none");
     expect(beat("create-api-personal-skill")?.promptType).toBe("reusable");
     expect(beat("promote-create-api-project")?.promptType).toBe("reusable");
-    expect(beat("bypass-formatter-test")?.promptType).toBe("adaptable");
     expect(beat("add-linear-mcp")?.promptType).toBe("adaptable");
     expect(beat("ask-linear-bug")?.promptType).toBe("adaptable");
     expect(beat("standard-bug-fix")?.promptType).toBe("adaptable");
