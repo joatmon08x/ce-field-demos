@@ -184,7 +184,7 @@ describe("runbook catalog", () => {
     expect(skill).toContain(track201?.description ?? "");
 
     expect(RUNBOOK_SECTIONS_201.map((section) => section.title)).toEqual([
-      "Why is my agent ignoring my instructions?",
+      "What is the agent doing to manage context?",
       "How do I standardize agent behavior?",
       "How does my agent get more information?",
       "How do I parallelize a task?",
@@ -201,9 +201,9 @@ describe("runbook catalog", () => {
       "ask-ddd-all",
       "rename-agent-2-target",
       "ask-ddd-invoice-table",
+      "context-usage",
       "compare-agents",
       "ask-cross-context",
-      "context-usage",
       "create-api-personal-skill",
       "promote-create-api-project",
       "add-linear-mcp",
@@ -216,6 +216,7 @@ describe("runbook catalog", () => {
       "open-ledgerly-reviewer",
       "open-dispatch-subagents-skill",
       "multitask-resolve-dispute",
+      "canvas-subagent-progress",
       "ledgerly-reviewer-check",
     ]);
     expect(RUNBOOK_SECTIONS_201.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
@@ -242,6 +243,11 @@ describe("runbook catalog", () => {
     expect(beat("ask-ddd-invoice-table")?.example).toBe(
       "/ask what is the domain driven design of the @invoice-table.tsx",
     );
+    expect(beat("context-usage")?.promptType).toBe("none");
+    expect(beat("context-usage")?.detail).toBe(
+      "Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat.",
+    );
+    expect(beat("context-usage")?.example).toBeUndefined();
     expect(beat("compare-agents")?.promptType).toBe("none");
     expect(beat("compare-agents")?.example).toBeUndefined();
     expect(beat("compare-agents")?.detail).toBe(
@@ -253,9 +259,6 @@ describe("runbook catalog", () => {
     expect(beat("ask-cross-context")?.example).toBe(
       "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
     );
-    expect(beat("context-usage")?.promptType).toBe("none");
-    expect(beat("context-usage")?.detail).toBe("Select the Context Usage indicator below the chat.");
-    expect(beat("context-usage")?.example).toBeUndefined();
     expect(beat("create-api-personal-skill")?.detail).toBe(
       "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",
     );
@@ -263,7 +266,7 @@ describe("runbook catalog", () => {
       "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
     );
     expect(beat("promote-create-api-project")?.detail).toBe(
-      "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository.",
+      "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
     );
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
     expect(beat("add-linear-mcp")?.detail).toBe(
@@ -312,7 +315,16 @@ describe("runbook catalog", () => {
       "Build the feature using the /multitask command.",
     );
     expect(beat("multitask-resolve-dispute")?.example).toBe("/multitask @resolve-dispute.md");
-    expect(beat("ledgerly-reviewer-check")?.detail).toBe("");
+    expect(beat("canvas-subagent-progress")?.promptType).toBe("adaptable");
+    expect(beat("canvas-subagent-progress")?.detail).toBe(
+      "Use Canvas to keep track of the progress of subagents and their tasks.",
+    );
+    expect(beat("canvas-subagent-progress")?.example).toBe(
+      "Update Canvas with progress of subagents and to-dos. Summarize the models for each subagent and supervisor.",
+    );
+    expect(beat("ledgerly-reviewer-check")?.detail).toBe(
+      "Use the specialized reviewer subagent to check the completed task.",
+    );
     expect(beat("ledgerly-reviewer-check")?.example).toBe("ledgerly-reviewer check my work");
 
     expect(beats201.every((entry) => entry.promptType !== undefined)).toBe(true);
@@ -320,14 +332,15 @@ describe("runbook catalog", () => {
     expect(beat("ask-ddd-all")?.promptType).toBe("reusable");
     expect(beat("rename-agent-2-target")?.promptType).toBe("reusable");
     expect(beat("ask-ddd-invoice-table")?.promptType).toBe("reusable");
-    expect(beat("ask-cross-context")?.promptType).toBe("reusable");
     expect(beat("context-usage")?.promptType).toBe("none");
+    expect(beat("ask-cross-context")?.promptType).toBe("reusable");
     expect(beat("create-api-personal-skill")?.promptType).toBe("reusable");
     expect(beat("promote-create-api-project")?.promptType).toBe("reusable");
     expect(beat("add-linear-mcp")?.promptType).toBe("adaptable");
     expect(beat("ask-linear-bug")?.promptType).toBe("adaptable");
     expect(beat("standard-bug-fix")?.promptType).toBe("adaptable");
     expect(beat("multitask-resolve-dispute")?.promptType).toBe("reusable");
+    expect(beat("canvas-subagent-progress")?.promptType).toBe("adaptable");
     expect(beat("ledgerly-reviewer-check")?.promptType).toBe("adaptable");
   });
 
