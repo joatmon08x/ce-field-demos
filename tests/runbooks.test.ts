@@ -425,4 +425,23 @@ describe("runbook catalog", () => {
     expect(files.howto).toContain("settings/teams/LY");
     expect(files.agents).toContain("settings/teams/LY");
   });
+
+  it("stage-linear and reset-demo-state confirm the private team before writing", () => {
+    const stage = readFileSync(join(root, ".cursor/skills/stage-linear/SKILL.md"), "utf8");
+    const reset = readFileSync(join(root, ".cursor/skills/reset-demo-state/SKILL.md"), "utf8");
+
+    for (const [name, contents] of Object.entries({ stage, reset })) {
+      expect(contents, `${name} is missing a confirm-team step`).toMatch(/confirm/i);
+      expect(contents, `${name} is missing the team settings URL`).toContain("settings/teams");
+      expect(contents, `${name} should refuse to guess the team`).toMatch(/assume|guess/i);
+    }
+
+    // reset cancels the board but no longer unlinks issues from the project
+    expect(reset).toContain("Canceled");
+    expect(reset, "reset should no longer unlink issues").not.toContain("unlink from the board");
+    expect(reset, "reset should leave issues linked").toContain("Leave the issue linked");
+
+    // stage-linear reactivates a torn-down board on the next run
+    expect(stage).toMatch(/reactivate|reopen|reopens/i);
+  });
 });

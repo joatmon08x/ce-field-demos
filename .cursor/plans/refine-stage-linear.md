@@ -110,7 +110,7 @@ the team.
 - Keep `reset` containing `stage-linear`, `FIELD_DEMO_ISSUES`, and `Canceled`.
 - Keep `Settings → Teams → New team`, `Make team private`, and `settings/teams/LY` present in
   `README.md`, `demo-howto.md`, `AGENTS.md` (and `Make team private` in the rule).
-- Keep the shipped-suite count `1 failed / 31 passed` identical across README, demo-howto,
+- Keep the shipped-suite count `1 failed / 32 passed` identical across README, demo-howto,
   AGENTS, reset skill, and `.cursor/plans/resolve-dispute.md` — this is doc-only, so the count
   does not change.
 - Add assertions that the `stage-linear` and `reset-demo-state` skills contain the confirm-team

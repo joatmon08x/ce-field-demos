@@ -55,6 +55,8 @@ Linear MCP cannot create teams. The operator creates a private team in the Linea
 4. Members: **only the operator**. Do not add any other team.
 5. Run `stage-linear` to create or reconcile project `ce-field-demos` on that team with exactly three Fieldnote issues.
 
+`stage-linear` never guesses the team — it lists the operator's private teams and confirms the exact one before writing, so any name works (e.g. `CE201-Ray`). `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project without unlinking (the team is retained; the next `stage-linear` reactivates the board).
+
 Do not `save_project` onto a public team. Do not add a local ticket board, ticket API, ticket MCP, or ticket marketplace plugin.
 
 ### Tests
@@ -67,7 +69,7 @@ One test fails on a clean tree: `tests/suggested-credit-api.test.ts` expects the
 
 Passing tests include `tests/money.test.ts` and `tests/plans.test.ts`. Environment start seeds the database and runs only the passing tests so a red suite cannot mark the machine as failed to boot.
 
-Shipped suite on a clean tree: **1 failed / 31 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
+Shipped suite on a clean tree: **1 failed / 32 passed**. The `dsp_1043` page shows v1's $400 result; v2 and the stored credit are correctly capped at $249. Invoice and dispute status pills write `state=` while the pages read `status` — that click path is a separate planted UI seam, not a second red test. Do not volunteer it when explaining the app or the failing test; only when the user is on that click path.
 
 ### Multi-file stub (leave it unless asked)
 

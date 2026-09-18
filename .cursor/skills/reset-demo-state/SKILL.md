@@ -5,7 +5,7 @@ description: Put a Ledgerly demo machine back to the shipped state — reseed SQ
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 31 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and no leftover issues on the private `ce-field-demos` Linear project. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
+Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 32 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, and the private `ce-field-demos` Linear board torn down — its issues `Canceled` and the project `Canceled`, with the private team retained. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`.
 
 ## Checklist (run what applies)
 
@@ -65,28 +65,26 @@ return { remaining: figma.getSlideGrid().flat().length };
 
 Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip. Do not hunt other teams' files.
 
-5. **Linear issues (only if this demo staged the board)**
+5. **Linear board (whenever the Linear MCP is connected)**
 
-If this session ran `stage-linear` or created issues on `ce-field-demos`, cancel them so the next run starts with an empty private board. Linear MCP has no issue-delete tool.
+Offer to tear down the `ce-field-demos` board any time the Linear MCP is connected — not only when this session staged it. Skip only if the MCP is missing, auth fails, or no private team can be confirmed. Linear MCP has no issue- or project-delete tool, so "clean" means cancel, not delete.
 
-Authenticate Linear (`mcp_auth` if tools are gated). Confirm `get_user` with `"me"`:
+**Confirm the target private team (same gate as `stage-linear`).** Authenticate Linear (`mcp_auth` if gated). `get_user` with `"me"` — `isGuest` must be false. Build the candidate list of **private** teams on `me`, present each with its name, key, and settings URL (`https://linear.app/<workspace>/settings/teams/<KEY>`), then confirm exactly one before any write. Never guess: a non-interactive run must be given an explicit team name or ID; if it is missing or more than one candidate matches, stop and print the candidates. Never mutate a public or shared team.
 
-- `isGuest` is false
-- The **private** field-demos team is in `teams`
+`list_projects` with query `ce-field-demos`. Act **only** on a project whose `teams` are exactly the confirmed private team, `lead` is the operator (`me`), and name is `ce-field-demos` or `ce-field-demos (…)`. If several match, list them and confirm which to tear down. Do not touch another team's issues.
 
-If Linear MCP is missing, auth fails, or `teams` is only public teams, skip.
+For each matched project:
 
-`list_projects` with query `ce-field-demos`. Act **only** when the project’s `teams` are exactly the operator’s private team and `lead` is the operator (`me`). If the only match is on a public or shared team, skip. Do not cancel other teams’ issues.
+- `list_issues` on it. For every issue (catalog titles from `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`, plus any leftover filler), `save_issue`:
+  - `id`: the issue identifier
+  - `state`: `Canceled`
 
-`list_issues` on that project. For every issue on it (catalog titles from `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`, plus any leftover filler), `save_issue`:
+  Do **not** set `project: null`. Leave the issue linked to the project. Canceling the project does not cancel its issues, so the issue `state` is set to `Canceled` to clear it from the operator's "My Issues"; the unlink is unnecessary churn.
+- Then close the board: `save_project` with the project `id` and `state`: `Canceled`. Verify the exact Canceled project-status string on the team the first time you run this, then use it.
 
-- `id`: the issue identifier
-- `project`: `null` (unlink from the board)
-- `state`: `Canceled`
+Leave the private team in place — Linear MCP cannot recreate it. The next `stage-linear` reactivates this project (sets it back to `Backlog`) and reopens the three catalog issues by title.
 
-Leave the private team and the empty project in place. `stage-linear` recreates the catalog issues next time. Do not delete the team — Linear MCP cannot create teams.
-
-If this session never staged Linear, or the private project has no issues, skip. Report identifiers and titles you canceled. Do not hunt other workspaces.
+If no matching project exists on the confirmed team, skip. Report the confirmed team, the canceled project name + URL, and the issue identifiers/titles you canceled. Do not hunt other workspaces.
 
 6. **Database looks wrong / empty dashboard**
 
@@ -108,7 +106,7 @@ npm run dev
 8. **Verify shipped state**
 
 ```bash
-npm test    # expect: 1 failed (suggested-credit-api), 31 passed
+npm test    # expect: 1 failed (suggested-credit-api), 32 passed
 ```
 
 Open `http://127.0.0.1:43173` — dashboard shows Fieldnote data, catalog $49/$99/$249, disputes badge on the sidebar.
