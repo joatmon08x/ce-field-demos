@@ -270,18 +270,18 @@ describe("runbook catalog", () => {
     );
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
     expect(beat("add-linear-mcp")?.detail).toBe(
-      "Check MCP servers in Customize -> MCPs. Review the Linear MCP server and the different tools you can enable.",
+      "Let’s start the issue tracker’s MCP server (in this case, Linear) to get a ticket to this project. Review MCP servers in Customize -> MCPs. Enable the Linear MCP server.",
     );
-    expect(beat("add-linear-mcp")?.example).toBe("Add the Linear MCP server to this project.");
+    expect(beat("add-linear-mcp")?.example).toBeUndefined();
     expect(beat("mcp-allowlist")?.promptType).toBe("none");
     expect(beat("mcp-allowlist")?.example).toBeUndefined();
     expect(beat("mcp-allowlist")?.detail).toBe(
       "Go to Settings -> Agents -> Execution and Approvals -> Allowlist Options -> MCP Allowlist to check valid MCP servers and tools from your administrator.",
     );
-    expect(beat("ask-linear-bug")?.detail).toBe("Explore the tool calls to Linear MCP server.");
-    expect(beat("ask-linear-bug")?.example).toBe(
-      "/ask “Clicking Overdue or Needs review does not filter the queue”",
+    expect(beat("ask-linear-bug")?.detail).toBe(
+      "Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
     );
+    expect(beat("ask-linear-bug")?.example).toBe("List the open issues from our issue tracker.");
     expect(beat("add-local-plugin")?.promptType).toBe("none");
     expect(beat("add-local-plugin")?.example).toBeUndefined();
     expect(beat("add-local-plugin")?.detail).toBe(
@@ -290,13 +290,13 @@ describe("runbook catalog", () => {
     expect(beat("check-plugin")?.promptType).toBe("none");
     expect(beat("check-plugin")?.example).toBeUndefined();
     expect(beat("check-plugin")?.detail).toBe(
-      "Go to Customize -> Plugins. Add the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server. Select Manage. Review standard bug fix plugin. It has the Linear MCP server, skills, and rules.",
+      "Go to Customize -> Plugins. Go to Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
     );
     expect(beat("standard-bug-fix")?.detail).toBe(
       "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
     );
     expect(beat("standard-bug-fix")?.example).toBe(
-      "/standard-bug-fix “Clicking Overdue or Needs review does not filter the queue”",
+      "Work on a standard bug fix for the issue where clicking overdue does not filter.",
     );
     expect(beat("open-resolve-dispute-plan")?.promptType).toBe("none");
     expect(beat("open-resolve-dispute-plan")?.example).toBeUndefined();
@@ -336,7 +336,7 @@ describe("runbook catalog", () => {
     expect(beat("ask-cross-context")?.promptType).toBe("reusable");
     expect(beat("create-api-personal-skill")?.promptType).toBe("reusable");
     expect(beat("promote-create-api-project")?.promptType).toBe("reusable");
-    expect(beat("add-linear-mcp")?.promptType).toBe("adaptable");
+    expect(beat("add-linear-mcp")?.promptType).toBe("none");
     expect(beat("ask-linear-bug")?.promptType).toBe("adaptable");
     expect(beat("standard-bug-fix")?.promptType).toBe("adaptable");
     expect(beat("multitask-resolve-dispute")?.promptType).toBe("reusable");

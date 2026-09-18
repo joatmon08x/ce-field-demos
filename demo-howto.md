@@ -18,7 +18,7 @@ The 201 track has four sections. Open `/runbooks/201` and copy a card for any be
 
 1. **What is the agent doing to manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
-3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, Ask Linear, import plugin from disk
+3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, list open issues, import plugin from disk
 4. **How do I parallelize a task?** — [resolve-dispute plan](#open-the-plan), `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
 ---
@@ -291,20 +291,16 @@ Open the project skill in `.cursor/skills`. Explore the other project skills for
 
 Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear`.
 
+Review MCP servers in Customize → MCPs. Enable the Linear MCP server. Check the MCP allowlist under Settings → Agents → Execution and Approvals. Then:
+
 ```text
-Add the Linear MCP server to this project.
+List the open issues from our issue tracker.
 ```
 
-Check MCP servers in Customize → MCPs. Check the MCP allowlist under Settings → Agents → Execution and Approvals. Then:
+Add the plugin from the local repository (Customize → Plugins → Add → From Local Repository, then `plugins/standard-bug-fix`). Go to Customize → Plugins → Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server. Then:
 
 ```text
-/ask “Clicking Overdue or Needs review does not filter the queue”
-```
-
-Add the plugin from the local repository (Customize → Plugins → Add → From Local Repository, then `plugins/standard-bug-fix`). Check Customize → Plugins, add “Standard bug fix”, and review skills, rules, and Linear MCP. Then:
-
-```text
-/standard-bug-fix “Clicking Overdue or Needs review does not filter the queue”
+Work on a standard bug fix for the issue where clicking overdue does not filter.
 ```
 
 ### How do I parallelize a task?
