@@ -77,7 +77,7 @@ describe("runbook catalog", () => {
     );
     expect(beat("agent-build")?.example).toBeUndefined();
     expect(beat("debug")?.detail).toBe(
-      "Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose",
+      "Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose to reproduce the bug and attempt to fix based on the agent’s hypotheses.",
     );
     expect(beat("debug")?.example).toBe("/debug the failing test");
     expect(beat("model-fast")?.title).toBe("Check the models");
