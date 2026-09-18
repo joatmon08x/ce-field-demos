@@ -86,11 +86,10 @@ export const RUNBOOK_SECTIONS_201 = [
     beats: [
       {
         id: "add-linear-mcp",
-        title: "Add Linear MCP",
-        promptType: "adaptable",
+        title: "Enable Linear MCP",
+        promptType: "none",
         detail:
-          "Check MCP servers in Customize -> MCPs. Review the Linear MCP server and the different tools you can enable.",
-        example: "Add the Linear MCP server to this project.",
+          "Let’s start the issue tracker’s MCP server (in this case, Linear) to get a ticket to this project. Review MCP servers in Customize -> MCPs. Enable the Linear MCP server.",
       },
       {
         id: "mcp-allowlist",
@@ -101,10 +100,11 @@ export const RUNBOOK_SECTIONS_201 = [
       },
       {
         id: "ask-linear-bug",
-        title: "Ask Linear for the filter bug",
+        title: "List open issues",
         promptType: "adaptable",
-        detail: "Explore the tool calls to Linear MCP server.",
-        example: "/ask “Clicking Overdue or Needs review does not filter the queue”",
+        detail:
+          "Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
+        example: "List the open issues from our issue tracker.",
       },
       {
         id: "add-local-plugin",
@@ -115,10 +115,10 @@ export const RUNBOOK_SECTIONS_201 = [
       },
       {
         id: "check-plugin",
-        title: "Check plugin",
+        title: "Enable Standard bug fix plugin",
         promptType: "none",
         detail:
-          "Go to Customize -> Plugins. Add the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server. Select Manage. Review standard bug fix plugin. It has the Linear MCP server, skills, and rules.",
+          "Go to Customize -> Plugins. Go to Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
       },
       {
         id: "standard-bug-fix",
@@ -126,7 +126,7 @@ export const RUNBOOK_SECTIONS_201 = [
         promptType: "adaptable",
         detail:
           "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
-        example: "/standard-bug-fix “Clicking Overdue or Needs review does not filter the queue”",
+        example: "Work on a standard bug fix for the issue where clicking overdue does not filter.",
       },
     ],
   },
