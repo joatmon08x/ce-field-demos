@@ -3,7 +3,7 @@ import type { DemoSection } from "@/lib/runbooks/types";
 export const RUNBOOK_SECTIONS_201 = [
   {
     id: "target-context",
-    title: "Why is my agent ignoring my instructions?",
+    title: "What is the agent doing to manage context?",
     beats: [
       {
         id: "rename-agent-1-all",
@@ -34,6 +34,13 @@ export const RUNBOOK_SECTIONS_201 = [
         example: "/ask what is the domain driven design of the @invoice-table.tsx",
       },
       {
+        id: "context-usage",
+        title: "Check context usage",
+        promptType: "none",
+        detail:
+          "Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat.",
+      },
+      {
         id: "compare-agents",
         title: "Compare agents",
         promptType: "none",
@@ -47,12 +54,6 @@ export const RUNBOOK_SECTIONS_201 = [
         detail:
           "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
         example: "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
-      },
-      {
-        id: "context-usage",
-        title: "Check context usage",
-        promptType: "none",
-        detail: "Select the Context Usage indicator below the chat.",
       },
     ],
   },
@@ -74,7 +75,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Promote create-api to project",
         promptType: "reusable",
         detail:
-          "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository.",
+          "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
         example: "Promote the create-api skill to this project.",
       },
     ],
@@ -160,10 +161,18 @@ export const RUNBOOK_SECTIONS_201 = [
         example: "/multitask @resolve-dispute.md",
       },
       {
+        id: "canvas-subagent-progress",
+        title: "Canvas subagent progress",
+        promptType: "adaptable",
+        detail: "Use Canvas to keep track of the progress of subagents and their tasks.",
+        example:
+          "Update Canvas with progress of subagents and to-dos. Summarize the models for each subagent and supervisor.",
+      },
+      {
         id: "ledgerly-reviewer-check",
         title: "ledgerly-reviewer check",
         promptType: "adaptable",
-        detail: "",
+        detail: "Use the specialized reviewer subagent to check the completed task.",
         example: "ledgerly-reviewer check my work",
       },
     ],
