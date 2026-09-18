@@ -459,6 +459,18 @@ describe("runbook catalog", () => {
     expect(reset, "reset should offer Linear teardown when MCP is connected").toMatch(
       /whenever the Linear MCP is connected/,
     );
+    expect(reset, "reset must delete git branches from the 201 standard-bug-fix beat").toContain(
+      "Demo-beat git branches",
+    );
+    expect(reset, "reset must switch off the demo branch").toContain("git checkout main");
+    expect(reset, "reset must delete the local demo-beat branch").toContain("git branch -D");
+    expect(reset, "reset must delete a pushed demo-beat branch").toContain(
+      "git push origin --delete",
+    );
+    expect(reset, "reset must restore invoice and dispute pages that read state=").toContain(
+      "app/invoices/page.tsx",
+    );
+    expect(reset, "reset must restore dispute queue pages").toContain("app/disputes/page.tsx");
 
     // stage-linear reactivates a torn-down board on the next run
     expect(stage).toMatch(/reactivate|reopen|reopens/i);
