@@ -37,9 +37,9 @@ If the user is a guest, stop.
 
 ## 1a. Confirm the target private team (required)
 
-Never **assume** which team to write to — not even when only one private team exists, and not from a name that looks like `{displayName}-field-demos`. An operator may name the team anything (for example `CE201-Ray`); confirm it, do not guess.
+Never **assume** which team to write to — not even when only one private team exists, and not from a name that looks like `{displayName}-field-demos`. An operator may name the team anything; confirm it, do not guess.
 
-1. Build the candidate list: every **private** team on `me` (from `get_user` → `teams`, or `list_teams`). Public and shared teams are never candidates. Free-form names are fine — `CE201-Ray` is as valid as `{displayName}-field-demos`.
+1. Build the candidate list: every **private** team on `me` (from `get_user` → `teams`, or `list_teams`). Public and shared teams are never candidates. Free-form names are fine — any team name is valid, not just `{displayName}-field-demos`.
 2. Present each candidate with: team name, team key (e.g. `LY`), privacy, and the settings URL `https://linear.app/<workspace>/settings/teams/<KEY>`.
 3. **Interactive run:** stop and have the operator confirm exactly one team before any write.
    **Non-interactive run (cloud/background):** require an explicit team name or ID in the request. If none was given, or more than one candidate matches it, stop and print the candidates — do not guess.

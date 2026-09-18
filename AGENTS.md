@@ -55,7 +55,7 @@ Linear MCP cannot create teams. The operator creates a private team in the Linea
 4. Members: **only the operator**. Do not add any other team.
 5. Run `stage-linear` to create or reconcile project `ce-field-demos` on that team with exactly three Fieldnote issues.
 
-`stage-linear` never guesses the team — it lists the operator's private teams and confirms the exact one before writing, so any name works (e.g. `CE201-Ray`). `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project without unlinking (the team is retained; the next `stage-linear` reactivates the board).
+`stage-linear` never guesses the team — it lists the operator's private teams and confirms the exact one before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project without unlinking (the team is retained; the next `stage-linear` reactivates the board).
 
 Do not `save_project` onto a public team. Do not add a local ticket board, ticket API, ticket MCP, or ticket marketplace plugin.
 

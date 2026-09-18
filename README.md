@@ -93,7 +93,7 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 4. Members: **only you**. Do not add any other team.
 5. Then ask an agent to run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
 
-`stage-linear` never guesses the team — it lists your private teams and asks you to **confirm the exact one** before writing, so any name works (e.g. `CE201-Ray`). `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project (issues stay linked; your team is retained for the next run).
+`stage-linear` never guesses the team — it lists your private teams and asks you to **confirm the exact one** before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project (issues stay linked; your team is retained for the next run).
 
 Do not skip the private-team step. A project on a public team is visible to that team.
 During a fresh setup, create issues sequentially: suggested-credit first, **Overdue / Needs review filter does not change the list second**, and invoice-email third.
