@@ -16,11 +16,18 @@ describe("ce-field-demos Linear book", () => {
       "email-on-invoice",
     ]);
     expect(FIELD_DEMO_ISSUES[1]?.title).toBe(
-      "Overdue / Needs review filter does not change the list",
+      "Clicking Overdue or Needs review does not filter the queue",
     );
     expect(FIELD_DEMO_SUGGESTED_CREDIT_TITLE).toBe(
-      "Dispute dsp_1043 claims $400 against a $249 Scale invoice",
+      "Suggested credit on dsp_1043 shows $400 instead of the $249 Scale cap",
     );
-    expect(FIELD_DEMO_FILTER_TITLE).toBe("Overdue / Needs review filter does not change the list");
+    expect(FIELD_DEMO_FILTER_TITLE).toBe(
+      "Clicking Overdue or Needs review does not filter the queue",
+    );
+    expect(FIELD_DEMO_ISSUES.map((issue) => issue.previousTitles?.[0])).toEqual([
+      "Dispute dsp_1043 claims $400 against a $249 Scale invoice",
+      "Overdue / Needs review filter does not change the list",
+      "Change customer email on invoice detail",
+    ]);
   });
 });

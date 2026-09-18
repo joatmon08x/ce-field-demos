@@ -96,7 +96,7 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 `stage-linear` never guesses the team — it lists your private teams and asks you to **confirm the exact one** before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project (issues stay linked; your team is retained for the next run).
 
 Do not skip the private-team step. A project on a public team is visible to that team.
-During a fresh setup, create issues sequentially: suggested-credit first, **Overdue / Needs review filter does not change the list second**, and invoice-email third.
+During a fresh setup, create issues sequentially: suggested-credit first, **Clicking Overdue or Needs review does not filter the queue** second, and invoice-email third.
 
 ## Agents and skills
 

@@ -40,6 +40,8 @@ describe("standard-bug-fix disk plugin", () => {
     expect(skill).toContain("Match `FIELD_DEMO_ISSUES` titles");
     expect(skill).not.toContain("/standard-bug-fix LY-003");
     expect(skill).toContain("Do **not** assume `LY-003` is the filter bug");
+    expect(skill).toContain('`state`: `In Progress`');
+    expect(skill).toContain("Do not mark the issue Done or Complete");
     expect(skill).toContain("# Bug Fix Summary: [Service affected] - [Short Description]");
     expect(skill).toContain("## 1. The Core Problem (Why it happened)");
     expect(skill).toContain("## 2. Quick Takeaways");
@@ -47,6 +49,8 @@ describe("standard-bug-fix disk plugin", () => {
     expect(rule).toContain("alwaysApply: true");
     expect(rule).toContain("https://mcp.linear.app/mcp");
     expect(rule).toContain("FIELD_DEMO_ISSUES");
+    expect(rule).toContain('`state`: `In Progress`');
+    expect(rule).toContain("Do not mark it Done or Complete");
     expect(rule).not.toContain("/standard-bug-fix LY-003");
     expect(rule).toContain("# Bug Fix Summary: [Service affected] - [Short Description]");
     expect(rule).toContain("## 1. The Core Problem (Why it happened)");

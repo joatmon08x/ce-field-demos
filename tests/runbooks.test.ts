@@ -280,7 +280,7 @@ describe("runbook catalog", () => {
     );
     expect(beat("ask-linear-bug")?.detail).toBe("Explore the tool calls to Linear MCP server.");
     expect(beat("ask-linear-bug")?.example).toBe(
-      "/ask “Overdue / Needs review filter does not change the list”",
+      "/ask “Clicking Overdue or Needs review does not filter the queue”",
     );
     expect(beat("add-local-plugin")?.promptType).toBe("none");
     expect(beat("add-local-plugin")?.example).toBeUndefined();
@@ -296,7 +296,7 @@ describe("runbook catalog", () => {
       "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
     );
     expect(beat("standard-bug-fix")?.example).toBe(
-      "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
+      "/standard-bug-fix “Clicking Overdue or Needs review does not filter the queue”",
     );
     expect(beat("open-resolve-dispute-plan")?.promptType).toBe("none");
     expect(beat("open-resolve-dispute-plan")?.example).toBeUndefined();

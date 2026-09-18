@@ -104,7 +104,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Ask Linear for the filter bug",
         promptType: "adaptable",
         detail: "Explore the tool calls to Linear MCP server.",
-        example: "/ask “Overdue / Needs review filter does not change the list”",
+        example: "/ask “Clicking Overdue or Needs review does not filter the queue”",
       },
       {
         id: "add-local-plugin",
@@ -126,7 +126,7 @@ export const RUNBOOK_SECTIONS_201 = [
         promptType: "adaptable",
         detail:
           "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
-        example: "/standard-bug-fix “Overdue / Needs review filter does not change the list”",
+        example: "/standard-bug-fix “Clicking Overdue or Needs review does not filter the queue”",
       },
     ],
   },

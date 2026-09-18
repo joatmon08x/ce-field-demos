@@ -1,6 +1,6 @@
 ---
 name: standard-bug-fix
-description: Pull one ce-field-demos Linear issue, then fix only that Ledgerly bug. Use when the user runs /standard-bug-fix with a Linear identifier or a field-demo title such as the Overdue / Needs review filter bug.
+description: Pull one ce-field-demos Linear issue, then fix only that Ledgerly bug. Use when the user runs /standard-bug-fix with a Linear identifier or a field-demo title such as the Overdue or Needs review filter bug.
 ---
 
 # Standard bug fix
@@ -17,6 +17,8 @@ Call **Linear** MCP (authenticate if needed):
 
 If Linear MCP is missing, tell the operator to add Linear from the marketplace and to run `stage-linear` if the project is empty.
 
+After the match, `save_issue` on that issue only: `state`: `In Progress`. Skip if it is already In Progress. Do this before product edits. Do not change any other issue. Do not mark the issue Done or Complete.
+
 ## 2. Stay inside the ticket
 
 - Reproduce on the URLs in the issue body.
@@ -28,9 +30,9 @@ If Linear MCP is missing, tell the operator to add Linear from the marketplace a
 
 ## 3. Known 201 cards
 
-- **Change customer email on invoice detail** — skip email validation.
-- **Dispute dsp_1043 claims $400 against a $249 Scale invoice** — switch the suggested-credit client to v2 only.
-- **Overdue / Needs review filter does not change the list** — fix filter selection so the active pill matches the table.
+- **Invoice detail has no control to change customer email** — skip email validation.
+- **Suggested credit on dsp_1043 shows $400 instead of the $249 Scale cap** — switch the suggested-credit client to v2 only.
+- **Clicking Overdue or Needs review does not filter the queue** — fix filter selection so the active pill matches the table.
 
 ## 4. Finish
 

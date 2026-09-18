@@ -298,13 +298,13 @@ Add the Linear MCP server to this project.
 Check MCP servers in Customize → MCPs. Check the MCP allowlist under Settings → Agents → Execution and Approvals. Then:
 
 ```text
-/ask “Overdue / Needs review filter does not change the list”
+/ask “Clicking Overdue or Needs review does not filter the queue”
 ```
 
 Add the plugin from the local repository (Customize → Plugins → Add → From Local Repository, then `plugins/standard-bug-fix`). Check Customize → Plugins, add “Standard bug fix”, and review skills, rules, and Linear MCP. Then:
 
 ```text
-/standard-bug-fix “Overdue / Needs review filter does not change the list”
+/standard-bug-fix “Clicking Overdue or Needs review does not filter the queue”
 ```
 
 ### How do I parallelize a task?

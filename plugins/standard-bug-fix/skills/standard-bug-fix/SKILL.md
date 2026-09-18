@@ -1,6 +1,6 @@
 ---
 name: standard-bug-fix
-description: Pull one ce-field-demos Linear issue by title or identifier, fix only that Ledgerly bug, and write hypothesis, debug notes, and the fix PR back to Linear. Use when the user runs /standard-bug-fix with a field-demo title such as the Overdue / Needs review filter bug.
+description: Pull one ce-field-demos Linear issue by title or identifier, fix only that Ledgerly bug, and write hypothesis, debug notes, and the fix PR back to Linear. Use when the user runs /standard-bug-fix with a field-demo title such as the Overdue or Needs review filter bug.
 ---
 
 # Standard bug fix
@@ -19,7 +19,7 @@ Call Linear MCP:
 2. `list_issues` on that project. Match `FIELD_DEMO_ISSUES` titles in `lib/runbooks/linear-field-demos.ts` when the user passed a title (the 201 paste uses titles).
 3. `get_issue` only when the user passed a real identifier (for example `CE-16`). Do **not** assume `LY-003` is the filter bug. After `stage-linear` on a `LY` team, identifiers follow create order: suggested-credit, then filter, then email — so `LY-003` is the email story.
 
-Work only the matched ticket.
+Work only the matched ticket. Then `save_issue` on that issue only: `state`: `In Progress`. Do this before product edits. Do not change any other issue. Do not mark the issue Done or Complete.
 
 ## 2. Stay inside the ticket
 
@@ -32,9 +32,9 @@ Work only the matched ticket.
 
 ## 3. Known 201 cards
 
-- **Change customer email on invoice detail** — skip email validation.
-- **Dispute dsp_1043 claims $400 against a $249 Scale invoice** — switch the suggested-credit client to v2 only.
-- **Overdue / Needs review filter does not change the list** — fix filter selection so the active pill matches the table.
+- **Invoice detail has no control to change customer email** — skip email validation.
+- **Suggested credit on dsp_1043 shows $400 instead of the $249 Scale cap** — switch the suggested-credit client to v2 only.
+- **Clicking Overdue or Needs review does not filter the queue** — fix filter selection so the active pill matches the table.
 
 ## Linear comment template
 
@@ -58,12 +58,13 @@ Every Linear writeback uses this shape. Concise. No extra sections.
 ## Sequence
 
 1. **Read the issue** as in §1. Reproduce from the repo (tests, seed, running app).
-2. **Hypothesis (Linear comment).** Before product edits, comment with the template. Fill **Service affected**, **Short Description**, and **Core Problem**. Leave Takeaways/Fixes as `TBD` if unknown.
-3. **Debug.** Instrument or inspect only what you need. Note what confirmed or killed the hypothesis.
-4. **Debugging notes (Linear comment).** Comment again with the template. Keep Core Problem; fill **Quick Takeaways** (Good / Bad) from the actual debug path.
-5. **Fix.** Smallest change that matches the ticket. Verify with the relevant tests (and the UI path if the change is visible).
-6. **PR.** Open a pull request for the fix. Do not merge it.
-7. **Fix PR (Linear comment).** Comment with the **full** template. Check the Fixes item (`[x]`). **Action** is what shipped. **Owner** is the Linear assignee, or Avery Quinn. **PR** is the PR number or URL. Link the PR on the Linear issue if the MCP can.
+2. **In Progress.** `save_issue` on that issue: `state`: `In Progress`. Skip if it is already In Progress. Do not move other issues. Do not mark Done or Complete.
+3. **Hypothesis (Linear comment).** Before product edits, comment with the template. Fill **Service affected**, **Short Description**, and **Core Problem**. Leave Takeaways/Fixes as `TBD` if unknown.
+4. **Debug.** Instrument or inspect only what you need. Note what confirmed or killed the hypothesis.
+5. **Debugging notes (Linear comment).** Comment again with the template. Keep Core Problem; fill **Quick Takeaways** (Good / Bad) from the actual debug path.
+6. **Fix.** Smallest change that matches the ticket. Verify with the relevant tests (and the UI path if the change is visible).
+7. **PR.** Open a pull request for the fix. Do not merge it.
+8. **Fix PR (Linear comment).** Comment with the **full** template. Check the Fixes item (`[x]`). **Action** is what shipped. **Owner** is the Linear assignee, or Avery Quinn. **PR** is the PR number or URL. Link the PR on the Linear issue if the MCP can.
 
 Do not skip the three Linear comments. Do not paste secrets, production PII, or real company names into Linear.
 

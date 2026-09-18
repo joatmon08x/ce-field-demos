@@ -69,13 +69,13 @@ Do not add initiatives, Slack channels, or extra teams.
 
 ## 3. Seed issues
 
-`list_issues` on that project. Match existing issues by **exact title** from `FIELD_DEMO_ISSUES`.
+`list_issues` on that project. Match existing issues by **exact title** from `FIELD_DEMO_ISSUES`, or by that issue’s `previousTitles` if the board still has the old title. For each match, `save_issue` with the existing Linear issue identifier and the current title, description, priority, and state so copy stays in sync. Do not create a duplicate when the title only changed.
 
 Create missing issues **sequentially** in the `FIELD_DEMO_ISSUES` array order. Never create them in parallel:
 
-1. `Dispute dsp_1043 claims $400 against a $249 Scale invoice`
-2. `Overdue / Needs review filter does not change the list`
-3. `Change customer email on invoice detail`
+1. `Suggested credit on dsp_1043 shows $400 instead of the $249 Scale cap`
+2. `Clicking Overdue or Needs review does not filter the queue`
+3. `Invoice detail has no control to change customer email`
 
 The filter issue must always be the second issue created. For each missing issue, `save_issue`:
 
@@ -90,7 +90,7 @@ Do not create workspace-wide labels. Put type (Story / Bug) in the description h
 
 Do not comment as a fake reporter. Avery Quinn copy is already in the description.
 
-After seeding, list any **active** (non-`Canceled`) issue on the project whose exact title is not in `FIELD_DEMO_ISSUES`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently. Leave canceled extras linked to the project — do not reopen them, and do not unlink them.
+After seeding, list any **active** (non-`Canceled`) issue on the project whose exact title is not a current `FIELD_DEMO_ISSUES` title and was not already matched via `previousTitles`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently. Leave canceled extras linked to the project — do not reopen them, and do not unlink them.
 
 ## 4. Confirm
 
