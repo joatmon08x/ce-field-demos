@@ -31,7 +31,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Debug",
         promptType: "reusable",
         detail:
-          "Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose",
+          "Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose to reproduce the bug and attempt to fix based on the agent’s hypotheses.",
         example: "/debug the failing test",
       },
       {
