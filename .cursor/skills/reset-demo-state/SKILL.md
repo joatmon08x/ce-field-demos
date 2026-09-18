@@ -1,6 +1,6 @@
 ---
 name: reset-demo-state
-description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any, cancel Linear issues if this demo staged them. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
+description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, drop personal rules, delete the Canvas, delete Figma slides if this demo created any, and cancel the private ce-field-demos Linear board (issues + project) whenever the Linear MCP is connected. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
 ---
 
 # Reset the demo state
@@ -118,5 +118,5 @@ Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a
 - Never delete `prisma/seed.ts` data or add customers to "fix" a demo.
 - Never edit `tests/suggested-credit-api.test.ts`, either API route, or the seed to make the shipped red test green.
 - Never leave `.cursor/rules/suggested-credit-api-v2.mdc` in the shipped tree; create and remove it during the live rule beat.
-- Never leave personal `/create-rule` leftovers, a leftover Canvas, a demo Slides deck, or active `ce-field-demos` Linear issues after reset when those apply.
+- Never leave personal `/create-rule` leftovers, a leftover Canvas, a demo Slides deck, or a live `ce-field-demos` Linear board after reset when the Linear MCP is connected.
 - Never cancel Linear issues on a public or shared team. Never delete the operator’s private team.

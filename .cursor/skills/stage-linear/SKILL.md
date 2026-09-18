@@ -90,7 +90,7 @@ Do not create workspace-wide labels. Put type (Story / Bug) in the description h
 
 Do not comment as a fake reporter. Avery Quinn copy is already in the description.
 
-After seeding, list any issue on the project whose exact title is not in `FIELD_DEMO_ISSUES`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently.
+After seeding, list any **active** (non-`Canceled`) issue on the project whose exact title is not in `FIELD_DEMO_ISSUES`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently. Leave canceled extras linked to the project — do not reopen them, and do not unlink them.
 
 ## 4. Confirm
 
@@ -101,8 +101,9 @@ Report:
 - Project URL
 - Three issue identifiers + titles + URLs
 - That `teams` on the project is only the confirmed private team
-- That `list_issues` on the project returns exactly the three catalog titles
+- That the **active** (non-`Canceled`) issues on the project are exactly the three catalog titles — ignore canceled leftovers still linked from a prior reset or reconcile
 - That the filter issue is second in creation order
+- Any canceled non-catalog leftovers still on the project (titles only), if present
 
 Runbook pastes use **titles**, not identifiers, so you do not edit runbook beats after minting IDs.
 

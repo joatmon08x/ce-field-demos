@@ -453,8 +453,21 @@ describe("runbook catalog", () => {
     expect(reset).toContain("Canceled");
     expect(reset, "reset should no longer unlink issues").not.toContain("unlink from the board");
     expect(reset, "reset should leave issues linked").toContain("Leave the issue linked");
+    expect(reset, "reset description should not gate Linear on this session staging").not.toMatch(
+      /cancel Linear issues if this demo staged them/,
+    );
+    expect(reset, "reset should offer Linear teardown when MCP is connected").toMatch(
+      /whenever the Linear MCP is connected/,
+    );
 
     // stage-linear reactivates a torn-down board on the next run
     expect(stage).toMatch(/reactivate|reopen|reopens/i);
+    // confirm counts only active issues so canceled linked extras do not fail the check
+    expect(stage, "stage confirm must count only active issues").toMatch(
+      /active.*non-`?Canceled`?|non-`?Canceled`?.*active/i,
+    );
+    expect(stage, "stage confirm must not require every linked issue to be catalog").not.toContain(
+      "list_issues` on the project returns exactly the three catalog titles",
+    );
   });
 });
