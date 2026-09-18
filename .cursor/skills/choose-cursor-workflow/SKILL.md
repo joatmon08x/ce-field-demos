@@ -25,10 +25,10 @@ The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not ment
 
 ## 201 sections and beats
 
-1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD, compare agents, ask across chats, check context usage.
+1. **What is the agent doing to manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats.
 2. **How do I standardize agent behavior?** — personal create-api skill, promote it.
 3. **How does my agent get more information?** — Linear MCP, MCP allowlist, Ask Linear for the filter bug, add `plugins/standard-bug-fix` from the local repository, check the plugin (skills, rules, Linear MCP), `/standard-bug-fix` on the filter-pills issue. The operator creates a private Linear team in the UI first (Settings → Teams → New team, Make team private). Then run `stage-linear`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
-4. **How do I parallelize a task?** — resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, ledgerly-reviewer check.
+4. **How do I parallelize a task?** — resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## Choose the mode
 

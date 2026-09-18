@@ -16,10 +16,10 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 
 The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
 
-1. **Why is my agent ignoring my instructions?** — rename agents, Ask DDD, compare agents, ask across chats, context usage
+1. **What is the agent doing to manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
 3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, Ask Linear, import plugin from disk
-4. **How do I parallelize a task?** — [resolve-dispute plan](#open-the-plan), `/multitask`, ledgerly-reviewer check
+4. **How do I parallelize a task?** — [resolve-dispute plan](#open-the-plan), `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
 ---
 
@@ -253,9 +253,9 @@ npm test
 
 Open `/runbooks/201`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card.
 
-### Why is my agent ignoring my instructions?
+### What is the agent doing to manage context?
 
-Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Compare agents: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
+Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat. Compare agents: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
 
 ```text
 /ask what is the domain driven design of the application.
@@ -268,8 +268,6 @@ Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). A
 ```text
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
 ```
-
-Then select the Context Usage indicator below the chat.
 
 ### How do I standardize agent behavior?
 
@@ -285,7 +283,7 @@ Open the skill in `~/.cursor/skills`, then promote it:
 Promote the create-api skill to this project.
 ```
 
-Open the project skill in `.cursor/skills`. Explore the other project skills for this repository.
+Open the project skill in `.cursor/skills`. Explore the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.
 
 ### How does my agent get more information?
 
@@ -315,6 +313,10 @@ Open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/ledgerly-reviewer.md`, 
 
 ```text
 /multitask @resolve-dispute.md
+```
+
+```text
+Update Canvas with progress of subagents and to-dos. Summarize the models for each subagent and supervisor.
 ```
 
 ```text
