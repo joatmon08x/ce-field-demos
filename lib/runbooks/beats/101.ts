@@ -59,7 +59,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Run Mode Allowlist",
         promptType: "none",
         detail:
-          "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
+          "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings > Agents > Executions & Approvals > Run Mode > Allowlist.",
       },
       {
         id: "verify-email",
@@ -122,7 +122,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user rule",
         promptType: "adaptable",
         detail:
-          "Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize -> Rules -> User to view the rule.",
+          "Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize > Rules > User to view the rule.",
         example:
           "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
       },
@@ -138,7 +138,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "Create a user skill",
         promptType: "adaptable",
         detail:
-          "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the skill.",
+          "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize > Skills to view the skill.",
         example:
           "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
       },
@@ -161,7 +161,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "MCP / Figma",
         promptType: "adaptable",
         detail:
-          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize -> MCPs -> Figma.",
+          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
         example:
           "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
       },

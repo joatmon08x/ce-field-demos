@@ -90,7 +90,7 @@ describe("runbook catalog", () => {
     expect(beat("fix")?.example).toBe("Fix the failing test.");
     expect(beat("allowlist")?.example).toBeUndefined();
     expect(beat("allowlist")?.detail).toBe(
-      "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings -> Agents -> Executions & Approvals -> Run Mode -> Allowlist.",
+      "Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings > Agents > Executions & Approvals > Run Mode > Allowlist.",
     );
     expect(beat("verify-email")?.promptType).toBe("none");
     expect(beat("verify-email")?.example).toBeUndefined();
@@ -125,7 +125,7 @@ describe("runbook catalog", () => {
       "If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Select the restore icon next to the prompt.",
     );
     expect(beat("rule")?.detail).toBe(
-      "Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize -> Rules -> User to view the rule.",
+      "Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize > Rules > User to view the rule.",
     );
     expect(beat("rule")?.example).toBe(
       "/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.",
@@ -133,7 +133,7 @@ describe("runbook catalog", () => {
     expect(beat("test-rule")?.detail).toBe("");
     expect(beat("test-rule")?.example).toBe('Change "Line Items" in the UI to something else.');
     expect(beat("skill")?.detail).toBe(
-      "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize -> Skills to view the skill.",
+      "Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize > Skills to view the skill.",
     );
     expect(beat("skill")?.example).toBe(
       "/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.",
@@ -144,7 +144,7 @@ describe("runbook catalog", () => {
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
     expect(beat("mcp")?.title).toBe("MCP / Figma");
     expect(beat("mcp")?.detail).toBe(
-      "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize -> MCPs -> Figma.",
+      "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
     );
     expect(beat("mcp")?.example).toBe(
       "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
