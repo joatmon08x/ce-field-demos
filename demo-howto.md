@@ -314,7 +314,7 @@ Open a new agent. Then open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/
 ```
 
 ```text
-Update Canvas with progress of subagents and to-dos. Summarize the models for each subagent and supervisor.
+Update Canvas with subagent progress and models used. Make a list of worktree conflicts as you encounter them.
 ```
 
 ```text

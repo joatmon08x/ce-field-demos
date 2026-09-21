@@ -280,7 +280,7 @@ describe("runbook catalog", () => {
       "Go to Settings -> Agents -> Execution and Approvals -> Allowlist Options -> MCP Allowlist to check valid MCP servers and tools from your administrator.",
     );
     expect(beat("ask-linear-bug")?.detail).toBe(
-      "Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
+      "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
     );
     expect(beat("ask-linear-bug")?.example).toBe("List the open issues from our issue tracker.");
     expect(beat("add-local-plugin")?.promptType).toBe("none");
@@ -322,10 +322,10 @@ describe("runbook catalog", () => {
     expect(beat("multitask-resolve-dispute")?.example).toBe("/multitask @resolve-dispute.md");
     expect(beat("canvas-subagent-progress")?.promptType).toBe("adaptable");
     expect(beat("canvas-subagent-progress")?.detail).toBe(
-      "Use Canvas to keep track of the progress of subagents and their tasks.",
+      "Use Canvas to keep track of the progress of subagents and their tasks. Review Canvas with subagent progress and worktree conflicts.",
     );
     expect(beat("canvas-subagent-progress")?.example).toBe(
-      "Update Canvas with progress of subagents and to-dos. Summarize the models for each subagent and supervisor.",
+      "Update Canvas with subagent progress and models used. Make a list of worktree conflicts as you encounter them.",
     );
     expect(beat("ledgerly-reviewer-check")?.detail).toBe(
       "Use the specialized reviewer subagent to check the completed task.",
