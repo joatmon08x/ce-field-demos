@@ -8,24 +8,24 @@ Chat prompt:
 /multitask @resolve-dispute.md
 ```
 
-Use `.cursor/skills/dispatch-subagents/SKILL.md`. **Exactly three** parallel worktrees — one isolated Task worker per workstream below. Do **not** implement in the parent chat. Do **not** fan out a fourth agent to write tests. Each worker starts with a clean context — put owned files, the shared contract, constraints, and how to verify **in that worker’s prompt**. Do not start a sibling after another sibling “so it has context.”
+Use `.cursor/skills/dispatch-subagents/SKILL.md`. The parent chat **is** the coordinator. Its first Task calls are **exactly three** parallel worktrees — Agent 1 (helper), Agent 2 (API), Agent 3 (UI) below. One isolated Task per workstream. Do **not** launch a wrapper (`generalPurpose` or otherwise) whose job is “implement / execute this plan.” That agent is not in the table. Do **not** implement in the parent chat. Do **not** fan out a fourth agent to write tests or to re-dispatch the three. Each worker starts with a clean context — put owned files, the shared contract, constraints, and how to verify **in that worker’s prompt**. Do not start a sibling after another sibling “so it has context.”
 
 **Pre-warm (coordinator, before `/multitask`):** delete leftover `components/disputes/resolution-panel.tsx` and `tests/resolve-dispute.e2e.test.ts` from a prior single-agent run. Seed so `dsp_1043` is not leftover `ACCEPTED`/`DECLINED` (`npx prisma db seed`). Ensure `npm run dev` is already Ready on **43173**. Do not pay boot + Prisma after apply.
 
 **Run order (this plan is not done until step 4):**
 
-1. Same turn: launch the three implementers (helper, API, UI).
+1. Same turn: launch Agent 1, Agent 2, and Agent 3. Do not insert a planner or “execute this plan” Task in front of them.
 2. When all three finish, summarize each worktree’s diff and apply **helper → API → UI**.
 3. Same turn after apply: `ledgerly-reviewer` on the combined diff **and** `dispute-verifier` against port 43173. They do not depend on each other. Do not serialize them. Verifier writes no product code.
 4. Finish line is **`dispute-verifier`**, not an e2e file. Do not skip verifier.
 
 E2e is **optional**. If the coordinator writes `tests/resolve-dispute.e2e.test.ts`, do it in the **same turn** as reviewer + verifier (not a prior serial step) and keep it **out of** `npm test`.
 
-The three files in `.cursor/agents/` are **not** the three implementers. Map them by role:
+The three files in `.cursor/agents/` are **not** the three implementers. There is no “implement resolve-dispute plan” agent. Map them by role:
 
 | Role | Agent | When |
 | --- | --- | --- |
-| Implementer (×3) | Isolated Task workers, one per workstream below | Same turn, `/multitask` or “in parallel” |
+| Implementer (×3) | Isolated Task workers: Agent 1, Agent 2, Agent 3 below — **only these** | Same turn, `/multitask` or “in parallel”. First Tasks in the parent. |
 | Request-log worker | `api-instrumenter` | **Out of this slice.** It only adds the shared request-log helper to one named API route. Do not send it `resolve.ts` or the Resolution panel. |
 | Diff review | `ledgerly-reviewer` | After apply, **same turn** as `dispute-verifier` (one review of the combined result, not one per sibling mid-flight) |
 | Finish line | `dispute-verifier` | After apply, **same turn** as `ledgerly-reviewer`, against the running app on port 43173. Writes no product code. **Required.** |
@@ -89,7 +89,7 @@ Contract miss: `action` must be `accept` \| `decline`, not `ACCEPTED` \| `DECLIN
 
 **Apply order after the three diffs land:** helper → API → UI. Then **same turn:** `ledgerly-reviewer` and **`dispute-verifier` (required)**. Optional e2e only in that same turn, never as a serial gate before verifier.
 
-**Out of scope for the three `/multitask` agents:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, writing tests, a fourth worktree, using `api-instrumenter` as a dispute-resolution worker, implementing in the parent agent instead of dispatching, running `dispute-verifier` in the same turn as the three implementers (it depends on apply). Do not serialize reviewer then verifier after a clean apply.
+**Out of scope for the three `/multitask` agents:** `lib/disputes/suggested-credit-api.ts`, `tests/suggested-credit-api.test.ts`, `prisma/seed.ts`, `lib/plans.ts` prices, customer email, inventing a fourth price, writing tests, a fourth worktree, a wrapper Task that implements the whole plan then (or instead of) the three, using `api-instrumenter` as a dispute-resolution worker, implementing in the parent agent instead of dispatching Agents 1–3, running `dispute-verifier` in the same turn as the three implementers (it depends on apply). Do not serialize reviewer then verifier after a clean apply.
 
 Mid-run **501** from UI or API is expected until the helper worktree is applied.
 
