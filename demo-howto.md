@@ -19,7 +19,7 @@ The 201 track has four sections. Open `/runbooks/201` and copy a card for any be
 1. **What is the agent doing to manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
 2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
 3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, list open issues, import plugin from disk
-4. **How do I parallelize a task?** — [resolve-dispute plan](#open-the-plan), `/multitask`, Canvas subagent progress, ledgerly-reviewer check
+4. **How do I parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
 ---
 
@@ -307,7 +307,7 @@ Work on a standard bug fix for the issue where clicking overdue does not filter.
 
 #### Open the plan
 
-Open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/ledgerly-reviewer.md`, and `.cursor/skills/dispatch-subagents/SKILL.md`. Then:
+Open a new agent. Then open `.cursor/plans/resolve-dispute.md`, `.cursor/agents/ledgerly-reviewer.md`, and `.cursor/skills/dispatch-subagents/SKILL.md`. Then:
 
 ```text
 /multitask @resolve-dispute.md

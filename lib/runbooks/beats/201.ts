@@ -135,6 +135,12 @@ export const RUNBOOK_SECTIONS_201 = [
     title: "How do I parallelize a task?",
     beats: [
       {
+        id: "open-new-agent",
+        title: "Open a new agent",
+        promptType: "none",
+        detail: "Open a new agent.",
+      },
+      {
         id: "open-resolve-dispute-plan",
         title: "Open resolve-dispute plan",
         promptType: "none",
