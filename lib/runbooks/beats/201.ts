@@ -103,7 +103,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "List open issues",
         promptType: "adaptable",
         detail:
-          "Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
+          "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
         example: "List the open issues from our issue tracker.",
       },
       {
@@ -170,9 +170,10 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "canvas-subagent-progress",
         title: "Canvas subagent progress",
         promptType: "adaptable",
-        detail: "Use Canvas to keep track of the progress of subagents and their tasks.",
+        detail:
+          "Use Canvas to keep track of the progress of subagents and their tasks. Review Canvas with subagent progress and worktree conflicts.",
         example:
-          "Update Canvas with progress of subagents and to-dos. Summarize the models for each subagent and supervisor.",
+          "Update Canvas with subagent progress and models used. Make a list of worktree conflicts as you encounter them.",
       },
       {
         id: "ledgerly-reviewer-check",
