@@ -212,6 +212,7 @@ describe("runbook catalog", () => {
       "add-local-plugin",
       "check-plugin",
       "standard-bug-fix",
+      "open-new-agent",
       "open-resolve-dispute-plan",
       "open-ledgerly-reviewer",
       "open-dispatch-subagents-skill",
@@ -298,6 +299,10 @@ describe("runbook catalog", () => {
     expect(beat("standard-bug-fix")?.example).toBe(
       "Work on a standard bug fix for the issue where clicking overdue does not filter.",
     );
+    expect(beat("open-new-agent")?.title).toBe("Open a new agent");
+    expect(beat("open-new-agent")?.promptType).toBe("none");
+    expect(beat("open-new-agent")?.example).toBeUndefined();
+    expect(beat("open-new-agent")?.detail).toBe("Open a new agent.");
     expect(beat("open-resolve-dispute-plan")?.promptType).toBe("none");
     expect(beat("open-resolve-dispute-plan")?.example).toBeUndefined();
     expect(beat("open-resolve-dispute-plan")?.detail).toBe(
@@ -339,6 +344,7 @@ describe("runbook catalog", () => {
     expect(beat("add-linear-mcp")?.promptType).toBe("none");
     expect(beat("ask-linear-bug")?.promptType).toBe("adaptable");
     expect(beat("standard-bug-fix")?.promptType).toBe("adaptable");
+    expect(beat("open-new-agent")?.promptType).toBe("none");
     expect(beat("multitask-resolve-dispute")?.promptType).toBe("reusable");
     expect(beat("canvas-subagent-progress")?.promptType).toBe("adaptable");
     expect(beat("ledgerly-reviewer-check")?.promptType).toBe("adaptable");
