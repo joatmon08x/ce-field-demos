@@ -89,14 +89,14 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Enable Linear MCP",
         promptType: "none",
         detail:
-          "Let’s start the issue tracker’s MCP server (in this case, Linear) to get a ticket to this project. Review MCP servers in Customize -> MCPs. Enable the Linear MCP server.",
+          "Let’s start the issue tracker’s MCP server (in this case, Linear) to get a ticket to this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
       },
       {
         id: "mcp-allowlist",
         title: "Check MCP allowlist",
         promptType: "none",
         detail:
-          "Go to Settings -> Agents -> Execution and Approvals -> Allowlist Options -> MCP Allowlist to check valid MCP servers and tools from your administrator.",
+          "Go to Settings > Agents > Execution and Approvals > Allowlist Options > MCP Allowlist to check valid MCP servers and tools from your administrator.",
       },
       {
         id: "ask-linear-bug",
@@ -111,14 +111,14 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Add plugin",
         promptType: "none",
         detail:
-          "A teammate created a plugin for standardizing bug fixes. Go to Customize -> Plugins -> Add -> From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
+          "A teammate created a plugin for standardizing bug fixes. Go to Customize > Plugins > Add > From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
       },
       {
         id: "check-plugin",
         title: "Enable Standard bug fix plugin",
         promptType: "none",
         detail:
-          "Go to Customize -> Plugins. Go to Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
+          "Go to Customize > Plugins. Go to Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
       },
       {
         id: "standard-bug-fix",
