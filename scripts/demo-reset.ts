@@ -126,6 +126,31 @@ function canvasRoot() {
   return resolve(sandboxHome, `.cursor/projects/${slug}/canvases`);
 }
 
+function validateRemovablePaths(event: SessionEvent) {
+  const projectRulesRoot = resolve(root, ".cursor/rules");
+  const userRulesRoot = resolve(sandboxHome, ".cursor/rules");
+  const userSkillsRoot = resolve(sandboxHome, ".cursor/skills");
+  const projectRule = resolve(root, ".cursor/rules/suggested-credit-api-v2.mdc");
+
+  for (const path of event.projectPaths) {
+    if (!knownProjectPaths.has(path)) throw new Error(`Unsupported demo project path: ${path}`);
+  }
+  for (const rule of event.userRules) {
+    if (!rule.path) continue;
+    const path = assertAllowedPath(rule.path, [userRulesRoot, projectRulesRoot]);
+    if (path !== projectRule && !path.startsWith(`${userRulesRoot}/`)) {
+      throw new Error(`Unsupported demo user-rule path: ${path}`);
+    }
+  }
+  for (const skill of event.personalSkills) {
+    const path = assertAllowedPath(skill.path, [userSkillsRoot]);
+    if (dirname(path) !== userSkillsRoot) {
+      throw new Error(`Personal skills must be recorded as direct children of ${userSkillsRoot}.`);
+    }
+  }
+  for (const canvas of event.canvases) assertAllowedPath(canvas, [canvasRoot()]);
+}
+
 function record(event: SessionEvent) {
   const kind = args[1];
   const value = args[2];
@@ -187,7 +212,11 @@ function removeLocalArtifacts(event: SessionEvent, report: Report) {
 
   for (const rule of event.userRules) {
     if (rule.path) {
-      removePath(assertAllowedPath(rule.path, [userRulesRoot, projectRulesRoot]), report);
+      const path = assertAllowedPath(rule.path, [userRulesRoot, projectRulesRoot]);
+      if (path !== resolve(root, ".cursor/rules/suggested-credit-api-v2.mdc") && !path.startsWith(`${userRulesRoot}/`)) {
+        throw new Error(`Unsupported demo user-rule path: ${path}`);
+      }
+      removePath(path, report);
     } else if (rule.id) {
       report.remaining.push({ kind: "cursor-rule", detail: `Remove Cursor user rule ${rule.id}${rule.title ? ` (${rule.title})` : ""}.` });
     }
@@ -357,6 +386,7 @@ function remainingExternalActions(event: SessionEvent, report: Report) {
 async function reset() {
   const event = readEvent(!force);
   const report: Report = { completed: [], skipped: [], remaining: [] };
+  validateRemovablePaths(event);
   resetGit(event, report);
   removeLocalArtifacts(event, report);
   reseedAndStart(report);
