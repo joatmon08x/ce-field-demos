@@ -40,6 +40,12 @@ const skipDb = args.includes("--skip-db");
 const skipServer = args.includes("--skip-server");
 const skipVerify = args.includes("--skip-verify");
 const keepBranch = args.includes("--keep-branch");
+const confirmLinear = args.includes("--confirm-linear");
+const force = args.includes("--force");
+const knownProjectPaths = new Set([
+  ".cursor/rules/suggested-credit-api-v2.mdc",
+  ".cursor/skills/create-api",
+]);
 
 function command(command: string, commandArgs: string[], options: { allowFailure?: boolean } = {}) {
   try {
@@ -126,12 +132,20 @@ function record(event: SessionEvent) {
   if (!kind || !value) throw new Error("Usage: demo:session record <rule|skill|project-path|branch|canvas|figma> <value> [metadata]");
 
   if (kind === "rule") {
-    event.userRules.push({ path: resolve(value), title: args[3] });
+    const path = resolve(value);
+    const userRulesRoot = resolve(sandboxHome, ".cursor/rules");
+    const projectRule = resolve(root, ".cursor/rules/suggested-credit-api-v2.mdc");
+    assertAllowedPath(path, [userRulesRoot, resolve(root, ".cursor/rules")]);
+    if (path !== projectRule && !path.startsWith(`${userRulesRoot}/`)) {
+      throw new Error(`Only user rules or ${projectRule} can be recorded.`);
+    }
+    event.userRules.push({ path, title: args[3] });
   } else if (kind === "rule-id") {
     event.userRules.push({ id: value, title: args[3] });
   } else if (kind === "skill") {
     event.personalSkills.push({ name: basename(value), path: resolve(value) });
   } else if (kind === "project-path") {
+    if (!knownProjectPaths.has(value)) throw new Error(`Unsupported demo project path: ${value}`);
     event.projectPaths.push(value);
   } else if (kind === "branch") {
     event.branches.push({ name: value, remote: args.includes("--remote") });
@@ -164,11 +178,7 @@ function removeLocalArtifacts(event: SessionEvent, report: Report) {
   const projectSkillsRoot = resolve(root, ".cursor/skills");
   const userRulesRoot = resolve(sandboxHome, ".cursor/rules");
   const userSkillsRoot = resolve(sandboxHome, ".cursor/skills");
-  const allowedProjectPaths = new Set([
-    resolve(root, ".cursor/rules/suggested-credit-api-v2.mdc"),
-    resolve(root, ".cursor/skills/create-api"),
-    ...event.projectPaths.map((path) => resolve(root, path)),
-  ]);
+  const allowedProjectPaths = new Set([...knownProjectPaths].map((path) => resolve(root, path)));
 
   for (const path of allowedProjectPaths) {
     assertAllowedPath(path, [projectRulesRoot, projectSkillsRoot]);
@@ -185,6 +195,9 @@ function removeLocalArtifacts(event: SessionEvent, report: Report) {
 
   for (const skill of event.personalSkills) {
     const skillPath = assertAllowedPath(skill.path, [userSkillsRoot]);
+    if (dirname(skillPath) !== userSkillsRoot) {
+      throw new Error(`Personal skills must be recorded as direct children of ${userSkillsRoot}.`);
+    }
     removePath(skillPath, report);
   }
 
@@ -269,7 +282,7 @@ function verifyTests(report: Report) {
 }
 
 async function cancelWithLinearApi(event: SessionEvent, report: Report) {
-  if (!event.linear || !process.env.LINEAR_API_KEY || process.env.DEMO_RESET_DISABLE_LINEAR === "1") return;
+  if (!event.linear || !process.env.LINEAR_API_KEY || !confirmLinear || process.env.DEMO_RESET_DISABLE_LINEAR === "1") return;
 
   const request = async (query: string, variables: Record<string, unknown>) => {
     const response = await fetch("https://api.linear.app/graphql", {
@@ -342,7 +355,7 @@ function remainingExternalActions(event: SessionEvent, report: Report) {
 }
 
 async function reset() {
-  const event = readEvent(false);
+  const event = readEvent(!force);
   const report: Report = { completed: [], skipped: [], remaining: [] };
   resetGit(event, report);
   removeLocalArtifacts(event, report);
@@ -350,6 +363,15 @@ async function reset() {
   await cancelWithLinearApi(event, report);
   remainingExternalActions(event, report);
   verifyTests(report);
+  if (!dryRun) {
+    const linearCompleted = report.completed.some((entry) => entry.includes(`Linear board ${event.linear?.projectId}`));
+    writeEvent({
+      ...defaultEvent(event.track),
+      userRules: event.userRules.filter((rule) => !rule.path),
+      figmaSlides: event.figmaSlides,
+      linear: linearCompleted ? undefined : event.linear,
+    });
+  }
   console.log(JSON.stringify(report, null, 2));
 }
 

@@ -11,7 +11,7 @@ Run the script first. It is the source of truth for local cleanup.
 npm run demo:reset
 ```
 
-The command restores tracked files with `git reset --hard HEAD`, switches to `main`, removes recorded demo rules, skills, Canvas files, and demo branches, reseeds SQLite, restarts port 43173, and confirms **1 failed / 32 passed**. It never runs `git clean`, removes an unrecorded personal skill, or deletes the private Linear team.
+The command restores tracked files with `git reset --hard HEAD`, switches to `main`, removes recorded demo rules, skills, Canvas files, and demo branches, reseeds SQLite, restarts port 43173, and confirms **1 failed / 32 passed**. It leaves the suggested-credit client on v1 and filter pills writing `state=`. It never runs `git clean`, removes an unrecorded personal skill, or deletes the private Linear team.
 
 ## Session events
 
@@ -23,7 +23,7 @@ npm run demo:session -- record skill "$HOME/.cursor/skills/<created-skill>"
 npm run demo:session -- record branch <linear-gitBranchName> --remote
 ```
 
-The ignored `.cursor/demo-session-events.json` stores recorded paths, branches, Figma file keys, and Linear identifiers. Use `npm run demo:session -- status` to inspect it. When a 101 or 201 beat creates a new leftover, update this script and its event record in the same change.
+The ignored `.cursor/demo-session-events.json` stores recorded paths, branches, Figma file keys, and Linear identifiers. Use `npm run demo:session -- status` to inspect it. The reset command requires this file; use `--force` only for a fully intentional legacy reset. When a 101 or 201 beat creates a new leftover, update `scripts/demo-reset.ts` and its event record in the same change.
 
 ## Demo-beat git branches
 
@@ -35,7 +35,7 @@ Read the JSON report printed by `demo:reset`. Only complete its `remaining` acti
 
 - **Figma:** for each recorded Slides `fileKey`, load `figma-use` and `figma-use-slides`, then remove every slide with `slide.remove()`.
 - **Cursor user rule:** use `cursor_dialog` only for a recorded rule ID with no filesystem path. Do not remove unrelated user rules.
-- **Linear:** offer teardown whenever the Linear MCP is connected, but act only when the report lists a recorded `ce-field-demos` board. Confirm the exact private team before any write: present its name, key, and `https://linear.app/<workspace>/settings/teams/<KEY>`. Never assume or guess a team. Cancel each recorded issue with `save_issue` (`state`: `Canceled`) and then the project with `save_project` (`state`: `Canceled`). The catalog is `FIELD_DEMO_ISSUES`. Leave the issue linked and retain the private team. `stage-linear` reactivates the board.
+- **Linear:** offer teardown whenever the Linear MCP is connected, but act only when the report lists a recorded `ce-field-demos` board. Confirm the exact private team before any write: present its name, key, and `https://linear.app/<workspace>/settings/teams/<KEY>`. Never assume or guess a team. Cancel each recorded issue with `save_issue` (`state`: `Canceled`) and then the project with `save_project` (`state`: `Canceled`). The catalog is `FIELD_DEMO_ISSUES`. Leave the issue linked and retain the private team. `stage-linear` reactivates the board. The script uses the Linear API only with both `LINEAR_API_KEY` and explicit `--confirm-linear`.
 
 If the event file is missing or a beat predates this script, use the old discovery flow cautiously: list candidates, do not guess a private team, and never touch public/shared work.
 

@@ -59,7 +59,7 @@ Check shipped state:
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
-- Invoice and dispute status pills write `?state=` while the pages read `status` — clicking Overdue / Needs review does not filter. That is a planted UI seam, not a second red test. Restore with `git checkout -- components/filter-pills.tsx`
+- Invoice and dispute status pills write `?state=` while the pages read `status` — clicking Overdue / Needs review does not filter. That is a planted UI seam, not a second red test. Restore it with the scripted reset.
 
 If the credit reads $249.00 or the suite is all green, a prior run switched the client to v2. If status pills filter the list, a prior run renamed `state` to `status`. Run:
 
