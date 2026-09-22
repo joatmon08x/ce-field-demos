@@ -37,3 +37,9 @@ After the match, `save_issue` on that issue only: `state`: `In Progress`. Skip i
 ## 4. Finish
 
 Run the tests that cover the files you changed. Leave the planted suggested-credit red test red unless this issue is the dsp_1043 client migration and the user asked to migrate.
+
+If this work creates a Linear `gitBranchName`, record it for reset:
+
+```bash
+npm run demo:session -- record branch <linear-gitBranchName> --remote
+```

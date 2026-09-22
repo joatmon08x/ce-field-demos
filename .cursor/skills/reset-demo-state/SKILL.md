@@ -1,135 +1,42 @@
 ---
 name: reset-demo-state
-description: Put a Ledgerly demo machine back to the shipped state — reseed SQLite, restore the expected red test, free the port, clear stray edits, delete git branches opened for this demo beat, drop personal rules, delete the Canvas, delete Figma slides if this demo created any, and cancel the private ce-field-demos Linear board (issues + project) whenever the Linear MCP is connected. Use when a demo just ended, the data looks wrong, tests are unexpectedly green, or the dev server will not start.
+description: Run the scripted Ledgerly demo reset first, then complete only the MCP cleanup it reports.
 ---
 
 # Reset the demo state
 
-Goal state: seeded Fieldnote book, dev server on 43173, `npm test` showing exactly **1 failed / 32 passed**, no leftover personal rules from `/create-rule`, no leftover Canvas from the 101 beat, no leftover Figma Slides deck from the 101 MCP beat, no leftover git branch from the 201 `/standard-bug-fix` beat, and the private `ce-field-demos` Linear board torn down — its issues `Canceled` and the project `Canceled`, with the private team retained. Restore `lib/disputes/suggested-credit-api.ts` if a prior demo switched the client to v2. Restore `components/filter-pills.tsx` if a prior demo renamed the pill query key from `state` to `status`. Restore `app/invoices/page.tsx` and `app/disputes/page.tsx` if a prior demo made those pages read `state`.
-
-## Checklist (run what applies)
-
-1. **Stray edits from the last demo**
+Run the script first. It is the source of truth for local cleanup.
 
 ```bash
-git status
-git checkout -- lib/disputes/suggested-credit-api.ts   # shipped client selects v1
-git checkout -- components/filter-pills.tsx            # shipped pills write state=
-git checkout -- app/invoices/page.tsx app/disputes/page.tsx  # shipped pages read status=
-rm -f .cursor/rules/suggested-credit-api-v2.mdc       # live /create-rule beat only
-git checkout -- .                        # only if the user agrees to drop ALL local changes
+npm run demo:reset
 ```
 
-2. **Demo-beat git branches**
+The command restores tracked files with `git reset --hard HEAD`, switches to `main`, removes recorded demo rules, skills, Canvas files, and demo branches, reseeds SQLite, restarts port 43173, and confirms **1 failed / 32 passed**. It never runs `git clean`, removes an unrecorded personal skill, or deletes the private Linear team.
 
-`/standard-bug-fix` (201) may create a feature branch from Linear `gitBranchName`. Reset must not leave it. Switch to `main` first, then delete every local branch opened for this demo beat (the Linear issue `gitBranchName`, `/standard-bug-fix` work, filter-pills / suggested-credit / email-on-invoice branches). If that branch was pushed, delete the remote too.
+## Session events
+
+Start each demo session and record artifacts as they are created:
 
 ```bash
-git checkout main
-git branch -D <linear-gitBranchName>
-git push origin --delete <linear-gitBranchName>
+npm run demo:session -- start --track=101
+npm run demo:session -- record skill "$HOME/.cursor/skills/<created-skill>"
+npm run demo:session -- record branch <linear-gitBranchName> --remote
 ```
 
-`<linear-gitBranchName>` is the branch `/standard-bug-fix` created this session (Linear's `gitBranchName` on the issue). List local branches (`git branch`) and delete only the ones created for the Linear cards — not `main` / `master`, and not the operator's unrelated work. Never `--force` push. Report the branches you deleted.
+The ignored `.cursor/demo-session-events.json` stores recorded paths, branches, Figma file keys, and Linear identifiers. Use `npm run demo:session -- status` to inspect it. When a 101 or 201 beat creates a new leftover, update this script and its event record in the same change.
 
-3. **Personal rules**
+## Remaining actions
 
-List user rules, then remove every one. Demo `/create-rule` leftovers must not survive a reset.
+Read the JSON report printed by `demo:reset`. Only complete its `remaining` actions:
 
-Use `cursor_dialog` in the `cursor-app-control` namespace (`item: "rule"`, `scope: "user"`):
+- **Figma:** for each recorded Slides `fileKey`, load `figma-use` and `figma-use-slides`, then remove every slide with `slide.remove()`.
+- **Cursor user rule:** use `cursor_dialog` only for a recorded rule ID with no filesystem path. Do not remove unrelated user rules.
+- **Linear:** only when the report lists a recorded `ce-field-demos` board. Confirm the exact private team before any write. Cancel each recorded issue with `save_issue` (`state`: `Canceled`) and then the project with `save_project` (`state`: `Canceled`). Leave issues linked and retain the private team. `stage-linear` reactivates the board.
 
-1. `action: "list"`
-2. For each returned `id`, `action: "remove"` with that `id`
-
-If the list is empty, skip. Report titles you removed. Do not recreate them.
-
-4. **Delete the Canvas**
-
-Canvases from the 101 beat live outside the repo. Grok Build only picks up files in `~/.cursor/projects/<workspace-slug>/canvases/`. The slug is the absolute repo path with `/` replaced by `-` (example: `~/.cursor/projects/Users-operator-ce-field-demos/canvases/`).
-
-Delete leftover canvas artifacts:
-
-```bash
-REPO="$(git rev-parse --show-toplevel)"
-SLUG="${REPO#/}"
-SLUG="${SLUG//\//-}"
-CANVASES="$HOME/.cursor/projects/${SLUG}/canvases"
-ls -1 "$CANVASES"/*.canvas.tsx "$CANVASES"/*.canvas.data.json 2>/dev/null
-rm -f "$CANVASES"/*.canvas.tsx "$CANVASES"/*.canvas.data.json
-```
-
-Report the filenames you removed. If none exist, skip. Do not delete `tsconfig.json`, `node_modules/`, or the `canvases/` directory itself.
-
-5. **Figma slides (only if this demo created a deck)**
-
-If the conversation created a Figma Slides file (101 MCP beat; URL like `https://www.figma.com/slides/<fileKey>`), delete its slides.
-
-There is no file-delete tool on the Figma MCP. Load `figma-use` and `figma-use-slides`, then `use_figma` on that `fileKey`:
-
-```js
-const grid = figma.getSlideGrid();
-for (const row of grid) {
-  for (const slide of [...row]) {
-    slide.remove();
-  }
-}
-return { remaining: figma.getSlideGrid().flat().length };
-```
-
-Expect `remaining: 0`. If no Slides URL or fileKey appears in this session, skip. Do not hunt other teams' files.
-
-6. **Linear board (whenever the Linear MCP is connected)**
-
-Offer to tear down the `ce-field-demos` board any time the Linear MCP is connected — not only when this session staged it. Skip only if the MCP is missing, auth fails, or no private team can be confirmed. Linear MCP has no issue- or project-delete tool, so "clean" means cancel, not delete.
-
-**Confirm the target private team (same gate as `stage-linear`).** Authenticate Linear (`mcp_auth` if gated). `get_user` with `"me"` — `isGuest` must be false. Build the candidate list of **private** teams on `me`, present each with its name, key, and settings URL (`https://linear.app/<workspace>/settings/teams/<KEY>`), then confirm exactly one before any write. Never guess: a non-interactive run must be given an explicit team name or ID; if it is missing or more than one candidate matches, stop and print the candidates. Never mutate a public or shared team.
-
-`list_projects` with query `ce-field-demos`. Act **only** on a project whose `teams` are exactly the confirmed private team, `lead` is the operator (`me`), and name is `ce-field-demos` or `ce-field-demos (…)`. If several match, list them and confirm which to tear down. Do not touch another team's issues.
-
-For each matched project:
-
-- `list_issues` on it. For every issue (catalog titles from `FIELD_DEMO_ISSUES` in `lib/runbooks/linear-field-demos.ts`, plus any leftover filler), `save_issue`:
-  - `id`: the issue identifier
-  - `state`: `Canceled`
-
-  Do **not** set `project: null`. Leave the issue linked to the project. Canceling the project does not cancel its issues, so the issue `state` is set to `Canceled` to clear it from the operator's "My Issues"; the unlink is unnecessary churn.
-- Then close the board: `save_project` with the project `id` and `state`: `Canceled`. Verify the exact Canceled project-status string on the team the first time you run this, then use it.
-
-Leave the private team in place — Linear MCP cannot recreate it. The next `stage-linear` reactivates this project (sets it back to `Backlog`) and reopens the three catalog issues by title.
-
-If no matching project exists on the confirmed team, skip. Report the confirmed team, the canceled project name + URL, and the issue identifiers/titles you canceled. Do not hunt other workspaces.
-
-7. **Database looks wrong / empty dashboard**
-
-```bash
-npx prisma db seed        # idempotent: pushes schema + reloads Fieldnote
-# nuclear option if the file is corrupt:
-npm run db:reset
-```
-
-There are no migrations in this repo — never run `prisma migrate`; the seed's `db push` is the whole story.
-
-8. **Port 43173 busy**
-
-```bash
-lsof -ti :43173 | xargs kill   # macOS/Linux/WSL
-npm run dev
-```
-
-9. **Verify shipped state**
-
-```bash
-npm test    # expect: 1 failed (suggested-credit-api), 32 passed
-```
-
-Open `http://127.0.0.1:43173` — dashboard shows Fieldnote data, catalog $49/$99/$249, disputes badge on the sidebar.
-
-Open `http://127.0.0.1:43173/disputes/dsp_1043` — the Resolution panel shows a red **Suggested credit $400.00** from v1 above the $249 Scale price. Confirm `/api/v2/disputes/dsp_1043/suggested-credit` returns $249.00. If the page reads $249.00 from v2, restore `lib/disputes/suggested-credit-api.ts`.
+If the event file is missing or a beat predates this script, use the old discovery flow cautiously: list candidates, do not guess a private team, and never touch public/shared work.
 
 ## Never
 
-- Never delete `prisma/seed.ts` data or add customers to "fix" a demo.
-- Never edit `tests/suggested-credit-api.test.ts`, either API route, or the seed to make the shipped red test green.
-- Never leave `.cursor/rules/suggested-credit-api-v2.mdc` in the shipped tree; create and remove it during the live rule beat.
-- Never leave personal `/create-rule` leftovers, a leftover Canvas, a demo Slides deck, a leftover `/standard-bug-fix` git branch, or a live `ce-field-demos` Linear board after reset when the Linear MCP is connected.
-- Never cancel Linear issues on a public or shared team. Never delete the operator’s private team.
+- Never edit `tests/suggested-credit-api.test.ts`, either suggested-credit API route, or the seed to make the shipped red test green.
+- Never delete a path outside the script's allowlist.
+- Never cancel Linear issues on a public or shared team, or delete the private team.

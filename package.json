@@ -16,7 +16,9 @@
     "test:watch": "vitest",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
-    "db:reset": "prisma db push --force-reset && prisma db seed"
+    "db:reset": "prisma db push --force-reset && prisma db seed",
+    "demo:session": "tsx scripts/demo-reset.ts",
+    "demo:reset": "tsx scripts/demo-reset.ts reset"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

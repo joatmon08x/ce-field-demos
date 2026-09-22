@@ -49,6 +49,7 @@ next-env.d.ts
 
 # cloud agent scratch
 /agent-tools
+.cursor/demo-session-events.json
 
 # facilitator screen recordings — artifact only, never git
 *.mp4

@@ -107,6 +107,16 @@ Report:
 
 Runbook pastes use **titles**, not identifiers, so you do not edit runbook beats after minting IDs.
 
+## Record for reset
+
+After confirming the private team and three issue identifiers, record the exact board:
+
+```bash
+npm run demo:session -- record linear <teamId> "<teamName>" <teamKey> <projectId> <issueId,issueId,issueId>
+```
+
+The reset script will use only this recorded board. If a demo beat creates a new leftover, update its event record and `scripts/demo-reset.ts` in the same change.
+
 ## What this unblocks
 
 1. Add Linear MCP (Customize → MCPs).
