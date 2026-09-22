@@ -16,7 +16,7 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "ask-ddd-all",
         title: "Ask DDD of the application",
         promptType: "reusable",
-        detail: "Ask the all-codebase agent for domain-driven design.",
+        detail: "",
         example: "/ask what is the domain driven design of the application.",
       },
       {
@@ -30,7 +30,7 @@ export const RUNBOOK_SECTIONS_201 = [
         id: "ask-ddd-invoice-table",
         title: "Ask DDD of the invoice table",
         promptType: "reusable",
-        detail: "Ask for domain-driven design of the invoice table only.",
+        detail: "",
         example: "/ask what is the domain driven design of the @invoice-table.tsx",
       },
       {
@@ -45,7 +45,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Compare agents",
         promptType: "none",
         detail:
-          "Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context.",
+          "Agent 1 maps all the domains in the whole codebase. Its context window shows X%. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.",
       },
       {
         id: "ask-cross-context",
