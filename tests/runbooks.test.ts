@@ -230,7 +230,7 @@ describe("runbook catalog", () => {
       "Open one agent and ask it for information about the entire codebase.",
     );
     expect(beat("rename-agent-1-all")?.example).toBe("/rename-chat Agent 1 All");
-    expect(beat("ask-ddd-all")?.detail).toBe("Ask the all-codebase agent for domain-driven design.");
+    expect(beat("ask-ddd-all")?.detail).toBe("");
     expect(beat("ask-ddd-all")?.example).toBe(
       "/ask what is the domain driven design of the application.",
     );
@@ -238,9 +238,7 @@ describe("runbook catalog", () => {
       "Open a second agent for a new targeted context window.",
     );
     expect(beat("rename-agent-2-target")?.example).toBe("/rename-chat Agent 2 Target");
-    expect(beat("ask-ddd-invoice-table")?.detail).toBe(
-      "Ask for domain-driven design of the invoice table only.",
-    );
+    expect(beat("ask-ddd-invoice-table")?.detail).toBe("");
     expect(beat("ask-ddd-invoice-table")?.example).toBe(
       "/ask what is the domain driven design of the @invoice-table.tsx",
     );
@@ -252,7 +250,7 @@ describe("runbook catalog", () => {
     expect(beat("compare-agents")?.promptType).toBe("none");
     expect(beat("compare-agents")?.example).toBeUndefined();
     expect(beat("compare-agents")?.detail).toBe(
-      "Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context.",
+      "Agent 1 maps all the domains in the whole codebase. Its context window shows X%. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.",
     );
     expect(beat("ask-cross-context")?.detail).toBe(
       "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
