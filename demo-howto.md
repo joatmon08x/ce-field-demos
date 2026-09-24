@@ -59,17 +59,15 @@ Check shipped state:
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
-- Invoice and dispute status pills write `?state=` while the pages read `status` — clicking Overdue / Needs review does not filter. That is a planted UI seam, not a second red test. Restore with `git checkout -- components/filter-pills.tsx`
+- Invoice and dispute status pills write `?state=` while the pages read `status` — clicking Overdue / Needs review does not filter. That is a planted UI seam, not a second red test. Restore it with the scripted reset.
 
-If the credit reads $249.00 or the suite is all green, a prior run switched the client to v2. If status pills filter the list, a prior run renamed `state` to `status`. Restore with the `reset-demo-state` skill, or:
+If the credit reads $249.00 or the suite is all green, a prior run switched the client to v2. If status pills filter the list, a prior run renamed `state` to `status`. Run:
 
 ```bash
-git checkout -- lib/disputes/suggested-credit-api.ts
-git checkout -- components/filter-pills.tsx
-npx prisma db seed
+npm run demo:reset
 ```
 
-Port 43173 busy: stop the old `npm run dev`. Empty dashboard: `npm run db:reset`.
+Then complete only the remaining MCP cleanup reported by the script. Empty dashboard: `npm run db:reset`.
 
 ### Create the private Linear team (manual)
 
@@ -187,6 +185,12 @@ Diagnose why dsp_1043 shows a $400 suggested credit even though v2 caps it at $2
 
 **Look for:** A proposed project rule under `.cursor/rules/`. This is a live manual beat; do not add the rule to the shipped repository.
 
+Record it for reset:
+
+```bash
+npm run demo:session -- record project-path .cursor/rules/suggested-credit-api-v2.mdc
+```
+
 ---
 
 ## Canvas
@@ -240,12 +244,10 @@ On a clean tree, npm test is 1 failed / 32 passed. The sole red test is tests/su
 **Do:** Ask the agent to run `reset-demo-state`, or:
 
 ```bash
-git checkout -- lib/disputes/suggested-credit-api.ts
-git checkout -- components/filter-pills.tsx
-rm -f .cursor/rules/suggested-credit-api-v2.mdc
-npx prisma db seed
-npm test
+npm run demo:reset
 ```
+
+**Then:** complete only the script's reported Figma, Cursor user-rule, or Linear MCP actions. The script resets files, recorded rules/skills, Canvas, branches, SQLite, and port 43173.
 
 **Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 32 passed**, status pills still writing `state=`.
 
@@ -286,6 +288,13 @@ Promote the create-api skill to this project.
 ```
 
 Open the project skill in `.cursor/skills`. Explore the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.
+
+Record both leftovers for reset:
+
+```bash
+npm run demo:session -- record skill "$HOME/.cursor/skills/create-api"
+npm run demo:session -- record project-path .cursor/skills/create-api
+```
 
 ### How does my agent get more information?
 
