@@ -38,7 +38,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Check context usage",
         promptType: "none",
         detail:
-          "Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat.",
+          "Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Go to Agent 2 Target. Click the Context Usage indicator below the chat.",
       },
       {
         id: "compare-agents",
@@ -75,7 +75,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Promote create-api to project",
         promptType: "reusable",
         detail:
-          "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
+          "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Review the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
         example: "Promote the create-api skill to this project.",
       },
     ],
@@ -89,7 +89,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Enable Linear MCP",
         promptType: "none",
         detail:
-          "Let’s start the issue tracker’s MCP server (in this case, Linear) to get a ticket to this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
+          "Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
       },
       {
         id: "mcp-allowlist",
@@ -103,7 +103,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "List open issues",
         promptType: "adaptable",
         detail:
-          "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
+          "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Review the tool calls to the Linear MCP server.",
         example: "List the open issues from our issue tracker.",
       },
       {
@@ -118,7 +118,7 @@ export const RUNBOOK_SECTIONS_201 = [
         title: "Enable Standard bug fix plugin",
         promptType: "none",
         detail:
-          "Go to Customize > Plugins. Go to Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
+          "Go to Customize > Plugins. Go to Personal. Click Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
       },
       {
         id: "standard-bug-fix",
