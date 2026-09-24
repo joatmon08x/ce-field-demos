@@ -61,7 +61,7 @@ Do not `save_project` onto a public team. Do not add a local ticket board, ticke
 
 ### Demo reset
 
-For any reset request, run `npm run demo:reset` first. The `reset-demo-state` skill handles only its reported MCP/discovery leftovers. When a 101 or 201 beat creates a new leftover, update its session event record and `scripts/demo-reset.ts` in the same change.
+For any reset request, run `npm run demo:reset` first. It resets everything it knows about — there is no 101-only or 201-only reset. The `reset-demo-state` skill handles only its reported MCP/discovery leftovers. When a demo beat creates a new leftover, update its session event record and `scripts/demo-reset.ts` in the same change.
 
 ### Tests
 

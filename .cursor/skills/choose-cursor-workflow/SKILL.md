@@ -17,7 +17,7 @@ The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/
 
 The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not mention the invoice or dispute filter-pill `state=` seam unless the user is on that click path.
 
-Start a demo track with `npm run demo:session -- start --track=101` or `--track=201`. Record every rule, skill, Canvas, Figma deck, Linear board, and demo branch it creates. Reset is script-first; update the event record and reset script whenever a beat gains a new leftover.
+Start a demo session with `npm run demo:session -- start`. Record every rule, skill, Canvas, Figma deck, Linear board, and demo branch it creates. Reset is script-first and clears both tracks at once; update the event record and reset script whenever a beat gains a new leftover.
 
 ## 101 sections and beats
 

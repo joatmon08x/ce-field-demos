@@ -18,12 +18,12 @@ The command restores tracked files with `git reset --hard HEAD`, switches to `ma
 Start each demo session and record artifacts as they are created:
 
 ```bash
-npm run demo:session -- start --track=101
+npm run demo:session -- start
 npm run demo:session -- record skill "$HOME/.cursor/skills/<created-skill>"
 npm run demo:session -- record branch <linear-gitBranchName> --remote
 ```
 
-The ignored `.cursor/demo-session-events.json` stores recorded paths, branches, Figma file keys, and Linear identifiers. Use `npm run demo:session -- status` to inspect it. The reset command requires this file; use `--force` only for a fully intentional legacy reset. When a 101 or 201 beat creates a new leftover, update `scripts/demo-reset.ts` and its event record in the same change.
+The ignored `.cursor/demo-session-events.json` stores recorded paths, branches, Figma file keys, and Linear identifiers. Use `npm run demo:session -- status` to inspect it. One reset clears everything it knows about — there is no per-track reset. Without the file the command still resets tracked files and the known demo paths, and says so in `skipped`. When a demo beat creates a new leftover, update `scripts/demo-reset.ts` and its event record in the same change.
 
 ## Demo-beat git branches
 

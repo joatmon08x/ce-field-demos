@@ -3,11 +3,8 @@ import { existsSync, lstatSync, mkdirSync, readFileSync, rmSync, writeFileSync }
 import { homedir } from "node:os";
 import { basename, dirname, isAbsolute, resolve } from "node:path";
 
-type Track = "101" | "201" | "both";
-
 type SessionEvent = {
   version: 1;
-  track: Track;
   createdAt: string;
   userRules: Array<{ id?: string; title?: string; path?: string }>;
   personalSkills: Array<{ name: string; path: string }>;
@@ -41,7 +38,6 @@ const skipServer = args.includes("--skip-server");
 const skipVerify = args.includes("--skip-verify");
 const keepBranch = args.includes("--keep-branch");
 const confirmLinear = args.includes("--confirm-linear");
-const force = args.includes("--force");
 const knownProjectPaths = new Set([
   ".cursor/rules/suggested-credit-api-v2.mdc",
   ".cursor/skills/create-api",
@@ -64,10 +60,9 @@ function command(command: string, commandArgs: string[], options: { allowFailure
   }
 }
 
-function defaultEvent(track: Track): SessionEvent {
+function defaultEvent(): SessionEvent {
   return {
     version: 1,
-    track,
     createdAt: new Date().toISOString(),
     userRules: [],
     personalSkills: [],
@@ -81,15 +76,13 @@ function defaultEvent(track: Track): SessionEvent {
 function readEvent(required = true): SessionEvent {
   if (!existsSync(eventFile)) {
     if (required) throw new Error(`No session event file at ${eventFile}. Run demo:session start first.`);
-    return defaultEvent("both");
+    return defaultEvent();
   }
 
   const event = JSON.parse(readFileSync(eventFile, "utf8")) as SessionEvent;
-  if (event.version !== 1 || !["101", "201", "both"].includes(event.track)) {
-    throw new Error(`Invalid session event file: ${eventFile}`);
-  }
+  if (event.version !== 1) throw new Error(`Invalid session event file: ${eventFile}`);
   return {
-    ...defaultEvent(event.track),
+    ...defaultEvent(),
     ...event,
   };
 }
@@ -384,9 +377,14 @@ function remainingExternalActions(event: SessionEvent, report: Report) {
 }
 
 async function reset() {
-  const event = readEvent(!force);
+  const event = readEvent(false);
   const report: Report = { completed: [], skipped: [], remaining: [] };
   validateRemovablePaths(event);
+  if (!existsSync(eventFile)) {
+    report.skipped.push(
+      `No session event file at ${eventFile}. Reset tracked files and known demo paths only; unrecorded personal rules, skills, Canvas files, and branches need manual cleanup.`,
+    );
+  }
   resetGit(event, report);
   removeLocalArtifacts(event, report);
   reseedAndStart(report);
@@ -396,7 +394,7 @@ async function reset() {
   if (!dryRun) {
     const linearCompleted = report.completed.some((entry) => entry.includes(`Linear board ${event.linear?.projectId}`));
     writeEvent({
-      ...defaultEvent(event.track),
+      ...defaultEvent(),
       userRules: event.userRules.filter((rule) => !rule.path),
       figmaSlides: event.figmaSlides,
       linear: linearCompleted ? undefined : event.linear,
@@ -408,10 +406,8 @@ async function reset() {
 async function main() {
 const action = args[0] ?? "status";
 if (action === "start") {
-  const track = (args.find((arg) => arg.startsWith("--track="))?.split("=")[1] ?? "both") as Track;
-  if (!["101", "201", "both"].includes(track)) throw new Error(`Invalid track: ${track}`);
-  writeEvent(defaultEvent(track));
-  console.log(`Started ${track} demo session at ${eventFile}`);
+  writeEvent(defaultEvent());
+  console.log(`Started demo session at ${eventFile}`);
 } else if (action === "record") {
   record(readEvent());
 } else if (action === "status") {
