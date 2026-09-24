@@ -244,7 +244,7 @@ describe("runbook catalog", () => {
     );
     expect(beat("context-usage")?.promptType).toBe("none");
     expect(beat("context-usage")?.detail).toBe(
-      "Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat.",
+      "Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Go to Agent 2 Target. Click the Context Usage indicator below the chat.",
     );
     expect(beat("context-usage")?.example).toBeUndefined();
     expect(beat("compare-agents")?.promptType).toBe("none");
@@ -265,11 +265,11 @@ describe("runbook catalog", () => {
       "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
     );
     expect(beat("promote-create-api-project")?.detail).toBe(
-      "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Explore the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
+      "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Review the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
     );
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
     expect(beat("add-linear-mcp")?.detail).toBe(
-      "Let’s start the issue tracker’s MCP server (in this case, Linear) to get a ticket to this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
+      "Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
     );
     expect(beat("add-linear-mcp")?.example).toBeUndefined();
     expect(beat("mcp-allowlist")?.promptType).toBe("none");
@@ -278,7 +278,7 @@ describe("runbook catalog", () => {
       "Go to Settings > Agents > Execution and Approvals > Allowlist Options > MCP Allowlist to check valid MCP servers and tools from your administrator.",
     );
     expect(beat("ask-linear-bug")?.detail).toBe(
-      "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Explore the tool calls to Linear MCP server.",
+      "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Review the tool calls to the Linear MCP server.",
     );
     expect(beat("ask-linear-bug")?.example).toBe("List the open issues from our issue tracker.");
     expect(beat("add-local-plugin")?.promptType).toBe("none");
@@ -289,7 +289,7 @@ describe("runbook catalog", () => {
     expect(beat("check-plugin")?.promptType).toBe("none");
     expect(beat("check-plugin")?.example).toBeUndefined();
     expect(beat("check-plugin")?.detail).toBe(
-      "Go to Customize > Plugins. Go to Personal. Select Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
+      "Go to Customize > Plugins. Go to Personal. Click Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
     );
     expect(beat("standard-bug-fix")?.detail).toBe(
       "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
