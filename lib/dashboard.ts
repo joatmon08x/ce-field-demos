@@ -1,3 +1,4 @@
+import { outstandingCents } from "@/lib/collections/balance";
 import { DEMO_AS_OF, DEMO_PRIOR_END, DEMO_PRIOR_START, DEMO_WINDOW_START } from "@/lib/clock";
 import { sumCents } from "@/lib/money";
 import { planPriceCents } from "@/lib/plans";
@@ -93,6 +94,52 @@ export function disputeBreakdown(disputes: DisputeLike[]) {
     { id: "review", label: "In review", count: inReview, color: "#d97706" },
     { id: "resolved", label: "Resolved", color: "#4f46e5", count: resolved },
   ] as const;
+}
+
+export const COLLECTIONS_WINDOW_DAYS = 7;
+
+export function overdueTotalCents(
+  invoices: { status: string; totalCents: number; payments: { amountCents: number }[] }[],
+) {
+  return sumCents(
+    invoices
+      .filter((invoice) => invoice.status === "OVERDUE")
+      .map((invoice) => outstandingCents(invoice)),
+  );
+}
+
+export function overdueInvoiceCount(invoices: { status: string }[]) {
+  return invoices.filter((invoice) => invoice.status === "OVERDUE").length;
+}
+
+export function activitiesOnDay(activities: { occurredOn: Date }[], day: Date) {
+  return activities.filter((activity) => sameUtcDay(activity.occurredOn, day)).length;
+}
+
+export function activitiesInWindow(
+  activities: { occurredOn: Date }[],
+  start: Date,
+  end: Date,
+) {
+  return activities.filter((activity) => activity.occurredOn >= start && activity.occurredOn <= end)
+    .length;
+}
+
+export function collectionsWindow(asOf: Date) {
+  const start = new Date(Date.UTC(asOf.getUTCFullYear(), asOf.getUTCMonth(), asOf.getUTCDate()));
+  start.setUTCDate(start.getUTCDate() - (COLLECTIONS_WINDOW_DAYS - 1));
+  const end = new Date(
+    Date.UTC(asOf.getUTCFullYear(), asOf.getUTCMonth(), asOf.getUTCDate(), 23, 59, 59, 999),
+  );
+  return { start, end };
+}
+
+function sameUtcDay(left: Date, right: Date) {
+  return (
+    left.getUTCFullYear() === right.getUTCFullYear() &&
+    left.getUTCMonth() === right.getUTCMonth() &&
+    left.getUTCDate() === right.getUTCDate()
+  );
 }
 
 export const DASHBOARD_WINDOWS = {
