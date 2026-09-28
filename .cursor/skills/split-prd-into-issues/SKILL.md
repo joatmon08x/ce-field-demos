@@ -1,11 +1,11 @@
 ---
-name: split-prd-plan
+name: split-prd-into-issues
 description: Splits work described in a PRD and an implementation plan into small vertical-slice issues for an issue tracker, using the Humanizing Work story-splitting patterns. Use when the user asks to break a PRD, plan, feature, or epic into issues, tickets, user stories, or backlog items.
 ---
 
-# Split a PRD and plan into issues
+# Split a PRD and into issues
 
-Turn a PRD plus a plan into issues a team can prioritize. Each issue is a change in system behavior a user can observe. Method: [The Humanizing Work Guide to Splitting User Stories](https://www.humanizingwork.com/the-humanizing-work-guide-to-splitting-user-stories/).
+Turn a PRD into issues a team can prioritize. Each issue is a change in system behavior a user can observe. Method: [The Humanizing Work Guide to Splitting User Stories](https://www.humanizingwork.com/the-humanizing-work-guide-to-splitting-user-stories/).
 
 Draft the issues in the reply. Create them in a tracker only when the user names the tracker and tells you to file.
 
