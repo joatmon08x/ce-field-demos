@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { AlertTriangle, CalendarRange, CircleDollarSign, FileText, TrendingUp } from "lucide-react";
+import { AlertTriangle, CalendarRange, CircleDollarSign, FileText, TrendingUp, Wallet } from "lucide-react";
 import { DisputeDonut } from "@/components/charts/dispute-donut";
 import { RevenueChart } from "@/components/charts/revenue-chart";
+import { AMOUNT_MASK_TEXT, GatedAmount } from "@/components/collections/gated-amount";
 import { InvoiceTable } from "@/components/invoice-table";
 import { KpiCard } from "@/components/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,9 +16,14 @@ export const metadata = {
 // Read the seed at request time so `next start` reflects a reseed.
 export const dynamic = "force-dynamic";
 
+function countPhrase(count: number, singular: string, plural: string) {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
 export default async function DashboardPage() {
-  const { invoices, series, breakdown, kpis } = await getDashboard();
+  const { invoices, series, breakdown, kpis, collections } = await getDashboard();
   const recent = invoices.filter((invoice) => invoice.status !== "VOID" && invoice.status !== "DRAFT").slice(0, 5);
+  const amountPlan = collections.amountsVisible ? "SCALE" : "MASKED";
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
@@ -66,6 +72,28 @@ export default async function DashboardPage() {
           icon={CircleDollarSign}
           tone="success"
         />
+        <div className="sm:col-span-2 xl:col-span-4">
+          <KpiCard
+            label="Collections"
+            value={collections.amountsVisible ? formatUsd(collections.overdueCents) : AMOUNT_MASK_TEXT}
+            valueNode={
+              <span className="text-danger">
+                <GatedAmount cents={collections.overdueCents} plan={amountPlan} />
+              </span>
+            }
+            hint={[
+              countPhrase(collections.overdueCount, "overdue invoice", "overdue invoices"),
+              countPhrase(collections.activitiesToday, "activity today", "activities today"),
+              countPhrase(
+                collections.activitiesThisWeek,
+                "activity in 7 days",
+                "activities in 7 days",
+              ),
+            ].join(" · ")}
+            icon={Wallet}
+            tone="indigo"
+          />
+        </div>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[minmax(0,1.7fr)_minmax(260px,0.9fr)]">

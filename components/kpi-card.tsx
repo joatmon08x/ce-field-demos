@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Info } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +11,7 @@ export function KpiCard({
   change,
   icon: Icon,
   tone = "indigo",
+  valueNode,
 }: {
   label: string;
   value: string;
@@ -17,6 +19,7 @@ export function KpiCard({
   change?: number | null;
   icon: LucideIcon;
   tone?: "indigo" | "success" | "danger";
+  valueNode?: ReactNode;
 }) {
   return (
     <Card className="gap-3 py-5">
@@ -37,7 +40,7 @@ export function KpiCard({
             <Icon className="size-4" />
           </span>
         </div>
-        <p className="text-[26px] leading-none font-semibold tracking-tight">{value}</p>
+        <p className="text-[26px] leading-none font-semibold tracking-tight">{valueNode ?? value}</p>
         <p className="text-xs leading-relaxed text-muted-foreground">
           {change === undefined ? hint : <Growth change={change} suffix={hint} />}
         </p>

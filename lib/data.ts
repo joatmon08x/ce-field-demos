@@ -1,14 +1,21 @@
-import { prisma } from "@/lib/prisma";
+import { DEMO_AS_OF } from "@/lib/clock";
 import {
   DASHBOARD_WINDOWS,
+  activitiesInWindow,
+  activitiesOnDay,
   catalogMrrCents,
   collectedCents,
+  collectionsWindow,
   disputeBreakdown,
   disputeCentsAt,
   openCentsAt,
+  overdueInvoiceCount,
+  overdueTotalCents,
   percentChange,
   revenueSeries,
 } from "@/lib/dashboard";
+import { amountsVisible } from "@/lib/plans";
+import { prisma } from "@/lib/prisma";
 import type { DisputeStatus, InvoiceStatus } from "@/lib/status";
 
 const invoiceInclude = {
@@ -27,10 +34,14 @@ const disputeInclude = {
 } as const;
 
 export async function getDashboard() {
-  const [invoices, disputes, customers] = await Promise.all([
-    prisma.invoice.findMany({ include: invoiceInclude, orderBy: { issuedOn: "desc" } }),
+  const [invoices, disputes, customers, activities] = await Promise.all([
+    prisma.invoice.findMany({
+      include: { ...invoiceInclude, payments: true },
+      orderBy: { issuedOn: "desc" },
+    }),
     prisma.dispute.findMany({ include: disputeInclude, orderBy: { openedOn: "desc" } }),
     prisma.customer.findMany(),
+    prisma.activity.findMany(),
   ]);
 
   const { currentStart, currentEnd, priorStart, priorEnd } = DASHBOARD_WINDOWS;
@@ -45,6 +56,7 @@ export async function getDashboard() {
   const openDisputes = disputes.filter(
     (dispute) => dispute.status === "OPEN" || dispute.status === "NEEDS_REVIEW",
   );
+  const { start: weekStart, end: weekEnd } = collectionsWindow(DEMO_AS_OF);
 
   return {
     invoices,
@@ -70,6 +82,13 @@ export async function getDashboard() {
       disputeChange: percentChange(disputeCurrent, disputePrior),
       reviewCount: needsReview.length,
       openDisputeCount: openDisputes.length,
+    },
+    collections: {
+      overdueCents: overdueTotalCents(invoices),
+      overdueCount: overdueInvoiceCount(invoices),
+      activitiesToday: activitiesOnDay(activities, DEMO_AS_OF),
+      activitiesThisWeek: activitiesInWindow(activities, weekStart, weekEnd),
+      amountsVisible: customers.every((customer) => amountsVisible(customer.plan)),
     },
   };
 }
