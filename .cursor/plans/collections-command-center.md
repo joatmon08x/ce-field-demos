@@ -8,7 +8,7 @@ Build the workspace in [prds/prd-01-collections-command-center.md](prds/prd-01-c
 - [x] Add Customers list and account Overdue Book, with invoice detail payment history
 - [x] Save notes, send email Nudges, and record full payments that set PAID only when the amount matches
 - [x] Add the collections KPI, tests that restore any mutated seed rows, and bump the shipped suite citations
-- [ ] Run npm test, walk the happy path in the browser, then ledgerly-reviewer
+- [x] Run npm test, walk the happy path in the browser, then ledgerly-reviewer
 
 ## Decisions taken from the open questions
 
