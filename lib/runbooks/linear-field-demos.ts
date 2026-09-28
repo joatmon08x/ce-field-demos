@@ -140,3 +140,220 @@ export const FIELD_DEMO_SUGGESTED_CREDIT_TITLE = FIELD_DEMO_ISSUES.find(
 export const FIELD_DEMO_FILTER_TITLE = FIELD_DEMO_ISSUES.find(
   (issue) => issue.slug === "filter-pills",
 )!.title;
+
+/**
+ * Collections Command Center slices.
+ * stage-linear reads FIELD_DEMO_ISSUES only. These must not join that array:
+ * the ce-field-demos board stays the three Fieldnote issues.
+ */
+export type CollectionsCommandCenterPattern = "Operations" | "Business rules";
+
+export type CollectionsCommandCenterIssue = {
+  slug:
+    | "overdue-book"
+    | "full-payment"
+    | "reject-other-amount"
+    | "collection-note"
+    | "note-edit-window"
+    | "nudge-sent"
+    | "nudge-failed"
+    | "collections-kpi"
+    | "amount-mask";
+  title: string;
+  why: string;
+  pattern: CollectionsCommandCenterPattern;
+  acceptance: readonly string[];
+  constraints: string;
+  notInThisIssue: string;
+  covers: readonly string[];
+  ledgerlyPaths: readonly string[];
+  ledgerlyUrls: readonly string[];
+};
+
+export const COLLECTIONS_COMMAND_CENTER_ISSUES: readonly CollectionsCommandCenterIssue[] = [
+  {
+    slug: "overdue-book",
+    title: "Customers account shows its overdue book",
+    why: "A rep can open an account and see what is owed without leaving Customers.",
+    pattern: "Operations",
+    acceptance: [
+      "Given a seeded account with at least one OVERDUE invoice, When Avery Quinn opens Customers and selects that account, Then the Overdue Book lists only that account’s OVERDUE invoices, days past due descending, with invoice number, invoice date, due date, days past due, outstanding balance via formatUsd, and an em dash when the account has no activity.",
+      "Given one of those rows, When Avery selects it, Then the existing invoice page opens and shows its line items.",
+      "Given an account with no OVERDUE invoices, When Avery opens that account, Then the Overdue Book has no invoice rows.",
+    ],
+    constraints:
+      "Customer is the account. Add Customers to the nav. /customers lists seeded accounts with name, plan, overdue invoice count, and overdue balance. /customers/[id] is Account Detail. Days past due are daysBetween(DEMO_AS_OF, dueOn) for OVERDUE invoices (demo clock 23 Aug 2026). Outstanding balance is invoice.totalCents until a later slice records payments. Seeded plans show formatUsd. Leave app/collections/page.tsx as the cross-account queue. Do not add CollectionNote, Activity, or Payment, and do not add sample rows.",
+    notInThisIssue:
+      "Payment history, recording a payment, notes, Nudge, the dashboard card, and masking amounts for a non-catalog plan id.",
+    covers: ["FR-1", "FR-2", "FR-3", "FR-4"],
+    ledgerlyPaths: [
+      "components/app-chrome.tsx",
+      "app/customers/page.tsx",
+      "app/customers/[id]/page.tsx",
+    ],
+    ledgerlyUrls: ["http://127.0.0.1:43173/customers"],
+  },
+  {
+    slug: "full-payment",
+    title: "Recording a full payment marks the invoice paid",
+    why: "A rep can record a phone payment and see the invoice settle without a second tool.",
+    pattern: "Operations",
+    acceptance: [
+      "Given an OVERDUE invoice with an outstanding balance, When Avery confirms “Record {amount} payment against {invoice number}?” after choosing check, ach, card_on_file, or cash, Then the invoice status is PAID, paidOn is the demo date, the invoice leaves the Overdue Book, payment history lists the payment, and the account activity feed shows PAYMENT_RECORDED for that amount, method, and recorder.",
+      "Given an invoice whose outstanding balance is 0, When a payment is submitted, Then the response is 400 and the status stays unchanged.",
+    ],
+    constraints:
+      "POST /api/invoices/[id]/payments with { method }. The server records the full outstanding balance (totalCents minus recorded payments) and ignores a client-supplied amount. Methods are only check, ach, card_on_file, and cash. Success sets status PAID and paidOn to DEMO_AS_OF, writes Payment and a PAYMENT_RECORDED activity (status recorded, occurredOn DEMO_AS_OF). This slice creates the single account activity feed; later slices append to it. Commit only after the confirm step, which shows the amount. On app/invoices/[id]/page.tsx add payment history and Record payment only. Do not change the customer email card or the unfinished collection-note card (lib/collection-note.ts, the disabled Save note button). Seed deleteMany for payments and activities runs before invoices. Tests that write restore the invoice and new rows. A new passing test updates the shipped suite citations in the same change. The sole failure stays tests/suggested-credit-api.test.ts. Catalog amounts stay Starter $49, Growth $99, Scale $249.",
+    notInThisIssue:
+      "Rejecting a body that sends a different amountCents, partial-payment entry, notes, Nudge, the dashboard card, and amount masking.",
+    covers: ["FR-12", "FR-13", "FR-15", "FR-16", "FR-17", "FR-18"],
+    ledgerlyPaths: [
+      "prisma/schema.prisma",
+      "prisma/seed.ts",
+      "app/api/invoices/[id]/payments/route.ts",
+      "app/invoices/[id]/page.tsx",
+      "app/customers/[id]/page.tsx",
+    ],
+    ledgerlyUrls: ["http://127.0.0.1:43173/invoices"],
+  },
+  {
+    slug: "reject-other-amount",
+    title: "A payment that is not the outstanding balance does not mark the invoice paid",
+    why: "A mismatched amount must not settle an invoice the customer has not paid in full.",
+    pattern: "Business rules",
+    acceptance: [
+      "Given the record-payment form, When Avery opens the confirm step, Then the only amount offered is the full outstanding balance.",
+      "Given an OVERDUE invoice, When a client posts amountCents other than that outstanding balance, Then the response is 400, nothing is stored, and the status stays OVERDUE.",
+    ],
+    constraints:
+      "Same payments route as the full-payment slice. The form never collects a second amount. Tests that write restore the invoice. Update the shipped suite citations if this adds a passing test. The sole failure stays tests/suggested-credit-api.test.ts.",
+    notInThisIssue: "Partial payments, installments, and a new payment method.",
+    covers: ["FR-14"],
+    ledgerlyPaths: ["app/api/invoices/[id]/payments/route.ts", "app/invoices/[id]/page.tsx"],
+    ledgerlyUrls: ["http://127.0.0.1:43173/invoices"],
+  },
+  {
+    slug: "collection-note",
+    title: "Account detail saves a collection note",
+    why: "A promise-to-pay or dispute note stays on the account instead of in a side channel.",
+    pattern: "Operations",
+    acceptance: [
+      "Given Account Detail, When Avery saves a non-blank note, Then that note is first in the account activity feed, attributed to Avery Quinn, with a timestamp, and a NOTE_ADDED activity is stored.",
+      "Given a blank body, When Avery saves, Then the response is 400 and the feed is unchanged.",
+      "Given a note body and an invoice id, When Avery saves, Then the note is tied to that invoice.",
+    ],
+    constraints:
+      "POST /api/customers/[id]/notes with { body, invoiceId? }. Persist CollectionNote (customerId, invoiceId nullable, authorName, body, createdAt, updatedAt) and a NOTE_ADDED activity on the same account feed. Author is Avery Quinn (DEMO_OPERATOR). Newest createdAt first. Seed deleteMany notes before invoices. Do not finish the invoice-page stub in lib/collection-note.ts or enable its Save note button. Tests that write restore the new rows. Update the shipped suite citations if this adds a passing test. The sole failure stays tests/suggested-credit-api.test.ts.",
+    notInThisIssue: "The 15-minute edit window, delete, Nudge, and payments.",
+    covers: ["FR-5", "FR-6"],
+    ledgerlyPaths: [
+      "prisma/schema.prisma",
+      "prisma/seed.ts",
+      "app/api/customers/[id]/notes/route.ts",
+      "app/customers/[id]/page.tsx",
+    ],
+    ledgerlyUrls: ["http://127.0.0.1:43173/customers"],
+  },
+  {
+    slug: "note-edit-window",
+    title: "Avery can edit a collection note for 15 minutes",
+    why: "A rep can fix a note just written, and the audit trail still keeps it.",
+    pattern: "Business rules",
+    acceptance: [
+      "Given a note Avery Quinn created less than 15 minutes ago, When Avery changes the body, Then the new body is saved.",
+      "Given a note older than 15 minutes, or an author other than Avery Quinn, When the body is patched, Then the response is 403 and the body stays.",
+      "Given a saved note, When Avery views the account, Then there is no delete control.",
+    ],
+    constraints:
+      "PATCH /api/notes/[id] updates body only. The window is createdAt, not occurredOn. No delete route. The 15 minutes stand in for the PRD’s unspecified edit window.",
+    notInThisIssue: "Deleting notes, editing someone else’s note inside the window, and a longer retention policy.",
+    covers: ["FR-7"],
+    ledgerlyPaths: ["app/api/notes/[id]/route.ts", "app/customers/[id]/page.tsx"],
+    ledgerlyUrls: ["http://127.0.0.1:43173/customers"],
+  },
+  {
+    slug: "nudge-sent",
+    title: "Sending a Nudge logs it on the account",
+    why: "A reminder is tied to the invoice and shows up in the account history.",
+    pattern: "Operations",
+    acceptance: [
+      "Given an OVERDUE invoice and a customer email on file, When Avery sends a Nudge for that invoice, Then the feed shows NUDGE_SENT with status sent, channel email, sender Avery Quinn, and the fixed template names the invoice number, outstanding balance, and due date.",
+      "Given an account with overdue invoices, When Avery uses the account Nudge, Then the nudge is for the most-past-due overdue invoice.",
+      "Given an account with no overdue invoices, When Avery views the account, Then the Nudge control is disabled.",
+    ],
+    constraints:
+      "POST /api/invoices/[id]/nudge. No custom body. Email only, to the on-file address. Per-invoice send starts from the overdue row on Account Detail. Append to the existing activity feed. Do not add the control to the invoice-page collection-note card. Update the shipped suite citations if this adds a passing test. The sole failure stays tests/suggested-credit-api.test.ts.",
+    notInThisIssue: "Failed sends, SMS or voice, custom copy, and dunning cadences.",
+    covers: ["FR-8", "FR-9", "FR-10"],
+    ledgerlyPaths: [
+      "app/api/invoices/[id]/nudge/route.ts",
+      "app/customers/[id]/page.tsx",
+    ],
+    ledgerlyUrls: ["http://127.0.0.1:43173/customers"],
+  },
+  {
+    slug: "nudge-failed",
+    title: "A Nudge that cannot be emailed shows as failed",
+    why: "A bad address stays visible on the account instead of looking like a sent reminder.",
+    pattern: "Business rules",
+    acceptance: [
+      "Given a customer whose email is missing or not an email address, When Avery sends a Nudge, Then the feed shows NUDGE_SENT with status failed and the UI shows that failure.",
+    ],
+    constraints:
+      "Same nudge route. Write the activity. Do not throw the request away and do not add a bounce provider. SMS stays out.",
+    notInThisIssue: "Retry, alternate channels, and editing the template.",
+    covers: ["FR-11"],
+    ledgerlyPaths: [
+      "app/api/invoices/[id]/nudge/route.ts",
+      "app/customers/[id]/page.tsx",
+    ],
+    ledgerlyUrls: ["http://127.0.0.1:43173/customers"],
+  },
+  {
+    slug: "collections-kpi",
+    title: "Dashboard shows collections totals on the next load",
+    why: "A rep can see overdue exposure and how much of the book was worked today.",
+    pattern: "Operations",
+    acceptance: [
+      "Given the dashboard, When Avery opens it, Then one collections card shows the overdue balance across accounts via formatUsd, the overdue invoice count, the count of activities whose occurredOn is the demo day, and the count of activities in the 7 days ending that day.",
+      "Given a note, nudge, or payment recorded in this session, When Avery loads the dashboard again, Then the card includes that change.",
+    ],
+    constraints:
+      "One card on app/page.tsx through the existing kpi-card tokens (bg-indigo-soft, text-indigo, and the existing danger tone for overdue). Do not restyle the other KPI cards, add a hex color, or make the card configurable. Aggregates come from lib/dashboard.ts through getDashboard() in lib/data.ts. occurredOn is DEMO_AS_OF. Overdue total uses catalog cents only. Update on the next dashboard load. Update the shipped suite citations if this adds a passing test. The sole failure stays tests/suggested-credit-api.test.ts.",
+    notInThisIssue: "Live updates, a second collections card, and masking the overdue total.",
+    covers: ["FR-19", "FR-20", "FR-21"],
+    ledgerlyPaths: [
+      "app/page.tsx",
+      "components/kpi-card.tsx",
+      "lib/dashboard.ts",
+      "lib/data.ts",
+    ],
+    ledgerlyUrls: ["http://127.0.0.1:43173/"],
+  },
+  {
+    slug: "amount-mask",
+    title: "Dollar amounts stay masked outside Starter, Growth, and Scale",
+    why: "Amount displays stay on the paid catalog, and the rest of the collections flow still works.",
+    pattern: "Business rules",
+    acceptance: [
+      "Given a plan id other than Starter, Growth, or Scale, When Avery opens the customers list, the Overdue Book, payment history, the activity feed, or the collections card, Then each dollar figure says “Upgrade to view amounts” and the invoice rows, notes, Nudge, status, and activity log still render.",
+      "Given that same plan id, When Avery opens the payment confirmation, Then the amount being recorded is visible.",
+      "Given a seeded Starter, Growth, or Scale account, When Avery opens those surfaces, Then dollar figures use formatUsd.",
+    ],
+    constraints:
+      "amountsVisible lives next to the plan catalog and is true only for STARTER, GROWTH, and SCALE. Do not add Free, Trial, or Enterprise. Every seeded account stays on the catalog; a unit test passes a non-catalog id. The payment confirm is the data-entry exception. Recording a payment still stores the amount so PAID is correct. Update the shipped suite citations if this adds a passing test. The sole failure stays tests/suggested-credit-api.test.ts.",
+    notInThisIssue: "Hiding the overdue list, notes, Nudge, or activity log on a non-catalog id, and a new price.",
+    covers: ["FR-22", "FR-23", "FR-24"],
+    ledgerlyPaths: [
+      "lib/plans.ts",
+      "app/customers/page.tsx",
+      "app/customers/[id]/page.tsx",
+      "app/invoices/[id]/page.tsx",
+      "app/page.tsx",
+    ],
+    ledgerlyUrls: [
+      "http://127.0.0.1:43173/customers",
+      "http://127.0.0.1:43173/",
+    ],
+  },
+] as const;

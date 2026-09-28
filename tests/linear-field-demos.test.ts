@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  COLLECTIONS_COMMAND_CENTER_ISSUES,
   FIELD_DEMO_FILTER_TITLE,
   FIELD_DEMO_ISSUES,
   FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
@@ -28,6 +29,51 @@ describe("ce-field-demos Linear book", () => {
       "Dispute dsp_1043 claims $400 against a $249 Scale invoice",
       "Overdue / Needs review filter does not change the list",
       "Change customer email on invoice detail",
+    ]);
+  });
+
+  it("keeps Collections Command Center slices off the three-issue board", () => {
+    expect(COLLECTIONS_COMMAND_CENTER_ISSUES.map((issue) => issue.slug)).toEqual([
+      "overdue-book",
+      "full-payment",
+      "reject-other-amount",
+      "collection-note",
+      "note-edit-window",
+      "nudge-sent",
+      "nudge-failed",
+      "collections-kpi",
+      "amount-mask",
+    ]);
+    const fieldTitles = new Set(FIELD_DEMO_ISSUES.map((issue) => issue.title));
+    for (const issue of COLLECTIONS_COMMAND_CENTER_ISSUES) {
+      expect(fieldTitles.has(issue.title)).toBe(false);
+    }
+    const covered = COLLECTIONS_COMMAND_CENTER_ISSUES.flatMap((issue) => [...issue.covers]);
+    expect(covered).toEqual([
+      "FR-1",
+      "FR-2",
+      "FR-3",
+      "FR-4",
+      "FR-12",
+      "FR-13",
+      "FR-15",
+      "FR-16",
+      "FR-17",
+      "FR-18",
+      "FR-14",
+      "FR-5",
+      "FR-6",
+      "FR-7",
+      "FR-8",
+      "FR-9",
+      "FR-10",
+      "FR-11",
+      "FR-19",
+      "FR-20",
+      "FR-21",
+      "FR-22",
+      "FR-23",
+      "FR-24",
     ]);
   });
 });
