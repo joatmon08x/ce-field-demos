@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PaymentHistory } from "@/components/collections/payment-history";
+import { RecordPayment } from "@/components/collections/record-payment";
 import { PageHeader } from "@/components/page-header";
 import { InvoiceStatusBadge, DisputeStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { outstandingCents } from "@/lib/collections/balance";
 import { draftCollectionNote } from "@/lib/collection-note";
 import { DEMO_AS_OF } from "@/lib/clock";
 import { getInvoice } from "@/lib/data";
@@ -43,7 +46,8 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       />
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(260px,0.7fr)]">
-        <Card className="overflow-hidden py-0">
+        <div className="space-y-4">
+          <Card className="overflow-hidden py-0">
           <CardHeader className="px-5 pt-5">
             <CardTitle>Line items</CardTitle>
             <CardDescription>
@@ -85,6 +89,22 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
             </dl>
           </CardContent>
         </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Payments</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <PaymentHistory payments={invoice.payments} plan={invoice.plan} />
+              <RecordPayment
+                invoiceId={invoice.id}
+                invoiceNumber={invoice.number}
+                outstandingCents={outstandingCents(invoice)}
+                status={invoice.status}
+              />
+            </CardContent>
+          </Card>
+        </div>
 
         <div className="space-y-4">
           <Card>

@@ -97,7 +97,10 @@ export async function getInvoices(filters?: { status?: string; q?: string }) {
 export async function getInvoice(id: string) {
   return prisma.invoice.findUnique({
     where: { id },
-    include: invoiceInclude,
+    include: {
+      ...invoiceInclude,
+      payments: { orderBy: { recordedAt: "asc" } },
+    },
   });
 }
 

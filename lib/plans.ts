@@ -22,6 +22,10 @@ export function isPlanId(value: string): value is PlanId {
   return (PLAN_IDS as readonly string[]).includes(value);
 }
 
+export function amountsVisible(plan: string): boolean {
+  return isPlanId(plan);
+}
+
 export function planPriceCents(plan: string): number {
   if (!isPlanId(plan)) {
     throw new Error(`Unknown plan "${plan}". Catalog is Starter $49, Growth $99, Scale $249.`);

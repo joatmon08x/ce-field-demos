@@ -13,6 +13,7 @@ import {
   Search,
   Settings,
   Sparkles,
+  Users,
   Workflow,
   X,
 } from "lucide-react";
@@ -25,6 +26,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/invoices", label: "Invoices", icon: FileText },
+  { href: "/customers", label: "Customers", icon: Users },
   { href: "/collections", label: "Collections", icon: Inbox },
   { href: "/disputes", label: "Disputes", icon: Scale },
   { href: "/runbooks", label: "Runbooks", icon: Workflow },
