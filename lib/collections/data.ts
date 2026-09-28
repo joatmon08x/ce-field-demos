@@ -33,7 +33,7 @@ export async function getCustomerAccount(id: string) {
         orderBy: { issuedOn: "desc" },
         include: {
           payments: { orderBy: { recordedAt: "asc" } },
-          activities: { orderBy: { createdAt: "desc" }, select: { createdAt: true } },
+          activities: { orderBy: { createdAt: "desc" }, select: { occurredOn: true } },
         },
       },
     },
@@ -45,7 +45,7 @@ export async function getCustomerAccount(id: string) {
     const { activities, ...rest } = invoice;
     return {
       ...rest,
-      lastActivityAt: activities[0]?.createdAt ?? null,
+      lastActivityAt: activities[0]?.occurredOn ?? null,
       daysPastDue: daysPastDue(invoice),
       outstandingCents: outstandingCents(invoice),
     };
