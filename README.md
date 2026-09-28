@@ -78,10 +78,10 @@ Open `/runbooks/101`, copy a card, and paste it in Grok Build. You still review 
 
 Open `/runbooks/201`, copy a card, and paste it in Grok Build. You still review the result.
 
-1. **What is the agent doing to manage context?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), check context usage, compare agents, ask across chats.
-2. **How do I standardize agent behavior?** — personal create-api skill, promote it to the project.
-3. **How does my agent get more information?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Create a private Linear team by hand, then run `stage-linear`.
-4. **How do I parallelize a task?** — open a new agent, open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
+1. **How do you manage context?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), check context usage, compare agents, ask across chats.
+2. **How do you standardize agent behavior?** — personal create-api skill, promote it to the project.
+3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Create a private Linear team by hand, then run `stage-linear`.
+4. **How do you parallelize a task?** — open a new agent, open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## Create the private Linear team (manual)
 
