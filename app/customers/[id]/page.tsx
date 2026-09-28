@@ -103,17 +103,10 @@ export default async function CustomerAccountPage({ params }: { params: Promise<
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Note</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <NoteComposer
-            customerId={customer.id}
-            invoices={overdue.map(({ id: invoiceId, number }) => ({ id: invoiceId, number }))}
-          />
-        </CardContent>
-      </Card>
+      <NoteComposer
+        customerId={customer.id}
+        invoices={overdue.map(({ id: invoiceId, number }) => ({ id: invoiceId, number }))}
+      />
 
       <Card>
         <CardHeader>

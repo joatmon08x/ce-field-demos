@@ -4,10 +4,10 @@ Build the workspace in [prds/prd-01-collections-command-center.md](prds/prd-01-c
 
 ## Work
 
-- [ ] Add CollectionNote, Activity, and Payment models plus domain helpers for notes, nudges, payments, and amount gating
-- [ ] Add Customers list and account Overdue Book, with invoice detail payment history
-- [ ] Save notes, send email Nudges, and record full payments that set PAID only when the amount matches
-- [ ] Add the collections KPI, tests that restore any mutated seed rows, and bump the shipped suite citations
+- [x] Add CollectionNote, Activity, and Payment models plus domain helpers for notes, nudges, payments, and amount gating
+- [x] Add Customers list and account Overdue Book, with invoice detail payment history
+- [x] Save notes, send email Nudges, and record full payments that set PAID only when the amount matches
+- [x] Add the collections KPI, tests that restore any mutated seed rows, and bump the shipped suite citations
 - [ ] Run npm test, walk the happy path in the browser, then ledgerly-reviewer
 
 ## Decisions taken from the open questions
