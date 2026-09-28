@@ -3,7 +3,7 @@ import type { DemoSection } from "@/lib/runbooks/types";
 export const RUNBOOK_SECTIONS_201 = [
   {
     id: "target-context",
-    title: "What is the agent doing to manage context?",
+    title: "How do you manage context?",
     beats: [
       {
         id: "rename-agent-1-all",
@@ -59,7 +59,7 @@ export const RUNBOOK_SECTIONS_201 = [
   },
   {
     id: "standardize-behavior",
-    title: "How do I standardize agent behavior?",
+    title: "How do you standardize agent behavior?",
     beats: [
       {
         id: "create-api-personal-skill",
@@ -82,7 +82,7 @@ export const RUNBOOK_SECTIONS_201 = [
   },
   {
     id: "mcp-more-info",
-    title: "How does my agent get more information?",
+    title: "How do you connect an agent to external tools?",
     beats: [
       {
         id: "add-linear-mcp",
@@ -132,7 +132,7 @@ export const RUNBOOK_SECTIONS_201 = [
   },
   {
     id: "parallelize-task",
-    title: "How do I parallelize a task?",
+    title: "How do you parallelize a task?",
     beats: [
       {
         id: "open-new-agent",

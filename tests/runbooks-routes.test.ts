@@ -35,10 +35,10 @@ describe("runbooks API", () => {
       "How do I govern my agent?",
     ]);
     expect(body.tracks[1].sections.map((section: { title: string }) => section.title)).toEqual([
-      "What is the agent doing to manage context?",
-      "How do I standardize agent behavior?",
-      "How does my agent get more information?",
-      "How do I parallelize a task?",
+      "How do you manage context?",
+      "How do you standardize agent behavior?",
+      "How do you connect an agent to external tools?",
+      "How do you parallelize a task?",
     ]);
   });
 

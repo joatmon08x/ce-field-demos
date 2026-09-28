@@ -16,10 +16,10 @@ The 101 track has three sections. Open `/runbooks/101` and copy a card for any b
 
 The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
 
-1. **What is the agent doing to manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
-2. **How do I standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
-3. **How does my agent get more information?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, list open issues, import plugin from disk
-4. **How do I parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
+1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
+2. **How do you standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
+3. **How do you connect an agent to external tools?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, list open issues, import plugin from disk
+4. **How do you parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
 ---
 
@@ -257,7 +257,7 @@ npm run demo:reset
 
 Open `/runbooks/201`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card.
 
-### What is the agent doing to manage context?
+### How do you manage context?
 
 Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat. Compare agents: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
 
@@ -273,7 +273,7 @@ Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). A
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
 ```
 
-### How do I standardize agent behavior?
+### How do you standardize agent behavior?
 
 #### Create-api skill
 
@@ -296,7 +296,7 @@ npm run demo:session -- record skill "$HOME/.cursor/skills/create-api"
 npm run demo:session -- record project-path .cursor/skills/create-api
 ```
 
-### How does my agent get more information?
+### How do you connect an agent to external tools?
 
 Create the private Linear team by hand first ([steps above](#create-the-private-linear-team-manual)): Settings → Teams → New team, **Make team private**, members = you only. Then run `stage-linear`.
 
@@ -312,7 +312,7 @@ Add the plugin from the local repository (Customize → Plugins → Add → From
 Work on a standard bug fix for the issue where clicking overdue does not filter.
 ```
 
-### How do I parallelize a task?
+### How do you parallelize a task?
 
 #### Open the plan
 

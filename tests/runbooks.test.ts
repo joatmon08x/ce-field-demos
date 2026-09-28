@@ -184,10 +184,10 @@ describe("runbook catalog", () => {
     expect(skill).toContain(track201?.description ?? "");
 
     expect(RUNBOOK_SECTIONS_201.map((section) => section.title)).toEqual([
-      "What is the agent doing to manage context?",
-      "How do I standardize agent behavior?",
-      "How does my agent get more information?",
-      "How do I parallelize a task?",
+      "How do you manage context?",
+      "How do you standardize agent behavior?",
+      "How do you connect an agent to external tools?",
+      "How do you parallelize a task?",
     ]);
     expect(RUNBOOK_SECTIONS_201.map((section) => section.id)).toEqual([
       "target-context",
