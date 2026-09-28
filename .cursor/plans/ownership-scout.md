@@ -1,12 +1,14 @@
 # Create the ownership-scout subagent
 
-Chat prompt (pin a higher-reasoning model first):
+Chat prompt (any model works for writing this file):
 
 ```
-Create a project subagent at .cursor/agents/ownership-scout.md, matching the frontmatter style of .cursor/agents/ledgerly-reviewer.md.
+Create a project subagent at .cursor/agents/ownership-scout.md, matching the frontmatter style of .cursor/agents/ledgerly-reviewer.md. Do not add a model field.
 
 Name: ownership-scout
-Description: Read-only ownership scout for the 301 lab. Use before Collections Command Center work when multiple contributors have open pull requests. Builds an Owns matrix from draft and ready PRs. Writes no product code.
+Description: Read-only ownership scout for the 301 lab. Use before Collections Command Center work when multiple contributors have open pull requests. Builds an Owns matrix from draft and ready PRs. Writes no product code. Invoke on a higher-reasoning model, not the coordinator's inherited model.
+
+In the agent body, add a line near the top: run ownership-scout on a higher-reasoning model. A parent that launches it as a Task passes a higher-reasoning model explicitly instead of inheriting its own.
 
 When invoked, the agent must:
 1. List open pull requests with gh, including drafts. Do not merge any of them.
@@ -25,7 +27,8 @@ Add `.cursor/agents/ownership-scout.md` only. Do not run the scout, open pull re
 
 ## Constraints
 
-- Match `ledgerly-reviewer` frontmatter (`name`, `description`).
+- Match `ledgerly-reviewer` frontmatter (`name`, `description`). No `model` field, so no slug goes stale.
+- The higher-reasoning model is pinned when the scout is invoked, not when the file is written. From the picker, choose a higher-reasoning model before running the scout. From a coordinator, launch the scout Task with an explicit higher-reasoning model. Collections Command Center implementers can stay on a faster model.
 - Scout writes no product code when later invoked.
 - Do not merge Developer A’s resolve draft. That stub stays unfinished for the 201 multitask beat.
 - Do not add lab issues to the staged `ce-field-demos` project of three Fieldnote issues.
