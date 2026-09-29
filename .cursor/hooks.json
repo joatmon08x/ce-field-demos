@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": ".cursor/hooks/synthetic-prompt.mjs",
+        "matcher": "UserPromptSubmit",
+        "timeout": 10,
+        "failClosed": true
+      }
+    ]
+  }
+}
