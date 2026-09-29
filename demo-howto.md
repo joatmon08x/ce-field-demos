@@ -77,9 +77,9 @@ Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP 
 2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. Members: **only you**. Do not add any other team.
-5. In Grok Build, run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with exactly three Fieldnote issues.
+5. In Grok Build, run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with the three Fieldnote issues plus the nine Collections Command Center slices, tagged as that feature.
 
-`stage-linear` never guesses the team — it lists your private teams and asks you to **confirm the exact one** before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the three issues and cancels the project (issues stay linked; the team is retained).
+`stage-linear` never guesses the team — it lists your private teams and asks you to **confirm the exact one** before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the recorded issues and cancels the project (issues stay linked; the team is retained).
 
 Do not skip the private-team step. A project on a public team is visible to that team.
 

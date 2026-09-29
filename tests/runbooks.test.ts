@@ -478,6 +478,9 @@ describe("runbook catalog", () => {
 
     // stage-linear reactivates a torn-down board on the next run
     expect(stage).toMatch(/reactivate|reopen|reopens/i);
+    expect(stage, "stage must create a new issue instead of unarchiving").toMatch(
+      /Never unarchive an issue/,
+    );
     // confirm counts only active issues so canceled linked extras do not fail the check
     expect(stage, "stage confirm must count only active issues").toMatch(
       /active.*non-`?Canceled`?|non-`?Canceled`?.*active/i,

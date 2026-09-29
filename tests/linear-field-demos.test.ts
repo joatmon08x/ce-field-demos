@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   COLLECTIONS_COMMAND_CENTER_ISSUES,
+  COLLECTIONS_COMMAND_CENTER_LINEAR,
+  collectionsCommandCenterDescription,
   FIELD_DEMO_FILTER_TITLE,
   FIELD_DEMO_ISSUES,
   FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
@@ -32,7 +34,7 @@ describe("ce-field-demos Linear book", () => {
     ]);
   });
 
-  it("keeps Collections Command Center slices off the three-issue board", () => {
+  it("keeps Collections Command Center slices out of FIELD_DEMO_ISSUES and tags their Linear bodies", () => {
     expect(COLLECTIONS_COMMAND_CENTER_ISSUES.map((issue) => issue.slug)).toEqual([
       "overdue-book",
       "full-payment",
@@ -45,8 +47,19 @@ describe("ce-field-demos Linear book", () => {
       "amount-mask",
     ]);
     const fieldTitles = new Set(FIELD_DEMO_ISSUES.map((issue) => issue.title));
-    for (const issue of COLLECTIONS_COMMAND_CENTER_ISSUES) {
+    expect(COLLECTIONS_COMMAND_CENTER_LINEAR.state).toBe("Todo");
+    expect(COLLECTIONS_COMMAND_CENTER_LINEAR.priority).toBe(3);
+    expect(COLLECTIONS_COMMAND_CENTER_LINEAR.note).toContain("Collections Command Center feature");
+    for (const [index, issue] of COLLECTIONS_COMMAND_CENTER_ISSUES.entries()) {
       expect(fieldTitles.has(issue.title)).toBe(false);
+      const description = collectionsCommandCenterDescription(issue);
+      expect(description.startsWith(COLLECTIONS_COMMAND_CENTER_LINEAR.note)).toBe(true);
+      expect(description).toContain(`Slice ${index + 1} of ${COLLECTIONS_COMMAND_CENTER_ISSUES.length}`);
+      const covers = issue.covers.map((id) => id.replaceAll("-", "\u2011")).join(", ");
+      expect(description).toContain(`Covers ${covers}`);
+      expect(description).not.toMatch(/FR-\d/);
+      expect(description).toContain("## Acceptance");
+      expect(description).not.toMatch(/\$(79|199)\b/);
     }
     const covered = COLLECTIONS_COMMAND_CENTER_ISSUES.flatMap((issue) => [...issue.covers]);
     expect(covered).toEqual([

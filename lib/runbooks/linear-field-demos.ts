@@ -2,7 +2,8 @@
 
 export const LINEAR_FIELD_DEMOS_PROJECT = {
   name: "ce-field-demos",
-  summary: "Personal Ledgerly board with three scoped Fieldnote issues.",
+  summary:
+    "Personal Ledgerly board: three scoped Fieldnote issues plus the Collections Command Center slices.",
   workspace: "Fieldnote Workspace",
   operator: "Avery Quinn",
   catalogPricesUsd: ["$49", "$99", "$249"] as const,
@@ -143,10 +144,22 @@ export const FIELD_DEMO_FILTER_TITLE = FIELD_DEMO_ISSUES.find(
 
 /**
  * Collections Command Center slices.
- * stage-linear reads FIELD_DEMO_ISSUES only. These must not join that array:
- * the ce-field-demos board stays the three Fieldnote issues.
+ * stage-linear stages these on the same ce-field-demos project, after the three
+ * Fieldnote issues, tagged with COLLECTIONS_COMMAND_CENTER_LINEAR. They must not
+ * join FIELD_DEMO_ISSUES: the 101/201 beats still name only those three titles.
  */
 export type CollectionsCommandCenterPattern = "Operations" | "Business rules";
+
+export const COLLECTIONS_COMMAND_CENTER_LINEAR = {
+  feature: "Collections Command Center",
+  /** Team-scoped label on the confirmed private team. Never a workspace label. */
+  label: "Collections Command Center",
+  /** First line of every slice description, so the tag survives a label strip. */
+  note: "> **Collections Command Center feature.** This issue is one slice of the Collections Command Center (prds/prd-01-collections-command-center.md). It is not one of the three Fieldnote demo issues.",
+  state: "Todo",
+  /** Linear: 3=Medium */
+  priority: 3,
+} as const;
 
 export type CollectionsCommandCenterIssue = {
   slug:
@@ -357,3 +370,28 @@ export const COLLECTIONS_COMMAND_CENTER_ISSUES: readonly CollectionsCommandCente
     ],
   },
 ] as const;
+
+/** Linear description for one slice. Note first, then the split-prd fields. */
+export function collectionsCommandCenterDescription(issue: CollectionsCommandCenterIssue): string {
+  const index = COLLECTIONS_COMMAND_CENTER_ISSUES.findIndex((candidate) => candidate.slug === issue.slug);
+  const position = `Slice ${index + 1} of ${COLLECTIONS_COMMAND_CENTER_ISSUES.length}`;
+  // Non-breaking hyphen: Linear treats "FR-1" as an issue key on the FR team.
+  const covers = issue.covers.map((id) => id.replaceAll("-", "\u2011")).join(", ");
+  const bullets = (items: readonly string[]) => items.map((item) => `- ${item}`).join("\n");
+  return [
+    COLLECTIONS_COMMAND_CENTER_LINEAR.note,
+    `${position} · ${issue.pattern} · Covers ${covers}`,
+    "## Story",
+    issue.why,
+    "## Acceptance",
+    bullets(issue.acceptance),
+    "## Constraints",
+    issue.constraints,
+    "## Not in this issue",
+    issue.notInThisIssue,
+    "## Paths",
+    bullets(issue.ledgerlyPaths.map((path) => `\`${path}\``)),
+    "## Verify",
+    bullets(issue.ledgerlyUrls),
+  ].join("\n\n");
+}
