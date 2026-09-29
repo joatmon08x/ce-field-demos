@@ -102,7 +102,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 
 | Name | Role |
 | --- | --- |
-| `ledgerly-reviewer` | After a change. Catalog, seed names, planted seams. |
+| `ledgerly-reviewer` | Read-only review after a change. Confirms the work runs, then catalog, seed names, planted seams, and high-risk changes. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |

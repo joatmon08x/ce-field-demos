@@ -98,7 +98,7 @@ Incomplete on purpose:
 
 | Path | Role |
 | --- | --- |
-| `.cursor/agents/ledgerly-reviewer.md` | Verifier after code changes |
+| `.cursor/agents/ledgerly-reviewer.md` | Read-only review after code changes. Confirms the work runs. |
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101 or 201 track: modes, models, rules, skills, and finishing one task with an agent |
