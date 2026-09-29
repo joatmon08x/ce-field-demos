@@ -35,3 +35,8 @@ export function planLabel(plan: string): string {
   }
   return PLAN_LABEL[plan];
 }
+
+/** Amount displays are gated to the paid catalog; any other id masks amounts. */
+export function amountsVisible(plan: string): boolean {
+  return isPlanId(plan);
+}

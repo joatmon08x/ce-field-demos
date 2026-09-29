@@ -79,7 +79,7 @@ Pure tests, no new red file:
 
 Route tests that write must put the invoice and new rows back before the test exits. The shared SQLite seed is the database other tests read.
 
-A new passing test moves **1 failed / 33 passed**. In the same change, set every citation to the new passed count, number only:
+The suite is now **1 failed / 63 passed**. Whenever a passing test is added or removed, set every citation to the new passed count, number only:
 
 - [README.md](README.md), [demo-howto.md](demo-howto.md), [AGENTS.md](AGENTS.md)
 - [.cursor/rules/ledgerly.mdc](.cursor/rules/ledgerly.mdc)

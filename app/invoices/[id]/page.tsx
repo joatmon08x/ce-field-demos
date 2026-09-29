@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Amount } from "@/components/amount";
+import { RecordPayment } from "@/components/invoices/record-payment";
 import { PageHeader } from "@/components/page-header";
 import { InvoiceStatusBadge, DisputeStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +10,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { draftCollectionNote } from "@/lib/collection-note";
 import { DEMO_AS_OF } from "@/lib/clock";
+import { outstandingCents } from "@/lib/collections";
 import { getInvoice } from "@/lib/data";
+import { getInvoicePayments, paymentMethodLabel } from "@/lib/payments";
 import { daysBetween, formatDate } from "@/lib/dates";
 import { formatUsd } from "@/lib/money";
 import { isPlanId, planLabel } from "@/lib/plans";
@@ -24,6 +28,9 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
   const invoice = await getInvoice(id);
   if (!invoice) notFound();
   if (!isPlanId(invoice.plan)) notFound();
+
+  const payments = await getInvoicePayments(id);
+  const outstanding = outstandingCents(invoice.totalCents, payments);
 
   const daysPastDue =
     invoice.status === "OVERDUE" ? Math.max(0, daysBetween(DEMO_AS_OF, invoice.dueOn)) : 0;
@@ -95,6 +102,44 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
             <CardContent className="space-y-1 text-sm">
               <p>{invoice.customer.email}</p>
               <p className="text-muted-foreground">Plan on file: {planLabel(invoice.plan)}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Payments</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {payments.length === 0 ? (
+                <p className="text-sm text-muted-foreground">— No payments recorded</p>
+              ) : (
+                <ul className="space-y-2">
+                  {payments.map((payment) => (
+                    <li key={payment.id} className="flex items-baseline justify-between gap-3 text-sm">
+                      <span>
+                        {formatDate(payment.recordedAt)}
+                        <span className="text-muted-foreground">
+                          {" · "}
+                          {paymentMethodLabel(payment.method)}
+                          {" · "}
+                          {payment.recordedBy}
+                        </span>
+                      </span>
+                      <Amount cents={payment.amountCents} plan={invoice.plan} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="flex items-baseline justify-between gap-3 border-t border-border pt-3 text-sm">
+                <span className="text-muted-foreground">Outstanding</span>
+                <Amount cents={outstanding} plan={invoice.plan} />
+              </div>
+              <RecordPayment
+                invoiceId={invoice.id}
+                invoiceNumber={invoice.number}
+                outstandingCents={outstanding}
+                disabled={invoice.status === "PAID" || outstanding === 0}
+              />
             </CardContent>
           </Card>
 

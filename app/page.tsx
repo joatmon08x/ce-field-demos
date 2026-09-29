@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { AlertTriangle, CalendarRange, CircleDollarSign, FileText, TrendingUp } from "lucide-react";
+import { AlertTriangle, CalendarRange, CircleDollarSign, Clock3, FileText, TrendingUp } from "lucide-react";
+import { MASKED_AMOUNT_TEXT } from "@/components/amount";
 import { DisputeDonut } from "@/components/charts/dispute-donut";
 import { RevenueChart } from "@/components/charts/revenue-chart";
 import { InvoiceTable } from "@/components/invoice-table";
@@ -34,7 +35,7 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         <KpiCard
           label="Monthly Recurring Revenue"
           value={formatUsd(kpis.mrrCents)}
@@ -65,6 +66,17 @@ export default async function DashboardPage() {
           change={kpis.collectedChange}
           icon={CircleDollarSign}
           tone="success"
+        />
+        <KpiCard
+          label="Overdue Book"
+          value={
+            kpis.collections.amountsVisible
+              ? formatUsd(kpis.collections.overdueCents)
+              : MASKED_AMOUNT_TEXT
+          }
+          hint={`${kpis.collections.overdueCount} overdue · ${kpis.collections.activitiesToday} touches today · ${kpis.collections.activitiesWeek} this week`}
+          icon={Clock3}
+          tone="danger"
         />
       </section>
 

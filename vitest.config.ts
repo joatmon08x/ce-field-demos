@@ -5,6 +5,8 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["tests/**/*.test.ts"],
+    // Route tests write to one SQLite file.
+    fileParallelism: false,
   },
   resolve: {
     alias: {

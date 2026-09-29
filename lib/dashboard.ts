@@ -101,3 +101,41 @@ export const DASHBOARD_WINDOWS = {
   priorStart: DEMO_PRIOR_START,
   priorEnd: DEMO_PRIOR_END,
 };
+
+export function overdueBookCents(invoices: InvoiceLike[]): number {
+  return sumCents(
+    invoices.filter((invoice) => invoice.status === "OVERDUE").map((invoice) => invoice.totalCents),
+  );
+}
+
+export function overdueInvoiceCount(invoices: InvoiceLike[]): number {
+  return invoices.filter((invoice) => invoice.status === "OVERDUE").length;
+}
+
+function utcDayBounds(asOf: Date) {
+  const start = new Date(Date.UTC(asOf.getUTCFullYear(), asOf.getUTCMonth(), asOf.getUTCDate()));
+  const end = new Date(start);
+  end.setUTCHours(23, 59, 59, 999);
+  return { start, end };
+}
+
+export function activityCounts(
+  activities: { occurredOn: Date }[],
+  asOf: Date = DEMO_AS_OF,
+): { today: number; week: number } {
+  const { start, end } = utcDayBounds(asOf);
+  const weekStart = new Date(start);
+  weekStart.setUTCDate(weekStart.getUTCDate() - 6);
+  const weekStartMs = weekStart.getTime();
+  const startMs = start.getTime();
+  const endMs = end.getTime();
+
+  let today = 0;
+  let week = 0;
+  for (const activity of activities) {
+    const occurred = activity.occurredOn.getTime();
+    if (occurred >= weekStartMs && occurred <= endMs) week += 1;
+    if (occurred >= startMs && occurred <= endMs) today += 1;
+  }
+  return { today, week };
+}
