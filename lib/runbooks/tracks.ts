@@ -1,5 +1,6 @@
 import { RUNBOOK_SECTIONS_101 } from "@/lib/runbooks/beats/101";
 import { RUNBOOK_SECTIONS_201 } from "@/lib/runbooks/beats/201";
+import { RUNBOOK_SECTIONS_301 } from "@/lib/runbooks/beats/301";
 import type { DemoSection, DemoTrack } from "@/lib/runbooks/types";
 
 export const RUNBOOK_TRACKS = [
@@ -16,6 +17,13 @@ export const RUNBOOK_TRACKS = [
     description:
       "You will curate what belongs in an agent's context, encode conventions as project skills, connect a curated set of MCP servers, and split one task across parallel agents.",
     sections: RUNBOOK_SECTIONS_201,
+  },
+  {
+    id: "301" as const,
+    title: "301",
+    description:
+      "You will orchestrate work across agents, tasks, and contributors: break tasks down for multiple agents, take a plan through parallel agents to a reviewable PR, scale review when several streams finish, and share ownership safely.",
+    sections: RUNBOOK_SECTIONS_301,
   },
 ] as const satisfies readonly {
   id: DemoTrack;

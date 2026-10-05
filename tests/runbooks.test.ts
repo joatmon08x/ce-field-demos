@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   RUNBOOK_SECTIONS_101,
   RUNBOOK_SECTIONS_201,
+  RUNBOOK_SECTIONS_301,
   RUNBOOK_TRACKS,
   runbookBeatSequence,
   runbookBeats,
@@ -12,19 +13,24 @@ import {
 const root = process.cwd();
 const beats101 = runbookBeats("101");
 const beats201 = runbookBeats("201");
+const beats301 = runbookBeats("301");
 
 describe("runbook catalog", () => {
-  it("ships the 101 and 201 tracks", () => {
-    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101", "201"]);
+  it("ships the 101, 201, and 301 tracks", () => {
+    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101", "201", "301"]);
 
     const track101 = RUNBOOK_TRACKS.find((track) => track.id === "101");
     const track201 = RUNBOOK_TRACKS.find((track) => track.id === "201");
+    const track301 = RUNBOOK_TRACKS.find((track) => track.id === "301");
 
     expect(track101?.description).toBe(
       "You will explore different ways to work in Grok Build, use modes and models for the right tasks, apply rules and skills to ensure consistent quality, and complete at least one task with an agent.",
     );
     expect(track201?.description).toBe(
       "You will curate what belongs in an agent's context, encode conventions as project skills, connect a curated set of MCP servers, and split one task across parallel agents.",
+    );
+    expect(track301?.description).toBe(
+      "You will orchestrate work across agents, tasks, and contributors: break tasks down for multiple agents, take a plan through parallel agents to a reviewable PR, scale review when several streams finish, and share ownership safely.",
     );
 
     for (const track of RUNBOOK_TRACKS) {
@@ -348,8 +354,202 @@ describe("runbook catalog", () => {
     expect(beat("ledgerly-reviewer-check")?.promptType).toBe("adaptable");
   });
 
+  it("keeps the 301 beats intact", () => {
+    const skill = readFileSync(join(root, ".cursor/skills/choose-cursor-workflow/SKILL.md"), "utf8");
+    const track301 = RUNBOOK_TRACKS.find((track) => track.id === "301");
+    expect(skill).toContain(track301?.description ?? "");
+    expect(skill).toContain("/runbooks/301");
+
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.title)).toEqual([
+      "How do you break down tasks for agents?",
+      "How do multiple agents go from plan to PR?",
+      "How do you scale AI code reviews?",
+      "How do contributors share ownership safely?",
+    ]);
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.id)).toEqual([
+      "break-down-tasks",
+      "plan-to-pr",
+      "scale-reviews",
+      "share-ownership",
+    ]);
+
+    expect(beats301.map((beat) => beat.id)).toEqual([
+      "open-local-agent",
+      "create-accessibility-auditor",
+      "optional-cloud-agent",
+      "multitask-audit",
+      "review-subagents",
+      "optional-start-project",
+      "optional-stage-project",
+      "open-plan-agent",
+      "list-collections-issues",
+      "plan-collections-center",
+      "review-plan",
+      "build-plan",
+      "optional-build-cloud",
+      "side-chat",
+      "ask-new-apis",
+      "consolidate-pr",
+      "optional-project-notes",
+      "linear-issue-fallback",
+      "checkout-feature-branch",
+      "open-hooks-json",
+      "trigger-email-hook",
+      "run-reviewer-subagent",
+      "check-high-severity",
+      "optional-bugbot",
+      "review-highest-risk",
+      "open-ownership-agent",
+      "shift-left-findings",
+      "optional-reviewer-automation",
+      "list-conflict-files",
+    ]);
+    expect(RUNBOOK_SECTIONS_301.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
+      beats301.map((entry) => entry.id),
+    );
+    expect(runbookBeatSequence("301")).toBe(
+      "Open a new agent → Create accessibility-auditor → Optional: Move to a Cloud Agent → Multitask the audit → Review the subagents → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → List open collections issues → Plan the collections command center → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what APIs the subagent adds → Consolidate and open a PR → Optional: Show project notes → Fallback: reference repo issues → Open the feature branch → Open hooks.json → Trigger the dataset hook → Run the reviewer subagent → Check high severity issues → Optional: Run Bugbot → Review the highest-risk slice → Open a new agent → Shift review findings left → Optional: Create a Reviewer automation → List files that might conflict",
+    );
+
+    const beat = (id: (typeof beats301)[number]["id"]) => beats301.find((entry) => entry.id === id);
+
+    expect(beat("open-local-agent")?.promptType).toBe("none");
+    expect(beat("open-local-agent")?.detail).toBe("Open a new local agent.");
+    expect(beat("open-local-agent")?.example).toBeUndefined();
+    expect(beat("create-accessibility-auditor")?.promptType).toBe("adaptable");
+    expect(beat("create-accessibility-auditor")?.detail).toBe("");
+    expect(beat("create-accessibility-auditor")?.example).toBe(
+      "/create-subagent named accessibility-auditor whose job is to audit accessibility of the UI based on WCAG. Provide a list of recommendations.",
+    );
+    expect(beat("optional-cloud-agent")?.promptType).toBe("none");
+    expect(beat("optional-cloud-agent")?.detail).toBe(
+      "Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.",
+    );
+    expect(beat("optional-cloud-agent")?.example).toBeUndefined();
+    expect(beat("multitask-audit")?.promptType).toBe("reusable");
+    expect(beat("multitask-audit")?.detail).toBe("");
+    expect(beat("multitask-audit")?.example).toBe(
+      "/multitask Use the accessibility-auditor subagent to audit the invoices page. Explain how suggested credit is calculated. Compare test coverage for disputes versus invoices.",
+    );
+    expect(beat("review-subagents")?.promptType).toBe("none");
+    expect(beat("review-subagents")?.detail).toBe("Watch the Working tab.");
+    expect(beat("review-subagents")?.example).toBeUndefined();
+
+    expect(beat("optional-start-project")?.promptType).toBe("none");
+    expect(beat("optional-start-project")?.detail).toBe(
+      "Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.",
+    );
+    expect(beat("optional-stage-project")?.promptType).toBe("adaptable");
+    expect(beat("optional-stage-project")?.detail).toBe("");
+    expect(beat("optional-stage-project")?.example).toBe(
+      "Run all agents in their own worktrees. Parallelize if possible.",
+    );
+    expect(beat("open-plan-agent")?.promptType).toBe("none");
+    expect(beat("open-plan-agent")?.detail).toBe(
+      "Open a new local agent. Optional: Run the following prompts from the Project.",
+    );
+    expect(beat("list-collections-issues")?.promptType).toBe("adaptable");
+    expect(beat("list-collections-issues")?.detail).toBe("Review the list of open issues.");
+    expect(beat("list-collections-issues")?.example).toBe(
+      "List the open issues for building the collections command center.",
+    );
+    expect(beat("plan-collections-center")?.promptType).toBe("adaptable");
+    expect(beat("plan-collections-center")?.detail).toBe("");
+    expect(beat("plan-collections-center")?.example).toBe(
+      "/plan Build the collections command center based on the open issues.",
+    );
+    expect(beat("review-plan")?.promptType).toBe("none");
+    expect(beat("review-plan")?.detail).toBe("Review the plan.");
+    expect(beat("build-plan")?.promptType).toBe("none");
+    expect(beat("build-plan")?.detail).toBe("Build the plan.");
+    expect(beat("optional-build-cloud")?.promptType).toBe("none");
+    expect(beat("optional-build-cloud")?.detail).toBe("Build the plan with Cloud Agents.");
+    expect(beat("side-chat")?.promptType).toBe("reusable");
+    expect(beat("side-chat")?.detail).toBe("");
+    expect(beat("side-chat")?.example).toBe("/side");
+    expect(beat("ask-new-apis")?.promptType).toBe("reusable");
+    expect(beat("ask-new-apis")?.detail).toBe(
+      "Use a side chat to read through implementation or ask questions without disrupting the coordinator.",
+    );
+    expect(beat("ask-new-apis")?.example).toBe("/ask what new APIs will this first subagent add?");
+    expect(beat("consolidate-pr")?.promptType).toBe("reusable");
+    expect(beat("consolidate-pr")?.detail).toBe(
+      "Move finished worktrees back deliberately. Resolve conflicts on purpose. Open the PR. Show the summary a colleague would read first.",
+    );
+    expect(beat("consolidate-pr")?.example).toBe(
+      "Consolidate the completed tasks into one branch. Open a PR that summarizes what each lane changed, links the plan or ticket, and lists what a human should verify before merge.",
+    );
+    expect(beat("optional-project-notes")?.promptType).toBe("adaptable");
+    expect(beat("optional-project-notes")?.detail).toBe("");
+    expect(beat("optional-project-notes")?.example).toBe("Show me the project notes and context.");
+    expect(beat("linear-issue-fallback")?.promptType).toBe("adaptable");
+    expect(beat("linear-issue-fallback")?.detail).toBe(
+      "If an agent cannot access Linear MCP server, use the issue descriptions in the repository.",
+    );
+    expect(beat("linear-issue-fallback")?.example).toBe(
+      "Reference issues from @linear-field-demo.ts instead of Linear",
+    );
+
+    expect(beat("checkout-feature-branch")?.promptType).toBe("adaptable");
+    expect(beat("checkout-feature-branch")?.detail).toBe("Open a new local agent.");
+    expect(beat("checkout-feature-branch")?.example).toBe(
+      "Change the branch to the collections command center feature.",
+    );
+    expect(beat("open-hooks-json")?.promptType).toBe("none");
+    expect(beat("open-hooks-json")?.detail).toBe("Open .cursor/hooks.json in the demo repo.");
+    expect(beat("trigger-email-hook")?.promptType).toBe("reusable");
+    expect(beat("trigger-email-hook")?.detail).toBe("");
+    expect(beat("trigger-email-hook")?.example).toBe(
+      "Create a test that uses the email avery.quinn@ledgerly.ai",
+    );
+    expect(beat("run-reviewer-subagent")?.promptType).toBe("reusable");
+    expect(beat("run-reviewer-subagent")?.detail).toBe("");
+    expect(beat("run-reviewer-subagent")?.example).toBe(
+      "Use the custom reviewer subagent to review the feature.",
+    );
+    expect(beat("check-high-severity")?.promptType).toBe("none");
+    expect(beat("check-high-severity")?.detail).toBe(
+      "Check the reviewer’s output for any high severity issues to assess.",
+    );
+    expect(beat("optional-bugbot")?.promptType).toBe("reusable");
+    expect(beat("optional-bugbot")?.detail).toBe("");
+    expect(beat("optional-bugbot")?.example).toBe("/review-bugbot");
+    expect(beat("review-highest-risk")?.promptType).toBe("reusable");
+    expect(beat("review-highest-risk")?.detail).toBe(
+      "Open the highest-risk slice first and read it line by line.",
+    );
+    expect(beat("review-highest-risk")?.example).toBe(
+      "/ask What is the highest-risk slice of work? Show me the lines I need to review.",
+    );
+
+    expect(beat("open-ownership-agent")?.promptType).toBe("none");
+    expect(beat("open-ownership-agent")?.detail).toBe("Open a new local agent.");
+    expect(beat("shift-left-findings")?.promptType).toBe("reusable");
+    expect(beat("shift-left-findings")?.detail).toBe("");
+    expect(beat("shift-left-findings")?.example).toBe(
+      "Read the review comments and reviewer subagent findings on this PR. List the ones that apply to future work in this repo. For each one, say whether it belongs in a rule, a skill, a hook, a test, the reviewer subagent, or a person, and draft it.",
+    );
+    expect(beat("optional-reviewer-automation")?.promptType).toBe("adaptable");
+    expect(beat("optional-reviewer-automation")?.detail).toBe(
+      "Go to the Automations tab. Create a New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Run custom reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save. Open the PR and review the check for Automation: Reviewer.",
+    );
+    expect(beat("optional-reviewer-automation")?.example).toBe("Fix dispute cap issue and open a PR.");
+    expect(beat("list-conflict-files")?.promptType).toBe("reusable");
+    expect(beat("list-conflict-files")?.detail).toBe(
+      "Start a new local agent as the second contributor.",
+    );
+    expect(beat("list-conflict-files")?.example).toBe(
+      "Check the PRs in this repository and make a list of files that might conflict with implementing the dispute resolution feature.",
+    );
+
+    expect(beats301.every((entry) => entry.promptType !== undefined)).toBe(true);
+    expect(beats301.filter((entry) => entry.promptType === "none").every((entry) => entry.example === undefined)).toBe(
+      true,
+    );
+  });
+
   it("does not resolve the retired advanced track", () => {
-    expect(RUNBOOK_TRACKS).toHaveLength(2);
+    expect(RUNBOOK_TRACKS).toHaveLength(3);
     for (const retired of ["advanced", "Advanced"]) {
       expect(RUNBOOK_TRACKS.find((track) => track.id === retired)).toBeUndefined();
     }
@@ -388,6 +588,11 @@ describe("runbook catalog", () => {
     expect(files.readme).toContain("/runbooks/201");
     expect(files.howto).toContain("/runbooks/201");
     expect(files.skill).toContain("/runbooks/201");
+    expect(files.readme).toContain("/runbooks/301");
+    expect(files.howto).toContain("/runbooks/301");
+    expect(files.skill).toContain("/runbooks/301");
+    expect(files.agents).toContain("/runbooks/301");
+    expect(files.rule).toContain("/runbooks/301");
     expect(files.agents).toContain("lib/runbooks/meta.ts");
     expect(files.rule).toContain("lib/runbooks/meta.ts");
     expect(files.skill).toContain("lib/runbooks/meta.ts");
