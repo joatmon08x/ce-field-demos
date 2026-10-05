@@ -20,7 +20,7 @@ export const PROJECT_SKILLS = [
   {
     name: "choose-cursor-workflow",
     path: ".cursor/skills/choose-cursor-workflow/SKILL.md",
-    when: "Walk the 101 or 201 track, then choose the mode, model, rule, or skill from the shape of the work.",
+    when: "Walk the 101, 201, or 301 track, then choose the mode, model, rule, or skill from the shape of the work.",
   },
   {
     name: "stage-linear",

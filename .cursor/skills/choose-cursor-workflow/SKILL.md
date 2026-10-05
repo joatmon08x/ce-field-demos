@@ -1,11 +1,11 @@
 ---
 name: choose-cursor-workflow
-description: Walk the 101 or 201 Ledgerly track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
+description: Walk the 101, 201, or 301 Ledgerly track, then choose the mode, model, rule, or skill that fits the shape of the work. You still review the result.
 ---
 
-# Walk the 101 or 201 track
+# Walk the 101, 201, or 301 track
 
-The demo ships two jumpable tracks: **101** and **201**. Every beat is independent — if the user names a beat, jump directly to it. You still review the result.
+The demo ships three jumpable tracks: **101**, **201**, and **301**. Every beat is independent. If the user names a beat, jump directly to it. You still review the result.
 
 ## The tracks
 
@@ -13,7 +13,9 @@ The demo ships two jumpable tracks: **101** and **201**. Every beat is independe
 
 201 — You will curate what belongs in an agent's context, encode conventions as project skills, connect a curated set of MCP servers, and split one task across parallel agents.
 
-The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101` and `/runbooks/201`. Use the matching `example` verbatim. Do not invent another catalog price.
+301: You will orchestrate work across agents, tasks, and contributors: break tasks down for multiple agents, take a plan through parallel agents to a reviewable PR, scale review when several streams finish, and share ownership safely.
+
+The beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101`, `/runbooks/201`, and `/runbooks/301`. Use the matching `example` verbatim. Do not invent another catalog price.
 
 The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not mention the invoice or dispute filter-pill `state=` seam unless the user is on that click path.
 
@@ -31,6 +33,13 @@ Start a demo session with `npm run demo:session -- start`. Record every rule, sk
 2. **How do you standardize agent behavior?** — personal create-api skill, promote it.
 3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. The operator creates a private Linear team in the UI first (Settings → Teams → New team, Make team private). Then run `stage-linear`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
 4. **How do you parallelize a task?** — open a new agent, resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
+
+## 301 sections and beats
+
+1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
+2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list open collections issues, plan and build, use `/side`, consolidate into a PR, and fall back to repo issue descriptions if Linear MCP is unavailable.
+3. **How do you scale AI code reviews?** Check out the feature branch, open hooks.json, trigger the dataset hook, run the reviewer subagent, optionally run Bugbot, and read the highest-risk slice.
+4. **How do contributors share ownership safely?** Shift review findings into a rule, skill, hook, test, the reviewer subagent, or a person, optionally create a Reviewer automation, and list files that might conflict.
 
 ## Choose the mode
 

@@ -1,10 +1,10 @@
 # Ledgerly demo howto
 
-Presenter run-of-show for the **101** and **201** tracks, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
+Presenter run-of-show for the **101**, **201**, and **301** tracks, not a course. Every step stands on its own, so you can start anywhere. You still review each result before it ships.
 
 Ledgerly is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
 
-The pastes below match the copy-paste blocks on `/runbooks/101` and `/runbooks/201`. Each beat is independent; jump directly to any step.
+The pastes below match the copy-paste blocks on `/runbooks/101`, `/runbooks/201`, and `/runbooks/301`. Each beat is independent; jump directly to any step.
 
 ## Jump menu
 
@@ -20,6 +20,13 @@ The 201 track has four sections. Open `/runbooks/201` and copy a card for any be
 2. **How do you standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
 3. **How do you connect an agent to external tools?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, list open issues, import plugin from disk
 4. **How do you parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
+
+The 301 track has four sections. Open `/runbooks/301` and copy a card for any beat.
+
+1. **How do you break down tasks for agents?** — open a local agent, create accessibility-auditor, optional Cloud Agent, `/multitask` the audit, watch the Working tab
+2. **How do multiple agents go from plan to PR?** — optional Project, list collections issues, `/plan`, build, `/side`, [consolidate into a PR](#consolidate-and-open-a-pr)
+3. **How do you scale AI code reviews?** — feature branch, hooks.json, dataset hook, reviewer subagent, optional Bugbot, highest-risk slice
+4. **How do contributors share ownership safely?** — shift findings left, optional Reviewer automation, files that might conflict
 
 ---
 
@@ -55,7 +62,7 @@ Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` ski
 
 Check shipped state:
 
-- `npm test` is **1 failed / 33 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 35 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -224,12 +231,12 @@ Create three slides in Figma Slides outlining how I used Grok Build to develop a
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 33 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 35 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If the client migration ran:** `tests/suggested-credit-api.test.ts` should be green and dsp_1043 should show **$249** from v2, with both routes intact.
 
-**If no migration ran:** `npm test` should remain **1 failed / 33 passed**. That is shipped state, not failed setup.
+**If no migration ran:** `npm test` should remain **1 failed / 35 passed**. That is shipped state, not failed setup.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -249,7 +256,7 @@ npm run demo:reset
 
 **Then:** complete only the script's reported Figma, Cursor user-rule, or Linear MCP actions. The script resets files, recorded rules/skills, Canvas, branches, SQLite, and port 43173.
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 33 passed**, status pills still writing `state=`.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 35 passed**, status pills still writing `state=`.
 
 ---
 
@@ -328,6 +335,130 @@ Update Canvas with subagent progress and models used. Make a list of worktree co
 
 ```text
 ledgerly-reviewer check my work
+```
+
+---
+
+## The 301 track
+
+Open `/runbooks/301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional beats are marked Optional in the title.
+
+### How do you break down tasks for agents?
+
+Open a new local agent. Create the accessibility-auditor subagent:
+
+```text
+/create-subagent named accessibility-auditor whose job is to audit accessibility of the UI based on WCAG. Provide a list of recommendations.
+```
+
+Optional: Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes. Then:
+
+```text
+/multitask Use the accessibility-auditor subagent to audit the invoices page. Explain how suggested credit is calculated. Compare test coverage for disputes versus invoices.
+```
+
+Watch the Working tab.
+
+### How do multiple agents go from plan to PR?
+
+Optional: Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}. Optional: stage it so each agent runs in its own worktree:
+
+```text
+Run all agents in their own worktrees. Parallelize if possible.
+```
+
+Open a new local agent. Optional: run the following prompts from the Project. List the issues, then plan:
+
+```text
+List the open issues for building the collections command center.
+```
+
+```text
+/plan Build the collections command center based on the open issues.
+```
+
+Review the plan. Build the plan. Optional: Build the plan with Cloud Agents. Open a side chat, then ask what the first subagent adds:
+
+```text
+/side
+```
+
+```text
+/ask what new APIs will this first subagent add?
+```
+
+#### Consolidate and open a PR
+
+Move finished worktrees back deliberately. Resolve conflicts on purpose.
+
+```text
+Consolidate the completed tasks into one branch. Open a PR that summarizes what each lane changed, links the plan or ticket, and lists what a human should verify before merge.
+```
+
+Open the PR. Show the summary a colleague would read first.
+
+Optional:
+
+```text
+Show me the project notes and context.
+```
+
+If an agent cannot access Linear MCP server, use the issue descriptions in the repository:
+
+```text
+Reference issues from @linear-field-demo.ts instead of Linear
+```
+
+### How do you scale AI code reviews?
+
+Open a new local agent and change to the feature branch:
+
+```text
+Change the branch to the collections command center feature.
+```
+
+Open `.cursor/hooks.json` in the demo repo. Trigger the dataset hook:
+
+```text
+Create a test that uses the email avery.quinn@ledgerly.ai
+```
+
+Run the reviewer subagent:
+
+```text
+Use the custom reviewer subagent to review the feature.
+```
+
+Check the reviewer’s output for any high severity issues to assess. Optional:
+
+```text
+/review-bugbot
+```
+
+```text
+/ask What is the highest-risk slice of work? Show me the lines I need to review.
+```
+
+Open the highest-risk slice first and read it line by line.
+
+### How do contributors share ownership safely?
+
+Open a new local agent. Shift review findings left:
+
+```text
+Read the review comments and reviewer subagent findings on this PR. List the ones that apply to future work in this repo. For each one, say whether it belongs in a rule, a skill, a hook, a test, the reviewer subagent, or a person, and draft it.
+```
+
+Optional: Go to the Automations tab. Create a New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Run custom reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.
+
+```text
+Fix dispute cap issue and open a PR.
+```
+
+Open the PR and review the check for Automation: Reviewer. Start a new local agent as the second contributor:
+
+```text
+Check the PRs in this repository and make a list of files that might conflict with implementing the dispute resolution feature.
 ```
 
 ---

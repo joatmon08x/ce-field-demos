@@ -9,12 +9,12 @@ const request = new Request("http://localhost/api/runbooks");
 const trackParams = (track: string) => ({ params: Promise.resolve({ track }) });
 
 describe("runbooks API", () => {
-  it("lists the 101 and 201 tracks with section-header tabs", async () => {
+  it("lists the 101, 201, and 301 tracks with section-header tabs", async () => {
     const response = await getRunbookCatalog();
     const body = await response.json();
 
     expect(response.status).toBe(200);
-    expect(body.tracks.map((track: { id: string }) => track.id)).toEqual(["101", "201"]);
+    expect(body.tracks.map((track: { id: string }) => track.id)).toEqual(["101", "201", "301"]);
 
     for (const track of body.tracks) {
       expect(track).not.toHaveProperty("runbookSlugs");
@@ -39,6 +39,12 @@ describe("runbooks API", () => {
       "How do you standardize agent behavior?",
       "How do you connect an agent to external tools?",
       "How do you parallelize a task?",
+    ]);
+    expect(body.tracks[2].sections.map((section: { title: string }) => section.title)).toEqual([
+      "How do you break down tasks for agents?",
+      "How do multiple agents go from plan to PR?",
+      "How do you scale AI code reviews?",
+      "How do contributors share ownership safely?",
     ]);
   });
 
@@ -82,6 +88,26 @@ describe("runbooks API", () => {
     expect(body).not.toHaveProperty("runbooks");
   });
 
+  it("returns the 301 track catalog with beats", async () => {
+    const response = await getRunbookTrack(request, trackParams("301"));
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.id).toBe("301");
+    expect(body.href).toBe("/runbooks/301");
+    expect(body.sections.map((section: { id: string }) => section.id)).toEqual([
+      "break-down-tasks",
+      "plan-to-pr",
+      "scale-reviews",
+      "share-ownership",
+    ]);
+    expect(body.sections[0].beats[0].id).toBe("open-local-agent");
+    expect(body.sections.map((section: { beats: unknown[] }) => section.beats.length)).toEqual([
+      5, 13, 7, 4,
+    ]);
+    expect(body).not.toHaveProperty("runbooks");
+  });
+
   it("returns 404 for the retired advanced track", async () => {
     const response = await getRunbookTrack(request, trackParams("advanced"));
     expect(response.status).toBe(404);
@@ -106,6 +132,9 @@ describe("runbooks redirects", () => {
     expect(redirects).not.toEqual(
       expect.arrayContaining([{ source: "/runbooks/201", destination: "/runbooks/101", permanent: false }]),
     );
+    expect(redirects).not.toEqual(
+      expect.arrayContaining([{ source: "/runbooks/301", destination: "/runbooks/101", permanent: false }]),
+    );
   });
 });
 
@@ -115,12 +144,14 @@ describe("runbooks catalog hrefs", () => {
     expect(runbookSectionHref("101", "first-prompt")).toBe("/runbooks/101#first-prompt");
     expect(runbookTrackHref("201")).toBe("/runbooks/201");
     expect(runbookSectionHref("201", "target-context")).toBe("/runbooks/201#target-context");
+    expect(runbookTrackHref("301")).toBe("/runbooks/301");
+    expect(runbookSectionHref("301", "break-down-tasks")).toBe("/runbooks/301#break-down-tasks");
   });
 });
 
 describe("runbooks page routes", () => {
-  it("prebuilds the 101 and 201 track pages", () => {
-    expect(generateTrackParams()).toEqual([{ track: "101" }, { track: "201" }]);
-    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101", "201"]);
+  it("prebuilds the 101, 201, and 301 track pages", () => {
+    expect(generateTrackParams()).toEqual([{ track: "101" }, { track: "201" }, { track: "301" }]);
+    expect(RUNBOOK_TRACKS.map((track) => track.id)).toEqual(["101", "201", "301"]);
   });
 });
