@@ -144,7 +144,7 @@ describe("runbook catalog", () => {
     expect(beat("canvas")?.example).toBe("Create a canvas explaining what we did today.");
     expect(beat("mcp")?.title).toBe("MCP / Figma");
     expect(beat("mcp")?.detail).toBe(
-      "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
+      "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find an MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
     );
     expect(beat("mcp")?.example).toBe(
       "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
@@ -156,8 +156,8 @@ describe("runbook catalog", () => {
     expect(beat("agent-build")?.promptType).toBe("none");
     expect(RUNBOOK_SECTIONS_101.map((section) => section.title)).toEqual([
       "What is Grok Build?",
-      "How do I work with an agent?",
-      "How do I govern my agent?",
+      "How do you work with an agent?",
+      "How do you govern an agent?",
     ]);
     expect(
       RUNBOOK_SECTIONS_101.find((section) => section.id === "work-with-agent")?.beats.map(

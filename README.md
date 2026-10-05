@@ -71,8 +71,8 @@ Restyle the four KPI cards on this dashboard using only the existing design toke
 Open `/runbooks/101`, copy a card, and paste it in Grok Build. You still review the result.
 
 1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, and check the models.
-2. **How do I work with an agent?** — Run Mode allowlist, verify the email feature, redact, stop, interrupt and steer, continue to the end, review diffs, restore from a checkpoint.
-3. **How do I govern my agent?** — create and test a rule, create and test a skill, Canvas, MCP / Figma.
+2. **How do you work with an agent?** — Run Mode allowlist, verify the email feature, redact, stop, interrupt and steer, continue to the end, review diffs, restore from a checkpoint.
+3. **How do you govern an agent?** — create and test a rule, create and test a skill, Canvas, MCP / Figma.
 
 ## The 201 track
 
