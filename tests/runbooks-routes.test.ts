@@ -31,8 +31,8 @@ describe("runbooks API", () => {
 
     expect(body.tracks[0].sections.map((section: { title: string }) => section.title)).toEqual([
       "What is Grok Build?",
-      "How do I work with an agent?",
-      "How do I govern my agent?",
+      "How do you work with an agent?",
+      "How do you govern an agent?",
     ]);
     expect(body.tracks[1].sections.map((section: { title: string }) => section.title)).toEqual([
       "How do you manage context?",

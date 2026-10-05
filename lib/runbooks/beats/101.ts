@@ -52,7 +52,7 @@ export const RUNBOOK_SECTIONS_101 = [
   },
   {
     id: "work-with-agent",
-    title: "How do I work with an agent?",
+    title: "How do you work with an agent?",
     beats: [
       {
         id: "allowlist",
@@ -115,7 +115,7 @@ export const RUNBOOK_SECTIONS_101 = [
   },
   {
     id: "govern-agent",
-    title: "How do I govern my agent?",
+    title: "How do you govern an agent?",
     beats: [
       {
         id: "rule",
@@ -161,7 +161,7 @@ export const RUNBOOK_SECTIONS_101 = [
         title: "MCP / Figma",
         promptType: "adaptable",
         detail:
-          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find a MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
+          "Ask Grok Build to create a slideshow in Figma using MCP Servers. Find an MCP server for slideshow generation in Grok Build. Go to Customize > MCPs > Figma.",
         example:
           "Create three slides in Figma Slides outlining how I used Grok Build to develop a new feature. I want to use this as part of my demo showcase.",
       },
