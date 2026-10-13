@@ -9,7 +9,7 @@ The agent reads issues from Linear. Run this before a beat that needs the Fieldn
 
 Catalog stays Starter **$49**, Growth **$99**, Scale **$249**. Operator Avery Quinn. No real customers.
 
-Issue bodies live in `lib/runbooks/linear-field-demos.ts`. The board has two sets on the **same** project, never a second project:
+Issue bodies live in `runbooks/linear-field-demos.ts`. The board has two sets on the **same** project, never a second project:
 
 - **Fieldnote issues** — the three in `FIELD_DEMO_ISSUES`. The 101/201 beats name only these titles.
 - **Collections Command Center slices** — the nine in `COLLECTIONS_COMMAND_CENTER_ISSUES`, each tagged as part of the Collections Command Center feature (§3a).
@@ -99,7 +99,7 @@ Do not comment as a fake reporter. Avery Quinn copy is already in the descriptio
 
 ## 3a. Collections Command Center slices
 
-Stage these **after** the three Fieldnote issues exist, on the **same** project. Do not create a second project, initiative, or milestone for the feature. Everything here is read from `COLLECTIONS_COMMAND_CENTER_ISSUES` and `COLLECTIONS_COMMAND_CENTER_LINEAR` in `lib/runbooks/linear-field-demos.ts`.
+Stage these **after** the three Fieldnote issues exist, on the **same** project. Do not create a second project, initiative, or milestone for the feature. Everything here is read from `COLLECTIONS_COMMAND_CENTER_ISSUES` and `COLLECTIONS_COMMAND_CENTER_LINEAR` in `runbooks/linear-field-demos.ts`.
 
 **Tag.** Every slice is marked as part of the Collections Command Center feature in two places:
 

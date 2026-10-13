@@ -1,5 +1,5 @@
-import { getRunbookTrack } from "@/lib/runbooks/tracks";
-import type { DemoBeat, DemoTrack } from "@/lib/runbooks/types";
+import { getRunbookTrack } from "@/runbooks/tracks";
+import type { DemoBeat, DemoTrack } from "@/runbooks/types";
 
 export function runbookTrackHref(trackId: string): string {
   return `/runbooks/${trackId}`;

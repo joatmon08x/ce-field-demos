@@ -3,7 +3,7 @@ import nextConfig from "@/next.config";
 import { GET as getRunbookCatalog } from "@/app/api/runbooks/route";
 import { GET as getRunbookTrack } from "@/app/api/runbooks/[track]/route";
 import { generateStaticParams as generateTrackParams } from "@/app/runbooks/[track]/page";
-import { RUNBOOK_TRACKS, runbookSectionHref, runbookTrackHref } from "@/lib/runbooks/meta";
+import { RUNBOOK_TRACKS, runbookSectionHref, runbookTrackHref } from "@/runbooks/meta";
 
 const request = new Request("http://localhost/api/runbooks");
 const trackParams = (track: string) => ({ params: Promise.resolve({ track }) });

@@ -1,4 +1,4 @@
-import type { DemoSection } from "@/lib/runbooks/types";
+import type { DemoSection } from "@/runbooks/types";
 
 export const RUNBOOK_SECTIONS_101 = [
   {

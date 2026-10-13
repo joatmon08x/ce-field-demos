@@ -7,8 +7,8 @@ import {
   RUNBOOK_TRACKS,
   runbookBeatSequence,
   runbookBeats,
-} from "@/lib/runbooks/meta";
-import { STATIC_RUNBOOKS_PATH, renderRunbooksHtml } from "@/lib/runbooks/static-page";
+} from "@/runbooks/meta";
+import { STATIC_RUNBOOKS_PATH, renderRunbooksHtml } from "@/runbooks/static-page";
 
 const root = process.cwd();
 const beats101 = runbookBeats("101");
@@ -400,9 +400,9 @@ describe("runbook catalog", () => {
     expect(files.readme).toContain("/runbooks/201");
     expect(files.howto).toContain("/runbooks/201");
     expect(files.skill).toContain("/runbooks/201");
-    expect(files.agents).toContain("lib/runbooks/meta.ts");
-    expect(files.rule).toContain("lib/runbooks/meta.ts");
-    expect(files.skill).toContain("lib/runbooks/meta.ts");
+    expect(files.agents).toContain("runbooks/meta.ts");
+    expect(files.rule).toContain("runbooks/meta.ts");
+    expect(files.skill).toContain("runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
 
     // Shipped-suite count must stay consistent across the docs that cite it

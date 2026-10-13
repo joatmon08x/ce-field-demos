@@ -3,7 +3,7 @@ import { HashScroll } from "@/components/hash-scroll";
 import { PageHeader } from "@/components/page-header";
 import { RunbookCatalog } from "@/components/runbook-catalog";
 import { RunbookCatalogSelect } from "@/components/runbook-catalog-select";
-import { RUNBOOK_TRACKS, getRunbookTrack } from "@/lib/runbooks/meta";
+import { RUNBOOK_TRACKS, getRunbookTrack } from "@/runbooks/meta";
 
 export function generateStaticParams() {
   return RUNBOOK_TRACKS.map((track) => ({ track: track.id }));

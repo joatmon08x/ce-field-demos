@@ -1,7 +1,7 @@
 import { CopyButton } from "@/components/copy-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { runbookSectionHref, type DemoSection } from "@/lib/runbooks/meta";
+import { runbookSectionHref, type DemoSection } from "@/runbooks/meta";
 
 function PasteBlock({ text, label = "Paste in Grok Build" }: { text: string; label?: string }) {
   return (

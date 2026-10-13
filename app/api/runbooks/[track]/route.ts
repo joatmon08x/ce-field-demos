@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRunbookTrack, runbookSectionHref, runbookTrackHref } from "@/lib/runbooks/meta";
+import { getRunbookTrack, runbookSectionHref, runbookTrackHref } from "@/runbooks/meta";
 
 export async function GET(
   _request: Request,

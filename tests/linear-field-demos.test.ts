@@ -7,7 +7,7 @@ import {
   FIELD_DEMO_ISSUES,
   FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
   LINEAR_FIELD_DEMOS_PROJECT,
-} from "@/lib/runbooks/linear-field-demos";
+} from "@/runbooks/linear-field-demos";
 
 describe("ce-field-demos Linear book", () => {
   it("keeps the three scoped issues and catalog prices", () => {

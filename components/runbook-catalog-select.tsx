@@ -1,6 +1,6 @@
 "use client";
 
-import { runbookTrackHref } from "@/lib/runbooks/meta";
+import { runbookTrackHref } from "@/runbooks/meta";
 
 export function RunbookCatalogSelect({
   tracks,

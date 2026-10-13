@@ -1,6 +1,6 @@
-import { RUNBOOK_SECTIONS_101 } from "@/lib/runbooks/beats/101";
-import { RUNBOOK_SECTIONS_201 } from "@/lib/runbooks/beats/201";
-import type { DemoSection, DemoTrack } from "@/lib/runbooks/types";
+import { RUNBOOK_SECTIONS_101 } from "@/runbooks/beats/101";
+import { RUNBOOK_SECTIONS_201 } from "@/runbooks/beats/201";
+import type { DemoSection, DemoTrack } from "@/runbooks/types";
 
 export const RUNBOOK_TRACKS = [
   {

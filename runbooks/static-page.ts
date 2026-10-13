@@ -1,5 +1,5 @@
-import { RUNBOOK_TRACKS } from "@/lib/runbooks/tracks";
-import type { DemoBeat, DemoSection } from "@/lib/runbooks/types";
+import { RUNBOOK_TRACKS } from "@/runbooks/tracks";
+import type { DemoBeat, DemoSection } from "@/runbooks/types";
 
 export const STATIC_RUNBOOKS_PATH = "runbooks.html";
 
@@ -64,7 +64,7 @@ export function renderRunbooksHtml(): string {
   ).join("\n          ");
 
   return `<!doctype html>
-<!-- Generated from lib/runbooks/meta.ts by \`npm run runbooks:export\`. Do not edit by hand. -->
+<!-- Generated from runbooks/meta.ts by \`npm run runbooks:export\`. Do not edit by hand. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">

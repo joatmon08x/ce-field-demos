@@ -26,7 +26,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | Demo hook | Where |
 | --- | --- |
 | Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
-| Static runbooks | `runbooks.html` — no server. Regenerate with `npm run runbooks:export` after editing `lib/runbooks/beats/` |
+| Static runbooks | `runbooks.html` — no server. Regenerate with `npm run runbooks:export` after editing `runbooks/beats/` |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |

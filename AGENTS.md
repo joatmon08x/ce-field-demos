@@ -14,7 +14,7 @@ Fictional billing ops SaaS. Fieldnote Workspace. Operator Avery Quinn. No auth. 
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
-This is a **Grok Build demo app** with two jumpable tracks: 101 and 201. Runbook beats live in `lib/runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101` and `/runbooks/201`. `runbooks.html` is the same catalog as a standalone file (no server); regenerate it with `npm run runbooks:export` whenever beats change — `tests/runbooks.test.ts` fails if it drifts. The presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. Do not reintroduce retired Advanced runbooks without a request.
+This is a **Grok Build demo app** with two jumpable tracks: 101 and 201. Runbook beats live in `runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101` and `/runbooks/201`. `runbooks.html` is the same catalog as a standalone file (no server); regenerate it with `npm run runbooks:export` whenever beats change — `tests/runbooks.test.ts` fails if it drifts. The presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. Do not reintroduce retired Advanced runbooks without a request.
 
 ## Grok Build Cloud specific instructions
 
@@ -90,7 +90,7 @@ Incomplete on purpose:
 - Comments in code must not cite Slack, GitHub, or issue-tracker URLs.
 - Do not rename Collections / Nudge / Pulse / Slatebook / Harborbill, and never reintroduce retired pre-remap names.
 - Do not add Deno workflows or GitHub Actions starters. Do not add better-sqlite3.
-- Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `lib/runbooks/meta.ts`.
+- Do not add talk-track / speaker-note skills. Do not add a fourth catalog-solving agent. Runbook beats live in `runbooks/meta.ts`.
 - Do not rename the FilterPills query key from `state` to `status` unless asked.
 - Do not add a Prisma/SQLite MCP or restore the `mcp/` directory. Query the seed with Prisma (`write-prisma-query`) or the HTTP API.
 
