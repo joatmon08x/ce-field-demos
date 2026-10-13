@@ -1,6 +1,6 @@
 ---
 name: start-ledgerly
-description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when the database is missing or empty, then open it in the Grok Build Browser with a second tab on the runbooks view. Use when the user asks to start the server, start the application, run the demo app, open Ledgerly in the browser, or seed if it has not already been seeded.
+description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when the database is missing or empty, then open the app and the static runbooks page in the Grok Build Browser. Use when the user asks to start the server, start the application, run the demo app, open Ledgerly in the browser, or seed if it has not already been seeded.
 ---
 
 # Start Ledgerly
@@ -58,13 +58,13 @@ Do not `lsof | kill` a busy 43173 — that is a reset, not a start.
 
 ## 4. Open the Grok Build Browser
 
-After the server is Ready (or already responding), open the app in the Grok Build Browser (`cursor-ide-browser`). Do this even when the server was already running. Use `position: "active"` so the browser is visible.
+After the server is Ready (or already responding), open two tabs in the Grok Build Browser (`cursor-ide-browser`). Do this even when the server was already running. Use `position: "active"` so the browser is visible. Do not use an external browser.
 
-1. Navigate to **http://localhost:43173** (the application).
-2. Open a **second tab** (`newTab: true`) to the runbooks view: **http://localhost:43173/runbooks**.
+1. Navigate to **http://localhost:43173**. This tab is the Ledgerly application. Leave it there.
+2. Open a **second tab** (`newTab: true`) to the static runbooks page. Resolve the absolute path of `runbooks.html` at the repo root and navigate to that `file://` URL. The page opens on the 101 track. Add `?track=201` only when the user asked for the 201 track. The file does not use the dev server.
 
-Do not use an external browser. Do not replace the first tab with `/runbooks`.
+Do not replace the application tab with the runbooks file. Do not open the in-app `/runbooks` route.
 
 ## 5. Confirm
 
-Report **http://localhost:43173** and **http://localhost:43173/runbooks**, and whether you seeded or skipped seed.
+Report **http://localhost:43173**, the `file://` URL of `runbooks.html`, and whether you seeded or skipped seed. The application tab is the Ledgerly dashboard. The runbooks tab shows the Catalog control.

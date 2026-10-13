@@ -405,6 +405,12 @@ describe("runbook catalog", () => {
     expect(files.skill).toContain("runbooks/meta.ts");
     expect(files.cloud).toContain("Cloud Agent");
 
+    const start = readFileSync(join(root, ".cursor/skills/start-ledgerly/SKILL.md"), "utf8");
+    expect(start).toContain("http://localhost:43173");
+    expect(start).toContain("runbooks.html");
+    expect(start).toContain("file://");
+    expect(start).not.toContain("http://localhost:43173/runbooks");
+
     // Shipped-suite count must stay consistent across the docs that cite it
     // (see the sync rule in .cursor/rules/ledgerly.mdc). Assert the
     // "1 failed / <n> passed" format is present in each and that every file
