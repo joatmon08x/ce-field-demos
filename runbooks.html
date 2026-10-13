@@ -70,11 +70,12 @@
   <main>
     <p class="eyebrow">Demo catalog</p>
     <h1>Runbooks</h1>
-    <p class="lede">Choose a track, jump to a section, and copy the next beat into Grok Build. Link a track directly with <code>?track=201</code>.</p>
+    <p class="lede">Choose a track, jump to a section, and copy the next beat into Grok Build. Link a track directly with <code>?track=201</code> or <code>?track=301</code>.</p>
     <label for="track">Catalog</label>
     <select id="track">
           <option value="101">101</option>
           <option value="201">201</option>
+          <option value="301">301</option>
     </select>
 
     <div class="track" data-track="101">
@@ -464,6 +465,273 @@
               <button type="button" class="copy">Copy</button>
             </div>
             <pre>ledgerly-reviewer check my work</pre>
+          </div>
+        </article>
+        </div>
+      </section>
+    </div>
+
+    <div class="track" data-track="301">
+      <h2>301</h2>
+      <p class="lede">You will orchestrate work across agents, tasks, and coworkers: break tasks down for multiple agents, take a plan through parallel agents to a reviewable PR, scale review when several streams finish, and share ownership safely.</p>
+      <nav class="tabs" aria-label="301 sections">
+        <a href="#301-break-down-tasks">How do you break down tasks for agents?</a>
+        <a href="#301-plan-to-pr">How do multiple agents go from plan to PR?</a>
+        <a href="#301-scale-reviews">How do you scale AI code reviews?</a>
+        <a href="#301-share-ownership">How do coworkers share ownership safely?</a>
+      </nav>
+      <section id="301-break-down-tasks">
+        <h3>How do you break down tasks for agents?</h3>
+        <div class="beats">
+        <article class="beat">
+          <h4>Open a new agent</h4>
+          <p class="detail">Open a new local agent.</p>
+        </article>
+        <article class="beat">
+          <h4>Create accessibility-auditor</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/create-subagent named accessibility-auditor whose job is to audit accessibility of the UI based on WCAG. Provide a list of recommendations.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Use a cost-efficient model</h4>
+          <p class="detail">Open the new subagent file in .cursor/agents and point out the model field. Change the model to a faster, cost-efficient model.</p>
+        </article>
+        <article class="beat">
+          <h4>Optional: Move to a Cloud Agent</h4>
+          <p class="detail">Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.</p>
+        </article>
+        <article class="beat">
+          <h4>Multitask the audit</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/multitask Use the accessibility-auditor subagent to audit the invoices page. Explain how suggested credit is calculated. Compare test coverage for disputes versus invoices.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Review the subagents</h4>
+          <p class="detail">Watch the Working tab.</p>
+        </article>
+        </div>
+      </section>
+      <section id="301-plan-to-pr">
+        <h3>How do multiple agents go from plan to PR?</h3>
+        <div class="beats">
+        <article class="beat">
+          <h4>Optional: Start a new Project</h4>
+          <p class="detail">Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.</p>
+        </article>
+        <article class="beat">
+          <h4>Optional: Stage the Project</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Run all agents in their own worktrees. Parallelize if possible.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Open a new agent</h4>
+          <p class="detail">Open a new local agent. Optional: Run the following prompts from the Project.</p>
+        </article>
+        <article class="beat">
+          <h4>List open collections issues</h4>
+          <p class="detail">Review the list of open issues.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>List the open issues for building the collections command center.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Plan the collections command center</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/plan Build the collections command center based on the open issues.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Review the plan</h4>
+          <p class="detail">Review the plan.</p>
+        </article>
+        <article class="beat">
+          <h4>Build the plan</h4>
+          <p class="detail">Build the plan.</p>
+        </article>
+        <article class="beat">
+          <h4>Optional: Build with Cloud Agents</h4>
+          <p class="detail">Build the plan with Cloud Agents.</p>
+        </article>
+        <article class="beat">
+          <h4>Open a side chat</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/side</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Ask what APIs the subagent adds</h4>
+          <p class="detail">Use a side chat to read through implementation or ask questions without disrupting the coordinator.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/ask what new APIs will this first subagent add?</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Consolidate and open a PR</h4>
+          <p class="detail">Move finished worktrees back deliberately. Resolve conflicts on purpose. Open the PR. Show the summary a colleague would read first.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Consolidate the completed tasks into one branch. Open a PR that summarizes what each lane changed, links the plan or ticket, and lists what a human should verify before merge.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Optional: Show project notes</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Show me the project notes and context.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Fallback: reference repo issues</h4>
+          <p class="detail">If an agent cannot access Linear MCP server, use the issue descriptions in the repository.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Reference issues from @linear-field-demo.ts instead of Linear</pre>
+          </div>
+        </article>
+        </div>
+      </section>
+      <section id="301-scale-reviews">
+        <h3>How do you scale AI code reviews?</h3>
+        <div class="beats">
+        <article class="beat">
+          <h4>Open the feature branch</h4>
+          <p class="detail">Open a new local agent.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Change the branch to the collections command center feature.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Open hooks.json</h4>
+          <p class="detail">Open .cursor/hooks.json in the demo repo.</p>
+        </article>
+        <article class="beat">
+          <h4>Trigger the dataset hook</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Create a test that uses the email avery.quinn@ledgerly.ai</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Run the change reviewer subagent</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Use the change reviewer to review the feature.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Check high severity issues</h4>
+          <p class="detail">Check the change reviewer’s output for any high severity issues to assess.</p>
+        </article>
+        <article class="beat">
+          <h4>Optional: Run Bugbot</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/review-bugbot</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Review the highest-risk slice</h4>
+          <p class="detail">Open the highest-risk slice first and read it line by line.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/ask What is the highest-risk slice of work? Show me the lines I need to review.</pre>
+          </div>
+        </article>
+        </div>
+      </section>
+      <section id="301-share-ownership">
+        <h3>How do coworkers share ownership safely?</h3>
+        <div class="beats">
+        <article class="beat">
+          <h4>Open a new agent</h4>
+          <p class="detail">Open a new local agent.</p>
+        </article>
+        <article class="beat">
+          <h4>Shift review findings left</h4>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Read the review comments and change reviewer subagent findings on this PR. List the ones that apply to future work in this repo. For each one, say whether it belongs in a rule, skill, hook, test, subagent, or a person, and draft it.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>Optional: Create a Reviewer automation</h4>
+          <p class="detail">Go to the Automations tab. Create a New Automation. Name it Reviewer. Select the demo repository. Click Triggers &gt; PR opened, then select the demo repository and set the author to Anyone. Add “Run change reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save. Open the PR and review the check for Automation: Reviewer.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Fix dispute cap issue and open a PR.</pre>
+          </div>
+        </article>
+        <article class="beat">
+          <h4>List files that might conflict</h4>
+          <p class="detail">Start a new local agent as the second contributor.</p>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>Check the PRs in this repository and make a list of files that might conflict with implementing the dispute resolution feature.</pre>
           </div>
         </article>
         </div>

@@ -135,7 +135,7 @@ export function renderRunbooksHtml(): string {
   <main>
     <p class="eyebrow">Demo catalog</p>
     <h1>Runbooks</h1>
-    <p class="lede">Choose a track, jump to a section, and copy the next beat into Grok Build. Link a track directly with <code>?track=201</code>.</p>
+    <p class="lede">Choose a track, jump to a section, and copy the next beat into Grok Build. Link a track directly with <code>?track=201</code> or <code>?track=301</code>.</p>
     <label for="track">Catalog</label>
     <select id="track">
           ${options}

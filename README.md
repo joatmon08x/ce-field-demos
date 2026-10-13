@@ -2,7 +2,7 @@
 
 Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for the jumpable Grok Build **101** and **201** tracks. Copy-paste prompts live in `runbooks.html`. `start-ledgerly` renders that file in a Cursor Canvas. The Catalog menu switches tracks; `runbooks.html?track=201` selects 201 when the file is opened on its own. The presenter run-of-show and speaker notes are `demo-howto.md`.
+Use it for the jumpable Grok Build **101**, **201**, and **301** tracks. Copy-paste prompts live in `runbooks.html`. `start-ledgerly` renders that file in a Cursor Canvas. The Catalog menu switches tracks; `runbooks.html?track=201` selects 201 and `runbooks.html?track=301` selects 301 when the file is opened on its own. The presenter run-of-show and speaker notes are `demo-howto.md`.
 
 ## Run
 
@@ -17,7 +17,7 @@ npm run dev
 
 Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` skill — it starts the app on 43173, seeds only when the database is missing or empty, and opens `runbooks.html` in a Cursor Canvas.
 
-`npm test` is **1 failed / 28 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Reset a demo with `npm run demo:reset` first; `reset-demo-state` only finishes reported MCP cleanup. Use `npm run db:reset` only for data.
+`npm test` is **1 failed / 29 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Reset a demo with `npm run demo:reset` first; `reset-demo-state` only finishes reported MCP cleanup. Use `npm run db:reset` only for data.
 
 ## App
 
@@ -30,7 +30,7 @@ Dashboard, Invoices, Collections, Disputes, Settings. Extra book accounts are in
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
 | Disk plugin | `plugins/standard-bug-fix/` — add from local repository; `/standard-bug-fix`, Linear MCP |
-| Presenter script | `demo-howto.md` — the 101 and 201 run-of-show |
+| Presenter script | `demo-howto.md`, the 101, 201, and 301 run-of-show |
 
 ## Starter prompts
 
@@ -83,6 +83,15 @@ Open `runbooks.html?track=201`, or switch to 201 with the Catalog menu in the Ca
 3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Create a private Linear team by hand, then run `stage-linear`.
 4. **How do you parallelize a task?** — open a new agent, open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
+## The 301 track
+
+Open `runbooks.html?track=301`, or switch to 301 with the Catalog menu in the Canvas, copy a card, and paste it in Grok Build. You still review the result.
+
+1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
+2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list collections issues, plan and build, `/side`, consolidate into a PR, and fall back to repo issues if Linear MCP is unavailable.
+3. **How do you scale AI code reviews?** Feature branch, `hooks.json`, dataset hook, change reviewer subagent, high severity issues, optional Bugbot, highest-risk slice.
+4. **How do coworkers share ownership safely?** Shift findings into a rule, skill, hook, test, subagent, or a person, optional Reviewer automation, and files that might conflict.
+
 ## Create the private Linear team (manual)
 
 Linear MCP cannot create teams. Do this in the Linear UI **before** the 201 MCP section, on the operator’s account only.
@@ -105,7 +114,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 | `ledgerly-reviewer` | Read-only review after a change. Confirms the work runs, then catalog, seed names, planted seams, and high-risk changes. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
-| `choose-cursor-workflow` | Walk the 101 or 201 track and pick the mode or model. |
+| `choose-cursor-workflow` | Walk the 101, 201, or 301 track and pick the mode or model. |
 | `stage-linear` | Reconcile Fieldnote issues on the private `ce-field-demos` Linear project. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
 | `dispatch-subagents` | Parallel Task launches. |
