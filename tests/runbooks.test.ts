@@ -377,7 +377,7 @@ describe("runbook catalog", () => {
     }
   });
 
-  it("points docs, skills, and rules at /runbooks and documents both tracks", () => {
+  it("points docs, skills, and rules at runbooks.html and documents both tracks", () => {
     const files = {
       readme: readFileSync(join(root, "README.md"), "utf8"),
       howto: readFileSync(join(root, "demo-howto.md"), "utf8"),
@@ -397,9 +397,14 @@ describe("runbook catalog", () => {
       );
     }
 
-    expect(files.readme).toContain("/runbooks/201");
-    expect(files.howto).toContain("/runbooks/201");
-    expect(files.skill).toContain("/runbooks/201");
+    expect(files.readme).toContain("runbooks.html?track=201");
+    expect(files.howto).toContain("runbooks.html?track=201");
+    expect(files.skill).toContain("runbooks.html");
+    for (const [name, contents] of Object.entries(files)) {
+      expect(contents, `${name} still sends readers to an in-app /runbooks route`).not.toMatch(
+        /\/runbooks\//,
+      );
+    }
     expect(files.agents).toContain("runbooks/meta.ts");
     expect(files.rule).toContain("runbooks/meta.ts");
     expect(files.skill).toContain("runbooks/meta.ts");

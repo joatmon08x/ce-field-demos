@@ -13,7 +13,7 @@ The demo ships two jumpable tracks: **101** and **201**. Every beat is independe
 
 201 — You will curate what belongs in an agent's context, encode conventions as project skills, connect a curated set of MCP servers, and split one task across parallel agents.
 
-The beats live in `runbooks/meta.ts` and as copy-paste blocks on `/runbooks/101` and `/runbooks/201`. Use the matching `example` verbatim. Do not invent another catalog price.
+The beats live in `runbooks/meta.ts` and in `runbooks.html`, which `start-ledgerly` renders in a Cursor Canvas. Use the matching `example` verbatim. Do not invent another catalog price.
 
 The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not mention the invoice or dispute filter-pill `state=` seam unless the user is on that click path.
 

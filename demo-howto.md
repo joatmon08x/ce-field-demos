@@ -4,17 +4,17 @@ Presenter run-of-show for the **101** and **201** tracks, not a course. Every st
 
 Ledgerly is a small, fictional demo app. It exists to give Grok Build enablement steps a visible surface: code to read, a UI to inspect, a scoped error to fix, and tests to verify. The data is synthetic. Avery Quinn is the operator, the only plan prices are Starter **$49**, Growth **$99**, and Scale **$249**, and the clock is frozen at **23 August 2026** so every run is repeatable.
 
-The pastes below match the copy-paste blocks on `/runbooks/101` and `/runbooks/201`, and in `runbooks.html` (open the file directly; `?track=201` selects a track). Each beat is independent; jump directly to any step.
+The pastes below match the copy-paste blocks in `runbooks.html`. `start-ledgerly` renders that file in a Cursor Canvas. The Catalog menu switches tracks, and `runbooks.html?track=201` selects 201 when the file is opened on its own. Each beat is independent; jump directly to any step.
 
 ## Jump menu
 
-The 101 track has three sections. Open `/runbooks/101` and copy a card for any beat.
+The 101 track has three sections. Open `runbooks.html` in the Canvas and copy a card for any beat.
 
 1. **What is Grok Build?** — [Ask](#ask), [Plan](#plan), [Build in Agent mode](#build-in-agent-mode), [Debug](#debug), check the models
 2. **How do you work with an agent?** — allowlist, verify the email feature, redact, stop, interrupt and steer, continue to the end, review diffs, restore from a checkpoint
 3. **How do you govern an agent?** — [create a rule](#create-a-rule), create a skill, [Canvas](#canvas), [MCP / Figma](#mcp--figma)
 
-The 201 track has four sections. Open `/runbooks/201` and copy a card for any beat.
+The 201 track has four sections. Open `runbooks.html?track=201` and copy a card for any beat.
 
 1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
 2. **How do you standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
@@ -51,11 +51,11 @@ npx prisma db seed
 npm run dev
 ```
 
-Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` skill — it starts on 43173 and seeds only when the database is empty.
+Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` skill — it starts on 43173, seeds only when the database is empty, and opens `runbooks.html` in a Cursor Canvas.
 
 Check shipped state:
 
-- `npm test` is **1 failed / 34 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
+- `npm test` is **1 failed / 28 passed**; the sole failure is `tests/suggested-credit-api.test.ts`
 - [http://127.0.0.1:43173/disputes/dsp_1043](http://127.0.0.1:43173/disputes/dsp_1043) shows **Suggested credit $400.00** in red, above the Scale price of **$249**
 - The deprecated v1 route returns the $400 claim; v2, the domain helper, and the seed store the correct $249 credit
 - Accept credit / Decline are disabled — that unfinished resolution UI is separate from the planted API-version error
@@ -224,12 +224,12 @@ Create three slides in Figma Slides outlining how I used Grok Build to develop a
 ```text
 Run npm test and report which tests passed and which failed. Do not edit any files.
 
-On a clean tree, npm test is 1 failed / 34 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
+On a clean tree, npm test is 1 failed / 28 passed. The sole red test is tests/suggested-credit-api.test.ts because the client intentionally selects deprecated v1. Do not change the test, either route, or the seed.
 ```
 
 **If the client migration ran:** `tests/suggested-credit-api.test.ts` should be green and dsp_1043 should show **$249** from v2, with both routes intact.
 
-**If no migration ran:** `npm test` should remain **1 failed / 34 passed**. That is shipped state, not failed setup.
+**If no migration ran:** `npm test` should remain **1 failed / 28 passed**. That is shipped state, not failed setup.
 
 **Land:** A green check is evidence, not permission to merge. The presenter remains accountable.
 
@@ -249,13 +249,13 @@ npm run demo:reset
 
 **Then:** complete only the script's reported Figma, Cursor user-rule, or Linear MCP actions. The script resets files, recorded rules/skills, Canvas, branches, SQLite, and port 43173.
 
-**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 34 passed**, status pills still writing `state=`.
+**Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 28 passed**, status pills still writing `state=`.
 
 ---
 
 ## The 201 track
 
-Open `/runbooks/201`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card.
+Open `runbooks.html?track=201`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card.
 
 ### How do you manage context?
 

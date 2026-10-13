@@ -1,5 +1,5 @@
 /**
- * Grok Build runbooks as they appear on /runbooks and in the README.
+ * Grok Build runbooks as they appear in runbooks.html and in the README.
  * The 101 and 201 tracks are shipped; their beats are the source of truth.
  */
 

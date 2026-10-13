@@ -7,7 +7,7 @@ export default function NotFound() {
       <p className="text-xs font-medium tracking-[0.16em] text-indigo uppercase">Missing folio</p>
       <h1 className="text-3xl font-semibold tracking-tight">That page is not in this ledger.</h1>
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Stable demo routes live at Dashboard, Invoices, Collections, Disputes, Runbooks, and Settings.
+        Stable demo routes live at Dashboard, Invoices, Collections, Disputes, and Settings.
         Invoice IDs look like <span className="font-mono text-foreground">inv_1043</span>; disputes like{" "}
         <span className="font-mono text-foreground">dsp_1043</span>.
       </p>

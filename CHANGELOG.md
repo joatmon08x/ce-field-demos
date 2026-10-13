@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **201 track** — Runbooks track `201` / `RUNBOOK_SECTIONS_201` is on main for CE workshop demos (Outline Show beats, Linear staging, disk plugin) but is not a formal release in this cut.
 
+### Changed
+
+- Runbooks left the app. The catalog is `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`.
+
 ## [1.0.0] - 2026-09-15
 
 First stable release of Ledgerly as the CE field-demo app for Adopting Grok Build for AI Development.
@@ -21,8 +25,8 @@ First stable release of Ledgerly as the CE field-demo app for Adopting Grok Buil
 
 ### Added
 
-- Ledgerly demo app: Fieldnote Workspace billing ops (dashboard, invoices, collections, disputes, runbooks, settings). Catalog prices stay Starter $49, Growth $99, Scale $249.
-- Jumpable runbook pages at `/runbooks/101` and `/runbooks/201` with copy-paste beats; presenter run-of-show in `demo-howto.md`.
+- Ledgerly demo app: Fieldnote Workspace billing ops (dashboard, invoices, collections, disputes, settings). Catalog prices stay Starter $49, Growth $99, Scale $249.
+- Copy-paste runbook beats in `runbooks.html` (tracks 101 and 201); presenter run-of-show in `demo-howto.md`.
 - Project agents (`ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier`) and skills for demo reset, Prisma lookups, workflow choice, and Cloud Agent handoff.
 
 ### Changed
