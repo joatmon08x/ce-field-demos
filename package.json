@@ -18,7 +18,8 @@
     "db:seed": "prisma db seed",
     "db:reset": "prisma db push --force-reset && prisma db seed",
     "demo:session": "tsx scripts/demo-reset.ts",
-    "demo:reset": "tsx scripts/demo-reset.ts reset"
+    "demo:reset": "tsx scripts/demo-reset.ts reset",
+    "runbooks:export": "tsx scripts/export-runbooks.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

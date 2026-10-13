@@ -8,6 +8,7 @@ import {
   runbookBeatSequence,
   runbookBeats,
 } from "@/lib/runbooks/meta";
+import { STATIC_RUNBOOKS_PATH, renderRunbooksHtml } from "@/lib/runbooks/static-page";
 
 const root = process.cwd();
 const beats101 = runbookBeats("101");
@@ -346,6 +347,17 @@ describe("runbook catalog", () => {
     expect(beat("multitask-resolve-dispute")?.promptType).toBe("reusable");
     expect(beat("canvas-subagent-progress")?.promptType).toBe("adaptable");
     expect(beat("ledgerly-reviewer-check")?.promptType).toBe("adaptable");
+  });
+
+  it("keeps the static runbooks page in sync with the beats", () => {
+    const committed = readFileSync(join(root, STATIC_RUNBOOKS_PATH), "utf8");
+    expect(committed, "run `npm run runbooks:export` to regenerate runbooks.html").toBe(
+      renderRunbooksHtml(),
+    );
+    for (const track of RUNBOOK_TRACKS) {
+      expect(committed).toContain(`data-track="${track.id}"`);
+    }
+    expect(committed).not.toMatch(/<(link|script)[^>]+(href|src)=/);
   });
 
   it("does not resolve the retired advanced track", () => {

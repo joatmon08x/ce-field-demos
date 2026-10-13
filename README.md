@@ -2,7 +2,7 @@
 
 Fictional B2B billing ops. Fieldnote Workspace. Operator **Avery Quinn**. Catalog is Starter **$49**, Growth **$99**, Scale **$249**. Demo clock is frozen at **23 August 2026**. Synthetic data only — no real companies.
 
-Use it for the jumpable Grok Build **101** and **201** tracks. Copy-paste prompts live on `/runbooks/101` and `/runbooks/201`; the presenter run-of-show and speaker notes are `demo-howto.md`.
+Use it for the jumpable Grok Build **101** and **201** tracks. Copy-paste prompts live on `/runbooks/101` and `/runbooks/201`, and in `runbooks.html` — open that file straight in a browser, no app needed, and pick a track with the Catalog menu or `runbooks.html?track=201`. The presenter run-of-show and speaker notes are `demo-howto.md`.
 
 ## Run
 
@@ -17,7 +17,7 @@ npm run dev
 
 Open **http://localhost:43173**. Or ask an agent to run the `start-ledgerly` skill — it starts the app on 43173 and seeds only when the database is missing or empty.
 
-`npm test` is **1 failed / 33 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Reset a demo with `npm run demo:reset` first; `reset-demo-state` only finishes reported MCP cleanup. Use `npm run db:reset` only for data.
+`npm test` is **1 failed / 34 passed** on a clean tree — `tests/suggested-credit-api.test.ts` is the planted API-version bug. The UI shows the deprecated v1 result of $400 for `dsp_1043`; v2 and the stored credit correctly cap at the $249 Scale price. Status pills on Invoices and Disputes write `state=` while the pages read `status`, so clicking a filter does not change the list — that is a separate planted UI seam, not a second red test. Reset a demo with `npm run demo:reset` first; `reset-demo-state` only finishes reported MCP cleanup. Use `npm run db:reset` only for data.
 
 ## App
 
@@ -26,6 +26,7 @@ Dashboard, Invoices, Collections, Disputes, Runbooks, Settings. Extra book accou
 | Demo hook | Where |
 | --- | --- |
 | Runbook beats | `/runbooks/101` and `/runbooks/201` (`/workflows` and `/analysis` redirect to 101) |
+| Static runbooks | `runbooks.html` — no server. Regenerate with `npm run runbooks:export` after editing `lib/runbooks/beats/` |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
 | Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
