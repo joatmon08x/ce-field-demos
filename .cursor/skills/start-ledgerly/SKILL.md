@@ -1,6 +1,6 @@
 ---
 name: start-ledgerly
-description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when the database is missing or empty, then open the app and the static runbooks page in the Grok Build Browser. Use when the user asks to start the server, start the application, run the demo app, open Ledgerly in the browser, or seed if it has not already been seeded.
+description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when the database is missing or empty, open the app in the Grok Build Browser, and open runbooks.html in a Cursor Canvas. Use when the user asks to start the server, start the application, run the demo app, open Ledgerly in the browser, or seed if it has not already been seeded.
 ---
 
 # Start Ledgerly
@@ -56,15 +56,14 @@ Request host/`all` permissions if bind fails (`uv_interface_addresses` or simila
 
 Do not `lsof | kill` a busy 43173 — that is a reset, not a start.
 
-## 4. Open the Grok Build Browser
+## 4. Open the application, then the runbooks in Canvas
 
-After the server is Ready (or already responding), open two tabs in the Grok Build Browser (`cursor-ide-browser`). Do this even when the server was already running. Use `position: "active"` so the browser is visible. Do not use an external browser.
+After the server is Ready (or already responding), do both of these even when the server was already running.
 
-1. Navigate to **http://localhost:43173**. This tab is the Ledgerly application. Leave it there.
-2. Open a **second tab** (`newTab: true`) to the static runbooks page. Resolve the absolute path of `runbooks.html` at the repo root and navigate to that `file://` URL. The page opens on the 101 track. Add `?track=201` only when the user asked for the 201 track. The file does not use the dev server.
+1. Open the Grok Build Browser (`cursor-ide-browser`) to **http://localhost:43173**. Use `position: "active"` so the browser is visible. This tab is the Ledgerly application. Leave it there. Do not use an external browser. Do not open a second browser tab for the runbooks. Do not open the in-app `/runbooks` route.
 
-Do not replace the application tab with the runbooks file. Do not open the in-app `/runbooks` route.
+2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks`. The module imports only from `cursor/canvas` and default-exports one component. That component fills the view with an `<iframe title="Ledgerly runbooks" srcDoc={html} />` whose `srcDoc` is the exact file contents, so the Catalog dropdown, section tabs, and Copy buttons keep working. No `fetch`. The embedded page opens on track 101. When the user asked for 201, they switch it with the Catalog control inside the canvas.
 
 ## 5. Confirm
 
-Report **http://localhost:43173**, the `file://` URL of `runbooks.html`, and whether you seeded or skipped seed. The application tab is the Ledgerly dashboard. The runbooks tab shows the Catalog control.
+Report **http://localhost:43173**, the canvas `url` returned by `WriteCanvas`, and whether you seeded or skipped seed. The browser tab is the Ledgerly dashboard. The canvas shows the Catalog control.
