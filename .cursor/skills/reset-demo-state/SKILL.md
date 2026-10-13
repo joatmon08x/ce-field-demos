@@ -11,7 +11,7 @@ Run the script first. It is the source of truth for local cleanup.
 npm run demo:reset
 ```
 
-The command restores tracked files with `git reset --hard HEAD`, switches to `main`, removes recorded demo rules, skills, Canvas files, and demo branches, reseeds SQLite, restarts port 43173, and confirms **1 failed / 29 passed**. It leaves the suggested-credit client on v1 and filter pills writing `state=`. It never runs `git clean`, removes an unrecorded personal skill, or deletes the private Linear team.
+The command restores tracked files with `git reset --hard HEAD`, switches to `main`, removes recorded demo rules, skills, Canvas files, and demo branches, removes the known project path `.cursor/agents/accessibility-auditor.md`, reseeds SQLite, restarts port 43173, and confirms **1 failed / 29 passed**. It leaves the suggested-credit client on v1 and filter pills writing `state=`. It never runs `git clean`, removes an unrecorded personal skill, or deletes the private Linear team.
 
 ## Session events
 
@@ -20,6 +20,7 @@ Start each demo session and record artifacts as they are created:
 ```bash
 npm run demo:session -- start
 npm run demo:session -- record skill "$HOME/.cursor/skills/<created-skill>"
+npm run demo:session -- record project-path .cursor/agents/accessibility-auditor.md
 npm run demo:session -- record branch <linear-gitBranchName> --remote
 ```
 
@@ -35,6 +36,7 @@ Read the JSON report printed by `demo:reset`. Only complete its `remaining` acti
 
 - **Figma:** for each recorded Slides `fileKey`, load `figma-use` and `figma-use-slides`, then remove every slide with `slide.remove()`.
 - **Cursor user rule:** use `cursor_dialog` only for a recorded rule ID with no filesystem path. Do not remove unrelated user rules.
+- **301 Reviewer automation:** this optional automation is not in the report. Remove it by hand in the Automations tab.
 - **Linear:** offer teardown whenever the Linear MCP is connected, but act only when the report lists a recorded `ce-field-demos` board. Confirm the exact private team before any write: present its name, key, and `https://linear.app/<workspace>/settings/teams/<KEY>`. Never assume or guess a team. Cancel each recorded issue with `save_issue` (`state`: `Canceled`) and then the project with `save_project` (`state`: `Canceled`). The catalog is `FIELD_DEMO_ISSUES` plus `COLLECTIONS_COMMAND_CENTER_ISSUES`; the recorded board lists all twelve. Leave the issue linked, leave the team-scoped `Collections Command Center` label in place, and retain the private team. `stage-linear` reactivates the board. The script uses the Linear API only with both `LINEAR_API_KEY` and explicit `--confirm-linear`.
 
 If the event file is missing or a beat predates this script, use the old discovery flow cautiously: list candidates, do not guess a private team, and never touch public/shared work.

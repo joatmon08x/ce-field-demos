@@ -724,6 +724,13 @@ describe("runbook catalog", () => {
     expect(reset, "reset must restore invoice and dispute pages that read state=").toContain(
       "app/invoices/page.tsx",
     );
+    expect(reset).toContain(".cursor/agents/accessibility-auditor.md");
+    expect(reset).toContain("301 Reviewer automation");
+    const resetScript = readFileSync(join(root, "scripts/demo-reset.ts"), "utf8");
+    expect(resetScript).toContain('".cursor/agents/accessibility-auditor.md"');
+    expect(readFileSync(join(root, "demo-howto.md"), "utf8")).toContain(
+      "npm run demo:session -- record project-path .cursor/agents/accessibility-auditor.md",
+    );
     expect(reset, "reset must restore dispute queue pages").toContain("app/disputes/page.tsx");
 
     // stage-linear reactivates a torn-down board on the next run

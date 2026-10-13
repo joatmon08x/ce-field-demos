@@ -351,6 +351,12 @@ Open a new local agent. Create the accessibility-auditor subagent:
 /create-subagent named accessibility-auditor whose job is to audit accessibility of the UI based on WCAG. Provide a list of recommendations.
 ```
 
+Record the leftover so reset can remove it:
+
+```bash
+npm run demo:session -- record project-path .cursor/agents/accessibility-auditor.md
+```
+
 Open the new subagent file in `.cursor/agents` and point out the model field. Change the model to a faster, cost-efficient model.
 
 Optional: Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes. Then:

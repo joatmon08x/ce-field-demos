@@ -41,7 +41,21 @@ const confirmLinear = args.includes("--confirm-linear");
 const knownProjectPaths = new Set([
   ".cursor/rules/suggested-credit-api-v2.mdc",
   ".cursor/skills/create-api",
+  ".cursor/agents/accessibility-auditor.md",
 ]);
+
+function projectArtifactRoots() {
+  return [
+    resolve(root, ".cursor/rules"),
+    resolve(root, ".cursor/skills"),
+    resolve(root, ".cursor/agents"),
+  ];
+}
+
+function assertKnownProjectPath(value: string) {
+  if (!knownProjectPaths.has(value)) throw new Error(`Unsupported demo project path: ${value}`);
+  assertAllowedPath(resolve(root, value), projectArtifactRoots());
+}
 
 function command(command: string, commandArgs: string[], options: { allowFailure?: boolean } = {}) {
   try {
@@ -125,9 +139,7 @@ function validateRemovablePaths(event: SessionEvent) {
   const userSkillsRoot = resolve(sandboxHome, ".cursor/skills");
   const projectRule = resolve(root, ".cursor/rules/suggested-credit-api-v2.mdc");
 
-  for (const path of event.projectPaths) {
-    if (!knownProjectPaths.has(path)) throw new Error(`Unsupported demo project path: ${path}`);
-  }
+  for (const path of event.projectPaths) assertKnownProjectPath(path);
   for (const rule of event.userRules) {
     if (!rule.path) continue;
     const path = assertAllowedPath(rule.path, [userRulesRoot, projectRulesRoot]);
@@ -163,7 +175,7 @@ function record(event: SessionEvent) {
   } else if (kind === "skill") {
     event.personalSkills.push({ name: basename(value), path: resolve(value) });
   } else if (kind === "project-path") {
-    if (!knownProjectPaths.has(value)) throw new Error(`Unsupported demo project path: ${value}`);
+    assertKnownProjectPath(value);
     event.projectPaths.push(value);
   } else if (kind === "branch") {
     event.branches.push({ name: value, remote: args.includes("--remote") });
@@ -193,13 +205,12 @@ function record(event: SessionEvent) {
 
 function removeLocalArtifacts(event: SessionEvent, report: Report) {
   const projectRulesRoot = resolve(root, ".cursor/rules");
-  const projectSkillsRoot = resolve(root, ".cursor/skills");
   const userRulesRoot = resolve(sandboxHome, ".cursor/rules");
   const userSkillsRoot = resolve(sandboxHome, ".cursor/skills");
   const allowedProjectPaths = new Set([...knownProjectPaths].map((path) => resolve(root, path)));
 
   for (const path of allowedProjectPaths) {
-    assertAllowedPath(path, [projectRulesRoot, projectSkillsRoot]);
+    assertAllowedPath(path, projectArtifactRoots());
     removePath(path, report);
   }
 
