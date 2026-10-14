@@ -64,6 +64,12 @@
       font: 0.75rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     .track[hidden] { display: none; }
+    label.optional-toggle {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin: 0.75rem 0 0; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+    }
+    .optional-toggle input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--indigo); }
+    .track:not(:has(.include-optional:checked)) .beat.optional { display: none; }
   </style>
 </head>
 <body>
@@ -89,7 +95,7 @@
       <section id="101-first-prompt">
         <h3>What is Grok Build?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="ask">
           <h4>Ask</h4>
           <p class="detail">Let’s learn more about the application with Ask mode.</p>
           <div class="paste">
@@ -100,7 +106,7 @@
             <pre>/ask Tell me what this application does in 3 sentences</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="plan">
           <h4>Plan</h4>
           <p class="detail">Map your approach to building a new feature in Plan mode.</p>
           <div class="paste">
@@ -111,11 +117,11 @@
             <pre>/plan I want a new feature to update the customer email in the invoice detail customer card. Don’t implement email validation.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="agent-build">
           <h4>Build in Agent mode</h4>
           <p class="detail">Build the feature in Agent mode. Build the plan locally. Check the feature in the UI.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="debug">
           <h4>Debug</h4>
           <p class="detail">Investigate the failing test using Debug mode. Debug mode is useful because the agent investigates the codebase and presents some hypothesis on the root cause. I can choose to reproduce the bug and attempt to fix based on the agent’s hypotheses.</p>
           <div class="paste">
@@ -126,11 +132,11 @@
             <pre>/debug the failing test</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="model-fast">
           <h4>Check the models</h4>
           <p class="detail">Check the models available for use. Select Auto in the chat and review the models available for use.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="fix">
           <h4>Plan to fix the bug</h4>
           <p class="detail">Use shift-tab to toggle to Agent mode.</p>
           <div class="paste">
@@ -146,15 +152,15 @@
       <section id="101-work-with-agent">
         <h3>How do you work with an agent?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="allowlist">
           <h4>Run Mode Allowlist</h4>
           <p class="detail">Let’s change how our agent asks for approvals by configuring an allowlist - a known set of commands that Grok Build can run without asking for review. Go to Settings &gt; Agents &gt; Executions &amp; Approvals &gt; Run Mode &gt; Allowlist.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="verify-email">
           <h4>Verify the email feature</h4>
           <p class="detail">Go to http://localhost:43173/invoices/inv_1048. Find the edit email feature you implemented in the Customer box.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="start-and-stop">
           <h4>Redact (partial)</h4>
           <div class="paste">
             <div class="paste-head">
@@ -164,11 +170,11 @@
             <pre>Redact the customer email in the UI. The first two characters and domain are plaintext. When I click to type in the box, clear it and save the new email.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="stop">
           <h4>Stop the prompt</h4>
           <p class="detail">Stop the prompt with the Stop button in the chat.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="interrupt-steer">
           <h4>Interrupt and steer</h4>
           <p class="detail">Steer the prompt. Show how the agent pauses for your approval. Continue running after reviewing the first file.</p>
           <div class="paste">
@@ -179,7 +185,7 @@
             <pre>Redact the customer email in the UI. Show it in plaintext when I click the box to edit it. Stop every time you change a file for me to review.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="continue-no-approval">
           <h4>Continue to the end</h4>
           <div class="paste">
             <div class="paste-head">
@@ -189,11 +195,11 @@
             <pre>Continue to the end, do not wait for my approval.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="diffs">
           <h4>Review diffs</h4>
           <p class="detail">Select Changes in the right hand panel. Show diffs from agent’s last turn.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="checkpoint-restore">
           <h4>Restore from a checkpoint</h4>
           <p class="detail">If I want to revert the code, I can restore from a checkpoint. Scroll back to a prompt before updating the feature. Select the restore icon next to the prompt.</p>
         </article>
@@ -202,7 +208,7 @@
       <section id="101-govern-agent">
         <h3>How do you govern an agent?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="rule">
           <h4>Create a user rule</h4>
           <p class="detail">Let’s create a user rule so the agent doesn’t try to improve the invoice UI without our approval. Use /create-rule, a built-in skill, to create a rule. Go to Customize &gt; Rules &gt; User to view the rule.</p>
           <div class="paste">
@@ -213,7 +219,7 @@
             <pre>/create-rule Preserve the invoice view. Do not rename, restyle, or rearrange invoice screens unless the user names the **exact** new copy (or a specific layout change). This is a personal rule.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="test-rule">
           <h4>Test the rule</h4>
           <div class="paste">
             <div class="paste-head">
@@ -223,7 +229,7 @@
             <pre>Change &quot;Line Items&quot; in the UI to something else.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="skill">
           <h4>Create a user skill</h4>
           <p class="detail">Let’s create a user skill that tells me the domain breakdown and available APIs. Go to Customize &gt; Skills to view the skill.</p>
           <div class="paste">
@@ -234,7 +240,7 @@
             <pre>/create-skill Use domain-driven design to break down the domains in this application and match it to available APIs or data schemas. This is a personal skill.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="test-skill">
           <h4>Test the skill</h4>
           <div class="paste">
             <div class="paste-head">
@@ -244,7 +250,7 @@
             <pre>Use domain-driven design on this application. Do not edit files.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="canvas">
           <h4>Canvas</h4>
           <p class="detail">Use Canvas to generate interactive artifacts that render next to the chat.</p>
           <div class="paste">
@@ -255,7 +261,7 @@
             <pre>Create a canvas explaining what we did today.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="mcp">
           <h4>MCP / Figma</h4>
           <p class="detail">Ask Grok Build to create a slideshow in Figma using MCP Servers. Find an MCP server for slideshow generation in Grok Build. Go to Customize &gt; MCPs &gt; Figma.</p>
           <div class="paste">
@@ -282,7 +288,7 @@
       <section id="201-target-context">
         <h3>How do you manage context?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="rename-agent-1-all">
           <h4>Rename Agent 1 All</h4>
           <p class="detail">Open one agent and ask it for information about the entire codebase.</p>
           <div class="paste">
@@ -293,7 +299,7 @@
             <pre>/rename-chat Agent 1 All</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="ask-ddd-all">
           <h4>Ask DDD of the application</h4>
           <div class="paste">
             <div class="paste-head">
@@ -303,7 +309,7 @@
             <pre>/ask what is the domain driven design of the application.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="rename-agent-2-target">
           <h4>Rename Agent 2 Target</h4>
           <p class="detail">Open a second agent for a new targeted context window.</p>
           <div class="paste">
@@ -314,7 +320,7 @@
             <pre>/rename-chat Agent 2 Target</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="ask-ddd-invoice-table">
           <h4>Ask DDD of the invoice table</h4>
           <div class="paste">
             <div class="paste-head">
@@ -324,15 +330,15 @@
             <pre>/ask what is the domain driven design of the @invoice-table.tsx</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="context-usage">
           <h4>Check context usage</h4>
           <p class="detail">Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Go to Agent 2 Target. Click the Context Usage indicator below the chat.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="compare-agents">
           <h4>Compare agents</h4>
           <p class="detail">Agent 1 maps all the domains in the whole codebase. Its context window shows X%. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="ask-cross-context">
           <h4>Ask across agents</h4>
           <p class="detail">Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.</p>
           <div class="paste">
@@ -348,7 +354,7 @@
       <section id="201-standardize-behavior">
         <h3>How do you standardize agent behavior?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="create-api-personal-skill">
           <h4>Create personal create-api skill</h4>
           <p class="detail">Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.</p>
           <div class="paste">
@@ -359,7 +365,7 @@
             <pre>/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="promote-create-api-project">
           <h4>Promote create-api to project</h4>
           <p class="detail">Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Review the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.</p>
           <div class="paste">
@@ -375,15 +381,15 @@
       <section id="201-mcp-more-info">
         <h3>How do you connect an agent to external tools?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="add-linear-mcp">
           <h4>Enable Linear MCP</h4>
           <p class="detail">Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project. Review MCP servers in Customize &gt; MCPs. Enable the Linear MCP server.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="mcp-allowlist">
           <h4>Check MCP allowlist</h4>
           <p class="detail">Go to Settings &gt; Agents &gt; Execution and Approvals &gt; Allowlist Options &gt; MCP Allowlist to check valid MCP servers and tools from your administrator.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="ask-linear-bug">
           <h4>List open issues</h4>
           <p class="detail">Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Review the tool calls to the Linear MCP server.</p>
           <div class="paste">
@@ -394,15 +400,15 @@
             <pre>List the open issues from our issue tracker.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="add-local-plugin">
           <h4>Add plugin</h4>
           <p class="detail">A teammate created a plugin for standardizing bug fixes. Go to Customize &gt; Plugins &gt; Add &gt; From Local Repository. Find the plugins/standard-bug-fix file directory and add it.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="check-plugin">
           <h4>Enable Standard bug fix plugin</h4>
           <p class="detail">Go to Customize &gt; Plugins. Go to Personal. Click Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="standard-bug-fix">
           <h4>Standard bug fix</h4>
           <p class="detail">Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.</p>
           <div class="paste">
@@ -418,23 +424,23 @@
       <section id="201-parallelize-task">
         <h3>How do you parallelize a task?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="open-new-agent">
           <h4>Open a new agent</h4>
           <p class="detail">Open a new agent.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="open-resolve-dispute-plan">
           <h4>Open resolve-dispute plan</h4>
           <p class="detail">Open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="open-ledgerly-reviewer">
           <h4>Open ledgerly-reviewer</h4>
           <p class="detail">Open .cursor/agents/ledgerly-reviewer.md</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="open-dispatch-subagents-skill">
           <h4>Open dispatch-subagents skill</h4>
           <p class="detail">Open .cursor/skills/dispatch-subagents/SKILL.md.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="multitask-resolve-dispute">
           <h4>Multitask resolve-dispute</h4>
           <p class="detail">Build the feature using the /multitask command.</p>
           <div class="paste">
@@ -445,7 +451,7 @@
             <pre>/multitask @resolve-dispute.md</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="canvas-subagent-progress">
           <h4>Canvas subagent progress</h4>
           <p class="detail">Use Canvas to keep track of the progress of subagents and their tasks. Review Canvas with subagent progress and worktree conflicts.</p>
           <div class="paste">
@@ -456,7 +462,7 @@
             <pre>Update Canvas with subagent progress and models used. Make a list of worktree conflicts as you encounter them.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="ledgerly-reviewer-check">
           <h4>ledgerly-reviewer check</h4>
           <p class="detail">Use the specialized reviewer subagent to check the completed task.</p>
           <div class="paste">
@@ -474,6 +480,10 @@
     <div class="track" data-track="301">
       <h2>301</h2>
       <p class="lede">You will orchestrate work across agents, tasks, and coworkers: break tasks down for multiple agents, take a plan through parallel agents to a reviewable PR, scale review when several streams finish, and share ownership safely.</p>
+      <label class="optional-toggle" for="include-optional">
+        <input id="include-optional" class="include-optional" type="checkbox">
+        Include optional cards
+      </label>
       <nav class="tabs" aria-label="301 sections">
         <a href="#301-break-down-tasks">How do you break down tasks for agents?</a>
         <a href="#301-plan-to-pr">How do multiple agents go from plan to PR?</a>
@@ -483,11 +493,11 @@
       <section id="301-break-down-tasks">
         <h3>How do you break down tasks for agents?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="open-local-agent">
           <h4>Open a new agent</h4>
           <p class="detail">Open a new local agent.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="create-accessibility-auditor">
           <h4>Create accessibility-auditor</h4>
           <div class="paste">
             <div class="paste-head">
@@ -497,15 +507,15 @@
             <pre>/create-subagent named accessibility-auditor whose job is to audit accessibility of the UI based on WCAG. Provide a list of recommendations.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="set-subagent-model">
           <h4>Use a cost-efficient model</h4>
           <p class="detail">Open the new subagent file in .cursor/agents and point out the model field. Change the model to a faster, cost-efficient model.</p>
         </article>
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-cloud-agent">
           <h4>Optional: Move to a Cloud Agent</h4>
           <p class="detail">Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="multitask-audit">
           <h4>Multitask the audit</h4>
           <div class="paste">
             <div class="paste-head">
@@ -515,7 +525,7 @@
             <pre>/multitask Use the accessibility-auditor subagent to audit the invoices page. Explain how suggested credit is calculated. Compare test coverage for disputes versus invoices.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="review-subagents">
           <h4>Review the subagents</h4>
           <p class="detail">Watch the Working tab.</p>
         </article>
@@ -524,11 +534,11 @@
       <section id="301-plan-to-pr">
         <h3>How do multiple agents go from plan to PR?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-start-project">
           <h4>Optional: Start a new Project</h4>
           <p class="detail">Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.</p>
         </article>
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-stage-project">
           <h4>Optional: Stage the Project</h4>
           <div class="paste">
             <div class="paste-head">
@@ -538,11 +548,11 @@
             <pre>Run all agents in their own worktrees. Parallelize if possible.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="open-plan-agent">
           <h4>Open a new agent</h4>
           <p class="detail">Open a new local agent. Optional: Run the following prompts from the Project.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="list-collections-issues">
           <h4>List open collections issues</h4>
           <p class="detail">Review the list of open issues.</p>
           <div class="paste">
@@ -553,7 +563,7 @@
             <pre>List the open issues for building the collections command center.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="plan-collections-center">
           <h4>Plan the collections command center</h4>
           <div class="paste">
             <div class="paste-head">
@@ -563,19 +573,19 @@
             <pre>/plan Build the collections command center based on the open issues.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="review-plan">
           <h4>Review the plan</h4>
           <p class="detail">Review the plan.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="build-plan">
           <h4>Build the plan</h4>
           <p class="detail">Build the plan.</p>
         </article>
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-build-cloud">
           <h4>Optional: Build with Cloud Agents</h4>
           <p class="detail">Build the plan with Cloud Agents.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="side-chat">
           <h4>Open a side chat</h4>
           <div class="paste">
             <div class="paste-head">
@@ -585,7 +595,7 @@
             <pre>/side</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="ask-new-apis">
           <h4>Ask what APIs the subagent adds</h4>
           <p class="detail">Use a side chat to read through implementation or ask questions without disrupting the coordinator.</p>
           <div class="paste">
@@ -596,7 +606,7 @@
             <pre>/ask what new APIs will this first subagent add?</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="consolidate-pr">
           <h4>Consolidate and open a PR</h4>
           <p class="detail">Move finished worktrees back deliberately. Resolve conflicts on purpose. Open the PR. Show the summary a colleague would read first.</p>
           <div class="paste">
@@ -607,7 +617,7 @@
             <pre>Consolidate the completed tasks into one branch. Open a PR that summarizes what each lane changed, links the plan or ticket, and lists what a human should verify before merge.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-project-notes">
           <h4>Optional: Show project notes</h4>
           <div class="paste">
             <div class="paste-head">
@@ -617,7 +627,7 @@
             <pre>Show me the project notes and context.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="linear-issue-fallback">
           <h4>Fallback: reference repo issues</h4>
           <p class="detail">If an agent cannot access Linear MCP server, use the issue descriptions in the repository.</p>
           <div class="paste">
@@ -633,7 +643,7 @@
       <section id="301-scale-reviews">
         <h3>How do you scale AI code reviews?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="checkout-feature-branch">
           <h4>Open the feature branch</h4>
           <p class="detail">Open a new local agent.</p>
           <div class="paste">
@@ -644,11 +654,11 @@
             <pre>Change the branch to the collections command center feature.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="open-hooks-json">
           <h4>Open hooks.json</h4>
           <p class="detail">Open .cursor/hooks.json in the demo repo.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="trigger-email-hook">
           <h4>Trigger the dataset hook</h4>
           <div class="paste">
             <div class="paste-head">
@@ -658,7 +668,7 @@
             <pre>Create a test that uses the email avery.quinn@ledgerly.ai</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="run-reviewer-subagent">
           <h4>Run the change reviewer subagent</h4>
           <div class="paste">
             <div class="paste-head">
@@ -668,11 +678,11 @@
             <pre>Use the change reviewer to review the feature.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="check-high-severity">
           <h4>Check high severity issues</h4>
           <p class="detail">Check the change reviewer’s output for any high severity issues to assess.</p>
         </article>
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-bugbot">
           <h4>Optional: Run Bugbot</h4>
           <div class="paste">
             <div class="paste-head">
@@ -682,7 +692,7 @@
             <pre>/review-bugbot</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="review-highest-risk">
           <h4>Review the highest-risk slice</h4>
           <p class="detail">Open the highest-risk slice first and read it line by line.</p>
           <div class="paste">
@@ -698,11 +708,11 @@
       <section id="301-share-ownership">
         <h3>How do coworkers share ownership safely?</h3>
         <div class="beats">
-        <article class="beat">
+        <article class="beat" data-beat="open-ownership-agent">
           <h4>Open a new agent</h4>
           <p class="detail">Open a new local agent.</p>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="shift-left-findings">
           <h4>Shift review findings left</h4>
           <div class="paste">
             <div class="paste-head">
@@ -712,7 +722,7 @@
             <pre>Read the review comments and change reviewer subagent findings on this PR. List the ones that apply to future work in this repo. For each one, say whether it belongs in a rule, skill, hook, test, subagent, or a person, and draft it.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat optional" data-beat="optional-reviewer-automation">
           <h4>Optional: Create a Reviewer automation</h4>
           <p class="detail">Go to the Automations tab. Create a New Automation. Name it Reviewer. Select the demo repository. Click Triggers &gt; PR opened, then select the demo repository and set the author to Anyone. Add “Run change reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save. Open the PR and review the check for Automation: Reviewer.</p>
           <div class="paste">
@@ -723,7 +733,7 @@
             <pre>Fix dispute cap issue and open a PR.</pre>
           </div>
         </article>
-        <article class="beat">
+        <article class="beat" data-beat="list-conflict-files">
           <h4>List files that might conflict</h4>
           <p class="detail">Start a new local agent as the second contributor.</p>
           <div class="paste">
@@ -765,6 +775,21 @@
         if (target) target.scrollIntoView();
       }
       select.addEventListener("change", function () { show(select.value, true); });
+
+      var optionalToggle = document.querySelector(".include-optional");
+      if (optionalToggle) {
+        optionalToggle.checked = params.get("optional") === "1";
+        optionalToggle.addEventListener("change", function () {
+          try {
+            var url = new URL(window.location.href);
+            if (optionalToggle.checked) url.searchParams.set("optional", "1");
+            else url.searchParams.delete("optional");
+            history.replaceState(null, "", url.toString());
+          } catch (err) {
+            // Canvas embeds this page as srcdoc, which has no URL to update.
+          }
+        });
+      }
 
       function fallbackCopy(text) {
         var area = document.createElement("textarea");

@@ -9,6 +9,8 @@ export type DemoBeat = {
   promptType?: BeatPromptType;
   example?: string;
   pasteLabel?: string;
+  /** Hidden on the runbook page until Include optional cards is checked. */
+  optional?: boolean;
 };
 
 export type DemoSection = {

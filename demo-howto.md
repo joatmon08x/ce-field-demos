@@ -21,7 +21,7 @@ The 201 track has four sections. Open `runbooks.html?track=201` and copy a card 
 3. **How do you connect an agent to external tools?** — [private Linear team](#create-the-private-linear-team-manual), Linear MCP, list open issues, import plugin from disk
 4. **How do you parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
-The 301 track has four sections. Open `runbooks.html?track=301` and copy a card for any beat.
+The 301 track has four sections. Open `runbooks.html?track=301` and copy a card for any beat. Optional cards stay hidden until Include optional cards is checked.
 
 1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, use a cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit
 2. **How do multiple agents go from plan to PR?** Optionally start a Project, list collections issues, plan and build, `/side`, consolidate into a PR
@@ -341,7 +341,7 @@ ledgerly-reviewer check my work
 
 ## The 301 track
 
-Open `runbooks.html?track=301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional beats are marked Optional in the title.
+Open `runbooks.html?track=301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional cards stay hidden until Include optional cards is checked. Their titles still start with Optional.
 
 ### How do you break down tasks for agents?
 

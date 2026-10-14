@@ -85,7 +85,7 @@ Open `runbooks.html?track=201`, or switch to 201 with the Catalog menu in the Ca
 
 ## The 301 track
 
-Open `runbooks.html?track=301`, or switch to 301 with the Catalog menu in the Canvas, copy a card, and paste it in Grok Build. You still review the result.
+Open `runbooks.html?track=301`, or switch to 301 with the Catalog menu in the Canvas, copy a card, and paste it in Grok Build. You still review the result. Optional cards stay hidden until Include optional cards is checked.
 
 1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
 2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list collections issues, plan and build, `/side`, consolidate into a PR, and fall back to repo issues if Linear MCP is unavailable.

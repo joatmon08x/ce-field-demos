@@ -569,6 +569,46 @@ describe("runbook catalog", () => {
     expect(beat("list-conflict-files")?.promptType).toBe("reusable");
   });
 
+  it("hides 301 optional cards until Include optional cards is checked", () => {
+    const optionalIds = [
+      "optional-cloud-agent",
+      "optional-start-project",
+      "optional-stage-project",
+      "optional-build-cloud",
+      "optional-project-notes",
+      "optional-bugbot",
+      "optional-reviewer-automation",
+    ];
+    expect(beats301.filter((entry) => entry.optional).map((entry) => entry.id)).toEqual(optionalIds);
+    expect(beats101.some((entry) => entry.optional)).toBe(false);
+    expect(beats201.some((entry) => entry.optional)).toBe(false);
+    for (const id of optionalIds) {
+      expect(beats301.find((entry) => entry.id === id)?.optional).toBe(true);
+    }
+
+    const html = renderRunbooksHtml();
+    expect(html).toContain(
+      ".track:not(:has(.include-optional:checked)) .beat.optional { display: none; }",
+    );
+    expect(html.match(/class="include-optional"/g)).toHaveLength(1);
+    expect(html).toContain("Include optional cards");
+    expect(html).toContain('params.get("optional") === "1"');
+    expect(html).not.toMatch(/id="include-optional"[^>]*\bchecked\b/);
+
+    const track101 = html.slice(html.indexOf('data-track="101"'), html.indexOf('data-track="201"'));
+    const track201 = html.slice(html.indexOf('data-track="201"'), html.indexOf('data-track="301"'));
+    const track301 = html.slice(html.indexOf('data-track="301"'));
+    expect(track101).not.toContain("include-optional");
+    expect(track201).not.toContain("include-optional");
+    expect(track301).toContain('class="include-optional"');
+    for (const id of optionalIds) {
+      expect(track301).toContain(`<article class="beat optional" data-beat="${id}">`);
+    }
+    expect(track301).toContain('<article class="beat" data-beat="open-local-agent">');
+    expect(track301).toContain('<article class="beat" data-beat="linear-issue-fallback">');
+    expect(track301).not.toContain('<article class="beat optional" data-beat="linear-issue-fallback">');
+  });
+
   it("keeps the static runbooks page in sync with the beats", () => {
     const committed = readFileSync(join(root, STATIC_RUNBOOKS_PATH), "utf8");
     expect(committed, "run `npm run runbooks:export` to regenerate runbooks.html").toBe(

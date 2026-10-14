@@ -24,8 +24,9 @@ function renderBeat(beat: DemoBeat): string {
             <pre>${escapeHtml(beat.example)}</pre>
           </div>`
     : "";
+  const optionalClass = beat.optional ? " optional" : "";
   return `
-        <article class="beat">
+        <article class="beat${optionalClass}" data-beat="${escapeHtml(beat.id)}">
           <h4>${escapeHtml(beat.title)}</h4>${detail}${paste}
         </article>`;
 }
@@ -39,6 +40,16 @@ function renderSection(trackId: string, section: DemoSection): string {
       </section>`;
 }
 
+function renderOptionalToggle(track: (typeof RUNBOOK_TRACKS)[number]): string {
+  const hasOptional = track.sections.some((section) => section.beats.some((beat) => beat.optional));
+  if (!hasOptional) return "";
+  return `
+      <label class="optional-toggle" for="include-optional">
+        <input id="include-optional" class="include-optional" type="checkbox">
+        Include optional cards
+      </label>`;
+}
+
 function renderTrack(track: (typeof RUNBOOK_TRACKS)[number]): string {
   const tabs = track.sections
     .map((section) => `<a href="#${track.id}-${section.id}">${escapeHtml(section.title)}</a>`)
@@ -46,7 +57,7 @@ function renderTrack(track: (typeof RUNBOOK_TRACKS)[number]): string {
   return `
     <div class="track" data-track="${track.id}">
       <h2>${escapeHtml(track.title)}</h2>
-      <p class="lede">${escapeHtml(track.description)}</p>
+      <p class="lede">${escapeHtml(track.description)}</p>${renderOptionalToggle(track)}
       <nav class="tabs" aria-label="${track.id} sections">
         ${tabs}
       </nav>${track.sections.map((section) => renderSection(track.id, section)).join("")}
@@ -57,6 +68,8 @@ function renderTrack(track: (typeof RUNBOOK_TRACKS)[number]): string {
  * Self-contained runbooks page: no app server, no network, no build step.
  * Every track is pre-rendered so the file still reads top to bottom with
  * scripts disabled; the script only hides tracks other than `?track=`.
+ * Optional cards stay in the markup and stay hidden until Include optional
+ * cards is checked. That checkbox is CSS, so it works with scripts disabled.
  */
 export function renderRunbooksHtml(): string {
   const options = RUNBOOK_TRACKS.map(
@@ -129,6 +142,12 @@ export function renderRunbooksHtml(): string {
       font: 0.75rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     .track[hidden] { display: none; }
+    label.optional-toggle {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin: 0.75rem 0 0; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+    }
+    .optional-toggle input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--indigo); }
+    .track:not(:has(.include-optional:checked)) .beat.optional { display: none; }
   </style>
 </head>
 <body>
@@ -169,6 +188,21 @@ ${RUNBOOK_TRACKS.map(renderTrack).join("\n")}
         if (target) target.scrollIntoView();
       }
       select.addEventListener("change", function () { show(select.value, true); });
+
+      var optionalToggle = document.querySelector(".include-optional");
+      if (optionalToggle) {
+        optionalToggle.checked = params.get("optional") === "1";
+        optionalToggle.addEventListener("change", function () {
+          try {
+            var url = new URL(window.location.href);
+            if (optionalToggle.checked) url.searchParams.set("optional", "1");
+            else url.searchParams.delete("optional");
+            history.replaceState(null, "", url.toString());
+          } catch (err) {
+            // Canvas embeds this page as srcdoc, which has no URL to update.
+          }
+        });
+      }
 
       function fallbackCopy(text) {
         var area = document.createElement("textarea");

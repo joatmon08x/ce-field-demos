@@ -29,6 +29,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-cloud-agent",
         title: "Optional: Move to a Cloud Agent",
+        optional: true,
         promptType: "none",
         detail:
           "Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.",
@@ -56,12 +57,14 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-start-project",
         title: "Optional: Start a new Project",
+        optional: true,
         promptType: "none",
         detail: "Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.",
       },
       {
         id: "optional-stage-project",
         title: "Optional: Stage the Project",
+        optional: true,
         promptType: "adaptable",
         detail: "",
         example: "Run all agents in their own worktrees. Parallelize if possible.",
@@ -101,6 +104,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-build-cloud",
         title: "Optional: Build with Cloud Agents",
+        optional: true,
         promptType: "none",
         detail: "Build the plan with Cloud Agents.",
       },
@@ -131,6 +135,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-project-notes",
         title: "Optional: Show project notes",
+        optional: true,
         promptType: "adaptable",
         detail: "",
         example: "Show me the project notes and context.",
@@ -185,6 +190,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-bugbot",
         title: "Optional: Run Bugbot",
+        optional: true,
         promptType: "reusable",
         detail: "",
         example: "/review-bugbot",
@@ -219,6 +225,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-reviewer-automation",
         title: "Optional: Create a Reviewer automation",
+        optional: true,
         promptType: "adaptable",
         detail:
           "Go to the Automations tab. Create a New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Run change reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save. Open the PR and review the check for Automation: Reviewer.",
