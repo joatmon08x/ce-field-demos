@@ -622,6 +622,7 @@ describe("runbook catalog", () => {
       'window.parent.postMessage({ type: "runbooks:track", track: id }, "*")',
     );
     expect(committed).toContain('data.type === "runbooks:set-track"');
+    expect(committed).toContain("ids.indexOf(data.track) !== -1");
     expect(committed).toContain("show(data.track, false)");
     expect(committed).toContain("Canvas srcdoc pages cannot update their about:srcdoc URL.");
   });

@@ -201,7 +201,8 @@ ${RUNBOOK_TRACKS.map(renderTrack).join("\n")}
           event.source === window.parent &&
           data &&
           data.type === "runbooks:set-track" &&
-          typeof data.track === "string"
+          typeof data.track === "string" &&
+          ids.indexOf(data.track) !== -1
         ) {
           show(data.track, false);
         }
