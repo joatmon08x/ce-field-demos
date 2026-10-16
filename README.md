@@ -114,7 +114,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 | `ledgerly-reviewer` | Read-only review after a change. Confirms the work runs, then catalog, seed names, and planted seams. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
-| `change-reviewer` | Read-only diff inspection. Reports Passed, then Incomplete with critical, warning, and advisory findings for sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |
+| `change-reviewer` | Read-only diff inspection. Reports Passed, then Incomplete with high, warning, and suggestion findings for sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |
 | `choose-cursor-workflow` | Walk the 101, 201, or 301 track and pick the mode or model. |
 | `stage-linear` | Reconcile Fieldnote issues on the private `ce-field-demos` Linear project. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
