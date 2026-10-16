@@ -618,15 +618,12 @@ describe("runbook catalog", () => {
       expect(committed).toContain(`data-track="${track.id}"`);
     }
     expect(committed).not.toMatch(/<(link|script)[^>]+(href|src)=/);
-  });
-
-  it("syncs the selected track with its Canvas host", () => {
-    const html = renderRunbooksHtml();
-
-    expect(html).toContain('window.parent.postMessage({ type: "runbooks:track", track: id }, "*")');
-    expect(html).toContain('data.type === "runbooks:set-track"');
-    expect(html).toContain("show(data.track, false)");
-    expect(html).toContain("Canvas srcdoc pages cannot update their about:srcdoc URL.");
+    expect(committed).toContain(
+      'window.parent.postMessage({ type: "runbooks:track", track: id }, "*")',
+    );
+    expect(committed).toContain('data.type === "runbooks:set-track"');
+    expect(committed).toContain("show(data.track, false)");
+    expect(committed).toContain("Canvas srcdoc pages cannot update their about:srcdoc URL.");
   });
 
   it("does not resolve the retired advanced track", () => {
