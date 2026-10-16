@@ -689,6 +689,14 @@ describe("runbook catalog", () => {
     expect(start).toContain("srcDoc");
     expect(start).toContain("useCanvasState");
     expect(start).toContain("runbooks:set-track");
+    expect(start).toContain("canvas_id");
+    expect(start).toContain("event.source === iframe.contentWindow");
+    expect(start).toContain(
+      'iframe.contentWindow.postMessage({ type: "runbooks:set-track", track }, "*")',
+    );
+    expect(start).toContain("On the iframe `load` event only");
+    expect(start).toContain('a srcdoc frame reports `"null"`');
+    expect(start).not.toContain("whenever the persisted track changes");
     expect(start).not.toContain("file://");
     expect(start).not.toContain("http://localhost:43173/runbooks");
 

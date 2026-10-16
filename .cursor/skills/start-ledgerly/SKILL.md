@@ -62,15 +62,17 @@ After the server is Ready (or already responding), do both of these even when th
 
 1. Open the Grok Build Browser (`cursor-ide-browser`) to **http://localhost:43173**. Use `position: "active"` so the browser is visible. This tab is the Ledgerly application. Leave it there. Do not use an external browser. Do not open a second browser tab for the runbooks. Do not open the in-app `/runbooks` route.
 
-2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks`. The module imports `useCanvasState`, `useEffect`, and `useRef` only from `cursor/canvas` and default-exports one component. Serialize the exact file contents into an `html` string; do not use `fetch`.
+2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks` only when creating the canvas. The module imports `useCanvasState`, `useEffect`, and `useRef` only from `cursor/canvas` and default-exports one component. Serialize the exact file contents into an `html` string; do not use `fetch`.
+
+   `useCanvasState` stores `runbooks-track` on that canvas's sidecar. `WriteCanvas` without a `canvas_id` creates a new canvas, so the next start opens on 101 even when the previous Runbooks canvas still has the saved track. When a Runbooks canvas is already open in this run, pass its `canvas_id` and omit the title so the same sidecar is reused. Reopening that canvas is what the hook covers.
 
    The component fills the view with an `<iframe title="Ledgerly runbooks" srcDoc={html} />` and persists the Catalog selection with `useCanvasState<string>("runbooks-track", "101")`:
 
    - Keep a ref to the iframe.
-   - Accept `message` events only from that iframe. When it posts `{ type: "runbooks:track", track }`, validate the track against `["101", "201", "301"]` and save it.
-   - On iframe load and whenever the persisted track changes, post `{ type: "runbooks:set-track", track }` to the iframe.
+   - Accept `message` events only when `event.source === iframe.contentWindow`. When it posts `{ type: "runbooks:track", track }`, validate the track against `["101", "201", "301"]` and save it. Skip an `event.origin` allowlist: a srcdoc frame reports `"null"`, and that check drops the message.
+   - On the iframe `load` event only, post the saved track with `iframe.contentWindow.postMessage({ type: "runbooks:set-track", track }, "*")`. The page applies that message with `show(data.track, false)`, so it does not echo. A later post of an older value can overwrite a newer Catalog choice, and the parent will not hear about it.
 
-   The event bridge is required: an iframe created with `srcDoc` is rebuilt when the user leaves and reopens the canvas, while `useCanvasState` survives canvas reloads and IDE restarts. Do not replace it with component-local state or iframe storage. The embedded page otherwise opens on track 101. `runbooks.html?track=301` selects 301 when the file is opened on its own. On 301, optional cards stay hidden until Include optional cards is checked.
+   The event bridge is required: an iframe created with `srcDoc` is rebuilt when the user leaves and reopens the canvas, while `useCanvasState` survives canvas reloads and IDE restarts. Do not replace it with component-local state or iframe storage. The embedded page otherwise opens on track 101. `runbooks.html?track=301` selects 301 when the file is opened on its own. On 301, optional cards stay hidden until Include optional cards is checked. Restoring a track does not restore that checkbox.
 
 ## 5. Confirm
 
