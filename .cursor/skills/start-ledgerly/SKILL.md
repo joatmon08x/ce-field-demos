@@ -62,7 +62,15 @@ After the server is Ready (or already responding), do both of these even when th
 
 1. Open the Grok Build Browser (`cursor-ide-browser`) to **http://localhost:43173**. Use `position: "active"` so the browser is visible. This tab is the Ledgerly application. Leave it there. Do not use an external browser. Do not open a second browser tab for the runbooks. Do not open the in-app `/runbooks` route.
 
-2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks`. The module imports only from `cursor/canvas` and default-exports one component. That component fills the view with an `<iframe title="Ledgerly runbooks" srcDoc={html} />` whose `srcDoc` is the exact file contents, so the Catalog dropdown, section tabs, and Copy buttons keep working. No `fetch`. The embedded page opens on track 101. When the user asked for 201 or 301, they switch it with the Catalog control inside the canvas. `runbooks.html?track=301` selects 301 when the file is opened on its own. On 301, optional cards stay hidden until Include optional cards is checked.
+2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks`. The module imports `useCanvasState`, `useEffect`, and `useRef` only from `cursor/canvas` and default-exports one component. Serialize the exact file contents into an `html` string; do not use `fetch`.
+
+   The component fills the view with an `<iframe title="Ledgerly runbooks" srcDoc={html} />` and persists the Catalog selection with `useCanvasState<string>("runbooks-track", "101")`:
+
+   - Keep a ref to the iframe.
+   - Accept `message` events only from that iframe. When it posts `{ type: "runbooks:track", track }`, validate the track against `["101", "201", "301"]` and save it.
+   - On iframe load and whenever the persisted track changes, post `{ type: "runbooks:set-track", track }` to the iframe.
+
+   The event bridge is required: an iframe created with `srcDoc` is rebuilt when the user leaves and reopens the canvas, while `useCanvasState` survives canvas reloads and IDE restarts. Do not replace it with component-local state or iframe storage. The embedded page otherwise opens on track 101. `runbooks.html?track=301` selects 301 when the file is opened on its own. On 301, optional cards stay hidden until Include optional cards is checked.
 
 ## 5. Confirm
 

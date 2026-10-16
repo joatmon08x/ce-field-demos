@@ -620,6 +620,15 @@ describe("runbook catalog", () => {
     expect(committed).not.toMatch(/<(link|script)[^>]+(href|src)=/);
   });
 
+  it("syncs the selected track with its Canvas host", () => {
+    const html = renderRunbooksHtml();
+
+    expect(html).toContain('window.parent.postMessage({ type: "runbooks:track", track: id }, "*")');
+    expect(html).toContain('data.type === "runbooks:set-track"');
+    expect(html).toContain("show(data.track, false)");
+    expect(html).toContain("Canvas srcdoc pages cannot update their about:srcdoc URL.");
+  });
+
   it("does not resolve the retired advanced track", () => {
     expect(RUNBOOK_TRACKS).toHaveLength(3);
     for (const retired of ["advanced", "Advanced"]) {
@@ -680,6 +689,8 @@ describe("runbook catalog", () => {
     expect(start).toContain("runbooks.html");
     expect(start).toContain("WriteCanvas");
     expect(start).toContain("srcDoc");
+    expect(start).toContain("useCanvasState");
+    expect(start).toContain("runbooks:set-track");
     expect(start).not.toContain("file://");
     expect(start).not.toContain("http://localhost:43173/runbooks");
 

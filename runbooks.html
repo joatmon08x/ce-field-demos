@@ -760,10 +760,17 @@
         tracks.forEach(function (el) { el.hidden = el.getAttribute("data-track") !== id; });
         document.title = "Runbooks · " + id;
         if (updateUrl) {
-          var url = new URL(window.location.href);
-          url.searchParams.set("track", id);
-          url.hash = "";
-          history.replaceState(null, "", url.toString());
+          try {
+            var url = new URL(window.location.href);
+            url.searchParams.set("track", id);
+            url.hash = "";
+            history.replaceState(null, "", url.toString());
+          } catch (err) {
+            // Canvas srcdoc pages cannot update their about:srcdoc URL.
+          }
+          if (window.parent !== window) {
+            window.parent.postMessage({ type: "runbooks:track", track: id }, "*");
+          }
         }
       }
 
@@ -775,6 +782,17 @@
         if (target) target.scrollIntoView();
       }
       select.addEventListener("change", function () { show(select.value, true); });
+      window.addEventListener("message", function (event) {
+        var data = event.data;
+        if (
+          event.source === window.parent &&
+          data &&
+          data.type === "runbooks:set-track" &&
+          typeof data.track === "string"
+        ) {
+          show(data.track, false);
+        }
+      });
 
       var optionalToggle = document.querySelector(".include-optional");
       if (optionalToggle) {
