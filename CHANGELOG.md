@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **201 track** — Runbooks track `201` / `RUNBOOK_SECTIONS_201` is on main for CE workshop demos (Outline Show beats, Linear staging, disk plugin) but is not a formal release in this cut.
 - **301 track.** Runbooks track `301` / `RUNBOOK_SECTIONS_301` adds the Outline Show for orchestrating agents, tasks, and coworkers (four sections, 30 beats). Not a formal release in this cut. Show 11 step 7 (Check organization and team rules, plugins, and MCPs) is held until the Outline finishes it.
 
+### Added
+
+- `change-reviewer` project agent. Read-only diff inspection for the 301 review beat: sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. Critical is the high-severity set.
+
 ### Changed
 
 - Runbooks left the app. The catalog is `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`.

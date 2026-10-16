@@ -14,6 +14,11 @@ export const PROJECT_AGENTS = [
     path: ".cursor/agents/dispute-verifier.md",
     when: "/goal and /orchestrate finish line. Report pass/fail evidence; write no product code.",
   },
+  {
+    name: "change-reviewer",
+    path: ".cursor/agents/change-reviewer.md",
+    when: "Read-only review of a diff. Flags sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands.",
+  },
 ] as const;
 
 export const PROJECT_SKILLS = [

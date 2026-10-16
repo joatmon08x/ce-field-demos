@@ -101,6 +101,7 @@ Incomplete on purpose:
 | `.cursor/agents/ledgerly-reviewer.md` | Read-only review after code changes. Confirms the work runs. |
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
+| `.cursor/agents/change-reviewer.md` | Read-only diff inspection. Critical, warning, and advisory. |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101, 201, or 301 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the private `ce-field-demos` Linear project |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |

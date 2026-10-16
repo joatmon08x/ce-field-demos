@@ -27,7 +27,7 @@ Dashboard, Invoices, Collections, Disputes, Settings. Extra book accounts are in
 | --- | --- |
 | Runbook beats | `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`. Regenerate with `npm run runbooks:export` after editing `runbooks/beats/` |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
-| Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier` |
+| Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier`, `change-reviewer` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
 | Disk plugin | `plugins/standard-bug-fix/` — add from local repository; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md`, the 101, 201, and 301 run-of-show |
@@ -114,6 +114,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 | `ledgerly-reviewer` | Read-only review after a change. Confirms the work runs, then catalog, seed names, planted seams, and high-risk changes. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
+| `change-reviewer` | Read-only diff inspection. Critical (high severity), warning, and advisory: sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |
 | `choose-cursor-workflow` | Walk the 101, 201, or 301 track and pick the mode or model. |
 | `stage-linear` | Reconcile Fieldnote issues on the private `ce-field-demos` Linear project. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
