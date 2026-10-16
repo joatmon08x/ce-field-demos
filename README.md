@@ -111,7 +111,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 
 | Name | Role |
 | --- | --- |
-| `ledgerly-reviewer` | Read-only review after a change. Confirms the work runs, then catalog, seed names, planted seams, and high-risk changes. |
+| `ledgerly-reviewer` | Read-only review after a change. Confirms the work runs, then catalog, seed names, and planted seams. |
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `change-reviewer` | Read-only diff inspection. Critical (high severity), warning, and advisory: sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |

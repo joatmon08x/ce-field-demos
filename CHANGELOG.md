@@ -14,10 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `change-reviewer` project agent. Read-only diff inspection for the 301 review beat: sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. Critical is the high-severity set.
+- `change-reviewer` project agent. Read-only diff inspection for the 301 review beat. It owns the closer-inspection list: authentication, payments, personal data, permissions, or secrets; difficult rollback; missing tests; a test an agent edited; scope outside the plan; and new dependencies or shell commands. Critical is the high-severity set.
 
 ### Changed
 
+- `ledgerly-reviewer` no longer carries the closer-inspection list. It confirms the claimed work runs, then checks the catalog, seed, and protected paths.
 - Runbooks left the app. The catalog is `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`.
 
 ## [1.0.0] - 2026-09-15

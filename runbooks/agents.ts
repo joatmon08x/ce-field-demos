@@ -2,7 +2,7 @@ export const PROJECT_AGENTS = [
   {
     name: "ledgerly-reviewer",
     path: ".cursor/agents/ledgerly-reviewer.md",
-    when: "After any code change. Read-only check that the work exists and runs, then catalog prices, seed names, protected paths, and high-risk changes.",
+    when: "After any code change. Read-only check that the work exists and runs, then catalog prices, seed names, and protected paths.",
   },
   {
     name: "api-instrumenter",

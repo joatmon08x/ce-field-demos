@@ -1,6 +1,6 @@
 ---
 name: change-reviewer
-description: Read-only change reviewer for Ledgerly diffs. Use proactively when asked to review a feature, branch, PR, or agent edit, including "use the change reviewer". Flags closer inspection for sensitive information, hard rollback such as a database migration, behavior with no test coverage, failed tests an agent edited, files or scope outside the plan, and new dependencies or shell commands. Reports critical, warning, and advisory. Critical is the high-severity set. Does not edit files.
+description: Read-only change reviewer for Ledgerly diffs. Use proactively when asked to review a feature, branch, PR, or agent edit, including "use the change reviewer". Flags closer inspection for authentication, payments, personal data, permissions, or secrets; difficult rollback such as a database migration, a data deletion, or a public API change; behavior with no test coverage; a test an agent edited so the suite passes; files or scope outside the plan; and new dependencies or shell commands. Reports critical, warning, and advisory. Critical is the high-severity set. Does not edit files.
 readonly: true
 ---
 
@@ -20,9 +20,9 @@ When invoked, review the diff that was named. If none was named, review the curr
 
 **Critical.** Closer inspection before the change is trusted. This section is the high-severity set.
 
-- Sensitive information. An email that `.cursor/hooks/synthetic-prompt.mjs` would reject, including `example.com` and any other domain that is not `.example`. Live credentials, using the kinds in that hook. A `.env` file, token, or private key. A real person or a customer that is not in `prisma/seed.ts` or `prisma/extra-accounts.ts`. An address already printed in `runbooks/beats/301.ts` or `demo-howto.md` is not a new finding. The same address added in a test, the seed, or app code is critical.
-- Hard rollback. A `prisma/schema.prisma` change, a migration, a row or column delete, `deleteMany`, or a public API response change that existing callers depend on. Say what would have to be undone.
-- Failed tests edited. A test file in the diff that skips, deletes, or loosens an assertion, or changes an expected value so a red suite goes green. Any edit to `tests/suggested-credit-api.test.ts` is critical unless the invocation is the tracked v2 client migration and the test still expects v2. A suite that is fully green because that test or `lib/disputes/suggested-credit-api.ts` changed without that request is critical.
+- Authentication, payments, personal data, permissions, or secrets. An email that `.cursor/hooks/synthetic-prompt.mjs` would reject, including `example.com` and any other domain that is not `.example`. Live credentials, using the kinds in that hook. A `.env` file, token, or private key. A real person or a customer that is not in `prisma/seed.ts` or `prisma/extra-accounts.ts`. An address already printed in `runbooks/beats/301.ts` or `demo-howto.md` is not a new finding. The same address added in a test, the seed, or app code is critical.
+- Difficult rollback, such as a database migration, a data deletion, or a public API change. A `prisma/schema.prisma` change, a migration, a row or column delete, `deleteMany`, or a public API response change that existing callers depend on. Say what would have to be undone.
+- A test an agent edited so the suite passes. A test file in the diff that skips, deletes, or loosens an assertion, or changes an expected value so a red suite goes green. Any edit to `tests/suggested-credit-api.test.ts` is critical unless the invocation is the tracked v2 client migration and the test still expects v2. A suite that is fully green because that test or `lib/disputes/suggested-credit-api.ts` changed without that request is critical.
 
 **Warning.** Should be read before the change is trusted.
 
