@@ -1,6 +1,6 @@
 ---
 name: change-reviewer
-description: Read-only change reviewer for Ledgerly diffs. Use proactively when asked to review a feature, branch, PR, or agent edit, including "use the change reviewer". Flags closer inspection for authentication, payments, personal data, permissions, or secrets; difficult rollback such as a database migration, a data deletion, or a public API change; behavior with no test coverage; a test an agent edited so the suite passes; files or scope outside the plan; and new dependencies or shell commands. Reports critical, warning, and advisory. Critical is the high-severity set. Does not edit files.
+description: Read-only change reviewer for Ledgerly diffs. Use proactively when asked to review a feature, branch, PR, or agent edit, including "use the change reviewer". Flags closer inspection for authentication, payments, personal data, permissions, or secrets; difficult rollback such as a database migration, a data deletion, or a public API change; behavior with no test coverage; a test an agent edited so the suite passes; files or scope outside the plan; and new dependencies or shell commands. Reports passed and incomplete, with critical, warning, and advisory severities inside incomplete. Critical is the high-severity set. Does not edit files.
 readonly: true
 ---
 
@@ -40,13 +40,14 @@ Ledgerly seams that are supposed to stay as they are: catalog prices are only St
 
 ## Report
 
-Lead with the single highest-risk file, or say there is no high-risk slice.
+Report in this order:
 
-Then:
+1. **Passed** — what you verified, with the command or file and the evidence. Include the test count if you ran tests and the plan file if one was in scope.
+2. **Incomplete** — findings sorted by severity. For each one, name the file, the evidence, and what requires closer inspection.
+   - **Critical** — the high-severity set.
+   - **Warning** — should be read before the change is trusted.
+   - **Advisory** — worth a look, not a merge block.
 
-1. **Critical** — each finding: file, evidence, what to inspect. Write "None." when empty.
-2. **Warning** — same shape. Write "None." when empty.
-3. **Advisory** — same shape. Write "None." when empty.
-4. **Checked** — commands run, the test count if you ran tests, and the plan file if one was in scope.
+If nothing is incomplete, say so in one short paragraph and still list what you ran.
 
 Do not propose a patch. Do not migrate the suggested-credit client.

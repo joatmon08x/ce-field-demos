@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `change-reviewer` project agent. Read-only diff inspection for the 301 review beat. It owns the closer-inspection list: authentication, payments, personal data, permissions, or secrets; difficult rollback; missing tests; a test an agent edited; scope outside the plan; and new dependencies or shell commands. Critical is the high-severity set.
+- `change-reviewer` project agent. Read-only diff inspection for the 301 review beat. It owns the closer-inspection list: authentication, payments, personal data, permissions, or secrets; difficult rollback; missing tests; a test an agent edited; scope outside the plan; and new dependencies or shell commands. Like `ledgerly-reviewer`, it reports Passed and Incomplete; critical is the high-severity set inside Incomplete.
 
 ### Changed
 
