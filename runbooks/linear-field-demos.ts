@@ -395,3 +395,55 @@ export function collectionsCommandCenterDescription(issue: CollectionsCommandCen
     bullets(issue.ledgerlyUrls),
   ].join("\n\n");
 }
+
+/**
+ * WCAG audit already on a ce-field-demos board.
+ * stage-linear updates this issue in place. It is not a Fieldnote beat and not
+ * a Collections Command Center slice, and a clean board does not gain a copy.
+ */
+export const WCAG_KEYBOARD_WALKTHROUGH = {
+  title: "UI changes need a WCAG 2.2 AA accessibility audit",
+  state: "Todo",
+  /** Linear: 3=Medium */
+  priority: 3,
+  description: `## Story
+
+This issue is a manual keyboard walkthrough. That is the WCAG 2.2 Level AA audit. A static review of markup or tokens does not complete it.
+
+Walk http://127.0.0.1:43173/invoices with the keyboard only: Tab, Shift+Tab, Enter, and Escape. The dev server is on port 43173. Cover the invoices page, the components it renders, the shared shell, and the tokens in \`app/globals.css\` in both themes. After each key, record tab order, whether focus is visible, whether focus can leave every region, whether Escape closes an open panel, and where focus lands after Enter.
+
+A walkthrough of that page found serious failures in the shared shell, so they show on every page:
+
+- No skip link to main content.
+- Filter pills, nav links, and invoice row links have no visible focus.
+- The notice bell menu opens on click and cannot be operated from the keyboard.
+- Status badge text fails 4.5:1: light-theme Open and Paid, and dark-theme Overdue and Disputed.
+
+## Acceptance
+
+The manual keyboard walkthrough can show each of these. Reading the source without walking the page does not pass:
+
+- The shell has a skip link to main content, and Tab reaches it.
+- Links and filter pills show a visible focus ring.
+- The notice bell menu opens from the keyboard, and focus returns to the bell on close.
+- Status badge text meets 4.5:1 in light and dark themes, using existing tokens in \`app/globals.css\`.
+- Filter pills and the active nav item expose their selected state during the walkthrough.
+- Invoice table headers set \`scope="col"\`.
+- The off-screen mobile sidebar is not in the tab order.
+- Filter and search changes announce the result count.
+
+## Paths
+
+- \`components/app-chrome.tsx\`
+- \`components/notice-bell.tsx\`
+- \`components/filter-pills.tsx\`
+- \`components/invoice-table.tsx\`
+- \`components/ui/badge.tsx\`
+- \`components/status-badge.tsx\`
+- \`app/globals.css\`
+- \`app/invoices/page.tsx\`
+
+## Verify
+
+- http://127.0.0.1:43173/invoices — manual keyboard walkthrough: skip link, focus rings, notice menu, and badge text in both themes.`,
+} as const;

@@ -7,6 +7,7 @@ import {
   FIELD_DEMO_ISSUES,
   FIELD_DEMO_SUGGESTED_CREDIT_TITLE,
   LINEAR_FIELD_DEMOS_PROJECT,
+  WCAG_KEYBOARD_WALKTHROUGH,
 } from "@/runbooks/linear-field-demos";
 
 describe("ce-field-demos Linear book", () => {
@@ -88,5 +89,26 @@ describe("ce-field-demos Linear book", () => {
       "FR-23",
       "FR-24",
     ]);
+  });
+
+  it("keeps the WCAG audit as a manual keyboard walkthrough outside the twelve titles", () => {
+    expect(WCAG_KEYBOARD_WALKTHROUGH.title).toBe(
+      "UI changes need a WCAG 2.2 AA accessibility audit",
+    );
+    expect(WCAG_KEYBOARD_WALKTHROUGH.state).toBe("Todo");
+    expect(WCAG_KEYBOARD_WALKTHROUGH.priority).toBe(3);
+    expect(
+      WCAG_KEYBOARD_WALKTHROUGH.description.startsWith(
+        "## Story\n\nThis issue is a manual keyboard walkthrough.",
+      ),
+    ).toBe(true);
+    expect(WCAG_KEYBOARD_WALKTHROUGH.description).toContain("That is the WCAG 2.2 Level AA audit.");
+    expect(WCAG_KEYBOARD_WALKTHROUGH.description).toContain("Tab, Shift+Tab, Enter, and Escape");
+    expect(FIELD_DEMO_ISSUES.some((issue) => issue.title === WCAG_KEYBOARD_WALKTHROUGH.title)).toBe(
+      false,
+    );
+    expect(
+      COLLECTIONS_COMMAND_CENTER_ISSUES.some((issue) => issue.title === WCAG_KEYBOARD_WALKTHROUGH.title),
+    ).toBe(false);
   });
 });

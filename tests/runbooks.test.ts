@@ -784,6 +784,17 @@ describe("runbook catalog", () => {
     );
     expect(reset, "reset must restore dispute queue pages").toContain("app/disputes/page.tsx");
 
+    expect(stage, "stage must say the WCAG audit is a manual keyboard walkthrough").toContain(
+      "manual keyboard walkthrough",
+    );
+    expect(stage).toContain("UI changes need a WCAG 2.2 AA accessibility audit");
+    expect(stage, "stage must not cancel the WCAG walkthrough as an extra").toContain(
+      "Never cancel the WCAG keyboard-walkthrough issue as an extra",
+    );
+    expect(stage, "stage must not create the WCAG issue on a clean board").toContain(
+      "Do not create this title when it is missing",
+    );
+
     // stage-linear reactivates a torn-down board on the next run
     expect(stage).toMatch(/reactivate|reopen|reopens/i);
     expect(stage, "stage must create a new issue instead of unarchiving").toMatch(

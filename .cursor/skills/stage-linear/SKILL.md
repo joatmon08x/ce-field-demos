@@ -14,6 +14,8 @@ Issue bodies live in `runbooks/linear-field-demos.ts`. The board has two sets on
 - **Fieldnote issues** — the three in `FIELD_DEMO_ISSUES`. The 101/201 beats name only these titles.
 - **Collections Command Center slices** — the nine in `COLLECTIONS_COMMAND_CENTER_ISSUES`, each tagged as part of the Collections Command Center feature (§3a).
 
+A WCAG audit already on that project (`WCAG_KEYBOARD_WALKTHROUGH`) is a manual keyboard walkthrough. Update that copy in place. Do not add it to a clean board.
+
 Do not invent another issue or a fourth price.
 
 ## Isolation (required)
@@ -135,9 +137,17 @@ Array order:
 
 These slices are not 101/201 beats. Do not paste them into runbooks, and do not put the tag on the three Fieldnote issues.
 
-## 3b. Extras
+## 3b. WCAG audit
 
-After seeding both sets, list any **active** (non-`Canceled`) issue on the project whose exact title is not a current `FIELD_DEMO_ISSUES` or `COLLECTIONS_COMMAND_CENTER_ISSUES` title and was not already matched via `previousTitles`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently. Leave canceled extras linked to the project — do not reopen them, and do not unlink them.
+`WCAG_KEYBOARD_WALKTHROUGH` in `runbooks/linear-field-demos.ts` is a manual keyboard walkthrough. That is the whole WCAG 2.2 Level AA audit. A static pass over markup or tokens does not complete it.
+
+The title is `UI changes need a WCAG 2.2 AA accessibility audit`. It is not one of the three Fieldnote issues and not a Collections Command Center slice. Do not add it to `FIELD_DEMO_ISSUES`, do not tag it with the feature label, and do not paste it into a runbook beat.
+
+Reconcile it only when a **non-archived, non-`Canceled`** issue on this project already has that exact title. `save_issue` with that identifier and the catalog `description`, `priority`, and `state`. The description must start by saying the issue is a manual keyboard walkthrough (Tab, Shift+Tab, Enter, Escape on the running invoices page). Do not create this title when it is missing. Do not unarchive it. A `Canceled` copy stays canceled.
+
+## 3c. Extras
+
+After seeding both sets, list any **active** (non-`Canceled`) issue on the project whose exact title is not a current `FIELD_DEMO_ISSUES` or `COLLECTIONS_COMMAND_CENTER_ISSUES` title, is not `WCAG_KEYBOARD_WALKTHROUGH.title`, and was not already matched via `previousTitles`. **Confirm with the operator before canceling any of them** — the confirmed team may hold unrelated work. On confirmation, cancel each extra (`save_issue` with `state`: `Canceled`). Never cancel extras silently. Never cancel the WCAG keyboard-walkthrough issue as an extra. Leave canceled extras linked to the project — do not reopen them, and do not unlink them.
 
 ## 4. Confirm
 
@@ -149,7 +159,8 @@ Report:
 - Three Fieldnote issue identifiers + titles + URLs
 - Nine Collections Command Center identifiers + titles + URLs, and that each description starts with the feature note and carries the team label (or that the label was skipped and why)
 - That `teams` on the project is only the confirmed private team
-- That the **unarchived, non-`Canceled`** issues on the project are exactly one of each of the three Fieldnote titles plus the nine Collections Command Center titles — ignore canceled and archived leftovers still linked from a prior reset or reconcile
+- That the **unarchived, non-`Canceled`** issues on the project are exactly one of each of the three Fieldnote titles plus the nine Collections Command Center titles, and the WCAG issue only when that title was already on the board — ignore canceled and archived leftovers still linked from a prior reset or reconcile
+- When the WCAG issue is present: its description starts by saying the audit is a manual keyboard walkthrough, and it was not canceled as an extra
 - That the filter issue is second within its Fieldnote create batch
 - Any canceled or archived leftovers still on the project (titles only), if present
 
@@ -157,7 +168,7 @@ Runbook pastes use **titles**, not identifiers, so you do not edit runbook beats
 
 ## Record for reset
 
-After confirming the private team and all twelve **unarchived** issue identifiers (three Fieldnote, then nine Collections Command Center), record that board. Do not record archived identifiers:
+After confirming the private team and all twelve **unarchived** issue identifiers (three Fieldnote, then nine Collections Command Center), record that board. When the WCAG keyboard-walkthrough issue is on the board, append its identifier after those twelve. Do not record archived identifiers:
 
 ```bash
 npm run demo:session -- record linear <teamId> "<teamName>" <teamKey> <projectId> <issueId,...,issueId>
