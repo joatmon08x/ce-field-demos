@@ -3,7 +3,7 @@
 // Runs only after contrast-collect.sh has flagged an edit to app/globals.css.
 // No CE Demo Builder accessibility library is in this repo, so the ratio math lives here.
 
-import { existsSync, readFileSync, unlinkSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -38,6 +38,31 @@ export function safeConversationId(conversationId) {
 
 export function flagPath(conversationId) {
   return join(flagDir(), safeConversationId(conversationId));
+}
+
+export function isSharedTokenPath(filePath) {
+  if (typeof filePath !== "string") return false;
+  const normalized = filePath.replaceAll("\\", "/");
+  return normalized === TOKEN_FILE || normalized.endsWith(`/${TOKEN_FILE}`);
+}
+
+// Top-level file_path only. A file_path key inside edits is not the edited file.
+export function tokenEditFlag(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return null;
+  if (!isSharedTokenPath(input.file_path)) return null;
+  return {
+    safeId: safeConversationId(input.conversation_id),
+    generationId: typeof input.generation_id === "string" ? input.generation_id : "",
+    filePath: input.file_path,
+  };
+}
+
+export function writeTokenEditFlag(input) {
+  const flag = tokenEditFlag(input);
+  if (!flag) return false;
+  mkdirSync(flagDir(), { recursive: true });
+  writeFileSync(flagPath(input.conversation_id), `${flag.generationId}\n${flag.filePath}\n`);
+  return true;
 }
 
 function channel(hex, offset) {
@@ -226,7 +251,7 @@ async function main() {
   let css = "";
   try {
     flagText = readFileSync(path, "utf8");
-    css = readFileSync(join(process.cwd(), TOKEN_FILE), "utf8");
+    css = readFileSync(process.env.LEDGERLY_CONTRAST_CSS || join(process.cwd(), TOKEN_FILE), "utf8");
   } catch {
     return;
   }

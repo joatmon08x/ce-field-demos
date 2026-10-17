@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -12,6 +12,7 @@ import {
   MIN_CONTRAST,
   safeConversationId,
   themeDeclarations,
+  tokenEditFlag,
 } from "./contrast-check.mjs";
 
 const root = join(import.meta.dirname, "../..");
@@ -93,6 +94,85 @@ test("the dark token block is .dark, not a later html.dark rule", () => {
 function runHook(command, input, env) {
   return spawnSync(command, { cwd: root, input, encoding: "utf8", env });
 }
+
+test("tokenEditFlag reads the top-level file_path when edits also have file_path", () => {
+  const flagged = tokenEditFlag({
+    conversation_id: "nested",
+    generation_id: "gen-nested",
+    file_path: "app/globals.css",
+    edits: [{ file_path: "app/invoices/page.tsx", old_string: "Overdue", new_string: "Past due" }],
+  });
+  assert.equal(flagged?.filePath, "app/globals.css");
+  assert.equal(flagged?.generationId, "gen-nested");
+
+  assert.equal(
+    tokenEditFlag({
+      file_path: "app/invoices/page.tsx",
+      edits: [{ file_path: "app/globals.css", old_string: "a", new_string: "b" }],
+    }),
+    null,
+  );
+});
+
+test("the collect script flags a token edit when edits contain another file_path", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ledgerly-contrast-"));
+  const env = { ...process.env, LEDGERLY_CONTRAST_FLAG_DIR: dir };
+  const collect = runHook(
+    ".cursor/hooks/contrast-collect.sh",
+    JSON.stringify({
+      conversation_id: "nested-shell",
+      generation_id: "gen-nested",
+      file_path: join(root, "app/globals.css"),
+      edits: [{ file_path: join(root, "app/invoices/page.tsx"), old_string: "Overdue", new_string: "Past due" }],
+    }),
+    env,
+  );
+  assert.equal(collect.status, 0);
+  assert.equal(collect.stdout, "");
+  const body = readFileSync(join(dir, "nested-shell"), "utf8");
+  assert.equal(body.split("\n")[0], "gen-nested");
+  assert.match(body, /app\/globals\.css/);
+  rmSync(dir, { recursive: true, force: true });
+});
+
+test("the stop process returns followup_message for a flagged failing palette", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ledgerly-contrast-"));
+  const cssPath = join(dir, "globals.css");
+  writeFileSync(cssPath, shipped.replace(/(--ink-soft:\s*)#6b7280/, "$1#B0B0B0"));
+  const flagDirPath = join(dir, "flags");
+  const env = {
+    ...process.env,
+    LEDGERLY_CONTRAST_FLAG_DIR: flagDirPath,
+    LEDGERLY_CONTRAST_CSS: cssPath,
+  };
+  const collect = runHook(
+    ".cursor/hooks/contrast-collect.sh",
+    JSON.stringify({
+      conversation_id: "failing-palette",
+      generation_id: "gen-fail",
+      file_path: join(root, "app/globals.css"),
+      edits: [{ old_string: "--ink-soft: #6b7280;", new_string: "--ink-soft: #B0B0B0;" }],
+    }),
+    env,
+  );
+  assert.equal(collect.status, 0);
+  const stop = runHook(
+    ".cursor/hooks/contrast-check.mjs",
+    JSON.stringify({
+      conversation_id: "failing-palette",
+      generation_id: "gen-fail",
+      status: "completed",
+      loop_count: 0,
+    }),
+    env,
+  );
+  assert.equal(stop.status, 0);
+  assert.match(stop.stdout, /"followup_message":/);
+  assert.match(stop.stdout, /#b0b0b0/);
+  assert.match(stop.stdout, /2\.03:1/);
+  assert.equal(existsSync(join(flagDirPath, "failing-palette")), false);
+  rmSync(dir, { recursive: true, force: true });
+});
 
 test("an invoices-page edit produces no hook output", () => {
   const dir = mkdtempSync(join(tmpdir(), "ledgerly-contrast-"));
