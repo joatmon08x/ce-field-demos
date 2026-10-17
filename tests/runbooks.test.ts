@@ -373,7 +373,7 @@ describe("runbook catalog", () => {
       "scale-reviews",
       "share-ownership",
     ]);
-    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([6, 13, 7, 4]);
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([6, 13, 6, 4]);
 
     expect(beats301.map((beat) => beat.id)).toEqual([
       "open-local-agent",
@@ -397,7 +397,6 @@ describe("runbook catalog", () => {
       "linear-issue-fallback",
       "checkout-feature-branch",
       "open-hooks-json",
-      "trigger-email-hook",
       "run-reviewer-subagent",
       "check-high-severity",
       "optional-bugbot",
@@ -411,7 +410,7 @@ describe("runbook catalog", () => {
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Open a new agent → Create accessibility-auditor → Use a cost-efficient model → Optional: Move to a Cloud Agent → Multitask the audit → Review the subagents → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → List open collections issues → Plan the collections command center → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what APIs the subagent adds → Consolidate and open a PR → Optional: Show project notes → Fallback: reference repo issues → Open the feature branch → Open hooks.json → Trigger the dataset hook → Run the change reviewer subagent → Check high severity issues → Optional: Run Bugbot → Review the highest-risk slice → Open a new agent → Shift review findings left → Optional: Create a Reviewer automation → List files that might conflict",
+      "Open a new agent → Create accessibility-auditor → Use a cost-efficient model → Optional: Move to a Cloud Agent → Multitask the audit → Review the subagents → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → List open collections issues → Plan the collections command center → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what APIs the subagent adds → Consolidate and open a PR → Optional: Show project notes → Fallback: reference repo issues → Open the feature branch → Open hooks.json → Run the change reviewer subagent → Check high severity issues → Optional: Run Bugbot → Review the highest-risk slice → Open a new agent → Shift review findings left → Optional: Create a Reviewer automation → List files that might conflict",
     );
 
     const beat = (id: (typeof beats301)[number]["id"]) => beats301.find((entry) => entry.id === id);
@@ -506,11 +505,6 @@ describe("runbook catalog", () => {
     );
     expect(beat("open-hooks-json")?.promptType).toBe("none");
     expect(beat("open-hooks-json")?.detail).toBe("Open .cursor/hooks.json in the demo repo.");
-    expect(beat("trigger-email-hook")?.promptType).toBe("reusable");
-    expect(beat("trigger-email-hook")?.detail).toBe("");
-    expect(beat("trigger-email-hook")?.example).toBe(
-      "Create a test that uses the email avery.quinn@ledgerly.ai",
-    );
     expect(beat("run-reviewer-subagent")?.title).toBe("Run the change reviewer subagent");
     expect(beat("run-reviewer-subagent")?.promptType).toBe("reusable");
     expect(beat("run-reviewer-subagent")?.detail).toBe("");
@@ -550,7 +544,7 @@ describe("runbook catalog", () => {
       "Check the PRs in this repository and make a list of files that might conflict with implementing the dispute resolution feature.",
     );
 
-    expect(beats301).toHaveLength(30);
+    expect(beats301).toHaveLength(29);
     expect(beats301.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(
       beats301.filter((entry) => entry.promptType === "none").every((entry) => entry.example === undefined),

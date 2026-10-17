@@ -168,13 +168,6 @@ export const RUNBOOK_SECTIONS_301 = [
         detail: "Open .cursor/hooks.json in the demo repo.",
       },
       {
-        id: "trigger-email-hook",
-        title: "Trigger the dataset hook",
-        promptType: "reusable",
-        detail: "",
-        example: "Create a test that uses the email avery.quinn@ledgerly.ai",
-      },
-      {
         id: "run-reviewer-subagent",
         title: "Run the change reviewer subagent",
         promptType: "reusable",

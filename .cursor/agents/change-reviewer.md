@@ -12,15 +12,14 @@ When invoked, review the diff that was named. If none was named, review the curr
 
 1. Read the invocation for a plan or task. If it names a plan file, read that file and treat its owned paths as the scope. If it names none, say so and do not invent an out-of-plan finding.
 2. Run `git status`, `git diff`, and `git diff --cached`. On a feature branch, also diff against `main`.
-3. Read `.cursor/hooks/synthetic-prompt.mjs` and apply those email and credential rules to added and changed lines.
-4. Check each inspection class below. Quote the file and the changed lines. For a credential, name the kind and the file. Do not copy the secret value into the report.
-5. Run `npm test` when the diff touches tests, `lib/`, `app/api/`, or `prisma/`. The clean tree is **1 failed / 30 passed**, and `tests/suggested-credit-api.test.ts` is the planted failure. Record the count you observed.
+3. Check each inspection class below. Quote the file and the changed lines. For a credential, name the kind and the file. Do not copy the secret value into the report.
+4. Run `npm test` when the diff touches tests, `lib/`, `app/api/`, or `prisma/`. The clean tree is **1 failed / 30 passed**, and `tests/suggested-credit-api.test.ts` is the planted failure. Record the count you observed.
 
 ## Inspection classes
 
 **High.** Closer inspection before the change is trusted.
 
-- Authentication, payments, personal data, permissions, or secrets. An email that `.cursor/hooks/synthetic-prompt.mjs` would reject, including `example.com` and any other domain that is not `.example`. Live credentials, using the kinds in that hook. A `.env` file, token, or private key. A real person or a customer that is not in `prisma/seed.ts` or `prisma/extra-accounts.ts`. An address already printed in `runbooks/beats/301.ts` or `demo-howto.md` is not a new finding. The same address added in a test, the seed, or app code is high.
+- Authentication, payments, personal data, permissions, or secrets. An email whose domain is not `.example`, including `example.com`. Live credentials: a private key block, an AWS access key, a GitHub token, a Slack token, a provider secret key (`sk_` or `rk_`, live or test), or a SendGrid key. A `.env` file, token, or private key. A real person or a customer that is not in `prisma/seed.ts` or `prisma/extra-accounts.ts`. An address already printed in `runbooks/beats/301.ts` or `demo-howto.md` is not a new finding. The same address added in a test, the seed, or app code is high.
 - Difficult rollback, such as a database migration, a data deletion, or a public API change. A `prisma/schema.prisma` change, a migration, a row or column delete, `deleteMany`, or a public API response change that existing callers depend on. Say what would have to be undone.
 - A test an agent edited so the suite passes. A test file in the diff that skips, deletes, or loosens an assertion, or changes an expected value so a red suite goes green. Any edit to `tests/suggested-credit-api.test.ts` is high unless the invocation is the tracked v2 client migration and the test still expects v2. A suite that is fully green because that test or `lib/disputes/suggested-credit-api.ts` changed without that request is high.
 
