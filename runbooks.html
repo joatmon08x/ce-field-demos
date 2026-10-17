@@ -510,20 +510,13 @@
         </article>
         <article class="beat" data-beat="show-problem-by-hand">
           <h4>Show the problem by hand.</h4>
-          <p class="detail">Go to http://localhost:43173/invoices in Browser.
-Press Tab while on the invoice page. Note that you lost where the focus was on the page.
-Each subagent is conducting a review similar to this manual one. It presses the keys and verifies the focus complies with accessibility standards.</p>
-          <div class="paste">
-            <div class="paste-head">
-              <span>Paste in Grok Build</span>
-              <button type="button" class="copy">Copy</button>
-            </div>
-            <pre>Start the application.</pre>
-          </div>
+          <p class="detail">Open Browser to http://localhost:43173/invoices.
+Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.
+Press Tab a few times on the invoices page.
+Watch the page. After a couple of presses the outline disappears. Focus is still on something, but I can&#39;t tell what, so a keyboard user is now lost.</p>
         </article>
         <article class="beat" data-beat="create-accessibility-manual-reviewer">
-          <h4>Create accessibility-manual-reviewer</h4>
-          <p class="detail">CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read. A keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.</p>
+          <h4>Checking every page like this by hand takes a lot of time and judgment, so let&#39;s build a subagent that does it for us.</h4>
           <div class="paste">
             <div class="paste-head">
               <span>Paste in Grok Build</span>
@@ -617,7 +610,7 @@ Each subagent is conducting a review similar to this manual one. It presses the 
         </article>
         <article class="beat" data-beat="ask-subagent-progress">
           <h4>Ask what the first subagent is remediating</h4>
-          <p class="detail">Ask what a subagent is doing in a side chat without blocking the coordinator.</p>
+          <p class="detail">If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.</p>
           <div class="paste">
             <div class="paste-head">
               <span>Paste in Grok Build</span>

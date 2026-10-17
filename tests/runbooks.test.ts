@@ -378,10 +378,10 @@ describe("runbook catalog", () => {
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Create accessibility-manual-reviewer → Optional: Move to a Cloud Agent → Multitask three page walkthroughs → Review the subagents → Check the subagent output → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Plan fixes for the walkthrough failures → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Fallback: reference repo issues → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Confirm the fixes by keyboard → Show the pre-staged contrast hook → Prove the hook fires on a token edit → Optional: Run Bugbot → Review the high-risk changes → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Return to the command center plan → Check other PRs for file conflicts → Check other PR review findings",
+      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Multitask three page walkthroughs → Review the subagents → Check the subagent output → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Plan fixes for the walkthrough failures → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Fallback: reference repo issues → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Confirm the fixes by keyboard → Show the pre-staged contrast hook → Prove the hook fires on a token edit → Optional: Run Bugbot → Review the high-risk changes → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Return to the command center plan → Check other PRs for file conflicts → Check other PR review findings",
     );
 
-    // Do and Prompt text is copied verbatim from the 301 Outline Show sections.
+    // 201-style mapping: Do is verbatim in detail, Prompt in example, a Say before a prompt is copied into detail, and a Say after a prompt is omitted.
     expect(beats301.map(({ id, title, promptType, detail, example, optional }) => ({ id, title, promptType, detail, example, optional }))).toEqual([
       {
         "id": "plan-command-center",
@@ -399,15 +399,14 @@ describe("runbook catalog", () => {
       {
         "id": "show-problem-by-hand",
         "title": "Show the problem by hand.",
-        "promptType": "adaptable",
-        "detail": "Go to http://localhost:43173/invoices in Browser.\nPress Tab while on the invoice page. Note that you lost where the focus was on the page.\nEach subagent is conducting a review similar to this manual one. It presses the keys and verifies the focus complies with accessibility standards.",
-        "example": "Start the application."
+        "promptType": "none",
+        "detail": "Open Browser to http://localhost:43173/invoices.\nFocus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPress Tab a few times on the invoices page.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
       },
       {
         "id": "create-accessibility-manual-reviewer",
-        "title": "Create accessibility-manual-reviewer",
+        "title": "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
         "promptType": "adaptable",
-        "detail": "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read. A keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.",
+        "detail": "",
         "example": "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots."
       },
       {
@@ -495,7 +494,7 @@ describe("runbook catalog", () => {
         "id": "ask-subagent-progress",
         "title": "Ask what the first subagent is remediating",
         "promptType": "reusable",
-        "detail": "Ask what a subagent is doing in a side chat without blocking the coordinator.",
+        "detail": "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.",
         "example": "/ask What is the first subagent remediating? Answer with the finding and the files it changes."
       },
       {

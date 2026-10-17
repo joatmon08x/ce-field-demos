@@ -22,17 +22,16 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "show-problem-by-hand",
         title: "Show the problem by hand.",
-        promptType: "adaptable",
+        promptType: "none",
         detail:
-          "Go to http://localhost:43173/invoices in Browser.\nPress Tab while on the invoice page. Note that you lost where the focus was on the page.\nEach subagent is conducting a review similar to this manual one. It presses the keys and verifies the focus complies with accessibility standards.",
-        example: "Start the application.",
+          "Open Browser to http://localhost:43173/invoices.\nFocus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPress Tab a few times on the invoices page.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost.",
       },
       {
         id: "create-accessibility-manual-reviewer",
-        title: "Create accessibility-manual-reviewer",
+        title:
+          "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
         promptType: "adaptable",
-        detail:
-          "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read. A keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.",
+        detail: "",
         example:
           "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots.",
       },
@@ -129,7 +128,8 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "ask-subagent-progress",
         title: "Ask what the first subagent is remediating",
         promptType: "reusable",
-        detail: "Ask what a subagent is doing in a side chat without blocking the coordinator.",
+        detail:
+          "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.",
         example: "/ask What is the first subagent remediating? Answer with the finding and the files it changes.",
       },
       {

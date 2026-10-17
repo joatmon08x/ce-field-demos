@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **301 beats synced to Outline 0.8.** Show 11 plans the command center in a separate agent, creates `accessibility-manual-reviewer`, demonstrates the manual keyboard pass, and runs three page walkthroughs. Show 16 plans the remediation. Show 21 adds the keyboard check and contrast hook beats. Show 25 returns to the plan.
+- **301 beats synced to Outline 0.8.** Show 11 plans the command center in a separate agent, shows the invoices focus problem by hand, then builds `accessibility-manual-reviewer` and runs three page walkthroughs. Show 16 plans the remediation. Show 21 adds the keyboard check and contrast hook beats. Show 25 returns to the plan.
 - `ledgerly-reviewer` no longer carries the closer-inspection list. It confirms the claimed work runs, then checks the catalog, seed, and protected paths.
 - Runbooks left the app. The catalog is `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`.
 
