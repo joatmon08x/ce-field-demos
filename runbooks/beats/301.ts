@@ -215,7 +215,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "reusable",
         detail: "",
         example:
-          "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic: rule, skill, subagent, test, or human check.",
+          "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic fix for each: a rule, skill, subagent, test, or human check.",
       },
       {
         id: "optional-reviewer-automation",

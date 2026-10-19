@@ -565,7 +565,7 @@ describe("runbook catalog", () => {
         "title": "Identify the most reliable fix",
         "promptType": "reusable",
         "detail": "",
-        "example": "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic: rule, skill, subagent, test, or human check."
+        "example": "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic fix for each: a rule, skill, subagent, test, or human check."
       },
       {
         "id": "optional-reviewer-automation",
