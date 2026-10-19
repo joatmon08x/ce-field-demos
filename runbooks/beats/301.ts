@@ -38,7 +38,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-cloud-agent",
         title: "Optional: Move to a Cloud Agent",
-        optional: true,
+        optional: { feature: "Cloud Agents" },
         promptType: "none",
         detail: "Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.",
       },
@@ -79,14 +79,14 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-start-project",
         title: "Optional: Start a new Project",
-        optional: true,
+        optional: { feature: "Projects" },
         promptType: "none",
         detail: "Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.",
       },
       {
         id: "optional-stage-project",
         title: "Optional: Stage the Project",
-        optional: true,
+        optional: { feature: "Projects" },
         promptType: "adaptable",
         detail: "",
         example: "Run each agent in its own worktree to avoid conflicts, and parallelize where possible.",
@@ -120,7 +120,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-build-cloud",
         title: "Optional: Build with Cloud Agents",
-        optional: true,
+        optional: { feature: "Cloud Agents" },
         promptType: "none",
         detail: "Build the plan with Cloud Agents.",
       },
@@ -150,7 +150,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-project-notes",
         title: "Optional: Show project notes",
-        optional: true,
+        optional: { feature: "Projects" },
         promptType: "adaptable",
         detail: "",
         example: "Show me the project notes and context.",
@@ -192,7 +192,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-bugbot",
         title: "Optional: Run Bugbot",
-        optional: true,
+        optional: { feature: "Bugbot" },
         promptType: "reusable",
         detail: "",
         example: "/review-bugbot this remediation PR",
@@ -220,7 +220,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-reviewer-automation",
         title: "Optional: Create a Reviewer automation",
-        optional: true,
+        optional: { feature: "Automations" },
         promptType: "none",
         detail:
           "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.",
@@ -228,7 +228,7 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "optional-trigger-automation",
         title: "Optional: Trigger the PR Automation",
-        optional: true,
+        optional: { feature: "Automations" },
         promptType: "adaptable",
         detail:
           "Start a new local agent. Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",

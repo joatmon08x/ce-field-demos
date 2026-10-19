@@ -8,8 +8,15 @@ import {
   RUNBOOK_TRACKS,
   runbookBeatSequence,
   runbookBeats,
+  stripOptionalTags,
+  trackOptionalFeatures,
 } from "@/runbooks/meta";
-import { STATIC_RUNBOOKS_PATH, renderRunbooksHtml } from "@/runbooks/static-page";
+import {
+  STATIC_RUNBOOKS_PATH,
+  beatFeature,
+  renderBeatHtml,
+  renderRunbooksHtml,
+} from "@/runbooks/static-page";
 
 const root = process.cwd();
 const beats101 = runbookBeats("101");
@@ -414,7 +421,7 @@ describe("runbook catalog", () => {
         "title": "Optional: Move to a Cloud Agent",
         "promptType": "none",
         "detail": "Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.",
-        "optional": true
+        "optional": { "feature": "Cloud Agents" }
       },
       {
         "id": "multitask-walkthroughs",
@@ -448,7 +455,7 @@ describe("runbook catalog", () => {
         "title": "Optional: Start a new Project",
         "promptType": "none",
         "detail": "Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.",
-        "optional": true
+        "optional": { "feature": "Projects" }
       },
       {
         "id": "optional-stage-project",
@@ -456,7 +463,7 @@ describe("runbook catalog", () => {
         "promptType": "adaptable",
         "detail": "",
         "example": "Run each agent in its own worktree to avoid conflicts, and parallelize where possible.",
-        "optional": true
+        "optional": { "feature": "Projects" }
       },
       {
         "id": "open-plan-agent",
@@ -488,7 +495,7 @@ describe("runbook catalog", () => {
         "title": "Optional: Build with Cloud Agents",
         "promptType": "none",
         "detail": "Build the plan with Cloud Agents.",
-        "optional": true
+        "optional": { "feature": "Cloud Agents" }
       },
       {
         "id": "side-chat",
@@ -517,7 +524,7 @@ describe("runbook catalog", () => {
         "promptType": "adaptable",
         "detail": "",
         "example": "Show me the project notes and context.",
-        "optional": true
+        "optional": { "feature": "Projects" }
       },
       {
         "id": "checkout-fixes-branch",
@@ -552,7 +559,7 @@ describe("runbook catalog", () => {
         "promptType": "reusable",
         "detail": "",
         "example": "/review-bugbot this remediation PR",
-        "optional": true
+        "optional": { "feature": "Bugbot" }
       },
       {
         "id": "open-ownership-agent",
@@ -572,7 +579,7 @@ describe("runbook catalog", () => {
         "title": "Optional: Create a Reviewer automation",
         "promptType": "none",
         "detail": "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.",
-        "optional": true
+        "optional": { "feature": "Automations" }
       },
       {
         "id": "optional-trigger-automation",
@@ -580,7 +587,7 @@ describe("runbook catalog", () => {
         "promptType": "adaptable",
         "detail": "Start a new local agent. Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
         "example": "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
-        "optional": true
+        "optional": { "feature": "Automations" }
       },
       {
         "id": "return-to-plan",
@@ -605,45 +612,84 @@ describe("runbook catalog", () => {
     expect(beats301.filter((entry) => entry.example?.startsWith("/")).every((entry) => /^\/[a-z-]+/.test(entry.example ?? ""))).toBe(true);
   });
 
-  it("hides 301 optional cards until Include optional cards is checked", () => {
-    const optionalIds = [
-      "optional-cloud-agent",
-      "optional-start-project",
-      "optional-stage-project",
-      "optional-build-cloud",
-      "optional-project-notes",
-      "optional-bugbot",
-      "optional-reviewer-automation",
-      "optional-trigger-automation",
-    ];
-    expect(beats301.filter((entry) => entry.optional).map((entry) => entry.id)).toEqual(optionalIds);
+  it("tags 301 optional beats with the Outline feature and filters them from the track checklist", () => {
+    const optionalFeatures = {
+      "optional-cloud-agent": "Cloud Agents",
+      "optional-start-project": "Projects",
+      "optional-stage-project": "Projects",
+      "optional-build-cloud": "Cloud Agents",
+      "optional-project-notes": "Projects",
+      "optional-bugbot": "Bugbot",
+      "optional-reviewer-automation": "Automations",
+      "optional-trigger-automation": "Automations",
+    } as const;
+    expect(beats301.filter((entry) => entry.optional).map((entry) => entry.id)).toEqual(
+      Object.keys(optionalFeatures),
+    );
     expect(beats101.some((entry) => entry.optional)).toBe(false);
     expect(beats201.some((entry) => entry.optional)).toBe(false);
-    for (const id of optionalIds) {
-      expect(beats301.find((entry) => entry.id === id)?.optional).toBe(true);
+    for (const [id, feature] of Object.entries(optionalFeatures)) {
+      expect(beats301.find((entry) => entry.id === id)?.optional).toEqual({ feature });
     }
+    expect(trackOptionalFeatures(RUNBOOK_TRACKS[0])).toEqual([]);
+    expect(trackOptionalFeatures(RUNBOOK_TRACKS[1])).toEqual([]);
+    expect(trackOptionalFeatures(RUNBOOK_TRACKS[2])).toEqual([
+      "Cloud Agents",
+      "Projects",
+      "Bugbot",
+      "Automations",
+    ]);
+
+    const tagged = stripOptionalTags("[Optional - Cloud Agents] /plan the work");
+    expect(tagged.features).toEqual(["Cloud Agents"]);
+    expect(tagged.text).toBe("/plan the work");
+    expect(stripOptionalTags("Keep this prompt.").text).toBe("Keep this prompt.");
+    const taggedCard = renderBeatHtml({
+      id: "tagged",
+      title: "Tagged",
+      detail: "",
+      promptType: "adaptable",
+      example: "[Optional - Projects] Show me the project notes and context.",
+    });
+    expect(taggedCard).toContain("Show me the project notes and context.");
+    expect(taggedCard).not.toContain("[Optional -");
+    expect(taggedCard).toContain('data-feature="Projects"');
+    expect(
+      beatFeature({
+        id: "tagged",
+        title: "Tagged",
+        detail: "",
+        example: "[Optional - Projects] Show me the project notes and context.",
+      }),
+    ).toBe("Projects");
 
     const html = renderRunbooksHtml();
-    expect(html).toContain(
-      ".track:not(:has(.include-optional:checked)) .beat.optional { display: none; }",
-    );
-    expect(html.match(/class="include-optional"/g)).toHaveLength(1);
-    expect(html).toContain("Include optional cards");
-    expect(html).toContain('params.get("optional") === "1"');
-    expect(html).not.toMatch(/id="include-optional"[^>]*\bchecked\b/);
+    expect(html).toContain("ledgerly-runbooks-optional-features");
+    expect(html).toContain("Optional features");
+    expect(html).not.toContain("Include optional cards");
+    expect(html).not.toContain("include-optional");
+    for (const feature of ["Cloud Agents", "Projects", "Bugbot", "Automations"]) {
+      expect(html).toContain(
+        `.track[data-track="301"]:has(.feature-toggle[data-feature="${feature}"]:not(:checked)) .beat[data-feature="${feature}"] { display: none; }`,
+      );
+      expect(html).toContain(`data-feature="${feature}" checked`);
+    }
+    expect(html.match(/class="feature-toggle"/g)).toHaveLength(4);
 
     const track101 = html.slice(html.indexOf('data-track="101"'), html.indexOf('data-track="201"'));
     const track201 = html.slice(html.indexOf('data-track="201"'), html.indexOf('data-track="301"'));
     const track301 = html.slice(html.indexOf('data-track="301"'));
-    expect(track101).not.toContain("include-optional");
-    expect(track201).not.toContain("include-optional");
-    expect(track301).toContain('class="include-optional"');
-    for (const id of optionalIds) {
-      expect(track301).toContain(`<article class="beat optional" data-beat="${id}">`);
+    expect(track101).not.toContain("feature-toggle");
+    expect(track201).not.toContain("feature-toggle");
+    expect(track301).toContain('class="feature-checklist"');
+    for (const [id, feature] of Object.entries(optionalFeatures)) {
+      expect(track301).toContain(`<article class="beat" data-beat="${id}" data-feature="${feature}">`);
+      expect(beatFeature(beats301.find((entry) => entry.id === id)!)).toBe(feature);
     }
     expect(track301).toContain('<article class="beat" data-beat="open-local-agent">');
     expect(track301).toContain('<article class="beat" data-beat="linear-issue-fallback">');
-    expect(track301).not.toContain('<article class="beat optional" data-beat="linear-issue-fallback">');
+    expect(track301).not.toContain('data-beat="linear-issue-fallback" data-feature=');
+    expect(html).not.toContain("[Optional -");
   });
 
   it("keeps the static runbooks page in sync with the beats", () => {

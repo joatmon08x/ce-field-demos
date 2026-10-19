@@ -2,6 +2,11 @@ export type DemoTrack = "101" | "201" | "301";
 
 export type BeatPromptType = "reusable" | "adaptable" | "none";
 
+/** Feature name copied from an `[Optional - Feature]` tag. */
+export type OptionalFeature = {
+  feature: string;
+};
+
 export type DemoBeat = {
   id: string;
   title: string;
@@ -9,8 +14,12 @@ export type DemoBeat = {
   promptType?: BeatPromptType;
   example?: string;
   pasteLabel?: string;
-  /** Hidden on the runbook page until Include optional cards is checked. */
-  optional?: boolean;
+  /**
+   * Set on beats the Outline marks `[Optional - Feature]`.
+   * The runbooks page can hide every beat for one feature.
+   * Required beats omit this.
+   */
+  optional?: OptionalFeature;
 };
 
 export type DemoSection = {

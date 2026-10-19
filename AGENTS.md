@@ -14,7 +14,7 @@ Fictional billing ops SaaS. Fieldnote Workspace. Operator Avery Quinn. No auth. 
 
 Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Never invent a fourth price, live ARR, or a real customer name.
 
-This is a **Grok Build demo app** with three jumpable tracks: 101, 201, and 301. Runbook beats live in `runbooks/meta.ts` and in `runbooks.html`. `start-ledgerly` renders that file in a Cursor Canvas. Regenerate it with `npm run runbooks:export` whenever beats change — `tests/runbooks.test.ts` fails if it drifts. Open `runbooks.html?track=301` for the 301 track. Optional cards stay hidden until Include optional cards is checked. The presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. Do not reintroduce retired Advanced runbooks without a request.
+This is a **Grok Build demo app** with three jumpable tracks: 101, 201, and 301. Runbook beats live in `runbooks/meta.ts` and in `runbooks.html`. `start-ledgerly` renders that file in a Cursor Canvas. Regenerate it with `npm run runbooks:export` whenever beats change — `tests/runbooks.test.ts` fails if it drifts. Open `runbooks.html?track=301` for the 301 track. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser. The presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. Do not reintroduce retired Advanced runbooks without a request.
 
 ## Grok Build Cloud specific instructions
 

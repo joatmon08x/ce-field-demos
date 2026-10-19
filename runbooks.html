@@ -64,12 +64,21 @@
       font: 0.75rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     .track[hidden] { display: none; }
-    label.optional-toggle {
-      display: flex; align-items: center; gap: 0.5rem;
-      margin: 0.75rem 0 0; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+    .feature-checklist {
+      display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center;
+      margin: 0.75rem 0 0; padding: 0.75rem 1rem;
+      border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-elevated);
     }
-    .optional-toggle input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--indigo); }
-    .track:not(:has(.include-optional:checked)) .beat.optional { display: none; }
+    .feature-checklist legend { padding: 0 0.25rem; font-size: 0.75rem; font-weight: 600; }
+    label.feature-option {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin: 0; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+    }
+    .feature-option input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--indigo); }
+    .track[data-track="301"]:has(.feature-toggle[data-feature="Cloud Agents"]:not(:checked)) .beat[data-feature="Cloud Agents"] { display: none; }
+    .track[data-track="301"]:has(.feature-toggle[data-feature="Projects"]:not(:checked)) .beat[data-feature="Projects"] { display: none; }
+    .track[data-track="301"]:has(.feature-toggle[data-feature="Bugbot"]:not(:checked)) .beat[data-feature="Bugbot"] { display: none; }
+    .track[data-track="301"]:has(.feature-toggle[data-feature="Automations"]:not(:checked)) .beat[data-feature="Automations"] { display: none; }
   </style>
 </head>
 <body>
@@ -480,10 +489,25 @@
     <div class="track" data-track="301">
       <h2>301</h2>
       <p class="lede">You will orchestrate work across agents, tasks, and coworkers: break tasks down for multiple agents, take a plan through parallel agents to a reviewable PR, scale review when several streams finish, and share ownership safely.</p>
-      <label class="optional-toggle" for="include-optional">
-        <input id="include-optional" class="include-optional" type="checkbox">
-        Include optional cards
-      </label>
+      <fieldset class="feature-checklist">
+        <legend>Optional features</legend>
+        <label class="feature-option" for="feature-301-cloud-agents">
+          <input id="feature-301-cloud-agents" class="feature-toggle" type="checkbox" data-track="301" data-feature="Cloud Agents" checked>
+          Cloud Agents
+        </label>
+        <label class="feature-option" for="feature-301-projects">
+          <input id="feature-301-projects" class="feature-toggle" type="checkbox" data-track="301" data-feature="Projects" checked>
+          Projects
+        </label>
+        <label class="feature-option" for="feature-301-bugbot">
+          <input id="feature-301-bugbot" class="feature-toggle" type="checkbox" data-track="301" data-feature="Bugbot" checked>
+          Bugbot
+        </label>
+        <label class="feature-option" for="feature-301-automations">
+          <input id="feature-301-automations" class="feature-toggle" type="checkbox" data-track="301" data-feature="Automations" checked>
+          Automations
+        </label>
+      </fieldset>
       <nav class="tabs" aria-label="301 sections">
         <a href="#301-break-down-tasks">How do you orchestrate tasks across agents?</a>
         <a href="#301-plan-to-pr">How do multiple agents go from plan to reviewable code?</a>
@@ -525,7 +549,7 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
             <pre>/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast.</pre>
           </div>
         </article>
-        <article class="beat optional" data-beat="optional-cloud-agent">
+        <article class="beat" data-beat="optional-cloud-agent" data-feature="Cloud Agents">
           <h4>Optional: Move to a Cloud Agent</h4>
           <p class="detail">Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.</p>
         </article>
@@ -569,11 +593,11 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
       <section id="301-plan-to-pr">
         <h3>How do multiple agents go from plan to reviewable code?</h3>
         <div class="beats">
-        <article class="beat optional" data-beat="optional-start-project">
+        <article class="beat" data-beat="optional-start-project" data-feature="Projects">
           <h4>Optional: Start a new Project</h4>
           <p class="detail">Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.</p>
         </article>
-        <article class="beat optional" data-beat="optional-stage-project">
+        <article class="beat" data-beat="optional-stage-project" data-feature="Projects">
           <h4>Optional: Stage the Project</h4>
           <div class="paste">
             <div class="paste-head">
@@ -605,7 +629,7 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
           <h4>Build the plan</h4>
           <p class="detail">Build locally.</p>
         </article>
-        <article class="beat optional" data-beat="optional-build-cloud">
+        <article class="beat" data-beat="optional-build-cloud" data-feature="Cloud Agents">
           <h4>Optional: Build with Cloud Agents</h4>
           <p class="detail">Build the plan with Cloud Agents.</p>
         </article>
@@ -641,7 +665,7 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
             <pre>Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify.</pre>
           </div>
         </article>
-        <article class="beat optional" data-beat="optional-project-notes">
+        <article class="beat" data-beat="optional-project-notes" data-feature="Projects">
           <h4>Optional: Show project notes</h4>
           <div class="paste">
             <div class="paste-head">
@@ -692,7 +716,7 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
             <pre>/ask Which change in this PR has the highest risk? List the files and lines I need to review.</pre>
           </div>
         </article>
-        <article class="beat optional" data-beat="optional-bugbot">
+        <article class="beat" data-beat="optional-bugbot" data-feature="Bugbot">
           <h4>Optional: Run Bugbot</h4>
           <div class="paste">
             <div class="paste-head">
@@ -721,11 +745,11 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
             <pre>Turn repeat findings from this PR&#39;s review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic fix for each: a rule, skill, subagent, test, or human check.</pre>
           </div>
         </article>
-        <article class="beat optional" data-beat="optional-reviewer-automation">
+        <article class="beat" data-beat="optional-reviewer-automation" data-feature="Automations">
           <h4>Optional: Create a Reviewer automation</h4>
           <p class="detail">Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers &gt; PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue&#39;s file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.</p>
         </article>
-        <article class="beat optional" data-beat="optional-trigger-automation">
+        <article class="beat" data-beat="optional-trigger-automation" data-feature="Automations">
           <h4>Optional: Trigger the PR Automation</h4>
           <p class="detail">Start a new local agent. Opening any PR triggers the Reviewer Automation, so I&#39;ll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.</p>
           <div class="paste">
@@ -801,20 +825,36 @@ Watch the page. After a couple of presses the outline disappears. Focus is still
         }
       });
 
-      var optionalToggle = document.querySelector(".include-optional");
-      if (optionalToggle) {
-        optionalToggle.checked = params.get("optional") === "1";
-        optionalToggle.addEventListener("change", function () {
-          try {
-            var url = new URL(window.location.href);
-            if (optionalToggle.checked) url.searchParams.set("optional", "1");
-            else url.searchParams.delete("optional");
-            history.replaceState(null, "", url.toString());
-          } catch (err) {
-            // Canvas embeds this page as srcdoc, which has no URL to update.
-          }
-        });
+      var FEATURE_KEY = "ledgerly-runbooks-optional-features";
+      function readFeatures() {
+        try {
+          var raw = localStorage.getItem(FEATURE_KEY);
+          return raw ? JSON.parse(raw) : {};
+        } catch (err) {
+          return {};
+        }
       }
+      function writeFeatures(state) {
+        try {
+          localStorage.setItem(FEATURE_KEY, JSON.stringify(state));
+        } catch (err) {
+          // Private browsing can reject storage. The checkbox still toggles.
+        }
+      }
+      var savedFeatures = readFeatures();
+      Array.prototype.forEach.call(document.querySelectorAll(".feature-toggle"), function (box) {
+        var trackId = box.getAttribute("data-track");
+        var featureName = box.getAttribute("data-feature");
+        var trackState = savedFeatures[trackId] || {};
+        box.checked = trackState[featureName] !== false;
+        box.addEventListener("change", function () {
+          var state = readFeatures();
+          if (!state[trackId]) state[trackId] = {};
+          if (box.checked) delete state[trackId][featureName];
+          else state[trackId][featureName] = false;
+          writeFeatures(state);
+        });
+      });
 
       function fallbackCopy(text) {
         var area = document.createElement("textarea");
