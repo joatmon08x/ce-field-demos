@@ -362,7 +362,7 @@ describe("runbook catalog", () => {
     expect(skill).toContain("runbooks.html?track=301");
 
     expect(RUNBOOK_SECTIONS_301.map((section) => section.title)).toEqual([
-      "How do you break down tasks for agents?",
+      "How do you orchestrate tasks across agents?",
       "How do multiple agents go from plan to reviewable code?",
       "How do you scale AI code reviews?",
       "How do coworkers share ownership safely?"
@@ -373,12 +373,12 @@ describe("runbook catalog", () => {
       "scale-reviews",
       "share-ownership"
     ]);
-    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([8, 12, 6, 6]);
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([9, 11, 5, 5]);
     expect(RUNBOOK_SECTIONS_301.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Multitask three page walkthroughs → Review the subagents → Check the subagent output → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Plan fixes for the walkthrough failures → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Fallback: reference repo issues → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Confirm the fixes by keyboard → Optional: Run Bugbot → Review the high-risk changes → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Return to the command center plan → Check other PRs for file conflicts → Check other PR review findings",
+      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Show /multitask for small coordinated jobs. → Review the subagents → Check the subagent output → Fallback: reference repo issues → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Plan fixes for the walkthrough failures → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Review the high-risk changes → Optional: Run Bugbot → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Return to the command center plan → Check other PRs for files and comments that conflict with the next project",
     );
 
     // 201-style mapping: Do is verbatim in detail, Prompt in example, a Say before a prompt is copied into detail, and a Say after a prompt is omitted.
@@ -407,7 +407,7 @@ describe("runbook catalog", () => {
         "title": "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
         "promptType": "adaptable",
         "detail": "",
-        "example": "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots."
+        "example": "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Use a fast model for this subagent."
       },
       {
         "id": "optional-cloud-agent",
@@ -418,10 +418,10 @@ describe("runbook catalog", () => {
       },
       {
         "id": "multitask-walkthroughs",
-        "title": "Multitask three page walkthroughs",
+        "title": "Show /multitask for small coordinated jobs.",
         "promptType": "adaptable",
         "detail": "",
-        "example": "/multitask Run the accessibility-manual-reviewer subagent on three pages: invoices, collections, and settings. Summarize the combined failures by page."
+        "example": "/multitask Run the accessibility-manual-reviewer subagent on invoice page, accessibility test suite, and application test suite in parallel to figure out what I need to fix."
       },
       {
         "id": "review-subagents",
@@ -435,6 +435,13 @@ describe("runbook catalog", () => {
         "promptType": "adaptable",
         "detail": "",
         "example": "Give me a one-sentence summary for each subagent."
+      },
+      {
+        "id": "linear-issue-fallback",
+        "title": "Fallback: reference repo issues",
+        "promptType": "adaptable",
+        "detail": "If an agent cannot access the Linear MCP server, use the issue descriptions in the repository.",
+        "example": "Reference issues from @linear-field-demo.ts instead of Linear"
       },
       {
         "id": "optional-start-project",
@@ -462,7 +469,7 @@ describe("runbook catalog", () => {
         "title": "Plan fixes for the walkthrough failures",
         "promptType": "adaptable",
         "detail": "",
-        "example": "/plan fixes for the keyboard failures the walkthroughs found on invoices, collections, and settings. Use one task per failure and mark which tasks can run in parallel."
+        "example": "/plan fixes for the keyboard failures in the walkthroughs for invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. Use one task per failure and mark which tasks can run in parallel."
       },
       {
         "id": "review-plan",
@@ -513,13 +520,6 @@ describe("runbook catalog", () => {
         "optional": true
       },
       {
-        "id": "linear-issue-fallback",
-        "title": "Fallback: reference repo issues",
-        "promptType": "adaptable",
-        "detail": "If an agent cannot access the Linear MCP server, use the issue descriptions in the repository.",
-        "example": "Reference issues from @linear-field-demo.ts instead of Linear"
-      },
-      {
         "id": "checkout-fixes-branch",
         "title": "Check out the keyboard fixes branch",
         "promptType": "adaptable",
@@ -540,11 +540,11 @@ describe("runbook catalog", () => {
         "detail": "Check the change reviewer’s output for any issues requiring closer inspection."
       },
       {
-        "id": "confirm-keyboard-fixes",
-        "title": "Confirm the fixes by keyboard",
+        "id": "review-highest-risk",
+        "title": "Review the high-risk changes",
         "promptType": "reusable",
-        "detail": "",
-        "example": "Use the accessibility-manual-reviewer subagent on this branch to confirm each fix. Report any remaining failure with the page, the key pressed, the expected focus, and a screenshot."
+        "detail": "Open the highest-risk slice first and read it line by line.",
+        "example": "/ask which change in this PR has the highest risk. List the files and lines I need to review."
       },
       {
         "id": "optional-bugbot",
@@ -553,13 +553,6 @@ describe("runbook catalog", () => {
         "detail": "",
         "example": "/review-bugbot this remediation PR",
         "optional": true
-      },
-      {
-        "id": "review-highest-risk",
-        "title": "Review the high-risk changes",
-        "promptType": "reusable",
-        "detail": "Open the highest-risk slice first and read it line by line.",
-        "example": "/ask which change in this PR has the highest risk. List the files and lines I need to review."
       },
       {
         "id": "open-ownership-agent",
@@ -572,7 +565,7 @@ describe("runbook catalog", () => {
         "title": "Identify the most reliable fix",
         "promptType": "reusable",
         "detail": "",
-        "example": "Draft a fix for each repeat finding in this PR’s review comments and change reviewer findings. Pick the most reliable fix, preferring deterministic ones: rule, skill, subagent, hook, test, or human check."
+        "example": "Draft a fix for each repeat finding in this PR’s review comments and change reviewer findings. Pick the most reliable fix, preferring deterministic ones: rule, skill, subagent, test, or human check."
       },
       {
         "id": "optional-reviewer-automation",
@@ -586,25 +579,18 @@ describe("runbook catalog", () => {
         "id": "return-to-plan",
         "title": "Return to the command center plan",
         "promptType": "none",
-        "detail": "Open the command center planning agent from Show - 11 in the Agent Window. Don’t start a new plan."
+        "detail": "Open the command center planning agent in the Agent Window. Don’t start a new plan."
       },
       {
         "id": "list-conflict-files",
-        "title": "Check other PRs for file conflicts",
+        "title": "Check other PRs for files and comments that conflict with the next project",
         "promptType": "adaptable",
         "detail": "",
-        "example": "List the open PRs in this repository and the files in each that might conflict with the collections command center plan."
-      },
-      {
-        "id": "summarize-review-findings",
-        "title": "Check other PR review findings",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "Before I start building, summarize PR comments and review findings that I should use to build the collections command center."
+        "example": "Review the open PRs in this repository and flag any that have file conflicts or comments that may affect the collections command center feature."
       }
     ]);
 
-    expect(beats301).toHaveLength(32);
+    expect(beats301).toHaveLength(30);
     expect(beats301.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(
       beats301.filter((entry) => entry.promptType === "none").every((entry) => entry.example === undefined),

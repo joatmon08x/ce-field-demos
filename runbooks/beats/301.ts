@@ -3,7 +3,7 @@ import type { DemoSection } from "@/runbooks/types";
 export const RUNBOOK_SECTIONS_301 = [
   {
     id: "break-down-tasks",
-    title: "How do you break down tasks for agents?",
+    title: "How do you orchestrate tasks across agents?",
     beats: [
       {
         id: "plan-command-center",
@@ -33,7 +33,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         detail: "",
         example:
-          "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots.",
+          "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Use a fast model for this subagent.",
       },
       {
         id: "optional-cloud-agent",
@@ -44,11 +44,11 @@ export const RUNBOOK_SECTIONS_301 = [
       },
       {
         id: "multitask-walkthroughs",
-        title: "Multitask three page walkthroughs",
+        title: "Show /multitask for small coordinated jobs.",
         promptType: "adaptable",
         detail: "",
         example:
-          "/multitask Run the accessibility-manual-reviewer subagent on three pages: invoices, collections, and settings. Summarize the combined failures by page.",
+          "/multitask Run the accessibility-manual-reviewer subagent on invoice page, accessibility test suite, and application test suite in parallel to figure out what I need to fix.",
       },
       {
         id: "review-subagents",
@@ -62,6 +62,13 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         detail: "",
         example: "Give me a one-sentence summary for each subagent.",
+      },
+      {
+        id: "linear-issue-fallback",
+        title: "Fallback: reference repo issues",
+        promptType: "adaptable",
+        detail: "If an agent cannot access the Linear MCP server, use the issue descriptions in the repository.",
+        example: "Reference issues from @linear-field-demo.ts instead of Linear",
       },
     ],
   },
@@ -96,7 +103,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         detail: "",
         example:
-          "/plan fixes for the keyboard failures the walkthroughs found on invoices, collections, and settings. Use one task per failure and mark which tasks can run in parallel.",
+          "/plan fixes for the keyboard failures in the walkthroughs for invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. Use one task per failure and mark which tasks can run in parallel.",
       },
       {
         id: "review-plan",
@@ -148,13 +155,6 @@ export const RUNBOOK_SECTIONS_301 = [
         detail: "",
         example: "Show me the project notes and context.",
       },
-      {
-        id: "linear-issue-fallback",
-        title: "Fallback: reference repo issues",
-        promptType: "adaptable",
-        detail: "If an agent cannot access the Linear MCP server, use the issue descriptions in the repository.",
-        example: "Reference issues from @linear-field-demo.ts instead of Linear",
-      },
     ],
   },
   {
@@ -183,12 +183,11 @@ export const RUNBOOK_SECTIONS_301 = [
         detail: "Check the change reviewer’s output for any issues requiring closer inspection.",
       },
       {
-        id: "confirm-keyboard-fixes",
-        title: "Confirm the fixes by keyboard",
+        id: "review-highest-risk",
+        title: "Review the high-risk changes",
         promptType: "reusable",
-        detail: "",
-        example:
-          "Use the accessibility-manual-reviewer subagent on this branch to confirm each fix. Report any remaining failure with the page, the key pressed, the expected focus, and a screenshot.",
+        detail: "Open the highest-risk slice first and read it line by line.",
+        example: "/ask which change in this PR has the highest risk. List the files and lines I need to review.",
       },
       {
         id: "optional-bugbot",
@@ -197,13 +196,6 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "reusable",
         detail: "",
         example: "/review-bugbot this remediation PR",
-      },
-      {
-        id: "review-highest-risk",
-        title: "Review the high-risk changes",
-        promptType: "reusable",
-        detail: "Open the highest-risk slice first and read it line by line.",
-        example: "/ask which change in this PR has the highest risk. List the files and lines I need to review.",
       },
     ],
   },
@@ -223,7 +215,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "reusable",
         detail: "",
         example:
-          "Draft a fix for each repeat finding in this PR’s review comments and change reviewer findings. Pick the most reliable fix, preferring deterministic ones: rule, skill, subagent, hook, test, or human check.",
+          "Draft a fix for each repeat finding in this PR’s review comments and change reviewer findings. Pick the most reliable fix, preferring deterministic ones: rule, skill, subagent, test, or human check.",
       },
       {
         id: "optional-reviewer-automation",
@@ -239,23 +231,15 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "return-to-plan",
         title: "Return to the command center plan",
         promptType: "none",
-        detail: "Open the command center planning agent from Show - 11 in the Agent Window. Don’t start a new plan.",
+        detail: "Open the command center planning agent in the Agent Window. Don’t start a new plan.",
       },
       {
         id: "list-conflict-files",
-        title: "Check other PRs for file conflicts",
+        title: "Check other PRs for files and comments that conflict with the next project",
         promptType: "adaptable",
         detail: "",
         example:
-          "List the open PRs in this repository and the files in each that might conflict with the collections command center plan.",
-      },
-      {
-        id: "summarize-review-findings",
-        title: "Check other PR review findings",
-        promptType: "adaptable",
-        detail: "",
-        example:
-          "Before I start building, summarize PR comments and review findings that I should use to build the collections command center.",
+          "Review the open PRs in this repository and flag any that have file conflicts or comments that may affect the collections command center feature.",
       },
     ],
   },
