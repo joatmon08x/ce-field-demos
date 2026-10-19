@@ -163,7 +163,7 @@ export const RUNBOOK_SECTIONS_301 = [
       },
       {
         id: "ask-subagent-progress",
-        title: "Ask a side question while the coordinator remediates the findings.",
+        title: "Ask what the first subagent is remediating.",
         promptType: "reusable",
         say: "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.",
         detail: "",
