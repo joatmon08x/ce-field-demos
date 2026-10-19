@@ -691,9 +691,20 @@ describe("runbook catalog", () => {
     }
     expect(html.match(/class="feature-toggle"/g)).toHaveLength(4);
 
-    const track101 = html.slice(html.indexOf('data-track="101"'), html.indexOf('data-track="201"'));
-    const track201 = html.slice(html.indexOf('data-track="201"'), html.indexOf('data-track="301"'));
-    const track301 = html.slice(html.indexOf('data-track="301"'));
+    const trackMarkup = (id: string, nextId?: string) => {
+      const marker = `<div class="track" data-track="${id}"`;
+      const start = html.indexOf(marker);
+      const end = nextId
+        ? html.indexOf(`<div class="track" data-track="${nextId}"`, start + marker.length)
+        : html.length;
+      return html.slice(start, end);
+    };
+    const track101 = trackMarkup("101", "201");
+    const track201 = trackMarkup("201", "301");
+    const track301 = trackMarkup("301");
+    expect(track101).toContain('data-beat="ask"');
+    expect(track201).toContain('data-beat="rename-agent-1-all"');
+    expect(track301).toContain('data-beat="plan-command-center"');
     expect(track101).not.toContain("feature-toggle");
     expect(track201).not.toContain("feature-toggle");
     expect(track301).toContain('class="feature-checklist"');
