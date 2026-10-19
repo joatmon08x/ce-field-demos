@@ -380,246 +380,296 @@ describe("runbook catalog", () => {
       "scale-reviews",
       "share-ownership"
     ]);
-    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([9, 11, 5, 6]);
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([11, 12, 5, 6]);
     expect(RUNBOOK_SECTIONS_301.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Show /multitask for small coordinated jobs. → Review the subagents → Check the subagent output → Fallback: reference repo issues → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Start a plan to fix the walkthrough failures on a separate worktree → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Review the high-risk changes → Optional: Run Bugbot → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Optional: Trigger the PR Automation → Return to the command center plan → Check other PRs for files and comments that conflict with the next project",
+      "Get the issues for the collections command center from the issue tracker. \u2192 Plan the collections command center in a separate agent. \u2192 Start a keyboard walkthrough for the accessibility audit in a new agent. \u2192 Show the problem by hand. \u2192 Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. \u2192 Move to a Cloud Agent. \u2192 Start a new agent to audit accessibility. \u2192 Show /multitask for small coordinated jobs. \u2192 Review the subagents. \u2192 Check the output of the subagents. \u2192 Fallback: reference repo issues \u2192 Start a new Project. \u2192 Stage the Project. \u2192 Use Projects to assign tasks to agents. \u2192 Start a new agent. \u2192 Start a plan to fix the walkthrough failures on a separate worktree. \u2192 Review the plan. \u2192 Build the plan. \u2192 Use Cloud Agents to build the plan if you do not have Projects. \u2192 Ask a side question while the coordinator remediates the findings. \u2192 Ask a side question while the coordinator remediates the findings. \u2192 Consolidate and open a reviewable PR. \u2192 Keep track of the Project. \u2192 Start a new agent. \u2192 Run the change reviewer subagent before you conduct manual review. \u2192 Identify any changes requiring closer inspection. \u2192 Review the high-risk changes. \u2192 Run Bugbot. \u2192 Start a new agent. \u2192 Identify the most reliable fix for each review finding. \u2192 Create an Automation. \u2192 Trigger the PR Automation. \u2192 Return to the collections command center plan. \u2192 Check other PRs for files and comments that conflict with the next project.",
     );
 
-    // Do lines stay in detail, one per line. Say is separate. A Do line that follows a prompt is in after, in order.
+    // Say, Do, and Prompt are copied from the Outline. Optional tags are on optional.feature, not in the prompt.
     expect(beats301.map(({ id, title, promptType, detail, example, optional, say, after }) => ({ id, title, promptType, detail, example, optional, say, after }))).toEqual([
-      {
-        "id": "plan-command-center",
-        "title": "Plan the command center in a separate agent",
-        "promptType": "adaptable",
-        "detail": "Start a new agent for the command center plan.",
-        "example": "/plan the collections command center from its Linear issues. List the tasks, the files each touches, and the open questions."
-      },
-      {
-        "id": "open-local-agent",
-        "title": "Start the keyboard walkthrough agent",
-        "promptType": "none",
-        "detail": "Start a new agent for the keyboard walkthrough."
-      },
-      {
-        "id": "show-problem-by-hand",
-        "title": "Show the problem by hand.",
-        "promptType": "none",
-        "detail": "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
-        "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
-      },
-      {
-        "id": "create-accessibility-manual-reviewer",
-        "title": "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast."
-      },
-      {
-        "id": "optional-cloud-agent",
-        "title": "Optional: Move to a Cloud Agent",
-        "promptType": "none",
-        "detail": "Click Continue on Cloud to move this to a Cloud Agent.\nClick Include Changes.",
-        "optional": { "feature": "Cloud Agents" }
-      },
-      {
-        "id": "multitask-walkthroughs",
-        "title": "Show /multitask for small coordinated jobs.",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "/multitask Run these in parallel to find what I need to fix: the accessibility-manual-reviewer subagent on the invoices page, the accessibility test suite, and the application test suite."
-      },
-      {
-        "id": "review-subagents",
-        "title": "Review the subagents",
-        "promptType": "none",
-        "detail": "Watch the Working tab."
-      },
-      {
-        "id": "summarize-subagents",
-        "title": "Check the subagent output",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "Give me a one-sentence summary for each subagent."
-      },
-      {
-        "id": "linear-issue-fallback",
-        "title": "Fallback: reference repo issues",
-        "promptType": "adaptable",
-        "detail": "If an agent cannot access the Linear MCP server, use the issue descriptions in the repository.",
-        "example": "Reference issues from @linear-field-demo.ts instead of Linear"
-      },
-      {
-        "id": "optional-start-project",
-        "title": "Optional: Start a new Project",
-        "promptType": "none",
-        "detail": "Start a new Project.\nName it {INSERT COMPANY HERE, default is Ledgerly}.",
-        "optional": { "feature": "Projects" }
-      },
-      {
-        "id": "optional-stage-project",
-        "title": "Optional: Stage the Project",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "Run each agent in its own worktree to avoid conflicts, and parallelize where possible.",
-        "optional": { "feature": "Projects" }
-      },
-      {
-        "id": "open-plan-agent",
-        "title": "Open a new agent",
-        "promptType": "none",
-        "detail": "Open a new local agent.\nOptional: Run the following prompts from the Project."
-      },
-      {
-        "id": "plan-remediation",
-        "title": "Start a plan to fix the walkthrough failures on a separate worktree",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "/plan fixes for the keyboard failures on invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. One task per failure, mark parallel tasks, and use a separate worktree with auto-approved changes."
-      },
-      {
-        "id": "review-plan",
-        "title": "Review the plan",
-        "promptType": "none",
-        "detail": "Review the plan."
-      },
-      {
-        "id": "build-plan",
-        "title": "Build the plan",
-        "promptType": "none",
-        "detail": "Build locally."
-      },
-      {
-        "id": "optional-build-cloud",
-        "title": "Optional: Build with Cloud Agents",
-        "promptType": "none",
-        "detail": "Build the plan with Cloud Agents.",
-        "optional": { "feature": "Cloud Agents" }
-      },
-      {
-        "id": "side-chat",
-        "title": "Open a side chat",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "/side"
-      },
-      {
-        "id": "ask-subagent-progress",
-        "title": "Ask what the first subagent is remediating",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "/ask What is the first subagent remediating? Answer with the finding and the files it changes.",
-        "say": "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator."
-      },
-      {
-        "id": "consolidate-pr",
-        "title": "Consolidate and open a reviewable PR",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify.",
-        "after": [
-          { "kind": "do", "text": "Open the PR. Show the summary a coworker would read first." }
-        ]
-      },
-      {
-        "id": "optional-project-notes",
-        "title": "Optional: Show project notes",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "Show me the project notes and context.",
-        "optional": { "feature": "Projects" }
-      },
-      {
-        "id": "checkout-fixes-branch",
-        "title": "Check out the keyboard fixes branch",
-        "promptType": "adaptable",
-        "detail": "Open a new local agent.",
-        "example": "Check out the branch for the keyboard fixes PR."
-      },
-      {
-        "id": "run-reviewer-subagent",
-        "title": "Run the change reviewer subagent",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "Use the change reviewer subagent to review the remediation PR. List each issue with its file, line, and severity."
-      },
-      {
-        "id": "check-closer-inspection",
-        "title": "Identify changes for closer inspection",
-        "promptType": "none",
-        "detail": "Check the change reviewer’s output for any issues requiring closer inspection."
-      },
-      {
-        "id": "review-highest-risk",
-        "title": "Review the high-risk changes",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "/ask Which change in this PR has the highest risk? List the files and lines I need to review.",
-        "after": [
-          { "kind": "do", "text": "Open the highest-risk change and read it line by line." }
-        ]
-      },
-      {
-        "id": "optional-bugbot",
-        "title": "Optional: Run Bugbot",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "/review-bugbot this remediation PR",
-        "optional": { "feature": "Bugbot" }
-      },
-      {
-        "id": "open-ownership-agent",
-        "title": "Open a new agent",
-        "promptType": "none",
-        "detail": "Open a new local agent."
-      },
-      {
-        "id": "shift-left-findings",
-        "title": "Identify the most reliable fix",
-        "promptType": "reusable",
-        "detail": "",
-        "example": "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic fix for each: a rule, skill, subagent, test, or human check."
-      },
-      {
-        "id": "optional-reviewer-automation",
-        "title": "Optional: Create a Reviewer automation",
-        "promptType": "none",
-        "detail": "Go to the Automations tab.\nClick New Automation.\nName it Reviewer.\nSelect the demo repository.\nClick Triggers > PR opened, then select the demo repository and set the author to Anyone.\nAdd “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions.\nAdd “Comment on Pull Request” to tools.\nClick Save.",
-        "optional": { "feature": "Automations" }
-      },
-      {
-        "id": "optional-trigger-automation",
-        "title": "Optional: Trigger the PR Automation",
-        "promptType": "adaptable",
-        "detail": "Start a new local agent.",
-        "example": "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
-        "say": "Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run.",
-        "after": [
-          {
-            "kind": "do",
-            "text": "Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer."
-          }
-        ],
-        "optional": { "feature": "Automations" }
-      },
-      {
-        "id": "return-to-plan",
-        "title": "Return to the command center plan",
-        "promptType": "none",
-        "detail": "Open the command center planning agent in the Agent Window. Don’t start a new plan."
-      },
-      {
-        "id": "list-conflict-files",
-        "title": "Check other PRs for files and comments that conflict with the next project",
-        "promptType": "adaptable",
-        "detail": "",
-        "example": "Review the open PRs in this repository and flag any that have file conflicts or comments that may affect the collections command center feature."
-      }
-    ]);
+  {
+    "id": "get-command-center-issues",
+    "title": "Get the issues for the collections command center from the issue tracker.",
+    "promptType": "adaptable",
+    "detail": "Start a new agent for the command center plan.",
+    "example": "/ask List open issues for the collections command center in Linear.",
+    "say": "The Linear MCP server returns a list of nine issues to create the collections command center."
+  },
+  {
+    "id": "plan-command-center",
+    "title": "Plan the collections command center in a separate agent.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "/plan the collections command center from its issues. List the tasks, the files each touches, and the open questions.",
+    "say": "We are going to run this first and handle the manual part in parallel. This agent only plans. It builds nothing until we come back to it."
+  },
+  {
+    "id": "open-local-agent",
+    "title": "Start a keyboard walkthrough for the accessibility audit in a new agent.",
+    "promptType": "none",
+    "detail": "Start a new agent for the keyboard walkthrough."
+  },
+  {
+    "id": "show-problem-by-hand",
+    "title": "Show the problem by hand.",
+    "promptType": "none",
+    "detail": "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
+    "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
+  },
+  {
+    "id": "create-accessibility-manual-reviewer",
+    "title": "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, read-only: false.",
+    "say": "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read.\nA keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI."
+  },
+  {
+    "id": "optional-cloud-agent",
+    "title": "Move to a Cloud Agent.",
+    "promptType": "none",
+    "detail": "Click Continue on Cloud to move this to a Cloud Agent.\nClick Include Changes.",
+    "optional": {
+      "feature": "Cloud Agents"
+    },
+    "say": "Rather than run all of these subagents locally, move everything to a Cloud Agent on a remote environment and build everything on an isolated branch.\nOnce it is done, check its work."
+  },
+  {
+    "id": "start-audit-agent",
+    "title": "Start a new agent to audit accessibility.",
+    "promptType": "none",
+    "detail": "Start a new local agent.",
+    "say": "Start a new audit for accessibility. Check the accessibility test suite and run a keyboard walkthrough. Run the application test suite to make sure the application works as intended."
+  },
+  {
+    "id": "multitask-walkthroughs",
+    "title": "Show /multitask for small coordinated jobs.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "/multitask Run these in parallel to find what I need to fix: the accessibility-manual-reviewer subagent on the invoices page, the accessibility test suite, and the application test suite.",
+    "say": "The coordinator gives each task its own subagent: a keyboard walkthrough of the invoices page, the accessibility test suite, and the application test suite."
+  },
+  {
+    "id": "review-subagents",
+    "title": "Review the subagents.",
+    "promptType": "none",
+    "detail": "Watch the Working indicator above the chat box.",
+    "say": "Stop one task if it drifts. When each agent completes, you get a set of recommendations."
+  },
+  {
+    "id": "summarize-subagents",
+    "title": "Check the output of the subagents.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "Give me a one-sentence summary for each subagent.",
+    "say": "The coordinator summarizes the failures from the keyboard walkthrough of the invoices page, the accessibility test suite, and the application test suite."
+  },
+  {
+    "id": "linear-issue-fallback",
+    "title": "Fallback: reference repo issues",
+    "promptType": "adaptable",
+    "detail": "If an agent cannot access the Linear MCP server, use the issue descriptions in the repository.",
+    "example": "Reference issues from @linear-field-demo.ts instead of Linear."
+  },
+  {
+    "id": "optional-start-project",
+    "title": "Start a new Project.",
+    "promptType": "none",
+    "detail": "Start a new Project.\nName it {INSERT COMPANY HERE, default is Ledgerly}.",
+    "optional": {
+      "feature": "Projects"
+    },
+    "say": "Starting a new Project creates a long-running Cloud Agent that acts as a coordinator.\nRun the remaining commands in the Project. Note that responses to prompts may differ from responses in an individual agent."
+  },
+  {
+    "id": "optional-stage-project",
+    "title": "Stage the Project.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "Run each agent in its own worktree to avoid conflicts, and parallelize where possible.",
+    "optional": {
+      "feature": "Projects"
+    },
+    "say": "Make clear to the Project that each agent runs in its own worktree to isolate work and avoid conflicts."
+  },
+  {
+    "id": "optional-assign-project",
+    "title": "Use Projects to assign tasks to agents.",
+    "promptType": "none",
+    "detail": "Run the following prompts from the Project without starting new agents.",
+    "optional": {
+      "feature": "Projects"
+    },
+    "say": "Let Projects decide how best to assign tasks and complete work."
+  },
+  {
+    "id": "open-plan-agent",
+    "title": "Start a new agent.",
+    "promptType": "none",
+    "detail": "Open a new local agent.",
+    "say": "I want to fix the keyboard walkthrough failures from all three pages."
+  },
+  {
+    "id": "plan-remediation",
+    "title": "Start a plan to fix the walkthrough failures on a separate worktree.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "/plan fixes for the keyboard failures on invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. One task per failure, mark parallel tasks, and use a separate worktree with auto-approved changes.",
+    "say": "Create a plan based on the combined failures from the three walkthroughs. If the plan asks questions, choose to run tasks in parallel and write updates to the issue tracker.\nBy starting the work on a separate worktree, you avoid editing the working code on the main branch. If you do not let the agent automatically approve changes on the worktree, you may have to manually approve each file change."
+  },
+  {
+    "id": "review-plan",
+    "title": "Review the plan.",
+    "promptType": "none",
+    "detail": "Review the plan.",
+    "say": "The plan assigns tasks to workers and notes which ones run in parallel."
+  },
+  {
+    "id": "build-plan",
+    "title": "Build the plan.",
+    "promptType": "none",
+    "detail": "Build locally."
+  },
+  {
+    "id": "optional-build-cloud",
+    "title": "Use Cloud Agents to build the plan if you do not have Projects.",
+    "promptType": "none",
+    "detail": "Build the plan with Cloud Agents.",
+    "optional": {
+      "feature": "Cloud Agents"
+    }
+  },
+  {
+    "id": "side-chat",
+    "title": "Ask a side question while the coordinator remediates the findings.",
+    "promptType": "reusable",
+    "detail": "",
+    "example": "/side"
+  },
+  {
+    "id": "ask-subagent-progress",
+    "title": "Ask a side question while the coordinator remediates the findings.",
+    "promptType": "reusable",
+    "detail": "",
+    "example": "/ask What is the first subagent remediating? Answer with the finding and the files it changes.",
+    "say": "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator."
+  },
+  {
+    "id": "consolidate-pr",
+    "title": "Consolidate and open a reviewable PR.",
+    "promptType": "reusable",
+    "detail": "Open the PR. Show the summary a coworker would read first.",
+    "example": "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify.",
+    "say": "Move finished worktrees back deliberately. Resolve conflicts on purpose."
+  },
+  {
+    "id": "optional-project-notes",
+    "title": "Keep track of the Project.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "Show me the project notes and context.",
+    "optional": {
+      "feature": "Projects"
+    },
+    "say": "As you continue working on the Project, it keeps track of your requests to agents.\nYou can review tasks in project notes and shared files in context."
+  },
+  {
+    "id": "checkout-fixes-branch",
+    "title": "Start a new agent.",
+    "promptType": "adaptable",
+    "detail": "Open a new local agent.",
+    "example": "Check out the branch for the keyboard fixes PR.",
+    "say": "With many lines of accessibility fixes in this PR, I want to identify the most important files to review."
+  },
+  {
+    "id": "run-reviewer-subagent",
+    "title": "Run the change reviewer subagent before you conduct manual review.",
+    "promptType": "reusable",
+    "detail": "",
+    "example": "Use the change reviewer subagent to review the remediation PR. List each issue with its file, line, and severity.",
+    "say": "With readonly: true, the change reviewer can read and report but can’t change files. The reviewer and the author stay separate."
+  },
+  {
+    "id": "check-closer-inspection",
+    "title": "Identify any changes requiring closer inspection.",
+    "promptType": "none",
+    "detail": "Check the change reviewer’s output for any issues requiring closer inspection."
+  },
+  {
+    "id": "review-highest-risk",
+    "title": "Review the high-risk changes.",
+    "promptType": "reusable",
+    "detail": "Open the highest-risk change and read it line by line.",
+    "example": "/ask Which change in this PR has the highest risk? List the files and lines I need to review.",
+    "say": "The change reviewer subagent clears the noise so your time goes where judgment matters."
+  },
+  {
+    "id": "optional-bugbot",
+    "title": "Run Bugbot.",
+    "promptType": "reusable",
+    "detail": "",
+    "example": "/review-bugbot this remediation PR",
+    "optional": {
+      "feature": "Bugbot"
+    },
+    "say": "Run Bugbot to check for code quality. Review its suggestions for changes."
+  },
+  {
+    "id": "open-ownership-agent",
+    "title": "Start a new agent.",
+    "promptType": "none",
+    "detail": "Open a new local agent.",
+    "say": "I want to turn some of the review findings in this PR into the most reliable fix: a rule, skill, subagent, test, or human check."
+  },
+  {
+    "id": "shift-left-findings",
+    "title": "Identify the most reliable fix for each review finding.",
+    "promptType": "reusable",
+    "detail": "",
+    "example": "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic fix for each: a rule, skill, subagent, test, or human check.",
+    "say": "You choose which ones to turn into a rule, skill, subagent, test, or human check for your coworkers to reuse."
+  },
+  {
+    "id": "optional-reviewer-automation",
+    "title": "Create an Automation.",
+    "promptType": "none",
+    "detail": "Go to the Automations tab.\nClick New Automation.\nName it Reviewer.\nSelect the demo repository.\nClick Triggers > PR opened, then select the demo repository and set the author to Anyone.\nAdd “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions.\nAdd “Comment on Pull Request” to tools.\nClick Save.",
+    "optional": {
+      "feature": "Automations"
+    }
+  },
+  {
+    "id": "optional-trigger-automation",
+    "title": "Trigger the PR Automation.",
+    "promptType": "adaptable",
+    "detail": "Start a new local agent.\nOpen the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
+    "example": "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
+    "optional": {
+      "feature": "Automations"
+    },
+    "say": "Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run."
+  },
+  {
+    "id": "return-to-plan",
+    "title": "Return to the collections command center plan.",
+    "promptType": "none",
+    "detail": "Open the command center planning agent in the Agent Window. Don’t start a new plan.",
+    "say": "Now I’m going back to the collections command center plan. Before I start the work, I’ll check the keyboard fixes PR for conflicts."
+  },
+  {
+    "id": "list-conflict-files",
+    "title": "Check other PRs for files and comments that conflict with the next project.",
+    "promptType": "adaptable",
+    "detail": "",
+    "example": "Review the open PRs in this repository and flag any that have file conflicts or comments that may affect the collections command center feature.",
+    "say": "Use the context in other PRs to identify possible conflicts before you start work."
+  }
+]);
 
-    expect(beats301).toHaveLength(31);
+    expect(beats301).toHaveLength(34);
     expect(beats301.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(
       beats301.filter((entry) => entry.promptType === "none").every((entry) => entry.example === undefined),
@@ -632,6 +682,7 @@ describe("runbook catalog", () => {
       "optional-cloud-agent": "Cloud Agents",
       "optional-start-project": "Projects",
       "optional-stage-project": "Projects",
+      "optional-assign-project": "Projects",
       "optional-build-cloud": "Cloud Agents",
       "optional-project-notes": "Projects",
       "optional-bugbot": "Bugbot",
@@ -718,7 +769,7 @@ describe("runbook catalog", () => {
     expect(html).not.toContain("[Optional -");
   });
 
-  it("renders say, then steps, then the prompt, and keeps a do step between prompts", () => {
+  it("renders say, then the do box, then the prompt, and keeps a do step between prompts", () => {
     const html = renderRunbooksHtml();
     const card = (id: string) => {
       const marker = `data-beat="${id}"`;
@@ -734,15 +785,22 @@ describe("runbook catalog", () => {
       expect(earlierAt).toBeLessThan(laterAt);
     };
 
+    expect(html).toContain(".do-box, pre {");
+    expect(html).toContain("--indigo-soft: #eef2ff;");
+    expect(html).toContain(".tabs a, label.feature-option {");
+    expect(html).not.toContain("steps-label");
+    expect(html).not.toContain(">Steps<");
+
     const ask = card("ask");
-    before(ask, ">Steps<", "/ask Tell me what this application does in 3 sentences");
+    before(ask, 'class="do-box"', "/ask Tell me what this application does in 3 sentences");
     expect(ask).toContain("<ul>");
     expect(ask).not.toContain("<ol>");
     expect(ask).not.toContain('class="say"');
+    expect(ask.slice(ask.indexOf('class="do-box"'), ask.indexOf("</div>", ask.indexOf('class="do-box"')))).not.toContain("Copy");
 
     const hand = card("show-problem-by-hand");
-    before(hand, "Focus is the control", ">Steps<");
-    before(hand, ">Steps<", "Open Browser to http://localhost:43173/invoices.");
+    before(hand, "Focus is the control", 'class="do-box"');
+    before(hand, 'class="do-box"', "Open Browser to http://localhost:43173/invoices.");
     before(hand, "Open Browser to http://localhost:43173/invoices.", "Press Tab a few times on the invoices page.");
     expect(hand.indexOf('class="say"')).toBeLessThan(hand.indexOf("<ol>"));
     const handList = hand.slice(hand.indexOf("<ol>"), hand.indexOf("</ol>"));
@@ -750,20 +808,24 @@ describe("runbook catalog", () => {
     expect(handList).not.toContain("Watch the page");
 
     const cloud = card("optional-cloud-agent");
+    expect(cloud).toContain('class="do-box"');
     expect(cloud).toContain("<ol>");
     before(cloud, "Click Continue on Cloud", "Click Include Changes");
     expect(cloud).not.toContain('class="paste"');
+    expect(cloud).not.toContain(">Copy<");
 
     const trigger = card("optional-trigger-automation");
     before(trigger, "Opening any PR triggers", "Start a new local agent.");
-    before(trigger, "Start a new local agent.", "Run the accessibility test suite");
-    before(trigger, "Run the accessibility test suite", "Open the PR for the accessibility test suite fixes");
+    before(trigger, "Start a new local agent.", "Open the PR for the accessibility test suite fixes");
+    before(trigger, "Open the PR for the accessibility test suite fixes", "Run the accessibility test suite");
 
     const consolidate = card("consolidate-pr");
-    before(consolidate, "Consolidate the completed tasks", "Open the PR. Show the summary");
+    before(consolidate, "Move finished worktrees back deliberately.", "Open the PR. Show the summary");
+    before(consolidate, "Open the PR. Show the summary", "Consolidate the completed tasks");
 
     const risk = card("review-highest-risk");
-    before(risk, "/ask Which change", "Open the highest-risk change");
+    before(risk, "The change reviewer subagent clears the noise", "Open the highest-risk change");
+    before(risk, "Open the highest-risk change", "/ask Which change");
 
     const between = renderBeatHtml({
       id: "between",

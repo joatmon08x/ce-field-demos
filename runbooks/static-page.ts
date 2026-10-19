@@ -87,12 +87,11 @@ function cardBlocks(beat: DemoBeat): CardBlock[] {
   return blocks;
 }
 
-function renderSteps(lines: string[]): string {
+function renderDo(lines: string[]): string {
   const tag = lines.length > 1 ? "ol" : "ul";
   const items = lines.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
   return `
-          <div class="steps">
-            <p class="steps-label">Steps</p>
+          <div class="do-box">
             <${tag}>${items}</${tag}>
           </div>`;
 }
@@ -110,7 +109,7 @@ function renderPrompt(text: string, label: string): string {
 
 function renderBlock(block: CardBlock): string {
   if (block.kind === "say") return `\n          <p class="say">${escapeHtml(block.text)}</p>`;
-  if (block.kind === "steps") return renderSteps(block.lines);
+  if (block.kind === "steps") return renderDo(block.lines);
   return renderPrompt(block.text, block.label);
 }
 
@@ -202,6 +201,7 @@ export function renderRunbooksHtml(): string {
       --paper: #f7f7fb;
       --paper-elevated: #ffffff;
       --line: #e5e7eb;
+      --indigo-soft: #eef2ff;
       --muted: #f3f4f6;
       --success: #059669;
       --radius: 0.625rem;
@@ -240,9 +240,16 @@ export function renderRunbooksHtml(): string {
     }
     h4 { margin: 0; font-size: 0.875rem; }
     .say { margin: 0; color: var(--ink-soft); font-size: 0.75rem; white-space: pre-line; }
-    .steps-label { margin: 0; font-size: 0.75rem; font-weight: 600; }
-    .steps ol, .steps ul { margin: 0.25rem 0 0; padding-left: 1.25rem; color: var(--ink-soft); font-size: 0.75rem; }
-    .steps li + li { margin-top: 0.25rem; }
+    .do-box, pre {
+      margin: 0; padding: 0.75rem; overflow: auto;
+      border: 1px solid var(--line); border-radius: var(--radius);
+    }
+    .do-box {
+      background: var(--indigo-soft); color: var(--ink);
+      font: 0.75rem/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    .do-box ol, .do-box ul { margin: 0; padding-left: 1.25rem; }
+    .do-box li + li { margin-top: 0.25rem; }
     .paste { margin-top: auto; }
     .paste-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.75rem; font-weight: 500; }
     .copy {
@@ -251,20 +258,24 @@ export function renderRunbooksHtml(): string {
     }
     .copy.done { color: var(--success); border-color: var(--success); }
     pre {
-      margin: 0; padding: 0.75rem; overflow: auto; white-space: pre-wrap;
-      border: 1px solid var(--line); border-radius: var(--radius); background: var(--muted);
+      white-space: pre-wrap; background: var(--muted);
       font: 0.75rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     .track[hidden] { display: none; }
     .feature-checklist {
-      display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center;
-      margin: 0.75rem 0 0; padding: 0.75rem 1rem;
-      border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-elevated);
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+      margin: 1rem 0 0; padding: 0; border: 0;
     }
-    .feature-checklist legend { padding: 0 0.25rem; font-size: 0.75rem; font-weight: 600; }
-    label.feature-option {
-      display: flex; align-items: center; gap: 0.5rem;
-      margin: 0; font-size: 0.8125rem; font-weight: 500; cursor: pointer;
+    .feature-checklist legend {
+      padding: 0; margin: 0 0.25rem 0 0;
+      font-size: 0.75rem; font-weight: 500; color: var(--ink);
+    }
+    .tabs a, label.feature-option {
+      flex-shrink: 0; display: flex; align-items: center; gap: 0.5rem;
+      margin: 0; padding: 0.375rem 0.75rem;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--paper-elevated); color: var(--ink);
+      font-size: 0.8125rem; font-weight: 400; text-decoration: none; cursor: pointer;
     }
     .feature-option input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--indigo); }
     ${renderFeatureCss()}

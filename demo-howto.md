@@ -341,7 +341,7 @@ ledgerly-reviewer check my work
 
 ## The 301 track
 
-Open `runbooks.html?track=301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser. Their titles still start with Optional.
+Open `runbooks.html?track=301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser. Optional beats are listed on the feature checklist.
 
 ### How do you break down tasks for agents?
 
