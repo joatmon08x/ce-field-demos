@@ -33,7 +33,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         detail: "",
         example:
-          "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Use a fast model for this subagent.",
+          "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast.",
       },
       {
         id: "optional-cloud-agent",
@@ -48,7 +48,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         detail: "",
         example:
-          "/multitask Run the accessibility-manual-reviewer subagent on invoice page, accessibility test suite, and application test suite in parallel to figure out what I need to fix.",
+          "/multitask Run these in parallel to find what I need to fix: the accessibility-manual-reviewer subagent on the invoices page, the accessibility test suite, and the application test suite.",
       },
       {
         id: "review-subagents",
@@ -89,7 +89,7 @@ export const RUNBOOK_SECTIONS_301 = [
         optional: true,
         promptType: "adaptable",
         detail: "",
-        example: "To avoid conflicts, run each agent in its own worktree and parallelize where possible.",
+        example: "Run each agent in its own worktree to avoid conflicts, and parallelize where possible.",
       },
       {
         id: "open-plan-agent",
@@ -99,11 +99,11 @@ export const RUNBOOK_SECTIONS_301 = [
       },
       {
         id: "plan-remediation",
-        title: "Plan fixes for the walkthrough failures",
+        title: "Start a plan to fix the walkthrough failures on a separate worktree",
         promptType: "adaptable",
         detail: "",
         example:
-          "/plan fixes for the keyboard failures in the walkthroughs for invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. Use one task per failure and mark which tasks can run in parallel.",
+          "/plan fixes for the keyboard failures on invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. One task per failure, mark parallel tasks, and use a separate worktree with auto-approved changes.",
       },
       {
         id: "review-plan",
@@ -145,7 +145,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "reusable",
         detail: "Open the PR. Show the summary a coworker would read first.",
         example:
-          "Consolidate the completed tasks into one branch so reviewers get one PR. Open it with what each task changed, the plan link, and what a human should verify.",
+          "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify.",
       },
       {
         id: "optional-project-notes",
@@ -186,8 +186,8 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "review-highest-risk",
         title: "Review the high-risk changes",
         promptType: "reusable",
-        detail: "Open the highest-risk slice first and read it line by line.",
-        example: "/ask which change in this PR has the highest risk. List the files and lines I need to review.",
+        detail: "Open the highest-risk change and read it line by line.",
+        example: "/ask Which change in this PR has the highest risk? List the files and lines I need to review.",
       },
       {
         id: "optional-bugbot",
@@ -215,17 +215,25 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "reusable",
         detail: "",
         example:
-          "Draft a fix for each repeat finding in this PR’s review comments and change reviewer findings. Pick the most reliable fix, preferring deterministic ones: rule, skill, subagent, test, or human check.",
+          "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic: rule, skill, subagent, test, or human check.",
       },
       {
         id: "optional-reviewer-automation",
         title: "Optional: Create a Reviewer automation",
         optional: true,
+        promptType: "none",
+        detail:
+          "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.",
+      },
+      {
+        id: "optional-trigger-automation",
+        title: "Optional: Trigger the PR Automation",
+        optional: true,
         promptType: "adaptable",
         detail:
-          "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Run change reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save. Open the PR and review the check for Automation: Reviewer.",
+          "Start a new local agent. Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
         example:
-          "Use the accessibility-manual-reviewer subagent to walk the invoices, collections, and settings pages by keyboard and open a PR with the failures and recommended fixes.",
+          "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
       },
       {
         id: "return-to-plan",

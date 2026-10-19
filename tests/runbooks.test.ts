@@ -373,12 +373,12 @@ describe("runbook catalog", () => {
       "scale-reviews",
       "share-ownership"
     ]);
-    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([9, 11, 5, 5]);
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([9, 11, 5, 6]);
     expect(RUNBOOK_SECTIONS_301.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Show /multitask for small coordinated jobs. → Review the subagents → Check the subagent output → Fallback: reference repo issues → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Plan fixes for the walkthrough failures → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Review the high-risk changes → Optional: Run Bugbot → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Return to the command center plan → Check other PRs for files and comments that conflict with the next project",
+      "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Show /multitask for small coordinated jobs. → Review the subagents → Check the subagent output → Fallback: reference repo issues → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Start a plan to fix the walkthrough failures on a separate worktree → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Review the high-risk changes → Optional: Run Bugbot → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Optional: Trigger the PR Automation → Return to the command center plan → Check other PRs for files and comments that conflict with the next project",
     );
 
     // 201-style mapping: Do is verbatim in detail, Prompt in example, a Say before a prompt is copied into detail, and a Say after a prompt is omitted.
@@ -407,7 +407,7 @@ describe("runbook catalog", () => {
         "title": "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
         "promptType": "adaptable",
         "detail": "",
-        "example": "/create-subagent accessibility-manual-reviewer to walk a page by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Use a fast model for this subagent."
+        "example": "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast."
       },
       {
         "id": "optional-cloud-agent",
@@ -421,7 +421,7 @@ describe("runbook catalog", () => {
         "title": "Show /multitask for small coordinated jobs.",
         "promptType": "adaptable",
         "detail": "",
-        "example": "/multitask Run the accessibility-manual-reviewer subagent on invoice page, accessibility test suite, and application test suite in parallel to figure out what I need to fix."
+        "example": "/multitask Run these in parallel to find what I need to fix: the accessibility-manual-reviewer subagent on the invoices page, the accessibility test suite, and the application test suite."
       },
       {
         "id": "review-subagents",
@@ -455,7 +455,7 @@ describe("runbook catalog", () => {
         "title": "Optional: Stage the Project",
         "promptType": "adaptable",
         "detail": "",
-        "example": "To avoid conflicts, run each agent in its own worktree and parallelize where possible.",
+        "example": "Run each agent in its own worktree to avoid conflicts, and parallelize where possible.",
         "optional": true
       },
       {
@@ -466,10 +466,10 @@ describe("runbook catalog", () => {
       },
       {
         "id": "plan-remediation",
-        "title": "Plan fixes for the walkthrough failures",
+        "title": "Start a plan to fix the walkthrough failures on a separate worktree",
         "promptType": "adaptable",
         "detail": "",
-        "example": "/plan fixes for the keyboard failures in the walkthroughs for invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. Use one task per failure and mark which tasks can run in parallel."
+        "example": "/plan fixes for the keyboard failures on invoices, collections, and settings in @.cursor/plans/keyboard-walkthrough-audit.md. One task per failure, mark parallel tasks, and use a separate worktree with auto-approved changes."
       },
       {
         "id": "review-plan",
@@ -509,7 +509,7 @@ describe("runbook catalog", () => {
         "title": "Consolidate and open a reviewable PR",
         "promptType": "reusable",
         "detail": "Open the PR. Show the summary a coworker would read first.",
-        "example": "Consolidate the completed tasks into one branch so reviewers get one PR. Open it with what each task changed, the plan link, and what a human should verify."
+        "example": "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify."
       },
       {
         "id": "optional-project-notes",
@@ -543,8 +543,8 @@ describe("runbook catalog", () => {
         "id": "review-highest-risk",
         "title": "Review the high-risk changes",
         "promptType": "reusable",
-        "detail": "Open the highest-risk slice first and read it line by line.",
-        "example": "/ask which change in this PR has the highest risk. List the files and lines I need to review."
+        "detail": "Open the highest-risk change and read it line by line.",
+        "example": "/ask Which change in this PR has the highest risk? List the files and lines I need to review."
       },
       {
         "id": "optional-bugbot",
@@ -565,14 +565,21 @@ describe("runbook catalog", () => {
         "title": "Identify the most reliable fix",
         "promptType": "reusable",
         "detail": "",
-        "example": "Draft a fix for each repeat finding in this PR’s review comments and change reviewer findings. Pick the most reliable fix, preferring deterministic ones: rule, skill, subagent, test, or human check."
+        "example": "Turn repeat findings from this PR's review comments and change reviewer into reusable fixes so they stop recurring. Draft the most deterministic: rule, skill, subagent, test, or human check."
       },
       {
         "id": "optional-reviewer-automation",
         "title": "Optional: Create a Reviewer automation",
+        "promptType": "none",
+        "detail": "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.",
+        "optional": true
+      },
+      {
+        "id": "optional-trigger-automation",
+        "title": "Optional: Trigger the PR Automation",
         "promptType": "adaptable",
-        "detail": "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Run change reviewer subagent” to agent instructions. Add “Comment on Pull Request” to tools. Click Save. Open the PR and review the check for Automation: Reviewer.",
-        "example": "Use the accessibility-manual-reviewer subagent to walk the invoices, collections, and settings pages by keyboard and open a PR with the failures and recommended fixes.",
+        "detail": "Start a new local agent. Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
+        "example": "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
         "optional": true
       },
       {
@@ -590,7 +597,7 @@ describe("runbook catalog", () => {
       }
     ]);
 
-    expect(beats301).toHaveLength(30);
+    expect(beats301).toHaveLength(31);
     expect(beats301.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(
       beats301.filter((entry) => entry.promptType === "none").every((entry) => entry.example === undefined),
@@ -607,6 +614,7 @@ describe("runbook catalog", () => {
       "optional-project-notes",
       "optional-bugbot",
       "optional-reviewer-automation",
+      "optional-trigger-automation",
     ];
     expect(beats301.filter((entry) => entry.optional).map((entry) => entry.id)).toEqual(optionalIds);
     expect(beats101.some((entry) => entry.optional)).toBe(false);
