@@ -21,7 +21,8 @@ function visibleText(value: string | undefined): string {
 /** Feature carried on the beat, or parsed from a leftover `[Optional - Feature]` tag. */
 export function beatFeature(beat: DemoBeat): string | undefined {
   if (beat.optional?.feature) return beat.optional.feature;
-  const chunks = [beat.detail, beat.example, beat.title];
+  const chunks = [beat.say, beat.detail, beat.example, beat.title];
+  for (const part of beat.after ?? []) chunks.push(part.text);
   for (const chunk of chunks) {
     if (!chunk) continue;
     const found = stripOptionalTags(chunk).features;
@@ -42,25 +43,83 @@ export function renderBeatHtml(beat: DemoBeat): string {
   return renderBeat(beat);
 }
 
-function renderBeat(beat: DemoBeat): string {
-  const detailText = visibleText(beat.detail);
-  const exampleText = visibleText(beat.example);
-  const detail = detailText ? `\n          <p class="detail">${escapeHtml(detailText)}</p>` : "";
-  const paste = exampleText
-    ? `
+type CardBlock =
+  | { kind: "say"; text: string }
+  | { kind: "steps"; lines: string[] }
+  | { kind: "prompt"; text: string; label: string };
+
+function doLines(value: string): string[] {
+  return value
+    .split("\n")
+    .map((line) => visibleText(line))
+    .filter((line) => line.length > 0);
+}
+
+function cardBlocks(beat: DemoBeat): CardBlock[] {
+  const blocks: CardBlock[] = [];
+  const say = visibleText(beat.say);
+  if (say) blocks.push({ kind: "say", text: say });
+  const leading = doLines(beat.detail);
+  if (leading.length) blocks.push({ kind: "steps", lines: leading });
+  const example = visibleText(beat.example);
+  if (example) {
+    blocks.push({
+      kind: "prompt",
+      text: example,
+      label: beat.pasteLabel ?? "Paste in Grok Build",
+    });
+  }
+  for (const part of beat.after ?? []) {
+    const text = visibleText(part.text);
+    if (!text) continue;
+    if (part.kind === "do") {
+      const last = blocks[blocks.length - 1];
+      if (last?.kind === "steps") last.lines.push(text);
+      else blocks.push({ kind: "steps", lines: [text] });
+      continue;
+    }
+    blocks.push({
+      kind: "prompt",
+      text,
+      label: part.pasteLabel ?? "Paste in Grok Build",
+    });
+  }
+  return blocks;
+}
+
+function renderSteps(lines: string[]): string {
+  const tag = lines.length > 1 ? "ol" : "ul";
+  const items = lines.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+  return `
+          <div class="steps">
+            <p class="steps-label">Steps</p>
+            <${tag}>${items}</${tag}>
+          </div>`;
+}
+
+function renderPrompt(text: string, label: string): string {
+  return `
           <div class="paste">
             <div class="paste-head">
-              <span>${escapeHtml(beat.pasteLabel ?? "Paste in Grok Build")}</span>
+              <span>${escapeHtml(label)}</span>
               <button type="button" class="copy">Copy</button>
             </div>
-            <pre>${escapeHtml(exampleText)}</pre>
-          </div>`
-    : "";
+            <pre>${escapeHtml(text)}</pre>
+          </div>`;
+}
+
+function renderBlock(block: CardBlock): string {
+  if (block.kind === "say") return `\n          <p class="say">${escapeHtml(block.text)}</p>`;
+  if (block.kind === "steps") return renderSteps(block.lines);
+  return renderPrompt(block.text, block.label);
+}
+
+function renderBeat(beat: DemoBeat): string {
   const feature = beatFeature(beat);
   const featureAttr = feature ? ` data-feature="${escapeHtml(feature)}"` : "";
   return `
         <article class="beat" data-beat="${escapeHtml(beat.id)}"${featureAttr}>
-          <h4>${escapeHtml(beat.title)}</h4>${detail}${paste}
+          <h4>${escapeHtml(beat.title)}</h4>${cardBlocks(beat).map(renderBlock).join("")}
         </article>`;
 }
 
@@ -180,7 +239,10 @@ export function renderRunbooksHtml(): string {
       border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-elevated);
     }
     h4 { margin: 0; font-size: 0.875rem; }
-    .detail { margin: -0.375rem 0 0; color: var(--ink-soft); font-size: 0.75rem; white-space: pre-line; }
+    .say { margin: 0; color: var(--ink-soft); font-size: 0.75rem; white-space: pre-line; }
+    .steps-label { margin: 0; font-size: 0.75rem; font-weight: 600; }
+    .steps ol, .steps ul { margin: 0.25rem 0 0; padding-left: 1.25rem; color: var(--ink-soft); font-size: 0.75rem; }
+    .steps li + li { margin-top: 0.25rem; }
     .paste { margin-top: auto; }
     .paste-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.75rem; font-weight: 500; }
     .copy {

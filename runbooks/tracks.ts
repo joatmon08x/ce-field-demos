@@ -43,7 +43,7 @@ export function trackOptionalFeatures(track: RunbookTrack): string[] {
   const seen: string[] = [];
   for (const section of track.sections) {
     for (const beat of section.beats) {
-      const feature = beat.optional?.feature;
+      const feature = "optional" in beat ? beat.optional?.feature : undefined;
       if (feature && !seen.includes(feature)) seen.push(feature);
     }
   }

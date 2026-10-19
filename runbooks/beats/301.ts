@@ -23,8 +23,9 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "show-problem-by-hand",
         title: "Show the problem by hand.",
         promptType: "none",
+        say: "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost.",
         detail:
-          "Open Browser to http://localhost:43173/invoices.\nFocus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPress Tab a few times on the invoices page.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost.",
+          "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
       },
       {
         id: "create-accessibility-manual-reviewer",
@@ -40,7 +41,8 @@ export const RUNBOOK_SECTIONS_301 = [
         title: "Optional: Move to a Cloud Agent",
         optional: { feature: "Cloud Agents" },
         promptType: "none",
-        detail: "Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.",
+        detail:
+          "Click Continue on Cloud to move this to a Cloud Agent.\nClick Include Changes.",
       },
       {
         id: "multitask-walkthroughs",
@@ -81,7 +83,7 @@ export const RUNBOOK_SECTIONS_301 = [
         title: "Optional: Start a new Project",
         optional: { feature: "Projects" },
         promptType: "none",
-        detail: "Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.",
+        detail: "Start a new Project.\nName it {INSERT COMPANY HERE, default is Ledgerly}.",
       },
       {
         id: "optional-stage-project",
@@ -95,7 +97,7 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "open-plan-agent",
         title: "Open a new agent",
         promptType: "none",
-        detail: "Open a new local agent. Optional: Run the following prompts from the Project.",
+        detail: "Open a new local agent.\nOptional: Run the following prompts from the Project.",
       },
       {
         id: "plan-remediation",
@@ -135,15 +137,18 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "ask-subagent-progress",
         title: "Ask what the first subagent is remediating",
         promptType: "reusable",
-        detail:
-          "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.",
+        say: "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.",
+        detail: "",
         example: "/ask What is the first subagent remediating? Answer with the finding and the files it changes.",
       },
       {
         id: "consolidate-pr",
         title: "Consolidate and open a reviewable PR",
         promptType: "reusable",
-        detail: "Open the PR. Show the summary a coworker would read first.",
+        detail: "",
+        after: [
+          { kind: "do", text: "Open the PR. Show the summary a coworker would read first." },
+        ],
         example:
           "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify.",
       },
@@ -186,8 +191,11 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "review-highest-risk",
         title: "Review the high-risk changes",
         promptType: "reusable",
-        detail: "Open the highest-risk change and read it line by line.",
+        detail: "",
         example: "/ask Which change in this PR has the highest risk? List the files and lines I need to review.",
+        after: [
+          { kind: "do", text: "Open the highest-risk change and read it line by line." },
+        ],
       },
       {
         id: "optional-bugbot",
@@ -223,15 +231,21 @@ export const RUNBOOK_SECTIONS_301 = [
         optional: { feature: "Automations" },
         promptType: "none",
         detail:
-          "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.",
+          "Go to the Automations tab.\nClick New Automation.\nName it Reviewer.\nSelect the demo repository.\nClick Triggers > PR opened, then select the demo repository and set the author to Anyone.\nAdd “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions.\nAdd “Comment on Pull Request” to tools.\nClick Save.",
       },
       {
         id: "optional-trigger-automation",
         title: "Optional: Trigger the PR Automation",
         optional: { feature: "Automations" },
         promptType: "adaptable",
-        detail:
-          "Start a new local agent. Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
+        say: "Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run.",
+        detail: "Start a new local agent.",
+        after: [
+          {
+            kind: "do",
+            text: "Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
+          },
+        ],
         example:
           "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
       },

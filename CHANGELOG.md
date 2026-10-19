@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Runbook cards show the Say text, then Do lines as a Steps list, then the prompt. One Do line is a plain list. Several are numbered. A Do line that follows a prompt stays after that prompt.
 - **301 beats synced to the Outline.** Four sections hold 9, 11, 5, and 6 beats (31 total). The review section has no keyboard-confirmation step.
 - `ledgerly-reviewer` no longer carries the closer-inspection list. It confirms the claimed work runs, then checks the catalog, seed, and protected paths.
 - Runbooks left the app. The catalog is `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`.

@@ -388,8 +388,8 @@ describe("runbook catalog", () => {
       "Plan the command center in a separate agent → Start the keyboard walkthrough agent → Show the problem by hand. → Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. → Optional: Move to a Cloud Agent → Show /multitask for small coordinated jobs. → Review the subagents → Check the subagent output → Fallback: reference repo issues → Optional: Start a new Project → Optional: Stage the Project → Open a new agent → Start a plan to fix the walkthrough failures on a separate worktree → Review the plan → Build the plan → Optional: Build with Cloud Agents → Open a side chat → Ask what the first subagent is remediating → Consolidate and open a reviewable PR → Optional: Show project notes → Check out the keyboard fixes branch → Run the change reviewer subagent → Identify changes for closer inspection → Review the high-risk changes → Optional: Run Bugbot → Open a new agent → Identify the most reliable fix → Optional: Create a Reviewer automation → Optional: Trigger the PR Automation → Return to the command center plan → Check other PRs for files and comments that conflict with the next project",
     );
 
-    // 201-style mapping: Do is verbatim in detail, Prompt in example, a Say before a prompt is copied into detail, and a Say after a prompt is omitted.
-    expect(beats301.map(({ id, title, promptType, detail, example, optional }) => ({ id, title, promptType, detail, example, optional }))).toEqual([
+    // Do lines stay in detail, one per line. Say is separate. A Do line that follows a prompt is in after, in order.
+    expect(beats301.map(({ id, title, promptType, detail, example, optional, say, after }) => ({ id, title, promptType, detail, example, optional, say, after }))).toEqual([
       {
         "id": "plan-command-center",
         "title": "Plan the command center in a separate agent",
@@ -407,7 +407,8 @@ describe("runbook catalog", () => {
         "id": "show-problem-by-hand",
         "title": "Show the problem by hand.",
         "promptType": "none",
-        "detail": "Open Browser to http://localhost:43173/invoices.\nFocus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPress Tab a few times on the invoices page.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
+        "detail": "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
+        "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
       },
       {
         "id": "create-accessibility-manual-reviewer",
@@ -420,7 +421,7 @@ describe("runbook catalog", () => {
         "id": "optional-cloud-agent",
         "title": "Optional: Move to a Cloud Agent",
         "promptType": "none",
-        "detail": "Click Continue on Cloud to move this to a Cloud Agent. Click Include Changes.",
+        "detail": "Click Continue on Cloud to move this to a Cloud Agent.\nClick Include Changes.",
         "optional": { "feature": "Cloud Agents" }
       },
       {
@@ -454,7 +455,7 @@ describe("runbook catalog", () => {
         "id": "optional-start-project",
         "title": "Optional: Start a new Project",
         "promptType": "none",
-        "detail": "Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}.",
+        "detail": "Start a new Project.\nName it {INSERT COMPANY HERE, default is Ledgerly}.",
         "optional": { "feature": "Projects" }
       },
       {
@@ -469,7 +470,7 @@ describe("runbook catalog", () => {
         "id": "open-plan-agent",
         "title": "Open a new agent",
         "promptType": "none",
-        "detail": "Open a new local agent. Optional: Run the following prompts from the Project."
+        "detail": "Open a new local agent.\nOptional: Run the following prompts from the Project."
       },
       {
         "id": "plan-remediation",
@@ -508,15 +509,19 @@ describe("runbook catalog", () => {
         "id": "ask-subagent-progress",
         "title": "Ask what the first subagent is remediating",
         "promptType": "reusable",
-        "detail": "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator.",
-        "example": "/ask What is the first subagent remediating? Answer with the finding and the files it changes."
+        "detail": "",
+        "example": "/ask What is the first subagent remediating? Answer with the finding and the files it changes.",
+        "say": "If you want to know what a subagent is doing, you can open a side chat and ask without blocking the coordinator."
       },
       {
         "id": "consolidate-pr",
         "title": "Consolidate and open a reviewable PR",
         "promptType": "reusable",
-        "detail": "Open the PR. Show the summary a coworker would read first.",
-        "example": "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify."
+        "detail": "",
+        "example": "Consolidate the completed tasks into one branch so reviewers get one PR. Open a PR with what each task changed and what a human should verify.",
+        "after": [
+          { "kind": "do", "text": "Open the PR. Show the summary a coworker would read first." }
+        ]
       },
       {
         "id": "optional-project-notes",
@@ -550,8 +555,11 @@ describe("runbook catalog", () => {
         "id": "review-highest-risk",
         "title": "Review the high-risk changes",
         "promptType": "reusable",
-        "detail": "Open the highest-risk change and read it line by line.",
-        "example": "/ask Which change in this PR has the highest risk? List the files and lines I need to review."
+        "detail": "",
+        "example": "/ask Which change in this PR has the highest risk? List the files and lines I need to review.",
+        "after": [
+          { "kind": "do", "text": "Open the highest-risk change and read it line by line." }
+        ]
       },
       {
         "id": "optional-bugbot",
@@ -578,15 +586,22 @@ describe("runbook catalog", () => {
         "id": "optional-reviewer-automation",
         "title": "Optional: Create a Reviewer automation",
         "promptType": "none",
-        "detail": "Go to the Automations tab. Click New Automation. Name it Reviewer. Select the demo repository. Click Triggers > PR opened, then select the demo repository and set the author to Anyone. Add “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions. Add “Comment on Pull Request” to tools. Click Save.",
+        "detail": "Go to the Automations tab.\nClick New Automation.\nName it Reviewer.\nSelect the demo repository.\nClick Triggers > PR opened, then select the demo repository and set the author to Anyone.\nAdd “Use the change reviewer subagent to review this PR and comment with each issue's file, line, and severity.” to agent instructions.\nAdd “Comment on Pull Request” to tools.\nClick Save.",
         "optional": { "feature": "Automations" }
       },
       {
         "id": "optional-trigger-automation",
         "title": "Optional: Trigger the PR Automation",
         "promptType": "adaptable",
-        "detail": "Start a new local agent. Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run. Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer.",
+        "detail": "Start a new local agent.",
         "example": "Run the accessibility test suite and fix its failures on a separate worktree. Open a PR when done.",
+        "say": "Opening any PR triggers the Reviewer Automation, so I'll create one and watch the check run.",
+        "after": [
+          {
+            "kind": "do",
+            "text": "Open the PR for the accessibility test suite fixes and review the status check for Automation: Reviewer."
+          }
+        ],
         "optional": { "feature": "Automations" }
       },
       {
@@ -690,6 +705,78 @@ describe("runbook catalog", () => {
     expect(track301).toContain('<article class="beat" data-beat="linear-issue-fallback">');
     expect(track301).not.toContain('data-beat="linear-issue-fallback" data-feature=');
     expect(html).not.toContain("[Optional -");
+  });
+
+  it("renders say, then steps, then the prompt, and keeps a do step between prompts", () => {
+    const html = renderRunbooksHtml();
+    const card = (id: string) => {
+      const marker = `data-beat="${id}"`;
+      const start = html.lastIndexOf("<article", html.indexOf(marker));
+      const end = html.indexOf("</article>", start);
+      return html.slice(start, end);
+    };
+    const before = (text: string, earlier: string, later: string) => {
+      const earlierAt = text.indexOf(earlier);
+      const laterAt = text.indexOf(later);
+      expect(earlierAt, earlier).toBeGreaterThan(-1);
+      expect(laterAt, later).toBeGreaterThan(-1);
+      expect(earlierAt).toBeLessThan(laterAt);
+    };
+
+    const ask = card("ask");
+    before(ask, ">Steps<", "/ask Tell me what this application does in 3 sentences");
+    expect(ask).toContain("<ul>");
+    expect(ask).not.toContain("<ol>");
+    expect(ask).not.toContain('class="say"');
+
+    const hand = card("show-problem-by-hand");
+    before(hand, "Focus is the control", ">Steps<");
+    before(hand, ">Steps<", "Open Browser to http://localhost:43173/invoices.");
+    before(hand, "Open Browser to http://localhost:43173/invoices.", "Press Tab a few times on the invoices page.");
+    expect(hand.indexOf('class="say"')).toBeLessThan(hand.indexOf("<ol>"));
+    const handList = hand.slice(hand.indexOf("<ol>"), hand.indexOf("</ol>"));
+    expect(handList).not.toContain("Focus is the control");
+    expect(handList).not.toContain("Watch the page");
+
+    const cloud = card("optional-cloud-agent");
+    expect(cloud).toContain("<ol>");
+    before(cloud, "Click Continue on Cloud", "Click Include Changes");
+    expect(cloud).not.toContain('class="paste"');
+
+    const trigger = card("optional-trigger-automation");
+    before(trigger, "Opening any PR triggers", "Start a new local agent.");
+    before(trigger, "Start a new local agent.", "Run the accessibility test suite");
+    before(trigger, "Run the accessibility test suite", "Open the PR for the accessibility test suite fixes");
+
+    const consolidate = card("consolidate-pr");
+    before(consolidate, "Consolidate the completed tasks", "Open the PR. Show the summary");
+
+    const risk = card("review-highest-risk");
+    before(risk, "/ask Which change", "Open the highest-risk change");
+
+    const between = renderBeatHtml({
+      id: "between",
+      title: "Between",
+      detail: "First do step.",
+      promptType: "reusable",
+      example: "/ask first prompt",
+      after: [
+        { kind: "do", text: "Middle one." },
+        { kind: "do", text: "Middle two." },
+        { kind: "prompt", promptType: "adaptable", text: "Second prompt." },
+      ],
+    });
+    before(between, "First do step.", "/ask first prompt");
+    before(between, "/ask first prompt", "Middle one.");
+    before(between, "Middle one.", "Middle two.");
+    before(between, "Middle two.", "Second prompt.");
+    const firstPrompt = between.indexOf("/ask first prompt");
+    const secondPrompt = between.indexOf("Second prompt.");
+    const middle = between.slice(firstPrompt, secondPrompt);
+    expect(middle).toContain("<ol>");
+    expect(middle).toContain("Middle one.");
+    expect(middle).toContain("Middle two.");
+    expect(between.slice(0, firstPrompt)).not.toContain("Middle one.");
   });
 
   it("keeps the static runbooks page in sync with the beats", () => {
