@@ -24,8 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Change reviewer catalog copy matches `readonly: false`: it can run `git status` and `git diff`, and its instructions still forbid edits.
-- Keyboard plan covers F1, W2, and W3 on separate files. W1, S1, and S2 stay in the audit, out of the plan. Show 19 plans those in-scope findings, one task per finding, each on its own worktree.
-- Linear fallback prompts reference `@runbooks/linear-field-demos.ts`.
+- Synced 301 Show beats to the accepted Outline: the in-scope keyboard plan and its Say, `readonly: false` on the accessibility manual reviewer, stop that reviewer after one failure, the Linear fallback file `@runbooks/linear-field-demos.ts`, change-reviewer `readonly: false`, and the closer-inspection beat that flags the planted Tab step as high and never kept.
 - The W2 keyboard task includes a deliberate Tab `preventDefault` step for the 301 demo. See Planted demo issues in `AGENTS.md` and `README.md`. The plan does not label it.
 - Runbook cards show Say, then the Do lines in their own box, then the prompt. Several Do lines are numbered. The box matches the prompt border, radius, and padding, with the indigo soft fill and no copy button.
 - 301 beats now copy Say, Do, and Prompt from the live Outline, including optional feature tags. Three Show steps that were missing are now beats.
