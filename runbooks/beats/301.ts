@@ -41,7 +41,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         say: "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read.\nA keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.",
         detail: "",
-        example: "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, readonly: false.",
+        example: "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, read-only: false.",
       },
       {
         id: "optional-cloud-agent",
@@ -64,7 +64,7 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "adaptable",
         say: "The coordinator gives each task its own subagent: a keyboard walkthrough of the invoices page, the accessibility test suite, and the application test suite.",
         detail: "",
-        example: "/multitask Run these in parallel to find what I need to fix: the accessibility-manual-reviewer subagent on the invoices page, the accessibility test suite, and the application test suite. Stop accessibility-manual-reviewer after finding one failure.",
+        example: "/multitask Run these in parallel to find what I need to fix: the accessibility-manual-reviewer subagent on the invoices page, the accessibility test suite, and the application test suite.",
       },
       {
         id: "review-subagents",
@@ -130,7 +130,7 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "plan-remediation",
         title: "Start a plan to fix the walkthrough failures on a separate worktree.",
         promptType: "adaptable",
-        say: "Plan the in-scope findings, one task per finding, each on its own worktree. If the plan asks questions, choose to run tasks in parallel and write updates to the issue tracker.\nBy starting the work on a separate worktree, you avoid editing the working code on the main branch. If you do not let the agent automatically approve changes on the worktree, you may have to manually approve each file change.",
+        say: "Create a plan from the in-scope findings in the audit. If the plan asks questions, choose to run one task per finding in parallel and write updates to the issue tracker.\nBy starting each task on its own worktree, you avoid editing the working code on the main branch. If you do not let the agent automatically approve changes on the worktree, you may have to manually approve each file change.",
         detail: "",
         example: "/plan the in-scope keyboard fixes in @.cursor/plans/keyboard-walkthrough-audit.md. One task per finding, in parallel, each on its own worktree with auto-approved changes.",
       },
@@ -211,10 +211,8 @@ export const RUNBOOK_SECTIONS_301 = [
       {
         id: "check-closer-inspection",
         title: "Identify any changes requiring closer inspection.",
-        promptType: "reusable",
-        say: "The plan included a step that sounds reasonable but blocks Tab navigation everywhere. The change reviewer flags it as high severity, with the file and line, so we never keep it.",
+        promptType: "none",
         detail: "Check the change reviewer’s output for any issues requiring closer inspection.",
-        example: "Fix the findings from the change reviewer.",
       },
       {
         id: "review-highest-risk",
