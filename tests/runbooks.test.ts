@@ -417,7 +417,7 @@ describe("runbook catalog", () => {
     "title": "Show the problem by hand.",
     "promptType": "none",
     "detail": "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
-    "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
+    "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPressing Tab repeatedly is a slow manual process. Is there a way we can automate this?"
   },
   {
     "id": "create-accessibility-manual-reviewer",
@@ -807,7 +807,9 @@ describe("runbook catalog", () => {
     expect(hand.indexOf('class="say"')).toBeLessThan(hand.indexOf("<ol>"));
     const handList = hand.slice(hand.indexOf("<ol>"), hand.indexOf("</ol>"));
     expect(handList).not.toContain("Focus is the control");
-    expect(handList).not.toContain("Watch the page");
+    expect(hand).toContain("Pressing Tab repeatedly is a slow manual process.");
+    expect(handList).not.toContain("Pressing Tab repeatedly");
+    expect(hand).not.toContain("Watch the page");
 
     const cloud = card("optional-cloud-agent");
     expect(cloud).toContain('class="do-box"');

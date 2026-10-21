@@ -31,7 +31,7 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "show-problem-by-hand",
         title: "Show the problem by hand.",
         promptType: "none",
-        say: "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost.",
+        say: "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPressing Tab repeatedly is a slow manual process. Is there a way we can automate this?",
         detail: "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
       },
       {
