@@ -380,21 +380,31 @@ describe("runbook catalog", () => {
       "scale-reviews",
       "share-ownership"
     ]);
-    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([11, 12, 5, 6]);
+    expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([11, 12, 5, 7]);
     expect(RUNBOOK_SECTIONS_301.flatMap((section) => section.beats.map((entry) => entry.id))).toEqual(
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Get the issues for the collections command center from the issue tracker. \u2192 Plan the collections command center in a separate agent. \u2192 Start a keyboard walkthrough for the accessibility audit in a new agent. \u2192 Show the problem by hand. \u2192 Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. \u2192 Move to a Cloud Agent. \u2192 Start a new agent to audit accessibility. \u2192 Show /multitask for small coordinated jobs. \u2192 Review the subagents. \u2192 Check the output of the subagents. \u2192 Fallback: reference repo issues \u2192 Start a new Project. \u2192 Stage the Project. \u2192 Use Projects to assign tasks to agents. \u2192 Start a new agent. \u2192 Start a plan to fix the walkthrough failures on a separate worktree. \u2192 Review the plan. \u2192 Build the plan. \u2192 Use Cloud Agents to build the plan if you do not have Projects. \u2192 Ask a side question while the coordinator remediates the findings. \u2192 Ask what the first subagent is remediating. \u2192 Consolidate and open a reviewable PR. \u2192 Keep track of the Project. \u2192 Start a new agent. \u2192 Run the change reviewer subagent before you conduct manual review. \u2192 Identify any changes requiring closer inspection. \u2192 Review the high-risk changes. \u2192 Run Bugbot. \u2192 Start a new agent. \u2192 Identify the most reliable fix for each review finding. \u2192 Create an Automation. \u2192 Trigger the PR Automation. \u2192 Return to the collections command center plan. \u2192 Check other PRs for files and comments that conflict with the next project.",
+      "Plan the command center on a Cloud Agent. \u2192 Get the issues for the collections command center from the issue tracker. \u2192 Plan the collections command center in a separate agent. \u2192 Start a keyboard walkthrough for the accessibility audit in a new agent. \u2192 Show the problem by hand. \u2192 Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. \u2192 Start a new agent to audit accessibility. \u2192 Show /multitask for small coordinated jobs. \u2192 Review the subagents. \u2192 Check the output of the subagents. \u2192 Fallback: reference repo issues \u2192 Start a new Project. \u2192 Stage the Project. \u2192 Use Projects to assign tasks to agents. \u2192 Start a new agent. \u2192 Start a plan to fix the walkthrough failures on a separate worktree. \u2192 Review the plan. \u2192 Build the plan. \u2192 Use Cloud Agents to build the plan if you do not have Projects. \u2192 Ask a side question while the coordinator remediates the findings. \u2192 Ask what the first subagent is remediating. \u2192 Consolidate and open a reviewable PR. \u2192 Keep track of the Project. \u2192 Start a new agent. \u2192 Run the change reviewer subagent before you conduct manual review. \u2192 Identify any changes requiring closer inspection. \u2192 Review the high-risk changes. \u2192 Run Bugbot. \u2192 Start a new agent. \u2192 Identify the most reliable fix for each review finding. \u2192 Create an Automation. \u2192 Trigger the PR Automation. \u2192 Return to the collections command center plan. \u2192 Instead, open the command center planning agent from the Cloud Agents list. \u2192 Check other PRs for files and comments that conflict with the next project.",
     );
 
     // Say, Do, and Prompt are copied from the Outline. Optional tags are on optional.feature, not in the prompt.
     expect(beats301.map(({ id, title, promptType, detail, example, optional, say, after }) => ({ id, title, promptType, detail, example, optional, say, after }))).toEqual([
   {
+    "id": "optional-cloud-command-center",
+    "title": "Plan the command center on a Cloud Agent.",
+    "promptType": "none",
+    "detail": "Start a new Cloud agent.\nUse the Cloud Agent to check for open issues in Linear and plan the collections command center.",
+    "optional": {
+      "feature": "Cloud Agents"
+    },
+    "say": "This plan runs on a remote machine, so it keeps going while I do the keyboard walkthrough locally."
+  },
+  {
     "id": "get-command-center-issues",
     "title": "Get the issues for the collections command center from the issue tracker.",
     "promptType": "adaptable",
-    "detail": "Start a new agent for the command center plan.",
+    "detail": "Start a new local agent.",
     "example": "/ask List open issues for the collections command center in Linear.",
     "say": "The Linear MCP server returns a list of nine issues to create the collections command center."
   },
@@ -410,14 +420,14 @@ describe("runbook catalog", () => {
     "id": "open-local-agent",
     "title": "Start a keyboard walkthrough for the accessibility audit in a new agent.",
     "promptType": "none",
-    "detail": "Start a new agent for the keyboard walkthrough."
+    "detail": "Start a new local agent for the keyboard walkthrough."
   },
   {
     "id": "show-problem-by-hand",
     "title": "Show the problem by hand.",
     "promptType": "none",
     "detail": "Open Browser to http://localhost:43173/invoices.\nPress Tab a few times on the invoices page.",
-    "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nWatch the page. After a couple of presses the outline disappears. Focus is still on something, but I can't tell what, so a keyboard user is now lost."
+    "say": "Focus is the control the keyboard is on right now. When you press Tab, focus moves to the next button, link, or field. A visible outline usually shows where it is, so a keyboard user always knows what Enter will do.\nPressing Tab repeatedly is a slow manual process. Is there a way we can automate this?"
   },
   {
     "id": "create-accessibility-manual-reviewer",
@@ -426,16 +436,6 @@ describe("runbook catalog", () => {
     "detail": "",
     "example": "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, readonly: false.",
     "say": "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read.\nA keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI."
-  },
-  {
-    "id": "optional-cloud-agent",
-    "title": "Move to a Cloud Agent.",
-    "promptType": "none",
-    "detail": "Click Continue on Cloud to move this to a Cloud Agent.\nClick Include Changes.",
-    "optional": {
-      "feature": "Cloud Agents"
-    },
-    "say": "Rather than run all of these subagents locally, move everything to a Cloud Agent on a remote environment and build everything on an isolated branch.\nOnce it is done, check its work."
   },
   {
     "id": "start-audit-agent",
@@ -662,6 +662,15 @@ describe("runbook catalog", () => {
     "say": "Now I’m going back to the collections command center plan. Before I start the work, I’ll check the keyboard fixes PR for conflicts."
   },
   {
+    "id": "optional-cloud-return",
+    "title": "Instead, open the command center planning agent from the Cloud Agents list.",
+    "promptType": "none",
+    "detail": "Instead, open the command center planning agent from the Cloud Agents list.",
+    "optional": {
+      "feature": "Cloud Agents"
+    }
+  },
+  {
     "id": "list-conflict-files",
     "title": "Check other PRs for files and comments that conflict with the next project.",
     "promptType": "adaptable",
@@ -671,7 +680,7 @@ describe("runbook catalog", () => {
   }
 ]);
 
-    expect(beats301).toHaveLength(34);
+    expect(beats301).toHaveLength(35);
     expect(beats301.every((entry) => entry.promptType !== undefined)).toBe(true);
     expect(
       beats301.filter((entry) => entry.promptType === "none").every((entry) => entry.example === undefined),
@@ -681,7 +690,7 @@ describe("runbook catalog", () => {
 
   it("tags 301 optional beats with the Outline feature and filters them from the track checklist", () => {
     const optionalFeatures = {
-      "optional-cloud-agent": "Cloud Agents",
+      "optional-cloud-command-center": "Cloud Agents",
       "optional-start-project": "Projects",
       "optional-stage-project": "Projects",
       "optional-assign-project": "Projects",
@@ -690,6 +699,7 @@ describe("runbook catalog", () => {
       "optional-bugbot": "Bugbot",
       "optional-reviewer-automation": "Automations",
       "optional-trigger-automation": "Automations",
+      "optional-cloud-return": "Cloud Agents",
     } as const;
     expect(beats301.filter((entry) => entry.optional).map((entry) => entry.id)).toEqual(
       Object.keys(optionalFeatures),
@@ -807,12 +817,15 @@ describe("runbook catalog", () => {
     expect(hand.indexOf('class="say"')).toBeLessThan(hand.indexOf("<ol>"));
     const handList = hand.slice(hand.indexOf("<ol>"), hand.indexOf("</ol>"));
     expect(handList).not.toContain("Focus is the control");
-    expect(handList).not.toContain("Watch the page");
+    expect(hand).toContain("Pressing Tab repeatedly is a slow manual process.");
+    expect(handList).not.toContain("Pressing Tab repeatedly");
+    expect(hand).not.toContain("Watch the page");
 
-    const cloud = card("optional-cloud-agent");
+    const cloud = card("optional-cloud-command-center");
+    before(cloud, "This plan runs on a remote machine", 'class="do-box"');
     expect(cloud).toContain('class="do-box"');
     expect(cloud).toContain("<ol>");
-    before(cloud, "Click Continue on Cloud", "Click Include Changes");
+    before(cloud, "Start a new Cloud agent.", "Use the Cloud Agent to check for open issues in Linear");
     expect(cloud).not.toContain('class="paste"');
     expect(cloud).not.toContain(">Copy<");
 
