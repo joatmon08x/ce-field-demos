@@ -626,10 +626,26 @@ function remainingExternalActions(event: SessionEvent, report: Report) {
 }
 
 function buildSummary(report: Report, suite: string): ResetSummary {
-  const branch = command("git", ["branch", "--show-current"]).trim() || "(detached)";
+  const branchNow = command("git", ["branch", "--show-current"]).trim() || "(detached)";
   const head = command("git", ["rev-parse", "--short", "HEAD"]).trim();
-  const worktrees = listWorktrees().map((worktree) => `${worktree.path} [${worktree.branch ?? "detached"}]`);
-  const localBranches = listLocalBranches();
+  let localBranches = listLocalBranches();
+  let worktrees = listWorktrees().map((worktree) => `${worktree.path} [${worktree.branch ?? "detached"}]`);
+  let branch = branchNow;
+  if (dryRun) {
+    const deleted = new Set(
+      report.completed
+        .filter((line) => line.startsWith("Would delete local branch: "))
+        .map((line) => line.slice("Would delete local branch: ".length)),
+    );
+    const removedPaths = new Set(
+      report.completed
+        .filter((line) => line.startsWith("Would remove worktree: "))
+        .map((line) => line.slice("Would remove worktree: ".length).replace(/ \([^)]*\)$/, "")),
+    );
+    localBranches = localBranches.filter((name) => !deleted.has(name));
+    worktrees = worktrees.filter((line) => !removedPaths.has(line.slice(0, line.lastIndexOf(" ["))));
+    if (report.completed.some((line) => line.startsWith("Would switch "))) branch = "main";
+  }
   const untouchedBranches = localBranches.filter((name) => !PROTECTED_BRANCHES.has(name) && !isDemoPattern(name));
   const remoteLeft = listRemoteDemoBranches();
   const cloudAgents = [
