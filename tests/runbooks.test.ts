@@ -1014,8 +1014,24 @@ describe("runbook catalog", () => {
 
     expect(stage, "stage accepts a public team").toContain("Public and private teams are both valid");
     expect(stage, "stage must not ban public teams").not.toContain("Never stage onto a public");
+    expect(stage, "stage accepts a public project").toContain("Public and private projects are both valid");
+    expect(stage, "stage must not refuse a public project").toContain("Never refuse a public project");
+    expect(stage, "stage must not force private projects").toMatch(/private:\s*false|omit it/i);
     expect(reset, "reset accepts a public team").toContain("Public and private teams are both valid");
+    expect(reset, "reset accepts a public project").toContain("Public and private projects are both valid");
     expect(reset, "reset must not ban public-team teardown").not.toContain("Never cancel Linear issues on a public");
+
+    const docs = {
+      readme: readFileSync(join(root, "README.md"), "utf8"),
+      howto: readFileSync(join(root, "demo-howto.md"), "utf8"),
+      agents: readFileSync(join(root, "AGENTS.md"), "utf8"),
+      rule: readFileSync(join(root, ".cursor/rules/ledgerly.mdc"), "utf8"),
+    };
+    for (const [name, contents] of Object.entries(docs)) {
+      expect(contents, `${name} must allow public projects`).toContain(
+        "Public and private projects are both valid",
+      );
+    }
 
     for (const [name, contents] of Object.entries({ stage, reset })) {
       expect(contents, `${name} is missing a confirm-team step`).toMatch(/confirm/i);

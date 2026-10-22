@@ -47,15 +47,15 @@ Listens on **43173** (not 3000).
 
 ### Linear team (manual, before 201 MCP)
 
-Linear MCP cannot create teams. Public and private teams are both valid. The operator picks a team they belong to, then an agent runs `stage-linear`.
+Linear MCP cannot create teams. Public and private teams are both valid. Public and private projects are both valid. The operator picks a team they belong to, then an agent runs `stage-linear`.
 
 1. Open Linear → **Settings → Teams → New team** only when they need a new team.
 2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Leave it public, or turn on **Make team private**. Team key can be **LY**. Settings URL looks like `https://linear.app/<workspace>/settings/teams/LY`.
 4. When the team is private, members are **only the operator**.
-5. Run `stage-linear` to create or reconcile project `ce-field-demos` on that team with the three Fieldnote issues plus the nine Collections Command Center slices (same project, tagged with the feature note and a team-scoped label).
+5. Run `stage-linear` to create or reconcile project `ce-field-demos` on that team with the three Fieldnote issues plus the nine Collections Command Center slices (same project, tagged with the feature note and a team-scoped label). The project stays public unless the operator asks for private.
 
-`stage-linear` never guesses the team — it lists the operator's teams and confirms the exact one before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the recorded issues and cancels the project without unlinking (the team is retained; the next `stage-linear` reactivates the board).
+`stage-linear` never guesses the team — it lists the operator's teams and confirms the exact one before writing, so any team name works. It does not refuse a public project or force the project private. `reset-demo-state` uses the same confirmation, then cancels the recorded issues and cancels the project without unlinking (the team is retained; the next `stage-linear` reactivates the board).
 
 Do not `save_project` onto a team the operator did not confirm. Do not add a local ticket board, ticket API, ticket MCP, or ticket marketplace plugin.
 
@@ -112,7 +112,7 @@ Incomplete on purpose:
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/agents/change-reviewer.md` | Diff inspection. `readonly: false` so it can run git diff. Instructions forbid edits. High, warning, and suggestion. |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101, 201, or 301 track: modes, models, rules, skills, and finishing one task with an agent |
-| `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams are both valid. |
+| `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |

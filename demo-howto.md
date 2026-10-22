@@ -78,17 +78,17 @@ Then complete only the remaining MCP cleanup reported by the script. Empty dashb
 
 ### Choose the Linear team (manual)
 
-Linear MCP cannot create teams. Public and private teams are both valid. Do this in the Linear UI **before** the 201 MCP section when the presenter does not already have a team.
+Linear MCP cannot create teams. Public and private teams are both valid. Public and private projects are both valid. Do this in the Linear UI **before** the 201 MCP section when the presenter does not already have a team.
 
 1. Open Linear → **Settings → Teams → New team**.
 2. Name it for this operator only (example: `{displayName}-field-demos`).
 3. Leave it public, or turn on **Make team private**. Team key can be **LY**. Confirm it at `https://linear.app/<workspace>/settings/teams/LY`.
 4. When the team is private, members are **only you**.
-5. In Grok Build, run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with the three Fieldnote issues plus the nine Collections Command Center slices, tagged as that feature.
+5. In Grok Build, run `stage-linear`. That skill creates or reconciles project `ce-field-demos` on this team with the three Fieldnote issues plus the nine Collections Command Center slices, tagged as that feature. The project stays public unless you ask for private.
 
 `stage-linear` never guesses the team — it lists your teams and asks you to **confirm the exact one** before writing, so any team name works. `reset-demo-state` uses the same confirmation, then cancels the recorded issues and cancels the project (issues stay linked; the team is retained).
 
-A public team makes the project visible to that team.
+A public team makes the project visible to that team. A public project on that team is valid — `stage-linear` does not refuse it or force it private.
 
 ---
 
@@ -305,7 +305,7 @@ npm run demo:session -- record project-path .cursor/skills/create-api
 
 ### How do you connect an agent to external tools?
 
-Use a public or private Linear team ([steps above](#choose-the-linear-team-manual)): Settings → Teams → New team when you need a new one, or leave an existing team public. **Make team private** is optional. Then run `stage-linear`.
+Use a public or private Linear team and project ([steps above](#choose-the-linear-team-manual)): Settings → Teams → New team when you need a new one, or leave an existing team public. **Make team private** is optional. `stage-linear` accepts a public project and does not force it private. Then run `stage-linear`.
 
 Review MCP servers in Customize → MCPs. Enable the Linear MCP server. Check the MCP allowlist under Settings → Agents → Execution and Approvals. Then:
 

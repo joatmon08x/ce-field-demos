@@ -1,6 +1,6 @@
 ---
 name: stage-linear
-description: Create or reconcile the ce-field-demos Linear board with its Fieldnote issues. Public and private teams are both valid.
+description: Create or reconcile the ce-field-demos Linear board with its Fieldnote issues. Public and private teams and projects are both valid.
 ---
 
 # Stage Linear
@@ -21,6 +21,8 @@ Do not invent another issue or a fourth price.
 ## Team
 
 **Public and private teams are both valid.** A public team makes the project visible to that team. Linear MCP cannot create teams.
+
+**Public and private projects are both valid.** Do not refuse a public project. Do not set the project private unless the operator asks.
 
 The same steps are in `README.md`, `demo-howto.md`, and `AGENTS.md`. Repeat them if the operator has no team yet:
 
@@ -53,9 +55,9 @@ Never **assume** which team to write to — not even when only one team exists, 
 
 ## 2. Reconcile the project
 
-Search `list_projects` with query `ce-field-demos`, scoped to the confirmed team.
+Search `list_projects` with query `ce-field-demos`, scoped to the confirmed team. Public and private projects on that team are both candidates — do not skip a match because the project is public.
 
-- Reuse a project **only** when its `teams` are exactly the confirmed team and `lead` is the operator (`me`).
+- Reuse a project **only** when its `teams` are exactly the confirmed team and `lead` is the operator (`me`). Project privacy (public vs private) does not block reuse.
 - If `ce-field-demos` already exists on a different team, do **not** reuse it. Create `ce-field-demos ({displayName})` on the confirmed team instead.
 
 Create it with `save_project` only when it is missing. Otherwise update the existing project in place:
@@ -66,7 +68,8 @@ Create it with `save_project` only when it is missing. Otherwise update the exis
 - `lead`: `"me"`
 - `state`: `Backlog` — not a company initiative
 - `summary`: from `LINEAR_FIELD_DEMOS_PROJECT.summary`
-- `description`: Fieldnote demo board. Three scoped issues plus the Collections Command Center slices. Personal. Confirmed team only.
+- `description`: Fieldnote demo board. Three scoped issues plus the Collections Command Center slices. Confirmed team only.
+- Privacy: leave the project **public** unless the operator asks for private. If `save_project` accepts `private`, pass `private: false` (or omit it). Never force `private: true` on create or update.
 
 A prior `reset-demo-state` may leave this project `Canceled` with its issues `Canceled` and still attached (they are not unlinked on reset). Reactivate it: setting `state`: `Backlog` here reopens the board, and §3 sets those `Canceled` issues back to their catalog state. Archived issues are not reopened.
 
@@ -185,6 +188,7 @@ The reset script will use only this recorded board. If a demo beat creates a new
 
 - Never unarchive an issue. Create a new issue for an archived catalog title and leave the archived one archived.
 - Never stage onto a team the operator did not confirm.
+- Never refuse a public project, and never force the project private unless the operator asks.
 - Never put the Collections Command Center slices on a second project, and never add them to `FIELD_DEMO_ISSUES` or a runbook beat.
 - Never create a workspace-wide label; the feature label is team-scoped or skipped.
 - Never complete dispute resolution or migrate suggested-credit as part of staging.
