@@ -22,10 +22,24 @@ type SessionEvent = {
 };
 
 type RemainingAction = { kind: "cursor-rule" | "figma" | "linear"; detail: string };
+type ResetSummary = {
+  dryRun: boolean;
+  branch: string;
+  head: string;
+  worktrees: string[];
+  localBranches: string[];
+  untouchedBranches: string[];
+  plantedSuggestedCredit: string;
+  suite: string;
+  cloudAgents: string[];
+  manual: string[];
+};
 type Report = {
   completed: string[];
   skipped: string[];
   remaining: RemainingAction[];
+  manual: string[];
+  summary?: ResetSummary;
 };
 
 const root = resolve(process.cwd());
@@ -43,6 +57,17 @@ const knownProjectPaths = new Set([
   ".cursor/skills/create-api",
   ".cursor/agents/accessibility-auditor.md",
 ]);
+const PROTECTED_BRANCHES = new Set(["main", "master"]);
+// Local rehearsal leftovers use these prefixes. A remote delete also requires a recorded session branch.
+const DEMO_BRANCH_PATTERN = /^(cursor|demo)\/[A-Za-z0-9][A-Za-z0-9._/-]*$/;
+
+type WorktreeInfo = {
+  path: string;
+  head: string;
+  branch: string | null;
+  locked: boolean;
+  prunable: boolean;
+};
 
 function projectArtifactRoots() {
   return [
@@ -239,41 +264,253 @@ function removeLocalArtifacts(event: SessionEvent, report: Report) {
   }
 }
 
+function assertSafeBranchName(name: string) {
+  if (
+    !name ||
+    !/^[A-Za-z0-9][A-Za-z0-9._/-]*$/.test(name) ||
+    name.includes("..") ||
+    name.endsWith("/") ||
+    name.endsWith(".lock")
+  ) {
+    throw new Error(`Refusing unexpected branch name: ${name}`);
+  }
+}
+
+function isDemoPattern(name: string) {
+  return DEMO_BRANCH_PATTERN.test(name) && !name.includes("..") && !PROTECTED_BRANCHES.has(name);
+}
+
+function isDemoBranch(name: string, recorded: Set<string>) {
+  return isDemoPattern(name) || recorded.has(name);
+}
+
+function listLocalBranches() {
+  return command("git", ["for-each-ref", "--format=%(refname:short)", "refs/heads"])
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function listRemoteDemoBranches() {
+  const names: string[] = [];
+  for (const line of command("git", ["branch", "-r"]).split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.includes(" -> ") || !trimmed.startsWith("origin/")) continue;
+    const name = trimmed.slice("origin/".length);
+    if (isDemoPattern(name)) names.push(name);
+  }
+  return names;
+}
+
+function listWorktrees(): WorktreeInfo[] {
+  const raw = command("git", ["worktree", "list", "--porcelain"]);
+  return raw
+    .split("\n\n")
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block) => {
+      const info: WorktreeInfo = { path: "", head: "", branch: null, locked: false, prunable: false };
+      for (const line of block.split("\n")) {
+        if (line.startsWith("worktree ")) info.path = line.slice("worktree ".length);
+        else if (line.startsWith("HEAD ")) info.head = line.slice("HEAD ".length);
+        else if (line === "detached") info.branch = null;
+        else if (line.startsWith("branch ")) {
+          const ref = line.slice("branch ".length);
+          if (!ref.startsWith("refs/heads/")) throw new Error(`Refusing unexpected worktree branch ref: ${ref}`);
+          info.branch = ref.slice("refs/heads/".length);
+        } else if (line === "locked" || line.startsWith("locked ")) info.locked = true;
+        else if (line === "prunable" || line.startsWith("prunable ")) info.prunable = true;
+        else if (line === "bare") throw new Error("Refusing to reset a bare repository.");
+        else throw new Error(`Refusing unexpected worktree list line: ${line}`);
+      }
+      if (!info.path || !info.head) throw new Error("Refusing incomplete worktree record.");
+      return info;
+    });
+}
+
+function currentBranchName() {
+  const name = command("git", ["branch", "--show-current"]).trim();
+  if (!name) throw new Error("Refusing to reset a detached primary checkout.");
+  assertSafeBranchName(name);
+  return name;
+}
+
+function remoteHeadExists(name: string) {
+  const listed = command("git", ["ls-remote", "--heads", "origin", `refs/heads/${name}`]).trim();
+  if (!listed) return false;
+  const expected = `refs/heads/${name}`;
+  if (!listed.split("\n").every((line) => line.endsWith(`\t${expected}`))) {
+    throw new Error(`Refusing unexpected ls-remote result for ${name}: ${listed}`);
+  }
+  return true;
+}
+
+function deleteRemoteBranch(name: string) {
+  if (PROTECTED_BRANCHES.has(name) || !isDemoPattern(name)) {
+    throw new Error(`Refusing to delete remote branch: ${name}`);
+  }
+  if (!remoteHeadExists(name)) return false;
+  command("git", ["push", "origin", "--delete", name]);
+  const tracking = `refs/remotes/origin/${name}`;
+  let trackingPresent = false;
+  try {
+    execFileSync("git", ["show-ref", "--verify", "--quiet", tracking], { cwd: root, stdio: "ignore" });
+    trackingPresent = true;
+  } catch {
+    trackingPresent = false;
+  }
+  if (trackingPresent) command("git", ["update-ref", "-d", tracking]);
+  return true;
+}
+
+function assertPlantedClient() {
+  const source = readFileSync(resolve(root, "lib/disputes/suggested-credit-api.ts"), "utf8");
+  const test = readFileSync(resolve(root, "tests/suggested-credit-api.test.ts"), "utf8");
+  if (!source.includes('export const SUGGESTED_CREDIT_API_VERSION = "v1"')) {
+    throw new Error("Planted suggested-credit client is not on v1.");
+  }
+  if (!test.includes('"/api/v2/disputes/dsp_1043/suggested-credit"')) {
+    throw new Error("Planted suggested-credit test no longer expects the v2 path.");
+  }
+  return "v1";
+}
+
 function resetGit(event: SessionEvent, report: Report) {
-  if (dryRun) {
+  const worktrees = listWorktrees();
+  const primary = worktrees[0];
+  if (!primary) throw new Error("Refusing to reset without a worktree.");
+  if (resolve(primary.path) !== root) {
+    throw new Error(
+      `Refusing to reset from linked worktree ${root}. Run npm run demo:reset from the main checkout at ${primary.path}.`,
+    );
+  }
+
+  for (const recorded of event.branches) {
+    assertSafeBranchName(recorded.name);
+    if (PROTECTED_BRANCHES.has(recorded.name)) {
+      throw new Error(`Refusing to delete protected branch: ${recorded.name}`);
+    }
+  }
+  for (const worktree of worktrees) {
+    if (!worktree.branch) throw new Error(`Refusing detached worktree at ${worktree.path}.`);
+    assertSafeBranchName(worktree.branch);
+  }
+
+  const branch = currentBranchName();
+  const recordedNames = new Set(event.branches.map((recorded) => recorded.name));
+  if (branch !== "main" && !isDemoBranch(branch, recordedNames) && !keepBranch) {
+    throw new Error(
+      `Refusing to reset from non-demo branch ${branch}. Switch to main, or pass --keep-branch for an isolated check.`,
+    );
+  }
+
+  const deleteLocal = new Set<string>();
+  for (const name of listLocalBranches()) {
+    if (isDemoPattern(name)) deleteLocal.add(name);
+  }
+  for (const name of recordedNames) deleteLocal.add(name);
+  for (const protectedName of PROTECTED_BRANCHES) deleteLocal.delete(protectedName);
+  if (keepBranch) deleteLocal.delete(branch);
+
+  const remoteDeletes: string[] = [];
+  for (const recorded of event.branches) {
+    if (!recorded.remote) continue;
+    if (isDemoPattern(recorded.name)) remoteDeletes.push(recorded.name);
+    else {
+      report.manual.push(
+        `Recorded remote ${recorded.name} is outside demo branch patterns (cursor/* and demo/*). The remote was not deleted.`,
+      );
+    }
+  }
+
+  const removableWorktrees = worktrees.filter((worktree) => {
+    if (resolve(worktree.path) === resolve(primary.path)) return false;
+    if (worktree.prunable) return false;
+    if (!worktree.branch || PROTECTED_BRANCHES.has(worktree.branch)) {
+      report.manual.push(`Left worktree ${worktree.path} checked out on ${worktree.branch ?? "an unknown branch"}.`);
+      return false;
+    }
+    if (!isDemoBranch(worktree.branch, recordedNames)) {
+      report.manual.push(`Left worktree ${worktree.path} on non-demo branch ${worktree.branch}.`);
+      return false;
+    }
+    return true;
+  });
+
+  if (keepBranch && branch !== "main") {
+    report.skipped.push(`Kept current branch for isolated verification: ${branch}`);
+    report.skipped.push("Skipped git reset --hard because --keep-branch is set.");
+  } else if (dryRun) {
+    if (branch !== "main") report.completed.push(`Would switch ${branch} to main.`);
     report.completed.push("Would run: git reset --hard HEAD");
   } else {
+    if (branch !== "main") {
+      command("git", ["reset", "--hard", "HEAD"]);
+      command("git", ["switch", "main"]);
+      report.completed.push("Switched to main.");
+    }
     command("git", ["reset", "--hard", "HEAD"]);
     report.completed.push("Restored tracked files with git reset --hard HEAD.");
   }
 
-  const currentBranch = command("git", ["branch", "--show-current"]).trim();
-  if (currentBranch && currentBranch !== "main" && !keepBranch) {
-    if (dryRun) report.completed.push(`Would switch ${currentBranch} to main.`);
-    else {
-      command("git", ["switch", "main"]);
-      report.completed.push("Switched to main.");
-    }
-  } else if (keepBranch) {
-    report.skipped.push(`Kept current branch for isolated verification: ${currentBranch}`);
+  for (const worktree of worktrees) {
+    if (!worktree.prunable || resolve(worktree.path) === resolve(primary.path)) continue;
+    const label = `Stale worktree registration will be pruned: ${worktree.path}`;
+    report.completed.push(dryRun ? `Would prune: ${worktree.path}` : label);
   }
 
-  for (const branch of event.branches) {
-    if (branch.name === "main" || branch.name === "master") {
-      report.skipped.push(`Protected branch: ${branch.name}`);
+  for (const worktree of removableWorktrees) {
+    const label = `${worktree.path} (${worktree.branch})`;
+    if (dryRun) {
+      report.completed.push(`Would remove worktree: ${label}`);
+      continue;
+    }
+    if (worktree.locked) command("git", ["worktree", "unlock", worktree.path]);
+    command("git", ["worktree", "remove", "--force", worktree.path]);
+    report.completed.push(`Removed worktree: ${label}`);
+  }
+
+  if (dryRun) report.completed.push("Would run: git worktree prune");
+  else {
+    command("git", ["worktree", "prune"]);
+    report.completed.push("Pruned stale worktree registrations.");
+  }
+
+  const checkedOut = new Set(
+    listWorktrees()
+      .map((worktree) => worktree.branch)
+      .filter((name): name is string => Boolean(name)),
+  );
+  const plannedToLeave = new Set(
+    removableWorktrees.map((worktree) => worktree.branch).filter((name): name is string => Boolean(name)),
+  );
+  if (dryRun && !keepBranch && branch !== "main") plannedToLeave.add(branch);
+  const existing = new Set(listLocalBranches());
+  for (const name of deleteLocal) {
+    assertSafeBranchName(name);
+    if (PROTECTED_BRANCHES.has(name)) throw new Error(`Refusing to delete protected branch: ${name}`);
+    if (checkedOut.has(name) && !(dryRun && plannedToLeave.has(name))) {
+      throw new Error(`Refusing to delete checked-out branch: ${name}`);
+    }
+    if (!existing.has(name)) {
+      report.skipped.push(`Local branch already absent: ${name}`);
       continue;
     }
     if (dryRun) {
-      report.completed.push(`Would delete local branch: ${branch.name}`);
-      if (branch.remote) report.completed.push(`Would delete remote branch: ${branch.name}`);
+      report.completed.push(`Would delete local branch: ${name}`);
       continue;
     }
-    command("git", ["branch", "-D", branch.name], { allowFailure: true });
-    report.completed.push(`Deleted local branch if present: ${branch.name}`);
-    if (branch.remote) {
-      command("git", ["push", "origin", "--delete", branch.name], { allowFailure: true });
-      report.completed.push(`Deleted remote branch if present: ${branch.name}`);
+    command("git", ["branch", "-D", name]);
+    report.completed.push(`Deleted local branch: ${name}`);
+  }
+
+  for (const name of [...new Set(remoteDeletes)]) {
+    if (dryRun) {
+      report.completed.push(`Would delete remote branch: ${name}`);
+      continue;
     }
+    if (deleteRemoteBranch(name)) report.completed.push(`Deleted remote branch: ${name}`);
+    else report.skipped.push(`Remote branch absent on origin: ${name}`);
   }
 }
 
@@ -306,12 +543,13 @@ function reseedAndStart(report: Report) {
 }
 
 function verifyTests(report: Report) {
-  if (skipVerify || dryRun) return;
+  if (skipVerify || dryRun) return "skipped";
   const output = command("npm", ["test"], { allowFailure: true });
   if (!/1 failed[\s\S]*32 passed|32 passed[\s\S]*1 failed/i.test(output)) {
     throw new Error("The reset suite did not report the expected 1 failed / 32 passed result.");
   }
   report.completed.push("Confirmed the expected 1 failed / 32 passed test result.");
+  return "1 failed / 32 passed";
 }
 
 async function cancelWithLinearApi(event: SessionEvent, report: Report) {
@@ -387,13 +625,59 @@ function remainingExternalActions(event: SessionEvent, report: Report) {
   }
 }
 
+function buildSummary(report: Report, suite: string): ResetSummary {
+  const branch = command("git", ["branch", "--show-current"]).trim() || "(detached)";
+  const head = command("git", ["rev-parse", "--short", "HEAD"]).trim();
+  const worktrees = listWorktrees().map((worktree) => `${worktree.path} [${worktree.branch ?? "detached"}]`);
+  const localBranches = listLocalBranches();
+  const untouchedBranches = localBranches.filter((name) => !PROTECTED_BRANCHES.has(name) && !isDemoPattern(name));
+  const remoteLeft = listRemoteDemoBranches();
+  const cloudAgents = [
+    "Cloud agent runs cannot be closed from this script. Stop them in Cursor. Deleting a local cursor/* branch does not stop the run.",
+  ];
+  if (remoteLeft.length) {
+    cloudAgents.push(
+      `Left these origin branches because this session did not record them for deletion: ${remoteLeft.join(", ")}`,
+    );
+  }
+  return {
+    dryRun,
+    branch,
+    head,
+    worktrees,
+    localBranches,
+    untouchedBranches,
+    plantedSuggestedCredit: assertPlantedClient(),
+    suite,
+    cloudAgents,
+    manual: report.manual,
+  };
+}
+
+function printSummary(summary: ResetSummary) {
+  const lines = [
+    "Reset summary",
+    `  dry run: ${summary.dryRun}`,
+    `  branch: ${summary.branch}`,
+    `  head: ${summary.head}`,
+    `  worktrees: ${summary.worktrees.join("; ") || "(none)"}`,
+    `  local branches: ${summary.localBranches.join(", ") || "(none)"}`,
+    `  untouched non-demo branches: ${summary.untouchedBranches.join(", ") || "(none)"}`,
+    `  planted suggested-credit client: ${summary.plantedSuggestedCredit}`,
+    `  suite: ${summary.suite}`,
+    `  cloud agents: ${summary.cloudAgents.join(" | ")}`,
+    `  still manual: ${summary.manual.join(" | ") || "(none)"}`,
+  ];
+  console.error(lines.join("\n"));
+}
+
 async function reset() {
   const event = readEvent(false);
-  const report: Report = { completed: [], skipped: [], remaining: [] };
+  const report: Report = { completed: [], skipped: [], remaining: [], manual: [] };
   validateRemovablePaths(event);
   if (!existsSync(eventFile)) {
     report.skipped.push(
-      `No session event file at ${eventFile}. Reset tracked files and known demo paths only; unrecorded personal rules, skills, Canvas files, and branches need manual cleanup.`,
+      `No session event file at ${eventFile}. Reset tracked files, known demo paths, local cursor/* and demo/* branches, and demo worktrees. Unrecorded personal rules, skills, and Canvas files need manual cleanup.`,
     );
   }
   resetGit(event, report);
@@ -401,7 +685,7 @@ async function reset() {
   reseedAndStart(report);
   await cancelWithLinearApi(event, report);
   remainingExternalActions(event, report);
-  verifyTests(report);
+  const suite = verifyTests(report);
   if (!dryRun) {
     const linearCompleted = report.completed.some((entry) => entry.includes(`Linear board ${event.linear?.projectId}`));
     writeEvent({
@@ -411,6 +695,8 @@ async function reset() {
       linear: linearCompleted ? undefined : event.linear,
     });
   }
+  report.summary = buildSummary(report, suite);
+  printSummary(report.summary);
   console.log(JSON.stringify(report, null, 2));
 }
 
