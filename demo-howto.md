@@ -254,7 +254,7 @@ On a clean tree, npm test is 1 failed / 32 passed. The sole red test is tests/su
 npm run demo:reset
 ```
 
-**Then:** complete only the script's reported Figma, Cursor user-rule, or Linear MCP actions. The script resets files, recorded rules/skills, Canvas, branches, SQLite, and port 43173.
+**Then:** complete only the script's reported Figma, Cursor user-rule, Linear, or cloud-agent actions. The script resets files, recorded rules and skills, Canvas files, local demo branches, demo worktrees, SQLite, and port 43173. Cloud agent runs stay manual.
 
 **Shipped state again:** suggested credit **$400.00** from v1 on dsp_1043, v2 and stored credit **$249.00**, suite **1 failed / 32 passed**, status pills still writing `state=`.
 
