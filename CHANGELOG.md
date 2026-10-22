@@ -23,7 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `npm run demo:reset` now deletes local `cursor/*` and `demo/*` branches, recorded remotes on those patterns, and extra demo worktrees, then prunes worktrees. Cloud agent runs stay manual.
+- `npm run demo:reset` now deletes local `cursor/*` and `demo/*` branches, recorded remotes on those patterns, and extra demo worktrees, then prunes worktrees. Cloud agent runs stay manual. Removing a demo worktree discards uncommitted files in that directory.
+- Dry-run summaries match the checkout a real reset would leave, including a prunable demo worktree.
 - Change reviewer catalog copy matches `readonly: false`: it can run `git status` and `git diff`, and its instructions still forbid edits.
 - Synced 301 Show beats to the accepted Outline: the in-scope keyboard plan and its Say, `readonly: false` on the accessibility manual reviewer, stop that reviewer after one failure, the Linear fallback file `@runbooks/linear-field-demos.ts`, change-reviewer `readonly: false`, and the closer-inspection beat that flags the planted Tab step as high and never kept.
 - The W2 keyboard task includes a deliberate Tab `preventDefault` step for the 301 demo. See Planted demo issues in `AGENTS.md` and `README.md`. The plan does not label it.

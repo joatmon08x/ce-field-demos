@@ -20,7 +20,7 @@ npm run demo:reset -- --dry-run
 - Removes recorded demo rules, skills, and Canvas files, plus the known paths `.cursor/rules/suggested-credit-api-v2.mdc`, `.cursor/skills/create-api`, and `.cursor/agents/accessibility-auditor.md`. It does not run `git clean`. Untracked files outside that allowlist stay.
 - Deletes local demo branches with `git branch -D`. A demo branch is a branch recorded in the session file, or any local branch named `cursor/*` or `demo/*`. It never deletes `main` or `master`, and it never deletes any other non-demo branch.
 - Deletes a remote with `git push origin --delete` only when the session recorded that branch with `--remote` and the name matches `cursor/*` or `demo/*`.
-- Removes linked worktrees whose branch is a demo branch, then runs `git worktree prune`. Worktrees on non-demo branches stay.
+- Removes linked worktrees whose branch is a demo branch, then runs `git worktree prune`. Removal unlocks a locked worktree and runs `git worktree remove --force`, so uncommitted changes and untracked files in that directory are discarded. A lock does not keep the directory. Unpushed commits can remain in the primary reflog until it expires. Worktrees on non-demo branches stay.
 - Reseeds SQLite and restarts port 43173.
 - Confirms **1 failed / 32 passed**. It leaves the suggested-credit client on v1 and filter pills writing `state=`.
 
@@ -58,7 +58,7 @@ The ignored `.cursor/demo-session-events.json` stores recorded paths, branches, 
 
 ## Demo-beat git branches
 
-The script switches to main (`git checkout main` equivalent), then uses `git branch -D` and, for recorded remotes that match `cursor/*` or `demo/*`, `git push origin --delete`. It removes linked demo worktrees and runs `git worktree prune`. It restores `app/invoices/page.tsx` and `app/disputes/page.tsx` along with every other tracked change. Do not repeat those commands after the script succeeds.
+The script switches to main (`git checkout main` equivalent), then uses `git branch -D` and, for recorded remotes that match `cursor/*` or `demo/*`, `git push origin --delete`. It removes linked demo worktrees with `git worktree remove --force` (a dirty or locked tree is wiped) and runs `git worktree prune`. It restores `app/invoices/page.tsx` and `app/disputes/page.tsx` along with every other tracked change. Do not repeat those commands after the script succeeds.
 
 ## Never
 
