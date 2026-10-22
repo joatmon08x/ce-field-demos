@@ -111,6 +111,7 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/agents/change-reviewer.md` | Diff inspection. `readonly: false` so it can run git diff. Instructions forbid edits. High, warning, and suggestion. |
+| `.cursor/agents/preflight-checker.md` | Before a 101 / 201 / 301 session. Track dependency pass / fail / blocked. `readonly: false` for shell probes; no install, seed, or MCP auth unless asked to remediate. |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101, 201, or 301 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |

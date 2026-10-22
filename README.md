@@ -36,7 +36,7 @@ Dashboard, Invoices, Collections, Disputes, Settings. Extra book accounts are in
 | --- | --- |
 | Runbook beats | `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`. Regenerate with `npm run runbooks:export` after editing `runbooks/beats/` |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
-| Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier`, `change-reviewer` |
+| Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier`, `change-reviewer`, `preflight-checker` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
 | Disk plugin | `plugins/standard-bug-fix/` — add from local repository; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md`, the 101, 201, and 301 run-of-show |
@@ -124,6 +124,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `change-reviewer` | Diff inspection with `readonly: false` so it can run `git status` and `git diff`. Its instructions forbid edits. Reports Passed, then Incomplete with high, warning, and suggestion findings for sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |
+| `preflight-checker` | Before a 101 / 201 / 301 session. Reports pass / fail / blocked per track dependency. `readonly: false` for shell probes; does not install, seed, stage Linear, or authenticate MCP unless asked to remediate. |
 | `choose-cursor-workflow` | Walk the 101, 201, or 301 track and pick the mode or model. |
 | `stage-linear` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |

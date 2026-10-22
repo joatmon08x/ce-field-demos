@@ -19,6 +19,11 @@ export const PROJECT_AGENTS = [
     path: ".cursor/agents/change-reviewer.md",
     when: "Diff review with readonly: false so it can run git status and git diff. Its instructions forbid edits. Flags sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands.",
   },
+  {
+    name: "preflight-checker",
+    path: ".cursor/agents/preflight-checker.md",
+    when: "Before a 101, 201, or 301 session. Reports pass / fail / blocked per track dependency. readonly: false so it can run shell probes; its instructions forbid edits, install, seed, stage-linear, and mcp_auth unless asked to remediate.",
+  },
 ] as const;
 
 export const PROJECT_SKILLS = [

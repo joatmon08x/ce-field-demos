@@ -23,11 +23,15 @@ Start a demo session with `npm run demo:session -- start`. Record every rule, sk
 
 ## 101 sections and beats
 
+Before the session, run `preflight-checker` with the track id (`preflight-checker track 101`).
+
 1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, check the models, plan to fix the bug.
 2. **How do you work with an agent?** — Run Mode allowlist, verify the email feature, redact, stop, interrupt and steer, continue to the end, review diffs, restore from a checkpoint.
 3. **How do you govern an agent?** — create a user rule, test the rule, create a user skill, test the skill, Canvas, MCP / Figma.
 
 ## 201 sections and beats
+
+Before the session, run `preflight-checker` with the track id (`preflight-checker track 201`).
 
 1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats.
 2. **How do you standardize agent behavior?** — personal create-api skill, promote it.
@@ -35,6 +39,8 @@ Start a demo session with `npm run demo:session -- start`. Record every rule, sk
 4. **How do you parallelize a task?** — open a new agent, resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## 301 sections and beats
+
+Before the session, run `preflight-checker` with the track id (`preflight-checker track 301`).
 
 1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
 2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list open collections issues, plan and build, use `/side`, consolidate into a PR, and fall back to repo issue descriptions if Linear MCP is unavailable.

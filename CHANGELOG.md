@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `preflight-checker` project agent. Before a 101 / 201 / 301 session, reports pass / fail / blocked per track dependency. `readonly` is false so it can run shell probes; its instructions forbid edits, install, seed, `stage-linear`, and `mcp_auth` unless the operator asks to remediate.
 - Optional runbook beats record a feature name from the Outline tag. Each track lists those features as checkboxes, on by default. Turning one off hides its beats and the browser remembers the choice.
 - `change-reviewer` project agent. Diff inspection for the 301 review beat. `readonly` is false so it can run `git status` and `git diff`; its instructions forbid edits. It owns the closer-inspection list: authentication, payments, personal data, permissions, or secrets; difficult rollback; missing tests; a test an agent edited; scope outside the plan; and new dependencies or shell commands. Like `ledgerly-reviewer`, it reports Passed and Incomplete, with high, warning, and suggestion inside Incomplete.
 
