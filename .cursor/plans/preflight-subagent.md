@@ -97,7 +97,8 @@ Team confirmation rules match `stage-linear`: never assume which team; listing c
 | `change-reviewer` agent | required | `.cursor/agents/change-reviewer.md` exists |
 | `dispatch-subagents` skill | required | skill file exists |
 | Collections issue catalog | required | `COLLECTIONS_COMMAND_CENTER_ISSUES` (or equivalent) present in `runbooks/linear-field-demos.ts` |
-| Cloud Agents | optional feature | report only if operator asked, or as `optional`: environment can hand off / list cloud agents |
+| Cloud Agents | optional feature | report as `optional` (or required when the operator named Cloud Agents): environment can hand off / list cloud agents **and** the Cloud Agent network allowlist permits Prisma engine download |
+| Cloud Agent egress: `binaries.prisma.sh` | optional (tied to Cloud Agents) | Effective egress is allow-all, **or** `allowedDomains` includes `binaries.prisma.sh` (exact host). Probe via `cursor-cloud` `environment-info` → `egress`. Do not print the full domain list. If restricted and the host is missing, fail with remediation: add `binaries.prisma.sh` to the environment network allowlist (Dashboard → Cloud Agents → environment → network). Related hosts `prisma.sh` / `pris.ly` are nice-to-have notes only — the required assertion is `binaries.prisma.sh`. A prior keyboard-audit run failed `npx prisma generate` without this host. |
 | Projects / Bugbot / Reviewer automation | optional features | same — never hard-block the track |
 | `accessibility-auditor` / manual reviewer | not required pre-session | that file is created mid-track; absence is expected on a clean tree |
 
@@ -137,6 +138,8 @@ Do not print secrets, API keys, or full MCP auth payloads. Do not volunteer the 
 - `preflight-checker track 101` with server down → Ready no; baseline server check failed; Linear not listed as required.
 - `preflight-checker track 201` without Linear auth → Ready no; Linear / team / board called out; remediation points at enable MCP + `stage-linear`.
 - `preflight-checker track 301` with Linear down but repo catalog present → Ready yes (or yes with Linear failed + fallback passed); optional Cloud Agents listed separately.
+- `preflight-checker track 301` when Cloud Agents is in scope and egress is restricted without `binaries.prisma.sh` → that optional check fails; Ready still yes unless the operator required Cloud Agents. Remediation names the dashboard network allowlist, not a code change.
+- `preflight-checker track 301` on this repo’s current environment (allowlist already includes `binaries.prisma.sh`) → Cloud Agent egress check passes.
 - `ledgerly-reviewer` on the doc/agent diff — catalog, seed, and planted seams untouched.
 
 ## Out of scope
