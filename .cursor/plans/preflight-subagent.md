@@ -48,7 +48,7 @@ Run these for `101`, `201`, and `301`:
 | Check | How | Pass when |
 | --- | --- | --- |
 | Node deps | `test -d node_modules` (and package presence for `next`, `prisma`) | `node_modules` present |
-| Prisma client | `npx prisma generate` is already reflected / `@prisma/client` importable | generate not missing |
+| Prisma client | Probe only — e.g. `node -e "require.resolve('@prisma/client')"` or an import check. Do **not** run `npx prisma generate`. | `@prisma/client` resolves; remediation may name `npx prisma generate` without running it |
 | SQLite seed | same probe as `start-ledgerly` (`customer.count()` via `tsx`) | `seeded` (count > 0) |
 | Dev server | `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:43173` | 2xx/3xx |
 | Shipped suite shape | `npm test` (or vitest summary) | **1 failed / 32 passed**; sole red file `tests/suggested-credit-api.test.ts` |
@@ -148,6 +148,9 @@ Do not print secrets, API keys, or full MCP auth payloads. Do not volunteer the 
 - A `scripts/preflight.ts` CLI.
 - Auto-remediation.
 - Fourth catalog price, ticket board, or SQLite MCP.
+
+## Implementation files (when approved)
+
 | File | Change |
 | --- | --- |
 | `.cursor/agents/preflight-checker.md` | **New** — agent instructions |
