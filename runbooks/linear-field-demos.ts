@@ -3,7 +3,7 @@
 export const LINEAR_FIELD_DEMOS_PROJECT = {
   name: "ce-field-demos",
   summary:
-    "Personal Ledgerly board: three scoped Fieldnote issues plus the Collections Command Center slices.",
+    "Ledgerly board: three scoped Fieldnote issues plus the Collections Command Center slices.",
   workspace: "Fieldnote Workspace",
   operator: "Avery Quinn",
   catalogPricesUsd: ["$49", "$99", "$249"] as const,

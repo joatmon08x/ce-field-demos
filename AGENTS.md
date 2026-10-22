@@ -112,7 +112,7 @@ Incomplete on purpose:
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/agents/change-reviewer.md` | Diff inspection. `readonly: false` so it can run git diff. Instructions forbid edits. High, warning, and suggestion. |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101, 201, or 301 track: modes, models, rules, skills, and finishing one task with an agent |
-| `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams are both valid. |
+| `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |
 | `.cursor/skills/dispatch-subagents/` | Parallel Task launches |
 | `.cursor/skills/hand-to-cloud-agent/` | Cloud `/goal`, `/autopilot`, and `/orchestrate` |

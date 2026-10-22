@@ -125,7 +125,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `change-reviewer` | Diff inspection with `readonly: false` so it can run `git status` and `git diff`. Its instructions forbid edits. Reports Passed, then Incomplete with high, warning, and suggestion findings for sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |
 | `choose-cursor-workflow` | Walk the 101, 201, or 301 track and pick the mode or model. |
-| `stage-linear` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams are both valid. |
+| `stage-linear` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |
 | `dispatch-subagents` | Parallel Task launches. |
 | `hand-to-cloud-agent` | Hand durable work to a Cloud Agent. |
