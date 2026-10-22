@@ -25,7 +25,7 @@ Catalog stays Starter $49 / Growth $99 / Scale $249. Operator Avery Quinn. No re
 | Option | Fit |
 | --- | --- |
 | Skill under `.cursor/skills/preflight-track/` | Good for "how to start," but skills are usually followed by the parent agent and tend to mutate state (`start-ledgerly`, `stage-linear`). |
-| **Project agent** `.cursor/agents/preflight-checker.md` | Matches `dispute-verifier` / `ledgerly-reviewer`: narrow role, fixed report shape, invoked by name, read-mostly. **Choose this.** |
+| **Project agent** `.cursor/agents/preflight-checker.md` | Matches `change-reviewer`: narrow role, fixed report shape, invoked by name, `readonly: false` so shell probes can run, prompt still forbids edits. **Choose this.** |
 | Script in `scripts/` | Useful later for CI-style checks; out of scope for the first cut. Agent can shell out for local checks. |
 
 ## Behavior contract
@@ -98,7 +98,7 @@ Team confirmation rules match `stage-linear`: never assume which team; listing c
 | `dispatch-subagents` skill | required | skill file exists |
 | Collections issue catalog | required | `COLLECTIONS_COMMAND_CENTER_ISSUES` (or equivalent) present in `runbooks/linear-field-demos.ts` |
 | Cloud Agents | optional feature | report as `optional` (or required when the operator named Cloud Agents): environment can hand off / list cloud agents **and** the Cloud Agent network allowlist permits Prisma engine download |
-| Cloud Agent egress: `binaries.prisma.sh` | optional (tied to Cloud Agents) | Effective egress is allow-all, **or** `allowedDomains` includes `binaries.prisma.sh` (exact host). Probe via `cursor-cloud` `environment-info` → `egress`. Do not print the full domain list. If restricted and the host is missing, fail with remediation: add `binaries.prisma.sh` to the environment network allowlist (Dashboard → Cloud Agents → environment → network). Related hosts `prisma.sh` / `pris.ly` are nice-to-have notes only — the required assertion is `binaries.prisma.sh`. A prior keyboard-audit run failed `npx prisma generate` without this host. |
+| Cloud Agent egress: Prisma hosts | optional (tied to Cloud Agents) | Effective egress is allow-all, **or** `allowedDomains` includes **all three** exact hosts: `binaries.prisma.sh`, `prisma.sh`, and `pris.ly`. Probe via `cursor-cloud` `environment-info` → `egress`. Do not print the full domain list. If restricted and any host is missing, fail and list only the missing host(s); remediation: add them to the environment network allowlist (Dashboard → Cloud Agents → environment → network). A prior keyboard-audit run failed `npx prisma generate` without `binaries.prisma.sh`. |
 | Projects / Bugbot / Reviewer automation | optional features | same — never hard-block the track |
 | `accessibility-auditor` / manual reviewer | not required pre-session | that file is created mid-track; absence is expected on a clean tree |
 
@@ -125,7 +125,7 @@ Do not print secrets, API keys, or full MCP auth payloads. Do not volunteer the 
 
 ## Implementation steps (when approved)
 
-1. Add `.cursor/agents/preflight-checker.md` with YAML frontmatter (`name`, `description`, `readonly: true`). Instructions encode the ask-for-track gate, shared baseline, three matrices, and report shape above.
+1. Add `.cursor/agents/preflight-checker.md` with YAML frontmatter (`name`, `description`, `readonly: false`). `readonly: false` matches `change-reviewer` so baseline shell probes (`test -d`, `node -e`, `tsx` seed probe, `curl`, `npm test`) can run; the agent body must still forbid edits, install, seed, `npm run demo:reset`, `stage-linear`, and `mcp_auth` unless the operator asks to remediate. Instructions encode the ask-for-track gate, shared baseline, three matrices, and report shape above.
 2. Register in `runbooks/agents.ts` → `PROJECT_AGENTS` (and thus `runbooks/meta.ts` export).
 3. Document in `AGENTS.md` agents table, `README.md` Agents row / table, and a one-line `CHANGELOG.md` Unreleased entry.
 4. Point `choose-cursor-workflow` at it in one sentence under each track intro ("Before the session, run `preflight-checker` with the track id") — keep it short; do not add a new runbook beat unless product asks for a Show card.
@@ -138,8 +138,8 @@ Do not print secrets, API keys, or full MCP auth payloads. Do not volunteer the 
 - `preflight-checker track 101` with server down → Ready no; baseline server check failed; Linear not listed as required.
 - `preflight-checker track 201` without Linear auth → Ready no; Linear / team / board called out; remediation points at enable MCP + `stage-linear`.
 - `preflight-checker track 301` with Linear down but repo catalog present → Ready yes (or yes with Linear failed + fallback passed); optional Cloud Agents listed separately.
-- `preflight-checker track 301` when Cloud Agents is in scope and egress is restricted without `binaries.prisma.sh` → that optional check fails; Ready still yes unless the operator required Cloud Agents. Remediation names the dashboard network allowlist, not a code change.
-- `preflight-checker track 301` on this repo’s current environment (allowlist already includes `binaries.prisma.sh`) → Cloud Agent egress check passes.
+- `preflight-checker track 301` when Cloud Agents is in scope and egress is restricted without any of `binaries.prisma.sh`, `prisma.sh`, or `pris.ly` → that optional check fails and lists the missing host(s); Ready still yes unless the operator required Cloud Agents. Remediation names the dashboard network allowlist, not a code change.
+- `preflight-checker track 301` on this repo’s current environment (allowlist already includes `binaries.prisma.sh`, `prisma.sh`, and `pris.ly`) → Cloud Agent egress check passes.
 - `ledgerly-reviewer` on the doc/agent diff — catalog, seed, and planted seams untouched.
 
 ## Out of scope
