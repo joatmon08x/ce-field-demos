@@ -604,11 +604,18 @@
       <section id="301-break-down-tasks">
         <h3>How do you orchestrate tasks across agents?</h3>
         <div class="beats">
+        <article class="beat" data-beat="optional-cloud-command-center" data-feature="Cloud Agents">
+          <h4>Plan the command center on a Cloud Agent.</h4>
+          <p class="say">This plan runs on a remote machine, so it keeps going while I do the keyboard walkthrough locally.</p>
+          <div class="do-box">
+            <ol><li>Start a new Cloud agent.</li><li>Use the Cloud Agent to check for open issues in Linear and plan the collections command center.</li></ol>
+          </div>
+        </article>
         <article class="beat" data-beat="get-command-center-issues">
           <h4>Get the issues for the collections command center from the issue tracker.</h4>
           <p class="say">The Linear MCP server returns a list of nine issues to create the collections command center.</p>
           <div class="do-box">
-            <ul><li>Start a new agent for the command center plan.</li></ul>
+            <ul><li>Start a new local agent.</li></ul>
           </div>
           <div class="paste">
             <div class="paste-head">
@@ -632,7 +639,7 @@
         <article class="beat" data-beat="open-local-agent">
           <h4>Start a keyboard walkthrough for the accessibility audit in a new agent.</h4>
           <div class="do-box">
-            <ul><li>Start a new agent for the keyboard walkthrough.</li></ul>
+            <ul><li>Start a new local agent for the keyboard walkthrough.</li></ul>
           </div>
         </article>
         <article class="beat" data-beat="show-problem-by-hand">
@@ -653,14 +660,6 @@ A keyboard walkthrough takes judgment, so this subagent uses the page the way a 
               <button type="button" class="copy">Copy</button>
             </div>
             <pre>/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, readonly: false.</pre>
-          </div>
-        </article>
-        <article class="beat" data-beat="optional-cloud-agent" data-feature="Cloud Agents">
-          <h4>Move to a Cloud Agent.</h4>
-          <p class="say">Rather than run all of these subagents locally, move everything to a Cloud Agent on a remote environment and build everything on an isolated branch.
-Once it is done, check its work.</p>
-          <div class="do-box">
-            <ol><li>Click Continue on Cloud to move this to a Cloud Agent.</li><li>Click Include Changes.</li></ol>
           </div>
         </article>
         <article class="beat" data-beat="start-audit-agent">
@@ -948,6 +947,12 @@ You can review tasks in project notes and shared files in context.</p>
           <p class="say">Now I’m going back to the collections command center plan. Before I start the work, I’ll check the keyboard fixes PR for conflicts.</p>
           <div class="do-box">
             <ul><li>Open the command center planning agent in the Agent Window. Don’t start a new plan.</li></ul>
+          </div>
+        </article>
+        <article class="beat" data-beat="optional-cloud-return" data-feature="Cloud Agents">
+          <h4>Instead, open the command center planning agent from the Cloud Agents list.</h4>
+          <div class="do-box">
+            <ul><li>Instead, open the command center planning agent from the Cloud Agents list.</li></ul>
           </div>
         </article>
         <article class="beat" data-beat="list-conflict-files">

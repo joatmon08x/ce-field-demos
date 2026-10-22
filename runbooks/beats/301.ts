@@ -6,11 +6,20 @@ export const RUNBOOK_SECTIONS_301 = [
     title: "How do you orchestrate tasks across agents?",
     beats: [
       {
+        id: "optional-cloud-command-center",
+        title: "Plan the command center on a Cloud Agent.",
+        optional: { feature: "Cloud Agents" },
+        promptType: "none",
+        say: "This plan runs on a remote machine, so it keeps going while I do the keyboard walkthrough locally.",
+        detail:
+          "Start a new Cloud agent.\nUse the Cloud Agent to check for open issues in Linear and plan the collections command center.",
+      },
+      {
         id: "get-command-center-issues",
         title: "Get the issues for the collections command center from the issue tracker.",
         promptType: "adaptable",
         say: "The Linear MCP server returns a list of nine issues to create the collections command center.",
-        detail: "Start a new agent for the command center plan.",
+        detail: "Start a new local agent.",
         example: "/ask List open issues for the collections command center in Linear.",
       },
       {
@@ -25,7 +34,7 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "open-local-agent",
         title: "Start a keyboard walkthrough for the accessibility audit in a new agent.",
         promptType: "none",
-        detail: "Start a new agent for the keyboard walkthrough.",
+        detail: "Start a new local agent for the keyboard walkthrough.",
       },
       {
         id: "show-problem-by-hand",
@@ -42,14 +51,6 @@ export const RUNBOOK_SECTIONS_301 = [
         say: "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read.\nA keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.",
         detail: "",
         example: "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, readonly: false.",
-      },
-      {
-        id: "optional-cloud-agent",
-        title: "Move to a Cloud Agent.",
-        optional: { feature: "Cloud Agents" },
-        promptType: "none",
-        say: "Rather than run all of these subagents locally, move everything to a Cloud Agent on a remote environment and build everything on an isolated branch.\nOnce it is done, check its work.",
-        detail: "Click Continue on Cloud to move this to a Cloud Agent.\nClick Include Changes.",
       },
       {
         id: "start-audit-agent",
@@ -276,6 +277,13 @@ export const RUNBOOK_SECTIONS_301 = [
         promptType: "none",
         say: "Now I’m going back to the collections command center plan. Before I start the work, I’ll check the keyboard fixes PR for conflicts.",
         detail: "Open the command center planning agent in the Agent Window. Don’t start a new plan.",
+      },
+      {
+        id: "optional-cloud-return",
+        title: "Instead, open the command center planning agent from the Cloud Agents list.",
+        optional: { feature: "Cloud Agents" },
+        promptType: "none",
+        detail: "Instead, open the command center planning agent from the Cloud Agents list.",
       },
       {
         id: "list-conflict-files",
