@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### In progress
 
 - **201 track** — Runbooks track `201` / `RUNBOOK_SECTIONS_201` is on main for CE workshop demos (Outline Show beats, Linear staging, disk plugin) but is not a formal release in this cut.
-- **301 track.** Runbooks track `301` / `RUNBOOK_SECTIONS_301` adds the Outline Show for orchestrating agents, tasks, and coworkers (four sections, 34 beats: 11, 12, 5, 6). Not a formal release in this cut.
+- **301 track.** Runbooks track `301` / `RUNBOOK_SECTIONS_301` adds the Outline Show for orchestrating agents, tasks, and coworkers (four sections, 35 beats: 11, 12, 5, 7). Not a formal release in this cut.
 
 ### Added
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Runbook cards show Say, then the Do lines in their own box, then the prompt. Several Do lines are numbered. The box matches the prompt border, radius, and padding, with the indigo soft fill and no copy button.
 - 301 beats now copy Say, Do, and Prompt from the live Outline, including optional feature tags. Three Show steps that were missing are now beats.
 - The side-question step uses two cards. side-chat keeps the Outline heading. ask-subagent-progress is titled Ask what the first subagent is remediating.
-- **301 beats synced to the Outline.** Four sections hold 11, 12, 5, and 6 beats (34 total). The review section has no keyboard-confirmation step.
+- **301 beats synced to the Outline.** Four sections hold 11, 12, 5, and 7 beats (35 total). The review section has no keyboard-confirmation step.
 - `ledgerly-reviewer` no longer carries the closer-inspection list. It confirms the claimed work runs, then checks the catalog, seed, and protected paths.
 - Runbooks left the app. The catalog is `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`.
 
