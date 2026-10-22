@@ -19,7 +19,7 @@ The beats live in `runbooks/meta.ts` and in `runbooks.html`, which `start-ledger
 
 The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not mention the invoice or dispute filter-pill `state=` seam unless the user is on that click path.
 
-Start a demo session with `npm run demo:session -- start`. Record every rule, skill, Canvas, Figma deck, Linear board, and demo branch it creates. Reset is script-first and clears every track at once; update the event record and reset script whenever a beat gains a new leftover.
+Before a demo session, run `preflight-checker` with the track id (`preflight-checker track 101`, `201`, or `301`). It reports **Ready** when every required check for that track passed, and it does not install, seed, start the server, or stage Linear. If the track is missing, it asks which of `101`, `201`, or `301` and runs no checks. Then start the session with `npm run demo:session -- start`. Record every rule, skill, Canvas, Figma deck, Linear board, and demo branch it creates. Reset is script-first and clears every track at once; update the event record and reset script whenever a beat gains a new leftover.
 
 ## 101 sections and beats
 

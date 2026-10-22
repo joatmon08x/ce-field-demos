@@ -6,6 +6,14 @@ Use it for the jumpable Grok Build **101**, **201**, and **301** tracks. Copy-pa
 
 ## Run
 
+Before a demo, open an agent and run the `preflight-checker` subagent with the track you are about to present:
+
+```text
+preflight-checker track 201
+```
+
+Use `101` or `301` the same way. It reports **Ready** only when every required check for that track passed, and it lists what failed with a remediation (`npm i`, `npx prisma db seed`, `start-ledgerly`, enable the MCP, or `stage-linear` after you confirm the Linear team). It does not install, seed, start the server, stage Linear, or authenticate MCP. If you omit the track, it asks which of `101`, `201`, or `301` and runs no checks. Then bring the app up.
+
 Node 20. Nothing else global.
 
 ```bash
