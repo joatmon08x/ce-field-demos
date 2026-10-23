@@ -16,6 +16,8 @@ Catalog prices are frozen: Starter **$49**, Growth **$99**, Scale **$249**. Neve
 
 This is a **Grok Build demo app** with three jumpable tracks: 101, 201, and 301. Runbook beats live in `runbooks/meta.ts` and in `runbooks.html`. `start-ledgerly` renders that file in a Cursor Canvas. Regenerate it with `npm run runbooks:export` whenever beats change — `tests/runbooks.test.ts` fails if it drifts. Open `runbooks.html?track=301` for the 301 track. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser. The presenter run-of-show is `demo-howto.md`. Project subagents live in `.cursor/agents/`. Skills live in `.cursor/skills/`. Do not add talk-track or speaker-note skills. Do not reintroduce retired Advanced runbooks without a request.
 
+Before a demo session, invoke `preflight-checker` with the track id (`preflight-checker track 101`, `201`, or `301`). It reports pass / fail / blocked for that track and does not install, seed, start the server, stage Linear, or authenticate MCP. If the track is missing, it asks and runs no checks. `start-ledgerly` is the start step after the report, not a substitute for preflight.
+
 ## Grok Build Cloud specific instructions
 
 ### Install
@@ -111,6 +113,7 @@ Incomplete on purpose:
 | `.cursor/agents/api-instrumenter.md` | `/multitask` worker — one API route |
 | `.cursor/agents/dispute-verifier.md` | `/goal` and `/orchestrate` finish line |
 | `.cursor/agents/change-reviewer.md` | Diff inspection. `readonly: false` so it can run git diff. Instructions forbid edits. High, warning, and suggestion. |
+| `.cursor/agents/preflight-checker.md` | Before a 101 / 201 / 301 session. Track dependency pass / fail / blocked. `readonly: false` for shell probes; no install, seed, or MCP auth unless asked to remediate. |
 | `.cursor/skills/choose-cursor-workflow/` | Walk the 101, 201, or 301 track: modes, models, rules, skills, and finishing one task with an agent |
 | `.cursor/skills/stage-linear/` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `.cursor/skills/standard-bug-fix/` | `/standard-bug-fix` — pull one ce-field-demos Linear issue and fix only that bug |

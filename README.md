@@ -6,6 +6,14 @@ Use it for the jumpable Grok Build **101**, **201**, and **301** tracks. Copy-pa
 
 ## Run
 
+Before a demo, open an agent and run the `preflight-checker` subagent with the track you are about to present:
+
+```text
+preflight-checker track 201
+```
+
+Use `101` or `301` the same way. It reports **Ready** only when every required check for that track passed, and it lists what failed with a remediation (`npm i`, `npx prisma db seed`, `start-ledgerly`, enable the MCP, or `stage-linear` after you confirm the Linear team). It does not install, seed, start the server, stage Linear, or authenticate MCP. If you omit the track, it asks which of `101`, `201`, or `301` and runs no checks. Then bring the app up.
+
 Node 20. Nothing else global.
 
 ```bash
@@ -36,7 +44,7 @@ Dashboard, Invoices, Collections, Disputes, Settings. Extra book accounts are in
 | --- | --- |
 | Runbook beats | `runbooks.html`, rendered in a Cursor Canvas by `start-ledgerly`. Regenerate with `npm run runbooks:export` after editing `runbooks/beats/` |
 | `/loop` job | `POST` then `GET` `/api/demo/job` (~45s, not written to SQLite) |
-| Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier`, `change-reviewer` |
+| Agents | `.cursor/agents/` — `ledgerly-reviewer`, `api-instrumenter`, `dispute-verifier`, `change-reviewer`, `preflight-checker` |
 | Skills | `.cursor/skills/` — run the demo, stage Linear, or pick a Cursor workflow |
 | Disk plugin | `plugins/standard-bug-fix/` — add from local repository; `/standard-bug-fix`, Linear MCP |
 | Presenter script | `demo-howto.md`, the 101, 201, and 301 run-of-show |
@@ -124,6 +132,7 @@ During a fresh setup, create issues sequentially: suggested-credit first, **Clic
 | `api-instrumenter` | One API route per parallel worker. |
 | `dispute-verifier` | Dispute-resolution finish line. No product code. |
 | `change-reviewer` | Diff inspection with `readonly: false` so it can run `git status` and `git diff`. Its instructions forbid edits. Reports Passed, then Incomplete with high, warning, and suggestion findings for sensitive data, hard rollback, missing tests, edited failing tests, scope outside the plan, and new dependencies or shell commands. |
+| `preflight-checker` | Before a 101 / 201 / 301 session. Reports pass / fail / blocked per track dependency. `readonly: false` for shell probes; does not install, seed, stage Linear, or authenticate MCP unless asked to remediate. |
 | `choose-cursor-workflow` | Walk the 101, 201, or 301 track and pick the mode or model. |
 | `stage-linear` | Reconcile Fieldnote issues on the `ce-field-demos` Linear project. Public and private teams and projects are both valid. |
 | `standard-bug-fix` | Pull one ce-field-demos Linear issue, then fix only that bug. |

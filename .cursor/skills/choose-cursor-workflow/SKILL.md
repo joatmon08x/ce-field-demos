@@ -19,9 +19,11 @@ The beats live in `runbooks/meta.ts` and in `runbooks.html`, which `start-ledger
 
 The named demo error is `dsp_1043` / the suggested-credit v1 client. Do not mention the invoice or dispute filter-pill `state=` seam unless the user is on that click path.
 
-Start a demo session with `npm run demo:session -- start`. Record every rule, skill, Canvas, Figma deck, Linear board, and demo branch it creates. Reset is script-first and clears every track at once; update the event record and reset script whenever a beat gains a new leftover.
+Before a demo session, run `preflight-checker` with the track id (`preflight-checker track 101`, `201`, or `301`). It reports **Ready** when every required check for that track passed, and it does not install, seed, start the server, or stage Linear. If the track is missing, it asks which of `101`, `201`, or `301` and runs no checks. Then start the session with `npm run demo:session -- start`. Record every rule, skill, Canvas, Figma deck, Linear board, and demo branch it creates. Reset is script-first and clears every track at once; update the event record and reset script whenever a beat gains a new leftover.
 
 ## 101 sections and beats
+
+Before the session, run `preflight-checker` with the track id (`preflight-checker track 101`).
 
 1. **What is Grok Build?** — Ask, Plan, Build in Agent mode, Debug, check the models, plan to fix the bug.
 2. **How do you work with an agent?** — Run Mode allowlist, verify the email feature, redact, stop, interrupt and steer, continue to the end, review diffs, restore from a checkpoint.
@@ -29,12 +31,16 @@ Start a demo session with `npm run demo:session -- start`. Record every rule, sk
 
 ## 201 sections and beats
 
+Before the session, run `preflight-checker` with the track id (`preflight-checker track 201`).
+
 1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats.
 2. **How do you standardize agent behavior?** — personal create-api skill, promote it.
 3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. The operator uses a public or private Linear team and project. Public and private projects are both valid. Linear MCP cannot create teams (Settings → Teams → New team; **Make team private** is optional). `stage-linear` accepts a public project and does not force it private. Then run `stage-linear`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
 4. **How do you parallelize a task?** — open a new agent, resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## 301 sections and beats
+
+Before the session, run `preflight-checker` with the track id (`preflight-checker track 301`).
 
 1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
 2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list open collections issues, plan and build, use `/side`, consolidate into a PR, and fall back to repo issue descriptions if Linear MCP is unavailable.
