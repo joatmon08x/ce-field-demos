@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Synced 301 Show beats to the live Outline. The Cloud Agents opener is one Do plus a /plan prompt, the subagent step uses the Outline title, and the Projects Do names the remaining prompts in this demo section.
 - `README.md`, `AGENTS.md`, and `choose-cursor-workflow` tell you to run `preflight-checker` with the track id before a demo.
 - `npm run demo:reset` now deletes local `cursor/*` and `demo/*` branches, recorded remotes on those patterns, and extra demo worktrees, then prunes worktrees. Cloud agent runs stay manual. Removing a demo worktree discards uncommitted files in that directory.
 - Dry-run summaries match the checkout a real reset would leave, including a prunable demo worktree.
