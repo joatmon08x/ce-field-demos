@@ -1011,16 +1011,55 @@ You can review tasks in project notes and shared files in context.</p>
         if (target) target.scrollIntoView();
       }
       select.addEventListener("change", function () { show(select.value, true); });
+
+      function catalogOptions() {
+        return Array.prototype.map.call(select.options, function (opt) { return opt.value; });
+      }
+      function postCatalog() {
+        if (window.parent === window) return;
+        window.parent.postMessage({
+          type: "runbooks:catalog",
+          options: catalogOptions(),
+          visibleTrack: select.value,
+        }, "*");
+      }
+      function applyFeatures(state) {
+        if (!state || typeof state !== "object") return;
+        Array.prototype.forEach.call(document.querySelectorAll(".feature-toggle"), function (box) {
+          var trackId = box.getAttribute("data-track");
+          var featureName = box.getAttribute("data-feature");
+          var trackState = state[trackId] || {};
+          box.checked = trackState[featureName] !== false;
+        });
+      }
+      function collectFeatures() {
+        var state = {};
+        Array.prototype.forEach.call(document.querySelectorAll(".feature-toggle"), function (box) {
+          var trackId = box.getAttribute("data-track");
+          var featureName = box.getAttribute("data-feature");
+          if (!state[trackId]) state[trackId] = {};
+          if (!box.checked) state[trackId][featureName] = false;
+        });
+        return state;
+      }
+      function postFeatures() {
+        if (window.parent === window) return;
+        window.parent.postMessage({ type: "runbooks:features", features: collectFeatures() }, "*");
+      }
+
       window.addEventListener("message", function (event) {
         var data = event.data;
+        if (event.source !== window.parent || !data) return;
         if (
-          event.source === window.parent &&
-          data &&
           data.type === "runbooks:set-track" &&
           typeof data.track === "string" &&
           ids.indexOf(data.track) !== -1
         ) {
           show(data.track, false);
+          postCatalog();
+        }
+        if (data.type === "runbooks:set-features" && data.features && typeof data.features === "object") {
+          applyFeatures(data.features);
         }
       });
 
@@ -1041,17 +1080,17 @@ You can review tasks in project notes and shared files in context.</p>
         }
       }
       var savedFeatures = readFeatures();
+      applyFeatures(savedFeatures);
       Array.prototype.forEach.call(document.querySelectorAll(".feature-toggle"), function (box) {
         var trackId = box.getAttribute("data-track");
-        var featureName = box.getAttribute("data-feature");
-        var trackState = savedFeatures[trackId] || {};
-        box.checked = trackState[featureName] !== false;
         box.addEventListener("change", function () {
           var state = readFeatures();
           if (!state[trackId]) state[trackId] = {};
+          var featureName = box.getAttribute("data-feature");
           if (box.checked) delete state[trackId][featureName];
           else state[trackId][featureName] = false;
           writeFeatures(state);
+          postFeatures();
         });
       });
 

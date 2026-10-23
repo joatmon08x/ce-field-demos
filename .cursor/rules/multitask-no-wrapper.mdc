@@ -26,3 +26,11 @@ Task: owns <file B> only
 ```
 
 A typed worker (`api-instrumenter`, `ledgerly-reviewer`, `dispute-verifier`) is still one named job. It is not a stand-in for “do the whole plan.”
+
+## Stay on the main worktree
+
+The parent chat stays in the primary checkout on `main`. Do not `git checkout` a worker branch there.
+
+Do not call `move_agent_to_root` or `SetActiveBranch` for a worker worktree or branch. If a tool would switch this chat’s root, skip it and keep the main path.
+
+Read worker diffs from the linked worktree paths. Apply them later, from `main`, in the plan’s order.

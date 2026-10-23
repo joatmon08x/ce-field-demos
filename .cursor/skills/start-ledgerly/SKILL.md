@@ -62,18 +62,36 @@ After the server is Ready (or already responding), do both of these even when th
 
 1. Open the Grok Build Browser (`cursor-ide-browser`) to **http://localhost:43173**. Use `position: "active"` so the browser is visible. This tab is the Ledgerly application. Leave it there. Do not use an external browser. Do not open a second browser tab for the runbooks. Do not open the in-app `/runbooks` route.
 
-2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks` only when creating the canvas. The module imports `useCanvasState`, `useEffect`, and `useRef` only from `cursor/canvas` and default-exports one component. Serialize the exact file contents into an `html` string; do not use `fetch`.
+2. Open `runbooks.html` in a Cursor Canvas. Read `~/.cursor/skills-cursor/canvas/SKILL.md`, then read `runbooks.html` at the repo root. Call `WriteCanvas` directly. Title: `Runbooks` only when creating the canvas. The module imports `Button`, `useCanvasState`, `useEffect`, and `useRef` from `cursor/canvas` and default-exports one component. Serialize the exact file contents into an `html` string; do not use `fetch`. Do not put zoom or session state into generated `runbooks.html`.
 
-   `useCanvasState` stores `runbooks-track` on that canvas's sidecar. `WriteCanvas` without a `canvas_id` creates a new canvas, so the next start opens on 101 even when the previous Runbooks canvas still has the saved track. When a Runbooks canvas is already open in this run, pass its `canvas_id` and omit the title so the same sidecar is reused. Reopening that canvas is what the hook covers.
+   **Sticky session.** `WriteCanvas` without a `canvas_id` creates a new canvas whose sidecar defaults to track `101`. When a Runbooks canvas is already open in this run, pass its `canvas_id` and omit the title so the same sidecar is reused. Persist three keys with `useCanvasState` on that canvas:
 
-   The component fills the view with an `<iframe title="Ledgerly runbooks" srcDoc={html} />` and persists the Catalog selection with `useCanvasState<string>("runbooks-track", "101")`:
+   - `runbooks-track` — string, default `"101"`
+   - `runbooks-features` — the 301 optional-feature map (object), default `{}`
+   - `runbooks-zoom` — number, default `1`
+
+   Reopening that canvas is what the hook covers. Do not mint a new canvas when one is already open.
+
+   The component fills the view with chrome (Zoom out / Zoom in) and an `<iframe title="Ledgerly runbooks" srcDoc={html} />`:
 
    - Keep a ref to the iframe.
-   - Accept `message` events only when `event.source === iframe.contentWindow`. When it posts `{ type: "runbooks:track", track }`, validate the track against `["101", "201", "301"]` and save it. Skip an `event.origin` allowlist: a srcdoc frame reports `"null"`, and that check drops the message.
-   - On the iframe `load` event only, post the saved track with `iframe.contentWindow.postMessage({ type: "runbooks:set-track", track }, "*")`. The page applies that message with `show(data.track, false)`, so it does not echo. A later post of an older value can overwrite a newer Catalog choice, and the parent will not hear about it.
+   - Accept `message` events only when `event.source === iframe.contentWindow`. Skip an `event.origin` allowlist: a srcdoc frame reports `"null"`, and that check drops the message.
+   - When it posts `{ type: "runbooks:track", track }`, validate the track against `["101", "201", "301"]` and save it to `runbooks-track`.
+   - When it posts `{ type: "runbooks:features", features }`, save that object to `runbooks-features`.
+   - **Catalog check.** After the iframe loads, the page must reply with `{ type: "runbooks:catalog", options, visibleTrack }` once it has applied `runbooks:set-track`. Confirm `options` are exactly `["101", "201", "301"]` (a `select#track` with those options) and `visibleTrack` matches the restored track. Treat a missing or mismatched reply as a failed open. Do not report the canvas ready until that reply matches.
+   - On the iframe `load` event only, post the saved track and the saved feature map — never the default `101` over a saved track:
 
-   The event bridge is required: an iframe created with `srcDoc` is rebuilt when the user leaves and reopens the canvas, while `useCanvasState` survives canvas reloads and IDE restarts. Do not replace it with component-local state or iframe storage. The embedded page otherwise opens on track 101. `runbooks.html?track=301` selects 301 when the file is opened on its own. On 301, each optional feature is a checkbox, checked by default. Unchecking a feature hides its beats, and the choice is stored in localStorage. Restoring a track does not change those checkboxes.
+     ```
+     iframe.contentWindow.postMessage({ type: "runbooks:set-track", track }, "*")
+     iframe.contentWindow.postMessage({ type: "runbooks:set-features", features }, "*")
+     ```
+
+     The page applies `runbooks:set-track` with `show(data.track, false)`, so it does not echo. Restoring the track must not reset feature checkboxes; those checkboxes are restored from the sidecar via `runbooks:set-features`, not from srcdoc `localStorage`, which does not survive a rebuilt iframe. A later post of an older value can overwrite a newer Catalog choice, and the parent will not hear about it.
+
+   **Zoom.** Add Zoom out and Zoom in controls in the canvas chrome, outside the iframe, using `Button` from `cursor/canvas`. Store the level in `useCanvasState` (`runbooks-zoom`, default `1`). Step by `0.25` between `0.5` and `2`. Apply it as CSS `zoom` on the iframe.
+
+   The event bridge is required: an iframe created with `srcDoc` is rebuilt when the user leaves and reopens the canvas, while `useCanvasState` survives canvas reloads and IDE restarts. Do not replace it with component-local state or iframe storage. The embedded page otherwise opens on track 101. `runbooks.html?track=301` selects 301 when the file is opened on its own. On 301, each optional feature is a checkbox, checked by default. Unchecking a feature hides its beats. Restoring a track does not change those checkboxes.
 
 ## 5. Confirm
 
-Report **http://localhost:43173**, the canvas `url` returned by `WriteCanvas`, and whether you seeded or skipped seed. The browser tab is the Ledgerly dashboard. The canvas shows the Catalog control.
+Report **http://localhost:43173**, the canvas `url` returned by `WriteCanvas`, that the catalog reply matched (`options` `101`/`201`/`301` and the restored `visibleTrack`), and whether you seeded or skipped seed. The browser tab is the Ledgerly dashboard. The canvas shows the Catalog control and Zoom out / Zoom in.

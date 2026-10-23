@@ -22,7 +22,7 @@ Catalog only: Starter $49, Growth $99, Scale $249 (`lib/plans.ts`). Dispute `dsp
 
 This plan is not done until step 4:
 
-1. Same turn: launch Agent 1, Agent 2, and Agent 3 (tables below) on isolated worktrees. Exactly three implementers.
+1. Same turn: launch Agent 1, Agent 2, and Agent 3 (tables below) on isolated worktrees. Exactly three implementers. The three implementers use isolated worktrees; the coordinator does not enter them.
 2. When all three finish, summarize each worktree’s diff (paths must be disjoint) and apply **helper → API → UI**. A git conflict means an agent edited a sibling’s file — revert that hunk.
 3. Same turn after apply: `ledgerly-reviewer` on the combined diff **and** `dispute-verifier` against port 43173. They do not depend on each other. Do not serialize them. Verifier writes no product code.
 4. Finish line is **`dispute-verifier`**. Do not skip it. Optional `tests/resolve-dispute.e2e.test.ts` only in this same turn, **out of** `npm test`; skip it if the verifier already covers the live path.

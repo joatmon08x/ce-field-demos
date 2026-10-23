@@ -954,11 +954,37 @@ describe("runbook catalog", () => {
     expect(start).toContain(
       'iframe.contentWindow.postMessage({ type: "runbooks:set-track", track }, "*")',
     );
+    expect(start).toContain(
+      'iframe.contentWindow.postMessage({ type: "runbooks:set-features", features }, "*")',
+    );
+    expect(start).toContain('type: "runbooks:catalog"');
+    expect(start).toContain("runbooks-features");
+    expect(start).toContain("runbooks-zoom");
+    expect(start).toContain("Zoom out");
+    expect(start).toContain("Zoom in");
+    expect(start).toContain("Button");
     expect(start).toContain("On the iframe `load` event only");
     expect(start).toContain('a srcdoc frame reports `"null"`');
     expect(start).not.toContain("whenever the persisted track changes");
     expect(start).not.toContain("file://");
     expect(start).not.toContain("http://localhost:43173/runbooks");
+
+    const multitaskRule = readFileSync(
+      join(root, ".cursor/rules/multitask-no-wrapper.mdc"),
+      "utf8",
+    );
+    const dispatch = readFileSync(
+      join(root, ".cursor/skills/dispatch-subagents/SKILL.md"),
+      "utf8",
+    );
+    for (const [name, contents] of Object.entries({ multitaskRule, dispatch })) {
+      expect(contents, `${name} must keep the coordinator on the main worktree`).toMatch(
+        /main worktree|primary checkout on `main`/i,
+      );
+      expect(contents, `${name} must not move this chat onto a worker`).toMatch(
+        /must not move|Do not call `move_agent_to_root`|skip it and keep the main path/i,
+      );
+    }
 
     // Shipped-suite count must stay consistent across the docs that cite it
     // (see the sync rule in .cursor/rules/ledgerly.mdc). Assert the
@@ -1078,9 +1104,17 @@ describe("runbook catalog", () => {
     expect(stage, "stage must not cancel the WCAG walkthrough as an extra").toContain(
       "Never cancel the WCAG keyboard-walkthrough issue as an extra",
     );
-    expect(stage, "stage must not create the WCAG issue on a clean board").toContain(
-      "Do not create this title when it is missing",
+    expect(stage, "stage reopens a match to Todo").toMatch(/reopen(?:s)?(?: those)? matches? to `Todo`|state`: `Todo`/i);
+    expect(stage, "stage creates a missing title").toMatch(
+      /Create this title when it is missing|Create a new issue only in two cases/i,
     );
+    expect(
+      stage,
+      "stage creates a new issue only when a canceled status change fails",
+    ).toMatch(
+      /Canceled` and `save_issue` cannot change its state|status change fails/i,
+    );
+    expect(stage).not.toContain("Do not create this title when it is missing");
 
     // stage-linear reactivates a torn-down board on the next run
     expect(stage).toMatch(/reactivate|reopen|reopens/i);
