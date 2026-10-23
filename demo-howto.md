@@ -51,16 +51,6 @@ Use these definitions when the audience is new:
 
 ## Before you start
 
-Before a track session, open an agent and run the `preflight-checker` subagent with the track id:
-
-```text
-preflight-checker track 101
-```
-
-Use `201` or `301` for those tracks. The agent pins that id and reports **Track**, **Ready** (`yes` only when every required check passed), **Passed**, **Blocked / Failed**, and **Skipped**. If the prompt has no track, it asks `Which track should I preflight: 101, 201, or 301?` and runs no checks. It does not infer the track from the Canvas or from `runbooks.html`.
-
-It only checks. It does not install packages, seed, start the server, run `stage-linear`, or authenticate MCP. Follow the one-line remediation in the report, then bring the app up. Optional 301 features (Cloud Agents, Projects, Bugbot, Reviewer automation) do not block **Ready** unless you named that feature. This step is not `start-ledgerly` and not `npm run demo:reset`.
-
 ```bash
 npm i
 npx prisma generate

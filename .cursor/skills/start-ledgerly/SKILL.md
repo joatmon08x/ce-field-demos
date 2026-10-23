@@ -7,8 +7,6 @@ description: Start the Ledgerly Next.js app on port 43173, seed SQLite only when
 
 Bring up the app. Do not reset demo state, restore files, or kill a healthy server.
 
-Preflight is separate. Before a demo session the operator runs `preflight-checker` with the track id (`preflight-checker track 101`, `201`, or `301`). This skill does not run those checks and does not invoke `preflight-checker`.
-
 Listen on **43173**. Schema URL is `file:./dev.db` in `prisma/schema.prisma`. Seed is idempotent (`prisma db push` then Fieldnote data) but **skip it when data is already there**.
 
 ## 1. Dependencies
