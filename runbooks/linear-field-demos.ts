@@ -32,6 +32,7 @@ export const FIELD_DEMO_ISSUES: readonly FieldDemoIssue[] = [
   {
     slug: "suggested-credit-v1",
     type: "Bug",
+    /** Catalog may stay In Progress; stage-linear always reopens matches to Todo. */
     state: "In Progress",
     priority: 2,
     title: "Suggested credit on dsp_1043 shows $400 instead of the $249 Scale cap",
@@ -397,9 +398,10 @@ export function collectionsCommandCenterDescription(issue: CollectionsCommandCen
 }
 
 /**
- * WCAG audit already on a ce-field-demos board.
- * stage-linear updates this issue in place. It is not a Fieldnote beat and not
- * a Collections Command Center slice, and a clean board does not gain a copy.
+ * WCAG keyboard walkthrough on the ce-field-demos board.
+ * stage-linear stages this as the thirteenth issue (Todo, priority 3): creates
+ * it when missing, reopens a match to Todo, and updates an open copy in place.
+ * It is not a Fieldnote beat and not a Collections Command Center slice.
  */
 export const WCAG_KEYBOARD_WALKTHROUGH = {
   title: "UI changes need a WCAG 2.2 AA accessibility audit",

@@ -27,3 +27,11 @@ Do **not** queue four jobs in one agent. Do **not** start a sibling after anothe
 - No sibling cross-talk. A planner or parent only sees its own children.
 - Five subagents cost roughly five times one agent. Launch only what is independent.
 - You still review. Do not merge or commit unless asked.
+
+## Stay on the main worktree
+
+Parallel workers still get their own worktrees. The coordinator chat does not move with them.
+
+- The parent chat stays in the primary checkout on `main`. Do not `git checkout` a worker branch there.
+- Do not call `move_agent_to_root` or `SetActiveBranch` for a worker worktree or branch. If a tool would switch this chat’s root, skip it and keep the main path.
+- Read worker diffs from the linked worktree paths. Apply them later, from `main`, in the plan’s order.
