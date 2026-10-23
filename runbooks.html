@@ -608,7 +608,14 @@
           <h4>Plan the command center on a Cloud Agent.</h4>
           <p class="say">This plan runs on a remote machine, so it keeps going while I do the keyboard walkthrough locally.</p>
           <div class="do-box">
-            <ol><li>Start a new Cloud agent.</li><li>Use the Cloud Agent to check for open issues in Linear and plan the collections command center.</li></ol>
+            <ul><li>Start a new Cloud Agent.</li></ul>
+          </div>
+          <div class="paste">
+            <div class="paste-head">
+              <span>Paste in Grok Build</span>
+              <button type="button" class="copy">Copy</button>
+            </div>
+            <pre>/plan the collections command center from its open Linear issues. List the tasks, the files each touches, and the open questions.</pre>
           </div>
         </article>
         <article class="beat" data-beat="get-command-center-issues">
@@ -651,7 +658,7 @@ Pressing Tab repeatedly is a slow manual process. Is there a way we can automate
           </div>
         </article>
         <article class="beat" data-beat="create-accessibility-manual-reviewer">
-          <h4>Checking every page like this by hand takes a lot of time and judgment, so let&#39;s build a subagent that does it for us.</h4>
+          <h4>Build a subagent to help automate the manual process.</h4>
           <p class="say">CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read.
 A keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.</p>
           <div class="paste">
@@ -742,7 +749,7 @@ Run the remaining commands in the Project. Note that responses to prompts may di
           <h4>Use Projects to assign tasks to agents.</h4>
           <p class="say">Let Projects decide how best to assign tasks and complete work.</p>
           <div class="do-box">
-            <ul><li>Run the following prompts from the Project without starting new agents.</li></ul>
+            <ul><li>Run the remaining prompts in this demo section from the Project without starting new agents.</li></ul>
           </div>
         </article>
         <article class="beat" data-beat="open-plan-agent">

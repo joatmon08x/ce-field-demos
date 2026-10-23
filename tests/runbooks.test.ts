@@ -385,7 +385,7 @@ describe("runbook catalog", () => {
       beats301.map((entry) => entry.id),
     );
     expect(runbookBeatSequence("301")).toBe(
-      "Plan the command center on a Cloud Agent. \u2192 Get the issues for the collections command center from the issue tracker. \u2192 Plan the collections command center in a separate agent. \u2192 Start a keyboard walkthrough for the accessibility audit in a new agent. \u2192 Show the problem by hand. \u2192 Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us. \u2192 Start a new agent to audit accessibility. \u2192 Show /multitask for small coordinated jobs. \u2192 Review the subagents. \u2192 Check the output of the subagents. \u2192 Fallback: reference repo issues \u2192 Start a new Project. \u2192 Stage the Project. \u2192 Use Projects to assign tasks to agents. \u2192 Start a new agent. \u2192 Start a plan to fix the walkthrough failures on a separate worktree. \u2192 Review the plan. \u2192 Build the plan. \u2192 Use Cloud Agents to build the plan if you do not have Projects. \u2192 Ask a side question while the coordinator remediates the findings. \u2192 Ask what the first subagent is remediating. \u2192 Consolidate and open a reviewable PR. \u2192 Keep track of the Project. \u2192 Start a new agent. \u2192 Run the change reviewer subagent before you conduct manual review. \u2192 Identify any changes requiring closer inspection. \u2192 Review the high-risk changes. \u2192 Run Bugbot. \u2192 Start a new agent. \u2192 Identify the most reliable fix for each review finding. \u2192 Create an Automation. \u2192 Trigger the PR Automation. \u2192 Return to the collections command center plan. \u2192 Instead, open the command center planning agent from the Cloud Agents list. \u2192 Check other PRs for files and comments that conflict with the next project.",
+      "Plan the command center on a Cloud Agent. \u2192 Get the issues for the collections command center from the issue tracker. \u2192 Plan the collections command center in a separate agent. \u2192 Start a keyboard walkthrough for the accessibility audit in a new agent. \u2192 Show the problem by hand. \u2192 Build a subagent to help automate the manual process. \u2192 Start a new agent to audit accessibility. \u2192 Show /multitask for small coordinated jobs. \u2192 Review the subagents. \u2192 Check the output of the subagents. \u2192 Fallback: reference repo issues \u2192 Start a new Project. \u2192 Stage the Project. \u2192 Use Projects to assign tasks to agents. \u2192 Start a new agent. \u2192 Start a plan to fix the walkthrough failures on a separate worktree. \u2192 Review the plan. \u2192 Build the plan. \u2192 Use Cloud Agents to build the plan if you do not have Projects. \u2192 Ask a side question while the coordinator remediates the findings. \u2192 Ask what the first subagent is remediating. \u2192 Consolidate and open a reviewable PR. \u2192 Keep track of the Project. \u2192 Start a new agent. \u2192 Run the change reviewer subagent before you conduct manual review. \u2192 Identify any changes requiring closer inspection. \u2192 Review the high-risk changes. \u2192 Run Bugbot. \u2192 Start a new agent. \u2192 Identify the most reliable fix for each review finding. \u2192 Create an Automation. \u2192 Trigger the PR Automation. \u2192 Return to the collections command center plan. \u2192 Instead, open the command center planning agent from the Cloud Agents list. \u2192 Check other PRs for files and comments that conflict with the next project.",
     );
 
     // Say, Do, and Prompt are copied from the Outline. Optional tags are on optional.feature, not in the prompt.
@@ -393,8 +393,9 @@ describe("runbook catalog", () => {
   {
     "id": "optional-cloud-command-center",
     "title": "Plan the command center on a Cloud Agent.",
-    "promptType": "none",
-    "detail": "Start a new Cloud agent.\nUse the Cloud Agent to check for open issues in Linear and plan the collections command center.",
+    "promptType": "adaptable",
+    "detail": "Start a new Cloud Agent.",
+    "example": "/plan the collections command center from its open Linear issues. List the tasks, the files each touches, and the open questions.",
     "optional": {
       "feature": "Cloud Agents"
     },
@@ -431,7 +432,7 @@ describe("runbook catalog", () => {
   },
   {
     "id": "create-accessibility-manual-reviewer",
-    "title": "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
+    "title": "Build a subagent to help automate the manual process.",
     "promptType": "adaptable",
     "detail": "",
     "example": "/create-subagent accessibility-manual-reviewer that walks pages by keyboard in the Browser, since CI runs automated tests. Report tab order, focus, trap, Escape, and navigation failures with screenshots. Set model: fast, readonly: false.",
@@ -499,7 +500,7 @@ describe("runbook catalog", () => {
     "id": "optional-assign-project",
     "title": "Use Projects to assign tasks to agents.",
     "promptType": "none",
-    "detail": "Run the following prompts from the Project without starting new agents.",
+    "detail": "Run the remaining prompts in this demo section from the Project without starting new agents.",
     "optional": {
       "feature": "Projects"
     },
@@ -823,11 +824,12 @@ describe("runbook catalog", () => {
 
     const cloud = card("optional-cloud-command-center");
     before(cloud, "This plan runs on a remote machine", 'class="do-box"');
-    expect(cloud).toContain('class="do-box"');
-    expect(cloud).toContain("<ol>");
-    before(cloud, "Start a new Cloud agent.", "Use the Cloud Agent to check for open issues in Linear");
-    expect(cloud).not.toContain('class="paste"');
-    expect(cloud).not.toContain(">Copy<");
+    before(cloud, 'class="do-box"', "Start a new Cloud Agent.");
+    before(cloud, "Start a new Cloud Agent.", "/plan the collections command center from its open Linear issues.");
+    expect(cloud).toContain("<ul>");
+    expect(cloud).not.toContain("<ol>");
+    expect(cloud).toContain('class="paste"');
+    expect(cloud).not.toContain("Use the Cloud Agent to check for open issues in Linear");
 
     const trigger = card("optional-trigger-automation");
     before(trigger, "Opening any PR triggers", "Start a new local agent.");

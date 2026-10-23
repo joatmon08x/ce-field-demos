@@ -9,10 +9,11 @@ export const RUNBOOK_SECTIONS_301 = [
         id: "optional-cloud-command-center",
         title: "Plan the command center on a Cloud Agent.",
         optional: { feature: "Cloud Agents" },
-        promptType: "none",
+        promptType: "adaptable",
         say: "This plan runs on a remote machine, so it keeps going while I do the keyboard walkthrough locally.",
-        detail:
-          "Start a new Cloud agent.\nUse the Cloud Agent to check for open issues in Linear and plan the collections command center.",
+        detail: "Start a new Cloud Agent.",
+        example:
+          "/plan the collections command center from its open Linear issues. List the tasks, the files each touches, and the open questions.",
       },
       {
         id: "get-command-center-issues",
@@ -45,8 +46,7 @@ export const RUNBOOK_SECTIONS_301 = [
       },
       {
         id: "create-accessibility-manual-reviewer",
-        title:
-          "Checking every page like this by hand takes a lot of time and judgment, so let's build a subagent that does it for us.",
+        title: "Build a subagent to help automate the manual process.",
         promptType: "adaptable",
         say: "CI catches missing labels, which break screen readers, and low contrast, which makes text hard to read.\nA keyboard walkthrough takes judgment, so this subagent uses the page the way a keyboard user would. Reuse it any time you change the UI.",
         detail: "",
@@ -118,7 +118,7 @@ export const RUNBOOK_SECTIONS_301 = [
         optional: { feature: "Projects" },
         promptType: "none",
         say: "Let Projects decide how best to assign tasks and complete work.",
-        detail: "Run the following prompts from the Project without starting new agents.",
+        detail: "Run the remaining prompts in this demo section from the Project without starting new agents.",
       },
       {
         id: "open-plan-agent",
