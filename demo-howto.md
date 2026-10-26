@@ -16,9 +16,9 @@ The 101 track has three sections. Open `runbooks.html` in the Canvas and copy a 
 
 The 201 track has four sections. Open `runbooks.html?track=201` and copy a card for any beat.
 
-1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
-2. **How do you standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
-3. **How do you connect an agent to external tools?** — [Linear team](#choose-the-linear-team-manual), Linear MCP, list open issues, import plugin from disk
+1. **How do you manage context?** Rename agents, Ask DDD, check each agent's context window, ask across chats
+2. **How do you standardize agents?** [create-api skill](#create-api-skill), promote it
+3. **How do you connect external tools?** [Linear team](#choose-the-linear-team-manual), Linear MCP, list open issues, import plugin from disk
 4. **How do you parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
 The 301 track has four sections. Open `runbooks.html?track=301` and copy a card for any beat. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser.
@@ -266,7 +266,7 @@ Open `runbooks.html?track=201`. Four section tabs match the Outline Show heading
 
 ### How do you manage context?
 
-Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat. Compare agents: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
+Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat. Check each context window: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
 
 ```text
 /ask what is the domain driven design of the application.
@@ -280,7 +280,7 @@ Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). A
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
 ```
 
-### How do you standardize agent behavior?
+### How do you standardize agents?
 
 #### Create-api skill
 
@@ -303,7 +303,7 @@ npm run demo:session -- record skill "$HOME/.cursor/skills/create-api"
 npm run demo:session -- record project-path .cursor/skills/create-api
 ```
 
-### How do you connect an agent to external tools?
+### How do you connect external tools?
 
 Use a public or private Linear team and project ([steps above](#choose-the-linear-team-manual)): Settings → Teams → New team when you need a new one, or leave an existing team public. **Make team private** is optional. `stage-linear` accepts a public project and does not force it private. Then run `stage-linear`.
 

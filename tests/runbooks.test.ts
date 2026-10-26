@@ -199,13 +199,13 @@ describe("runbook catalog", () => {
 
     expect(RUNBOOK_SECTIONS_201.map((section) => section.title)).toEqual([
       "How do you manage context?",
-      "How do you standardize agent behavior?",
-      "How do you connect an agent to external tools?",
+      "How do you standardize agents?",
+      "How do you connect external tools?",
       "How do you parallelize a task?",
     ]);
     expect(RUNBOOK_SECTIONS_201.map((section) => section.id)).toEqual([
       "target-context",
-      "standardize-behavior",
+      "standardize-agents",
       "mcp-more-info",
       "parallelize-task",
     ]);
@@ -222,6 +222,7 @@ describe("runbook catalog", () => {
       "promote-create-api-project",
       "add-linear-mcp",
       "mcp-allowlist",
+      "start-issue-agent",
       "ask-linear-bug",
       "add-local-plugin",
       "check-plugin",
@@ -240,50 +241,64 @@ describe("runbook catalog", () => {
 
     const beat = (id: (typeof beats201)[number]["id"]) => beats201.find((entry) => entry.id === id);
 
-    expect(beat("rename-agent-1-all")?.detail).toBe(
+    expect(beat("rename-agent-1-all")?.title).toBe(
       "Open one agent and ask it for information about the entire codebase.",
     );
+    expect(beat("rename-agent-1-all")?.detail).toBe("");
     expect(beat("rename-agent-1-all")?.example).toBe("/rename-chat Agent 1 All");
     expect(beat("ask-ddd-all")?.detail).toBe("");
     expect(beat("ask-ddd-all")?.example).toBe(
       "/ask what is the domain driven design of the application.",
     );
-    expect(beat("rename-agent-2-target")?.detail).toBe(
-      "Open a second agent for a new targeted context window.",
+    expect(beat("rename-agent-2-target")?.title).toBe(
+      "Let’s open a second agent. This starts a new context window.",
     );
+    expect(beat("rename-agent-2-target")?.detail).toBe("");
     expect(beat("rename-agent-2-target")?.example).toBe("/rename-chat Agent 2 Target");
     expect(beat("ask-ddd-invoice-table")?.detail).toBe("");
     expect(beat("ask-ddd-invoice-table")?.example).toBe(
       "/ask what is the domain driven design of the @invoice-table.tsx",
     );
     expect(beat("context-usage")?.promptType).toBe("none");
+    expect(beat("context-usage")?.title).toBe("Check agent 1’s context window.");
     expect(beat("context-usage")?.detail).toBe(
-      "Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Go to Agent 2 Target. Click the Context Usage indicator below the chat.",
+      "Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Agent 1 maps all the domains in the whole codebase. Its context window shows X%.",
     );
     expect(beat("context-usage")?.example).toBeUndefined();
     expect(beat("compare-agents")?.promptType).toBe("none");
     expect(beat("compare-agents")?.example).toBeUndefined();
+    expect(beat("compare-agents")?.title).toBe("Check agent 2’s context window.");
     expect(beat("compare-agents")?.detail).toBe(
-      "Agent 1 maps all the domains in the whole codebase. Its context window shows X%. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.",
+      "Go to Agent 2 Target. Click the Context Usage indicator below the chat. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.",
+    );
+    expect(beat("ask-cross-context")?.title).toBe(
+      "We want to check if the invoice table can be changed in isolation.",
     );
     expect(beat("ask-cross-context")?.detail).toBe(
-      "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
+      "Agent 1 did the work of identifying all domains. Agent 2 can benefit from its summary. It doesn’t need to review the entire codebase again. Go to Agent 2 Target chat.",
     );
     expect(beat("ask-cross-context")?.example).toBe(
       "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
     );
+    expect(beat("create-api-personal-skill")?.title).toBe(
+      "Open a new agent and add a new personal skill.",
+    );
     expect(beat("create-api-personal-skill")?.detail).toBe(
-      "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",
+      "Open a new agent. Every time I ask a new agent to create an API, it forgets how to do it and scans the entire repository for the pattern. Let’s create a skill for it so the agent can do less work. Open skill in ~/.cursor/skills.",
     );
     expect(beat("create-api-personal-skill")?.example).toBe(
       "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
     );
+    expect(beat("promote-create-api-project")?.title).toBe("Create a project skill.");
     expect(beat("promote-create-api-project")?.detail).toBe(
-      "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Review the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
+      "A teammate mentioned they were frustrated because they had to keep correcting the agent when it builds the API. They asked if they could also use the API skill.\nOpen skill in .cursor/skills\nReview the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
     );
     expect(beat("promote-create-api-project")?.example).toBe("Promote the create-api skill to this project.");
+    expect(beat("add-linear-mcp")?.title).toBe(
+      "Start the MCP server for the company issue tracker.",
+    );
     expect(beat("add-linear-mcp")?.detail).toBe(
-      "Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
+      "Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project.\nReview MCP servers in Customize > MCPs\nEnable the Linear MCP server.",
     );
     expect(beat("add-linear-mcp")?.example).toBeUndefined();
     expect(beat("mcp-allowlist")?.promptType).toBe("none");
@@ -291,14 +306,23 @@ describe("runbook catalog", () => {
     expect(beat("mcp-allowlist")?.detail).toBe(
       "Go to Settings > Agents > Execution and Approvals > Allowlist Options > MCP Allowlist to check valid MCP servers and tools from your administrator.",
     );
+    expect(beat("mcp-allowlist")?.title).toBe("Check your allowed MCP servers.");
+    expect(beat("start-issue-agent")?.promptType).toBe("none");
+    expect(beat("start-issue-agent")?.title).toBe("Start a new agent.");
+    expect(beat("start-issue-agent")?.detail).toBe(
+      "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it.",
+    );
+    expect(beat("start-issue-agent")?.example).toBeUndefined();
+    expect(beat("ask-linear-bug")?.title).toBe("Retrieve a bug ticket from the issue tracker.");
     expect(beat("ask-linear-bug")?.detail).toBe(
-      "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Review the tool calls to the Linear MCP server.",
+      "Review the tool calls to the Linear MCP server.",
     );
     expect(beat("ask-linear-bug")?.example).toBe("List the open issues from our issue tracker.");
     expect(beat("add-local-plugin")?.promptType).toBe("none");
     expect(beat("add-local-plugin")?.example).toBeUndefined();
+    expect(beat("add-local-plugin")?.title).toBe("Add the plugin.");
     expect(beat("add-local-plugin")?.detail).toBe(
-      "A teammate created a plugin for standardizing bug fixes. Go to Customize > Plugins > Add > From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
+      "My teammate on another application let me know that they just created a plugin for standardizing and documenting bug fixes on our issue tracker. Go to Customize > Plugins > Add > From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
     );
     expect(beat("check-plugin")?.promptType).toBe("none");
     expect(beat("check-plugin")?.example).toBeUndefined();
@@ -311,25 +335,47 @@ describe("runbook catalog", () => {
     expect(beat("standard-bug-fix")?.example).toBe(
       "Work on a standard bug fix for the issue where clicking overdue does not filter.",
     );
-    expect(beat("open-new-agent")?.title).toBe("Open a new agent");
+    expect(beat("check-plugin")?.title).toBe("Enable the “Standard bug fix” plugin.");
+    expect(beat("standard-bug-fix")?.title).toBe("Fix the bug with the standard template.");
+    expect(beat("open-new-agent")?.title).toBe("Start a new agent.");
     expect(beat("open-new-agent")?.promptType).toBe("none");
     expect(beat("open-new-agent")?.example).toBeUndefined();
-    expect(beat("open-new-agent")?.detail).toBe("Open a new agent.");
+    expect(beat("open-new-agent")?.detail).toBe(
+      "Open a new agent. I created a plan for a feature to resolve disputes, splitting the work across three agents.",
+    );
     expect(beat("open-resolve-dispute-plan")?.promptType).toBe("none");
     expect(beat("open-resolve-dispute-plan")?.example).toBeUndefined();
+    expect(beat("open-resolve-dispute-plan")?.title).toBe(
+      "Split the plan for three parallel agents.",
+    );
     expect(beat("open-resolve-dispute-plan")?.detail).toBe(
       "Open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
     );
+    expect(beat("open-ledgerly-reviewer")?.title).toBe(
+      "The plan uses custom subagents to control how changes are made.",
+    );
     expect(beat("open-ledgerly-reviewer")?.promptType).toBe("none");
     expect(beat("open-ledgerly-reviewer")?.example).toBeUndefined();
-    expect(beat("open-ledgerly-reviewer")?.detail).toBe("Open .cursor/agents/ledgerly-reviewer.md");
+    expect(beat("open-ledgerly-reviewer")?.detail).toBe(
+      "For any changes to the application, there is a reviewer subagent to check changes.\nOpen .cursor/agents/ledgerly-reviewer.md",
+    );
+    expect(beat("open-dispatch-subagents-skill")?.title).toBe(
+      "The plan has concrete steps for conflict resolution.",
+    );
     expect(beat("open-dispatch-subagents-skill")?.promptType).toBe("none");
     expect(beat("open-dispatch-subagents-skill")?.example).toBeUndefined();
     expect(beat("open-dispatch-subagents-skill")?.detail).toBe(
-      "Open .cursor/skills/dispatch-subagents/SKILL.md.",
+      "Open .cursor/skills/dispatch-subagents/SKILL.md. This skill gives clear guidance to your agents that they should avoid making changes with conflicts.",
     );
+    expect(beat("multitask-resolve-dispute")?.title).toBe("Start multitasking.");
     expect(beat("multitask-resolve-dispute")?.detail).toBe(
       "Build the feature using the /multitask command.",
+    );
+    expect(beat("canvas-subagent-progress")?.title).toBe(
+      "Show the progress of subagents and tasks.",
+    );
+    expect(beat("ledgerly-reviewer-check")?.title).toBe(
+      "Verify the task completed with the subagent.",
     );
     expect(beat("multitask-resolve-dispute")?.example).toBe("/multitask @resolve-dispute.md");
     expect(beat("canvas-subagent-progress")?.promptType).toBe("adaptable");

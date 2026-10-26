@@ -7,9 +7,9 @@ export const RUNBOOK_SECTIONS_201 = [
     beats: [
       {
         id: "rename-agent-1-all",
-        title: "Rename Agent 1 All",
+        title: "Open one agent and ask it for information about the entire codebase.",
         promptType: "reusable",
-        detail: "Open one agent and ask it for information about the entire codebase.",
+        detail: "",
         example: "/rename-chat Agent 1 All",
       },
       {
@@ -21,9 +21,9 @@ export const RUNBOOK_SECTIONS_201 = [
       },
       {
         id: "rename-agent-2-target",
-        title: "Rename Agent 2 Target",
+        title: "Let’s open a second agent. This starts a new context window.",
         promptType: "reusable",
-        detail: "Open a second agent for a new targeted context window.",
+        detail: "",
         example: "/rename-chat Agent 2 Target",
       },
       {
@@ -35,94 +35,100 @@ export const RUNBOOK_SECTIONS_201 = [
       },
       {
         id: "context-usage",
-        title: "Check context usage",
+        title: "Check agent 1’s context window.",
         promptType: "none",
         detail:
-          "Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Go to Agent 2 Target. Click the Context Usage indicator below the chat.",
+          "Go to Agent 1 All chat. Click the Context Usage indicator below the chat. Agent 1 maps all the domains in the whole codebase. Its context window shows X%.",
       },
       {
         id: "compare-agents",
-        title: "Compare agents",
+        title: "Check agent 2’s context window.",
         promptType: "none",
         detail:
-          "Agent 1 maps all the domains in the whole codebase. Its context window shows X%. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.",
+          "Go to Agent 2 Target. Click the Context Usage indicator below the chat. Agent 2 maps half of the domains based on the targeted context. Its context window shows Y%. The difference in context window may not be significant but can affect larger repositories.",
       },
       {
         id: "ask-cross-context",
-        title: "Ask across agents",
+        title: "We want to check if the invoice table can be changed in isolation.",
         promptType: "reusable",
         detail:
-          "Agent 1 mapped all domains; Agent 2 can reuse that summary. Go to Agent 2 Target chat.",
+          "Agent 1 did the work of identifying all domains. Agent 2 can benefit from its summary. It doesn’t need to review the entire codebase again. Go to Agent 2 Target chat.",
         example: "/ask @Agent 1 All Does refactoring the table change anything across all contexts?",
       },
     ],
   },
   {
-    id: "standardize-behavior",
-    title: "How do you standardize agent behavior?",
+    id: "standardize-agents",
+    title: "How do you standardize agents?",
     beats: [
       {
         id: "create-api-personal-skill",
-        title: "Create personal create-api skill",
+        title: "Open a new agent and add a new personal skill.",
         promptType: "reusable",
         detail:
-          "Open a new agent. It scans the entire repository for the pattern. Create a personal skill for how to create a new API. Open skill in ~/.cursor/skills.",
+          "Open a new agent. Every time I ask a new agent to create an API, it forgets how to do it and scans the entire repository for the pattern. Let’s create a skill for it so the agent can do less work. Open skill in ~/.cursor/skills.",
         example:
           "/create-skill for how to create a new API. Follow the standards in this repo. This is a personal skill named create-api.",
       },
       {
         id: "promote-create-api-project",
-        title: "Promote create-api to project",
+        title: "Create a project skill.",
         promptType: "reusable",
         detail:
-          "Promote the create-api skill so teammates can use it. Open skill in .cursor/skills. Review the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
+          "A teammate mentioned they were frustrated because they had to keep correcting the agent when it builds the API. They asked if they could also use the API skill.\nOpen skill in .cursor/skills\nReview the other project skills for this repository, such as add-dashboard-widget, draft-collection-email, or write-prisma-query.",
         example: "Promote the create-api skill to this project.",
       },
     ],
   },
   {
     id: "mcp-more-info",
-    title: "How do you connect an agent to external tools?",
+    title: "How do you connect external tools?",
     beats: [
       {
         id: "add-linear-mcp",
-        title: "Enable Linear MCP",
+        title: "Start the MCP server for the company issue tracker.",
         promptType: "none",
         detail:
-          "Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project. Review MCP servers in Customize > MCPs. Enable the Linear MCP server.",
+          "Let’s start the issue tracker’s MCP server. For this workshop, that is Linear. Get a ticket for this project.\nReview MCP servers in Customize > MCPs\nEnable the Linear MCP server.",
       },
       {
         id: "mcp-allowlist",
-        title: "Check MCP allowlist",
+        title: "Check your allowed MCP servers.",
         promptType: "none",
         detail:
           "Go to Settings > Agents > Execution and Approvals > Allowlist Options > MCP Allowlist to check valid MCP servers and tools from your administrator.",
       },
       {
-        id: "ask-linear-bug",
-        title: "List open issues",
-        promptType: "adaptable",
+        id: "start-issue-agent",
+        title: "Start a new agent.",
+        promptType: "none",
         detail:
-          "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it. Review the tool calls to the Linear MCP server.",
+          "Open a new agent. Someone reported a bug and it was logged in our issue tracker. I want more information on it.",
+      },
+      {
+        id: "ask-linear-bug",
+        title: "Retrieve a bug ticket from the issue tracker.",
+        promptType: "adaptable",
+        detail: "Review the tool calls to the Linear MCP server.",
         example: "List the open issues from our issue tracker.",
       },
       {
         id: "add-local-plugin",
-        title: "Add plugin",
+        title: "Add the plugin.",
         promptType: "none",
         detail:
-          "A teammate created a plugin for standardizing bug fixes. Go to Customize > Plugins > Add > From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
+          "My teammate on another application let me know that they just created a plugin for standardizing and documenting bug fixes on our issue tracker. Go to Customize > Plugins > Add > From Local Repository. Find the plugins/standard-bug-fix file directory and add it.",
       },
       {
         id: "check-plugin",
-        title: "Enable Standard bug fix plugin",
+        title: "Enable the “Standard bug fix” plugin.",
         promptType: "none",
         detail:
           "Go to Customize > Plugins. Go to Personal. Click Add to enable the “Standard bug fix” plugin. Show that the plugin has skills, rules, and MCP server.",
       },
       {
         id: "standard-bug-fix",
-        title: "Standard bug fix",
+        title: "Fix the bug with the standard template.",
         promptType: "adaptable",
         detail:
           "Let’s fix the bug and update the issue with the standard template. Go to the issue in Linear and review the comments following the bug template.",
@@ -136,39 +142,42 @@ export const RUNBOOK_SECTIONS_201 = [
     beats: [
       {
         id: "open-new-agent",
-        title: "Open a new agent",
+        title: "Start a new agent.",
         promptType: "none",
-        detail: "Open a new agent.",
+        detail:
+          "Open a new agent. I created a plan for a feature to resolve disputes, splitting the work across three agents.",
       },
       {
         id: "open-resolve-dispute-plan",
-        title: "Open resolve-dispute plan",
+        title: "Split the plan for three parallel agents.",
         promptType: "none",
         detail:
           "Open .cursor/plans/resolve-dispute.md. Review the plan and how it splits data, API, and UI tasks.",
       },
       {
         id: "open-ledgerly-reviewer",
-        title: "Open ledgerly-reviewer",
+        title: "The plan uses custom subagents to control how changes are made.",
         promptType: "none",
-        detail: "Open .cursor/agents/ledgerly-reviewer.md",
+        detail:
+          "For any changes to the application, there is a reviewer subagent to check changes.\nOpen .cursor/agents/ledgerly-reviewer.md",
       },
       {
         id: "open-dispatch-subagents-skill",
-        title: "Open dispatch-subagents skill",
+        title: "The plan has concrete steps for conflict resolution.",
         promptType: "none",
-        detail: "Open .cursor/skills/dispatch-subagents/SKILL.md.",
+        detail:
+          "Open .cursor/skills/dispatch-subagents/SKILL.md. This skill gives clear guidance to your agents that they should avoid making changes with conflicts.",
       },
       {
         id: "multitask-resolve-dispute",
-        title: "Multitask resolve-dispute",
+        title: "Start multitasking.",
         promptType: "reusable",
         detail: "Build the feature using the /multitask command.",
         example: "/multitask @resolve-dispute.md",
       },
       {
         id: "canvas-subagent-progress",
-        title: "Canvas subagent progress",
+        title: "Show the progress of subagents and tasks.",
         promptType: "adaptable",
         detail:
           "Use Canvas to keep track of the progress of subagents and their tasks. Review Canvas with subagent progress and worktree conflicts.",
@@ -177,7 +186,7 @@ export const RUNBOOK_SECTIONS_201 = [
       },
       {
         id: "ledgerly-reviewer-check",
-        title: "ledgerly-reviewer check",
+        title: "Verify the task completed with the subagent.",
         promptType: "adaptable",
         detail: "Use the specialized reviewer subagent to check the completed task.",
         example: "ledgerly-reviewer check my work",

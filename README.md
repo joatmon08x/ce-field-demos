@@ -95,9 +95,9 @@ Open `runbooks.html` in the Canvas (track 101), copy a card, and paste it in Gro
 
 Open `runbooks.html?track=201`, or switch to 201 with the Catalog menu in the Canvas, copy a card, and paste it in Grok Build. You still review the result.
 
-1. **How do you manage context?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), check context usage, compare agents, ask across chats.
-2. **How do you standardize agent behavior?** — personal create-api skill, promote it to the project.
-3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Use a public or private Linear team and project, then run `stage-linear`.
+1. **How do you manage context?** Rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), check each agent's context window, ask across chats.
+2. **How do you standardize agents?** Personal create-api skill, promote it to the project.
+3. **How do you connect external tools?** Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Use a public or private Linear team and project, then run `stage-linear`.
 4. **How do you parallelize a task?** — open a new agent, open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## The 301 track
