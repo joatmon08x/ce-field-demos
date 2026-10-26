@@ -2,8 +2,8 @@ import type { DemoSection } from "@/runbooks/types";
 
 export const RUNBOOK_SECTIONS_301 = [
   {
-    id: "break-down-tasks",
-    title: "How do you orchestrate tasks across agents?",
+    id: "orchestrate-agents",
+    title: "How do you orchestrate agents?",
     beats: [
       {
         id: "optional-cloud-command-center",
@@ -92,8 +92,8 @@ export const RUNBOOK_SECTIONS_301 = [
     ],
   },
   {
-    id: "plan-to-pr",
-    title: "How do multiple agents go from plan to reviewable code?",
+    id: "plan-to-code",
+    title: "How do you go from plan to code?",
     beats: [
       {
         id: "optional-start-project",
@@ -190,8 +190,8 @@ export const RUNBOOK_SECTIONS_301 = [
     ],
   },
   {
-    id: "scale-reviews",
-    title: "How do you scale AI code reviews?",
+    id: "scale-review",
+    title: "How do you scale review?",
     beats: [
       {
         id: "checkout-fixes-branch",
@@ -238,7 +238,7 @@ export const RUNBOOK_SECTIONS_301 = [
   },
   {
     id: "share-ownership",
-    title: "How do coworkers share ownership safely?",
+    title: "How do you share ownership safely?",
     beats: [
       {
         id: "open-ownership-agent",

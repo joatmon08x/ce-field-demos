@@ -369,15 +369,15 @@ describe("runbook catalog", () => {
     expect(skill).toContain("runbooks.html?track=301");
 
     expect(RUNBOOK_SECTIONS_301.map((section) => section.title)).toEqual([
-      "How do you orchestrate tasks across agents?",
-      "How do multiple agents go from plan to reviewable code?",
-      "How do you scale AI code reviews?",
-      "How do coworkers share ownership safely?"
+      "How do you orchestrate agents?",
+      "How do you go from plan to code?",
+      "How do you scale review?",
+      "How do you share ownership safely?"
     ]);
     expect(RUNBOOK_SECTIONS_301.map((section) => section.id)).toEqual([
-      "break-down-tasks",
-      "plan-to-pr",
-      "scale-reviews",
+      "orchestrate-agents",
+      "plan-to-code",
+      "scale-review",
       "share-ownership"
     ]);
     expect(RUNBOOK_SECTIONS_301.map((section) => section.beats.length)).toEqual([11, 12, 5, 7]);

@@ -23,10 +23,10 @@ The 201 track has four sections. Open `runbooks.html?track=201` and copy a card 
 
 The 301 track has four sections. Open `runbooks.html?track=301` and copy a card for any beat. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser.
 
-1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, use a cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit
-2. **How do multiple agents go from plan to PR?** Optionally start a Project, list collections issues, plan and build, `/side`, consolidate into a PR
-3. **How do you scale AI code reviews?** Feature branch, change reviewer subagent, highest-risk slice
-4. **How do coworkers share ownership safely?** Shift findings left, optional Reviewer automation, files that might conflict
+1. **How do you orchestrate agents?** Open a local agent, create accessibility-auditor, use a cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit
+2. **How do you go from plan to code?** Optionally start a Project, list collections issues, plan and build, `/side`, consolidate into a PR
+3. **How do you scale review?** Feature branch, change reviewer subagent, highest-risk slice
+4. **How do you share ownership safely?** Shift findings left, optional Reviewer automation, files that might conflict
 
 ---
 
@@ -343,7 +343,7 @@ ledgerly-reviewer check my work
 
 Open `runbooks.html?track=301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser. Optional beats are listed on the feature checklist.
 
-### How do you break down tasks for agents?
+### How do you orchestrate agents?
 
 Open a new local agent. Create the accessibility-auditor subagent:
 
@@ -367,7 +367,7 @@ Optional: Click Continue on Cloud to move this to a Cloud Agent. Click Include C
 
 Watch the Working tab.
 
-### How do multiple agents go from plan to PR?
+### How do you go from plan to code?
 
 Optional: Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}. Optional: stage it so each agent runs in its own worktree:
 
@@ -417,7 +417,7 @@ If an agent cannot access Linear MCP server, use the issue descriptions in the r
 Reference issues from @runbooks/linear-field-demos.ts instead of Linear
 ```
 
-### How do you scale AI code reviews?
+### How do you scale review?
 
 Open a new local agent and change to the feature branch:
 
@@ -443,7 +443,7 @@ Check the change reviewer’s output for any high severity issues to assess. Opt
 
 Open the highest-risk slice first and read it line by line.
 
-### How do coworkers share ownership safely?
+### How do you share ownership safely?
 
 Open a new local agent. Shift review findings left:
 
