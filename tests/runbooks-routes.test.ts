@@ -16,8 +16,8 @@ describe("runbooks catalog hrefs", () => {
       "runbooks.html?track=201#201-target-context",
     );
     expect(runbookTrackHref("301")).toBe("runbooks.html?track=301");
-    expect(runbookSectionHref("301", "break-down-tasks")).toBe(
-      "runbooks.html?track=301#301-break-down-tasks",
+    expect(runbookSectionHref("301", "orchestrate-agents")).toBe(
+      "runbooks.html?track=301#301-orchestrate-agents",
     );
   });
 });

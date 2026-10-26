@@ -95,19 +95,19 @@ Open `runbooks.html` in the Canvas (track 101), copy a card, and paste it in Gro
 
 Open `runbooks.html?track=201`, or switch to 201 with the Catalog menu in the Canvas, copy a card, and paste it in Grok Build. You still review the result.
 
-1. **How do you manage context?** — rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), check context usage, compare agents, ask across chats.
-2. **How do you standardize agent behavior?** — personal create-api skill, promote it to the project.
-3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Use a public or private Linear team and project, then run `stage-linear`.
+1. **How do you manage context?** Rename agents, Ask DDD (whole app vs `@invoice-table.tsx`), check each agent's context window, ask across chats.
+2. **How do you standardize agents?** Personal create-api skill, promote it to the project.
+3. **How do you connect external tools?** Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. Use a public or private Linear team and project, then run `stage-linear`.
 4. **How do you parallelize a task?** — open a new agent, open the resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## The 301 track
 
 Open `runbooks.html?track=301`, or switch to 301 with the Catalog menu in the Canvas, copy a card, and paste it in Grok Build. You still review the result. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser.
 
-1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
-2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list collections issues, plan and build, `/side`, consolidate into a PR, and fall back to repo issues if Linear MCP is unavailable.
-3. **How do you scale AI code reviews?** Feature branch, change reviewer subagent, high severity issues, optional Bugbot, highest-risk slice.
-4. **How do coworkers share ownership safely?** Shift findings into a rule, skill, hook, test, subagent, or a person, optional Reviewer automation, and files that might conflict.
+1. **How do you orchestrate agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
+2. **How do you go from plan to code?** Optionally start and stage a Project, list collections issues, plan and build, `/side`, consolidate into a PR, and fall back to repo issues if Linear MCP is unavailable.
+3. **How do you scale review?** Feature branch, change reviewer subagent, high severity issues, optional Bugbot, highest-risk slice.
+4. **How do you share ownership safely?** Shift findings into a rule, skill, hook, test, subagent, or a person, optional Reviewer automation, and files that might conflict.
 
 ## Choose the Linear team (manual)
 

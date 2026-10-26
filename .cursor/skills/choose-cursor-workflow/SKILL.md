@@ -33,19 +33,19 @@ Before the session, run `preflight-checker` with the track id (`preflight-checke
 
 Before the session, run `preflight-checker` with the track id (`preflight-checker track 201`).
 
-1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats.
-2. **How do you standardize agent behavior?** — personal create-api skill, promote it.
-3. **How do you connect an agent to external tools?** — Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. The operator uses a public or private Linear team and project. Public and private projects are both valid. Linear MCP cannot create teams (Settings → Teams → New team; **Make team private** is optional). `stage-linear` accepts a public project and does not force it private. Then run `stage-linear`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
+1. **How do you manage context?** Rename agents, Ask DDD, check each agent's context window, ask across chats.
+2. **How do you standardize agents?** Personal create-api skill, promote it.
+3. **How do you connect external tools?** Linear MCP, MCP allowlist, list open issues from the issue tracker, add `plugins/standard-bug-fix` from the local repository, enable the Standard bug fix plugin (skills, rules, MCP server), standard bug fix on the overdue filter. The operator uses a public or private Linear team and project. Public and private projects are both valid. Linear MCP cannot create teams (Settings → Teams → New team; **Make team private** is optional). `stage-linear` accepts a public project and does not force it private. Then run `stage-linear`. `.cursor/mcp.json` has no project servers and there is no `mcp/` directory. Do not stand up a SQLite MCP.
 4. **How do you parallelize a task?** — open a new agent, resolve-dispute plan, ledgerly-reviewer, dispatch-subagents skill, `/multitask`, Canvas subagent progress, ledgerly-reviewer check.
 
 ## 301 sections and beats
 
 Before the session, run `preflight-checker` with the track id (`preflight-checker track 301`).
 
-1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
-2. **How do multiple agents go from plan to PR?** Optionally start and stage a Project, list open collections issues, plan and build, use `/side`, consolidate into a PR, and fall back to repo issue descriptions if Linear MCP is unavailable.
-3. **How do you scale AI code reviews?** Open the feature branch, run the change reviewer subagent, check high severity issues, optionally run Bugbot, and read the highest-risk slice.
-4. **How do coworkers share ownership safely?** Shift review findings into a rule, skill, hook, test, subagent, or a person, optionally create a Reviewer automation, and list files that might conflict.
+1. **How do you orchestrate agents?** Open a local agent, create accessibility-auditor, point the subagent at a faster cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit, and watch the Working tab.
+2. **How do you go from plan to code?** Optionally start and stage a Project, list open collections issues, plan and build, use `/side`, consolidate into a PR, and fall back to repo issue descriptions if Linear MCP is unavailable.
+3. **How do you scale review?** Open the feature branch, run the change reviewer subagent, check high severity issues, optionally run Bugbot, and read the highest-risk slice.
+4. **How do you share ownership safely?** Shift review findings into a rule, skill, hook, test, subagent, or a person, optionally create a Reviewer automation, and list files that might conflict.
 
 ## Choose the mode
 

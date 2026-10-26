@@ -16,17 +16,17 @@ The 101 track has three sections. Open `runbooks.html` in the Canvas and copy a 
 
 The 201 track has four sections. Open `runbooks.html?track=201` and copy a card for any beat.
 
-1. **How do you manage context?** — rename agents, Ask DDD, check context usage, compare agents, ask across chats
-2. **How do you standardize agent behavior?** — [create-api skill](#create-api-skill), promote it
-3. **How do you connect an agent to external tools?** — [Linear team](#choose-the-linear-team-manual), Linear MCP, list open issues, import plugin from disk
+1. **How do you manage context?** Rename agents, Ask DDD, check each agent's context window, ask across chats
+2. **How do you standardize agents?** [create-api skill](#create-api-skill), promote it
+3. **How do you connect external tools?** [Linear team](#choose-the-linear-team-manual), Linear MCP, list open issues, import plugin from disk
 4. **How do you parallelize a task?** — [open a new agent](#open-the-plan), resolve-dispute plan, `/multitask`, Canvas subagent progress, ledgerly-reviewer check
 
 The 301 track has four sections. Open `runbooks.html?track=301` and copy a card for any beat. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser.
 
-1. **How do you break down tasks for agents?** Open a local agent, create accessibility-auditor, use a cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit
-2. **How do multiple agents go from plan to PR?** Optionally start a Project, list collections issues, plan and build, `/side`, consolidate into a PR
-3. **How do you scale AI code reviews?** Feature branch, change reviewer subagent, highest-risk slice
-4. **How do coworkers share ownership safely?** Shift findings left, optional Reviewer automation, files that might conflict
+1. **How do you orchestrate agents?** Open a local agent, create accessibility-auditor, use a cost-efficient model, optionally move to a Cloud Agent, `/multitask` the audit
+2. **How do you go from plan to code?** Optionally start a Project, list collections issues, plan and build, `/side`, consolidate into a PR
+3. **How do you scale review?** Feature branch, change reviewer subagent, highest-risk slice
+4. **How do you share ownership safely?** Shift findings left, optional Reviewer automation, files that might conflict
 
 ---
 
@@ -266,7 +266,7 @@ Open `runbooks.html?track=201`. Four section tabs match the Outline Show heading
 
 ### How do you manage context?
 
-Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat. Compare agents: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
+Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). Ask each for domain-driven design (whole app vs `@invoice-table.tsx`). Go to Agent 1 All chat. Select the Context Usage indicator below the chat. Go to Agent 2 Target. Select the Context Usage indicator below the chat. Check each context window: Agent 1 maps all the domains in the whole codebase. Agent 2 maps half of the domains based on the targeted context. Then ask across chats:
 
 ```text
 /ask what is the domain driven design of the application.
@@ -280,7 +280,7 @@ Rename two agents (`/rename-chat Agent 1 All`, `/rename-chat Agent 2 Target`). A
 /ask @Agent 1 All Does refactoring the table change anything across all contexts?
 ```
 
-### How do you standardize agent behavior?
+### How do you standardize agents?
 
 #### Create-api skill
 
@@ -303,7 +303,7 @@ npm run demo:session -- record skill "$HOME/.cursor/skills/create-api"
 npm run demo:session -- record project-path .cursor/skills/create-api
 ```
 
-### How do you connect an agent to external tools?
+### How do you connect external tools?
 
 Use a public or private Linear team and project ([steps above](#choose-the-linear-team-manual)): Settings → Teams → New team when you need a new one, or leave an existing team public. **Make team private** is optional. `stage-linear` accepts a public project and does not force it private. Then run `stage-linear`.
 
@@ -343,7 +343,7 @@ ledgerly-reviewer check my work
 
 Open `runbooks.html?track=301`. Four section tabs match the Outline Show headings. Copy a card; Do text and prompts are on the card. Optional features are checkboxes, checked by default. Uncheck a feature to hide its beats. The choice is saved in the browser. Optional beats are listed on the feature checklist.
 
-### How do you break down tasks for agents?
+### How do you orchestrate agents?
 
 Open a new local agent. Create the accessibility-auditor subagent:
 
@@ -367,7 +367,7 @@ Optional: Click Continue on Cloud to move this to a Cloud Agent. Click Include C
 
 Watch the Working tab.
 
-### How do multiple agents go from plan to PR?
+### How do you go from plan to code?
 
 Optional: Start a new Project. Name it {INSERT COMPANY HERE, default is Ledgerly}. Optional: stage it so each agent runs in its own worktree:
 
@@ -417,7 +417,7 @@ If an agent cannot access Linear MCP server, use the issue descriptions in the r
 Reference issues from @runbooks/linear-field-demos.ts instead of Linear
 ```
 
-### How do you scale AI code reviews?
+### How do you scale review?
 
 Open a new local agent and change to the feature branch:
 
@@ -443,7 +443,7 @@ Check the change reviewer’s output for any high severity issues to assess. Opt
 
 Open the highest-risk slice first and read it line by line.
 
-### How do coworkers share ownership safely?
+### How do you share ownership safely?
 
 Open a new local agent. Shift review findings left:
 
