@@ -3,7 +3,7 @@
 export const LINEAR_FIELD_DEMOS_PROJECT = {
   name: "ce-field-demos",
   summary:
-    "Ledgerly board: three scoped Fieldnote issues plus the Collections Command Center slices.",
+    "Ledgerly board: four scoped Fieldnote issues plus the Collections Command Center slices.",
   workspace: "Fieldnote Workspace",
   operator: "Avery Quinn",
   catalogPricesUsd: ["$49", "$99", "$249"] as const,
@@ -15,7 +15,7 @@ export type FieldDemoIssueStatus = "Todo" | "In Progress";
 export type FieldDemoPriority = 2 | 3;
 
 export type FieldDemoIssue = {
-  slug: "email-on-invoice" | "suggested-credit-v1" | "filter-pills";
+  slug: "email-on-invoice" | "suggested-credit-v1" | "filter-pills" | "a11y-contrast";
   type: FieldDemoIssueType;
   state: FieldDemoIssueStatus;
   /** Linear: 2=High, 3=Medium */
@@ -196,6 +196,58 @@ Redaction of the address, the filter pills, suggested credit, dispute resolution
       "http://127.0.0.1:43173/invoices/inv_1042",
     ],
   },
+  {
+    slug: "a11y-contrast",
+    type: "Bug",
+    state: "Todo",
+    priority: 2,
+    title: "Accessibility contrast tests fail 4.5:1 on badges, muted text, and the up KPI",
+    description: `## Bug
+
+\`npm run test:a11y\` fails WCAG 1.4.3 text contrast (4.5:1) in \`tests/a11y/contrast.test.ts\`. Label checks in \`tests/a11y/labels.test.tsx\` pass. \`npm test\` does not run this suite.
+
+## Failing pairs
+
+Light theme:
+
+- \`--success\` on \`--success-soft\` (Paid and Accepted badges)
+- \`--warning\` on \`--warning-soft\` (Open and dispute warning badges)
+- \`--danger\` on \`--danger-soft\` (Overdue, Disputed badges, suggested credit)
+- \`--muted-foreground\` on \`--muted\` (muted badge, search placeholder)
+- \`--muted-foreground\` on \`--indigo-soft\` (collections queue callout)
+- \`--success\` on \`--card\` (KPI growth up)
+
+Dark theme:
+
+- \`--danger\` on \`--danger-soft\` (Overdue, Disputed badges, suggested credit)
+
+## Fix
+
+Change existing token values in \`app/globals.css\` (\`:root\` and \`.dark\`) until each pair is at least 4.5:1. Do not add a hex color in a component. Do not edit \`tests/a11y/contrast.test.ts\` to drop a pair or lower the ratio. Pairs that already pass stay at or above 4.5:1.
+
+## Acceptance
+
+- \`npm run test:a11y\` passes.
+- \`npm test\` stays 1 failed / 32 passed.
+- \`test:a11y\` stays out of \`npm test\`, the environment start command, and \`scripts/demo-reset.ts\`.
+
+## Paths
+
+- \`app/globals.css\`
+
+The contrast test is the check, not a file to edit.
+
+## Verify
+
+- \`npm run test:a11y\`
+- http://127.0.0.1:43173/invoices — Paid, Open, and Overdue badge text in light and dark
+
+## Out of scope
+
+The keyboard walkthrough (skip link, focus, notice bell), suggested credit, filter pills, dispute resolution, and catalog prices.`,
+    ledgerlyPaths: ["app/globals.css"],
+    ledgerlyUrls: ["http://127.0.0.1:43173/invoices"],
+  },
 ] as const;
 
 export const FIELD_DEMO_SUGGESTED_CREDIT_TITLE = FIELD_DEMO_ISSUES.find(
@@ -208,9 +260,10 @@ export const FIELD_DEMO_FILTER_TITLE = FIELD_DEMO_ISSUES.find(
 
 /**
  * Collections Command Center slices.
- * stage-linear stages these on the same ce-field-demos project, after the three
+ * stage-linear stages these on the same ce-field-demos project, after the four
  * Fieldnote issues, tagged with COLLECTIONS_COMMAND_CENTER_LINEAR. They must not
- * join FIELD_DEMO_ISSUES: the 101/201 beats still name only those three titles.
+ * join FIELD_DEMO_ISSUES. The 101/201 beats still name only the suggested-credit,
+ * filter, and email titles.
  */
 export type CollectionsCommandCenterPattern = "Operations" | "Business rules";
 
@@ -219,7 +272,7 @@ export const COLLECTIONS_COMMAND_CENTER_LINEAR = {
   /** Team-scoped label on the confirmed team. Never a workspace label. */
   label: "Collections Command Center",
   /** First line of every slice description, so the tag survives a label strip. */
-  note: "> **Collections Command Center feature.** This issue is one slice of the Collections Command Center (prds/prd-01-collections-command-center.md). It is not one of the three Fieldnote demo issues.",
+  note: "> **Collections Command Center feature.** This issue is one slice of the Collections Command Center (prds/prd-01-collections-command-center.md). It is not one of the four Fieldnote demo issues.",
   state: "Todo",
   /** Linear: 3=Medium */
   priority: 3,
@@ -462,7 +515,7 @@ export function collectionsCommandCenterDescription(issue: CollectionsCommandCen
 
 /**
  * WCAG keyboard walkthrough on the ce-field-demos board.
- * stage-linear stages this as the thirteenth issue (Todo, priority 3): creates
+ * stage-linear stages this as the fourteenth issue (Todo, priority 3): creates
  * it when missing, reopens a match to Todo, and updates an open copy in place.
  * It is not a Fieldnote beat and not a Collections Command Center slice.
  */

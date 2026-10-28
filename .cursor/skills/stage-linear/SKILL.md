@@ -11,13 +11,13 @@ Catalog stays Starter **$49**, Growth **$99**, Scale **$249**. Operator Avery Qu
 
 Issue bodies live in `runbooks/linear-field-demos.ts`. The board has two sets on the **same** project, never a second project:
 
-- **Fieldnote issues** — the three in `FIELD_DEMO_ISSUES`. The 101/201 beats name only these titles.
+- **Fieldnote issues** — the four in `FIELD_DEMO_ISSUES`. The 101/201 beats name only the suggested-credit, filter, and email titles.
 - **Collections Command Center slices** — the nine in `COLLECTIONS_COMMAND_CENTER_ISSUES`, each tagged as part of the Collections Command Center feature (§3a).
-- **WCAG keyboard walkthrough** — `WCAG_KEYBOARD_WALKTHROUGH`. Staged as the thirteenth issue (§3b). Not a Fieldnote beat and not a Collections slice.
+- **WCAG keyboard walkthrough** — `WCAG_KEYBOARD_WALKTHROUGH`. Staged as the fourteenth issue (§3b). Not a Fieldnote beat and not a Collections slice.
 
 A WCAG audit on that project (`WCAG_KEYBOARD_WALKTHROUGH`) is a manual keyboard walkthrough. Create it when missing; reopen a match to `Todo`. Update that copy in place when it is already open.
 
-Do not invent another issue or a fourth price.
+Do not invent an issue that is not in the catalog, or a fourth price.
 
 ## Team
 
@@ -69,7 +69,7 @@ Create it with `save_project` only when it is missing. Otherwise update the exis
 - `lead`: `"me"`
 - `state`: `Backlog` — not a company initiative
 - `summary`: from `LINEAR_FIELD_DEMOS_PROJECT.summary`
-- `description`: Fieldnote demo board. Three scoped issues plus the Collections Command Center slices and the WCAG keyboard walkthrough. Confirmed team only.
+- `description`: Fieldnote demo board. Four scoped issues plus the Collections Command Center slices and the WCAG keyboard walkthrough. Confirmed team only.
 - Privacy: leave the project **public** unless the operator asks for private. If `save_project` accepts `private`, pass `private: false` (or omit it). Never force `private: true` on create or update.
 
 A prior `reset-demo-state` may leave this project `Canceled` with its issues `Canceled` and still attached (they are not unlinked on reset). Reactivate it: setting `state`: `Backlog` here reopens the board, and §3 / §3a / §3b reopen those matches to `Todo`. Archived issues are not reopened.
@@ -92,6 +92,7 @@ Create missing issues **sequentially** in the `FIELD_DEMO_ISSUES` array order. N
 1. `Suggested credit on dsp_1043 shows $400 instead of the $249 Scale cap`
 2. `Clicking Overdue or Needs review does not filter the queue`
 3. `Invoice detail has no control to change customer email`
+4. `Accessibility contrast tests fail 4.5:1 on badges, muted text, and the up KPI`
 
 Within a Fieldnote create batch, create them in that order, so the filter issue is second in the batch. Do not unarchive an older issue to keep an earlier timestamp. For each missing issue, `save_issue`:
 
@@ -107,7 +108,7 @@ Do not comment as a fake reporter. Avery Quinn copy is already in the descriptio
 
 ## 3a. Collections Command Center slices
 
-Stage these **after** the three Fieldnote issues exist, on the **same** project. Do not create a second project, initiative, or milestone for the feature. Everything here is read from `COLLECTIONS_COMMAND_CENTER_ISSUES` and `COLLECTIONS_COMMAND_CENTER_LINEAR` in `runbooks/linear-field-demos.ts`.
+Stage these **after** the four Fieldnote issues exist, on the **same** project. Do not create a second project, initiative, or milestone for the feature. Everything here is read from `COLLECTIONS_COMMAND_CENTER_ISSUES` and `COLLECTIONS_COMMAND_CENTER_LINEAR` in `runbooks/linear-field-demos.ts`.
 
 **Tag.** Every slice is marked as part of the Collections Command Center feature in two places:
 
@@ -118,7 +119,7 @@ Stage these **after** the three Fieldnote issues exist, on the **same** project.
 
 An archived slice is not a match. Do not unarchive it. Create a new issue for that title and leave the archived one archived.
 
-Create missing slices **sequentially** in array order, after the three Fieldnote issues. Never in parallel. For each, `save_issue`:
+Create missing slices **sequentially** in array order, after the four Fieldnote issues. Never in parallel. For each, `save_issue`:
 
 - `team`: the confirmed team
 - `project`: the same project as the Fieldnote issues
@@ -141,15 +142,15 @@ Array order:
 8. `Dashboard shows collections totals on the next load`
 9. `Dollar amounts stay masked outside Starter, Growth, and Scale`
 
-These slices are not 101/201 beats. Do not paste them into runbooks, and do not put the tag on the three Fieldnote issues.
+These slices are not 101/201 beats. Do not paste them into runbooks, and do not put the tag on the four Fieldnote issues.
 
 ## 3b. WCAG audit
 
 `WCAG_KEYBOARD_WALKTHROUGH` in `runbooks/linear-field-demos.ts` is a manual keyboard walkthrough. That is the whole WCAG 2.2 Level AA audit. A static pass over markup or tokens does not complete it.
 
-The title is `UI changes need a WCAG 2.2 AA accessibility audit`. It is not one of the three Fieldnote issues and not a Collections Command Center slice. Do not add it to `FIELD_DEMO_ISSUES`, do not tag it with the feature label, and do not paste it into a runbook beat.
+The title is `UI changes need a WCAG 2.2 AA accessibility audit`. It is not one of the four Fieldnote issues and not a Collections Command Center slice. Do not add it to `FIELD_DEMO_ISSUES`, do not tag it with the feature label, and do not paste it into a runbook beat.
 
-Stage it **after** the three Fieldnote issues and the nine Collections slices. Match a **non-archived** issue by that exact title. When a match exists, `save_issue` with that identifier and the catalog `title`, `description`, `priority` (3), and `state`: `Todo`. Assignee stays `"me"`. An open WCAG issue is updated, not duplicated. The description must start by saying the issue is a manual keyboard walkthrough (Tab, Shift+Tab, Enter, Escape on the running invoices page).
+Stage it **after** the four Fieldnote issues and the nine Collections slices. Match a **non-archived** issue by that exact title. When a match exists, `save_issue` with that identifier and the catalog `title`, `description`, `priority` (3), and `state`: `Todo`. Assignee stays `"me"`. An open WCAG issue is updated, not duplicated. The description must start by saying the issue is a manual keyboard walkthrough (Tab, Shift+Tab, Enter, Escape on the running invoices page).
 
 Create this title when it is missing (no unarchived match). If the match is `Canceled` and `save_issue` cannot change its state, leave that canceled issue linked, do not retry it, and create a new issue for the title. Do not unarchive an archived copy.
 
@@ -168,7 +169,7 @@ Report:
 - Nine Collections Command Center identifiers + titles + URLs, and that each description starts with the feature note and carries the team label (or that the label was skipped and why)
 - The live WCAG keyboard-walkthrough identifier + title + URL, and that its description starts by saying the audit is a manual keyboard walkthrough, and it was not canceled as an extra
 - That `teams` on the project is only the confirmed team
-- That the **active** (unarchived, non-`Canceled`) issues on the project are exactly those thirteen titles — three Fieldnote, nine Collections Command Center, and WCAG — ignore canceled leftovers that could not be reopened and archived leftovers still linked from a prior reset or reconcile
+- That the **active** (unarchived, non-`Canceled`) issues on the project are exactly those fourteen titles — four Fieldnote, nine Collections Command Center, and WCAG — ignore canceled leftovers that could not be reopened and archived leftovers still linked from a prior reset or reconcile
 - Canceled leftovers that could not be reopened, and archived leftovers, by title only
 - That the filter issue is second within its Fieldnote create batch
 
@@ -176,7 +177,7 @@ Runbook pastes use **titles**, not identifiers, so you do not edit runbook beats
 
 ## Record for reset
 
-After confirming the team and all thirteen **live** issue identifiers (three Fieldnote, then nine Collections Command Center, then the live WCAG issue), record that board. Do not record a canceled issue that was replaced. Do not record archived identifiers:
+After confirming the team and all fourteen **live** issue identifiers (four Fieldnote, then nine Collections Command Center, then the live WCAG issue), record that board. Do not record a canceled issue that was replaced. Do not record archived identifiers:
 
 ```bash
 npm run demo:session -- record linear <teamId> "<teamName>" <teamKey> <projectId> <issueId,...,issueId>
