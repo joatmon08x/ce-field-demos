@@ -83,23 +83,57 @@ On http://127.0.0.1:43173/disputes, click **Needs review**. The queue still show
 
 Same control on both pages. Fix filter selection so the active pill matches the rows. Do not split this into two issues.
 
+## Cause
+
+Pills link to \`?state=\`. Both pages read \`status\`, so the value stays \`ALL\`, every row stays, and All stays highlighted. The invoice search field also writes \`status\`, so a search drops the pill even after the pages read \`state\`.
+
+## Fix
+
+Leave \`components/filter-pills.tsx\` writing \`state\`. Do not rename that query key to \`status\`.
+
+Read \`state\` (default \`ALL\`) in \`app/invoices/page.tsx\` and \`app/disputes/page.tsx\`. Pass that value to \`getInvoices\` / \`getDisputes\` and to \`FilterPills\`.
+
+In \`components/search-field.tsx\`, submit and preserve the active filter as \`state\` so \`q\` does not clear it.
+
+\`getInvoices\` and \`getDisputes\` still compare the invoice or dispute \`status\` field. That argument is the row field, not the query key.
+
+## Ids
+
+Invoice pills: \`ALL\`, \`OPEN\`, \`OVERDUE\`, \`PAID\`, \`DRAFT\`, \`VOID\`.
+
+Dispute pills: \`ALL\`, \`NEEDS_REVIEW\`, \`OPEN\`, \`ACCEPTED\`, \`DECLINED\`.
+
+The highlighted pill is the one whose id equals \`state\`.
+
 ## Acceptance
 
 - On /invoices, Overdue shows only OVERDUE rows and only that pill is active.
 - On /disputes, Needs review shows only NEEDS_REVIEW rows and only that pill is active.
 - All still lists the full seeded book.
+- A search on the filtered invoice list keeps \`state\`.
 
 ## Paths
 
-- \`components/filter-pills.tsx\`
+- \`components/filter-pills.tsx\` (leave the query key as \`state\`)
 - \`app/invoices/page.tsx\`
 - \`app/disputes/page.tsx\`
+- \`components/search-field.tsx\`
 
 ## Verify
 
-- http://127.0.0.1:43173/invoices
-- http://127.0.0.1:43173/disputes`,
-    ledgerlyPaths: ["components/filter-pills.tsx", "app/invoices/page.tsx", "app/disputes/page.tsx"],
+- http://127.0.0.1:43173/invoices?state=OVERDUE — only OVERDUE rows, only Overdue highlighted. A search keeps \`state\`.
+- http://127.0.0.1:43173/disputes?state=NEEDS_REVIEW — only NEEDS_REVIEW rows, only Needs review highlighted.
+- http://127.0.0.1:43173/invoices and http://127.0.0.1:43173/disputes with no \`state\` param list the full book and All stays highlighted.
+
+## Out of scope
+
+Suggested credit, dispute resolution, catalog prices, and customer names.`,
+    ledgerlyPaths: [
+      "components/filter-pills.tsx",
+      "app/invoices/page.tsx",
+      "app/disputes/page.tsx",
+      "components/search-field.tsx",
+    ],
     ledgerlyUrls: ["http://127.0.0.1:43173/invoices", "http://127.0.0.1:43173/disputes"],
   },
   {
