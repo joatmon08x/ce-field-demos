@@ -11,13 +11,14 @@ import {
 } from "@/runbooks/linear-field-demos";
 
 describe("ce-field-demos Linear book", () => {
-  it("keeps the three scoped issues and catalog prices", () => {
+  it("keeps the scoped Fieldnote issues and catalog prices", () => {
     expect(LINEAR_FIELD_DEMOS_PROJECT.name).toBe("ce-field-demos");
     expect(LINEAR_FIELD_DEMOS_PROJECT.catalogPricesUsd).toEqual(["$49", "$99", "$249"]);
     expect(FIELD_DEMO_ISSUES.map((issue) => issue.slug)).toEqual([
       "suggested-credit-v1",
       "filter-pills",
       "email-on-invoice",
+      "a11y-contrast",
     ]);
     expect(FIELD_DEMO_ISSUES[1]?.title).toBe(
       "Clicking Overdue or Needs review does not filter the queue",
@@ -28,10 +29,15 @@ describe("ce-field-demos Linear book", () => {
     expect(FIELD_DEMO_FILTER_TITLE).toBe(
       "Clicking Overdue or Needs review does not filter the queue",
     );
+    expect(FIELD_DEMO_ISSUES[3]?.title).toBe(
+      "Accessibility contrast tests fail 4.5:1 on badges, muted text, and the up KPI",
+    );
+    expect(FIELD_DEMO_ISSUES[3]?.previousTitles).toBeUndefined();
     expect(FIELD_DEMO_ISSUES.map((issue) => issue.previousTitles?.[0])).toEqual([
       "Dispute dsp_1043 claims $400 against a $249 Scale invoice",
       "Overdue / Needs review filter does not change the list",
       "Change customer email on invoice detail",
+      undefined,
     ]);
   });
 
@@ -91,7 +97,7 @@ describe("ce-field-demos Linear book", () => {
     ]);
   });
 
-  it("keeps the WCAG audit as a manual keyboard walkthrough outside the twelve titles", () => {
+  it("keeps the WCAG audit as a manual keyboard walkthrough outside the Fieldnote and Collections titles", () => {
     expect(WCAG_KEYBOARD_WALKTHROUGH.title).toBe(
       "UI changes need a WCAG 2.2 AA accessibility audit",
     );
