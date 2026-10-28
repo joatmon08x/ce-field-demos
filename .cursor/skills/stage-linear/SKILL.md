@@ -165,7 +165,7 @@ Report:
 - The confirmed team: name, key, and settings URL
 - That every write used only the confirmed team
 - Project URL
-- Three Fieldnote issue identifiers + titles + URLs
+- Four Fieldnote issue identifiers + titles + URLs
 - Nine Collections Command Center identifiers + titles + URLs, and that each description starts with the feature note and carries the team label (or that the label was skipped and why)
 - The live WCAG keyboard-walkthrough identifier + title + URL, and that its description starts by saying the audit is a manual keyboard walkthrough, and it was not canceled as an extra
 - That `teams` on the project is only the confirmed team

@@ -29,6 +29,10 @@ describe("ce-field-demos Linear book", () => {
     expect(FIELD_DEMO_FILTER_TITLE).toBe(
       "Clicking Overdue or Needs review does not filter the queue",
     );
+    expect(FIELD_DEMO_ISSUES[3]?.title).toBe(
+      "Accessibility contrast tests fail 4.5:1 on badges, muted text, and the up KPI",
+    );
+    expect(FIELD_DEMO_ISSUES[3]?.previousTitles).toBeUndefined();
     expect(FIELD_DEMO_ISSUES.map((issue) => issue.previousTitles?.[0])).toEqual([
       "Dispute dsp_1043 claims $400 against a $249 Scale invoice",
       "Overdue / Needs review filter does not change the list",
