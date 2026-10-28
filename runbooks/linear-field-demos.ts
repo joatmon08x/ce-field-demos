@@ -149,23 +149,52 @@ Open an invoice from http://127.0.0.1:43173/invoices. The customer card shows th
 
 Invoice amounts stay on the catalog: Starter $49, Growth $99, Scale $249. Customer names and .example addresses stay on the Fieldnote book.
 
+## Write
+
+Persist \`Customer.email\` only. Do not add an email column on \`Invoice\`. Name, contact name, and plan stay. Unknown customer id returns 404. Do not add email-format validation, and do not reject an empty string. Store the submitted string.
+
+## Save
+
+On the Customer card, a text field prefilled with the current email and a Save email button. Click submits. Do not save on each keystroke. The button calls \`PATCH /api/customers/[id]\` with \`{ email }\`, where \`id\` is that invoice's customer id.
+
+Leave the collection-note textarea and its disabled Save note button alone (\`lib/collection-note.ts\`).
+
+## Other invoices
+
+After a successful save, reload of any invoice with the same \`customerId\` shows the stored email. A different customer's invoice stays on its seeded address.
+
 ## Acceptance
 
 - Invoice detail customer card can change the seeded contact email.
+- The write lands on \`Customer.email\` through \`PATCH /api/customers/[id]\`.
 - No email-format validation is added.
 - Customer names and .example addresses stay on the Fieldnote book.
+- Another invoice for that customer shows the saved email. An invoice for a different customer does not.
 
 ## Paths
 
 - \`app/invoices/[id]/page.tsx\`
+- \`app/api/customers/[id]/route.ts\`
 
 ## Verify
 
-- http://127.0.0.1:43173/invoices — pick any invoice, edit email on the customer card
+- http://127.0.0.1:43173/invoices/inv_1048 — Maple & Ember. The Customer card has the control. This customer has only this invoice. The 101 verify beat uses this page.
+- http://127.0.0.1:43173/invoices/inv_1041 — Acme North, seeded \`billing@acmenorth.example\`. Save a new address.
+- http://127.0.0.1:43173/invoices/inv_1051 — same customer. After reload, the card shows that saved address.
+- http://127.0.0.1:43173/invoices/inv_1042 — Riverstone Labs still shows \`hello@riverstone.example\`.
 
-Matches the 101 Plan beat. Keep the change on the invoice detail customer card.`,
-    ledgerlyPaths: ["app/invoices/[id]/page.tsx"],
-    ledgerlyUrls: ["http://127.0.0.1:43173/invoices"],
+Matches the 101 Plan beat. Keep the change on the invoice detail customer card.
+
+## Out of scope
+
+Redaction of the address, the filter pills, suggested credit, dispute resolution, catalog prices, and new customers. A test that writes restores the customer email. A new passing test updates the shipped suite citations in the same change. The sole failure stays \`tests/suggested-credit-api.test.ts\`.`,
+    ledgerlyPaths: ["app/invoices/[id]/page.tsx", "app/api/customers/[id]/route.ts"],
+    ledgerlyUrls: [
+      "http://127.0.0.1:43173/invoices/inv_1048",
+      "http://127.0.0.1:43173/invoices/inv_1041",
+      "http://127.0.0.1:43173/invoices/inv_1051",
+      "http://127.0.0.1:43173/invoices/inv_1042",
+    ],
   },
 ] as const;
 
