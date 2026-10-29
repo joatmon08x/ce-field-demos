@@ -20,7 +20,18 @@ export type AccountActivityRow = {
   actorName: string;
   occurredOn: Date;
   invoice: { number: string } | null;
+  note: { body: string } | null;
 };
+
+function formatActivityTimestamp(value: Date): string {
+  const time = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  }).format(value);
+  return `${formatDate(value)}, ${time}`;
+}
 
 export function AccountActivity({ activities }: { activities: readonly AccountActivityRow[] }) {
   return (
@@ -49,6 +60,7 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                   <TableHead className="text-right">Amount</TableHead>
                   <TableHead>Method</TableHead>
                   <TableHead>By</TableHead>
+                  <TableHead>Note</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -56,7 +68,9 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                   <TableRow key={activity.id}>
                     <TableCell className="text-muted-foreground">
                       <time dateTime={activity.occurredOn.toISOString()}>
-                        {formatDate(activity.occurredOn)}
+                        {activity.note
+                          ? formatActivityTimestamp(activity.occurredOn)
+                          : formatDate(activity.occurredOn)}
                       </time>
                     </TableCell>
                     <TableCell className="font-mono text-[13px]">{activity.type}</TableCell>
@@ -69,6 +83,9 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                     </TableCell>
                     <TableCell>{activity.method ? paymentMethodLabel(activity.method) : "—"}</TableCell>
                     <TableCell>{activity.actorName}</TableCell>
+                    <TableCell className="max-w-sm whitespace-pre-wrap">
+                      {activity.note?.body ?? "—"}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -162,7 +162,10 @@ const customerAccountInclude = {
       { occurredOn: "desc" as const },
       { createdAt: "desc" as const },
     ] satisfies Prisma.ActivityOrderByWithRelationInput[],
-    include: { invoice: { select: { number: true } } },
+    include: {
+      invoice: { select: { number: true } },
+      note: { select: { body: true, createdAt: true } },
+    },
   },
 } satisfies Prisma.CustomerInclude;
 

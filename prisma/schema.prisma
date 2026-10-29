@@ -28,6 +28,7 @@ model Customer {
   createdAt   DateTime  @default(now())
   invoices    Invoice[]
   activities  Activity[]
+  notes       CollectionNote[]
 }
 
 model Invoice {
@@ -51,6 +52,7 @@ model Invoice {
   disputes        Dispute[]
   payments        Payment[]
   activities      Activity[]
+  notes           CollectionNote[]
 }
 
 model InvoiceLine {
@@ -89,21 +91,41 @@ model Payment {
   @@index([invoiceId])
 }
 
+/// Saved on the account. Distinct from Invoice.collectionNote, the unfinished invoice-page draft.
+model CollectionNote {
+  id         String     @id
+  customerId String
+  customer   Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  invoiceId  String?
+  invoice    Invoice?   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  authorName String
+  body       String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  activities Activity[]
+
+  @@index([customerId, createdAt])
+  @@index([invoiceId])
+}
+
 /// Account activity feed. Later collections slices append rows here.
 model Activity {
-  id          String   @id
+  id          String          @id
   customerId  String
-  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customer    Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
   invoiceId   String?
-  invoice     Invoice? @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoice     Invoice?        @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  noteId      String?
+  note        CollectionNote? @relation(fields: [noteId], references: [id], onDelete: SetNull)
   type        String
   status      String
   amountCents Int?
   method      String?
   actorName   String
   occurredOn  DateTime
-  createdAt   DateTime @default(now())
+  createdAt   DateTime        @default(now())
 
   @@index([customerId, occurredOn])
   @@index([invoiceId])
+  @@index([noteId])
 }
