@@ -8,6 +8,7 @@ import { formatUsd } from "@/lib/money";
 import {
   NUDGE_CHANNEL_EMAIL,
   NUDGE_SENT,
+  NUDGE_STATUS_FAILED,
   NUDGE_STATUS_SENT,
   clearRecordedNudges,
   nudgeTemplate,
@@ -150,20 +151,46 @@ describe("send nudge", () => {
     expect(await prisma.activity.count({ where: { invoiceId: OPEN_INVOICE_ID } })).toBe(0);
   });
 
-  it("returns 400 when the account has no email on file and stores nothing", async () => {
+  it.each([
+    ["missing", ""],
+    ["not an email address", "not-an-email"],
+  ])("logs NUDGE_SENT with status failed when the email is %s", async (_label, email) => {
     await prisma.customer.update({
       where: { id: COBALT_CUSTOMER_ID },
-      data: { email: "" },
+      data: { email },
     });
 
     const response = await post(OVERDUE_INVOICE_ID);
+    const payload = await response.json();
+    const invoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: OVERDUE_INVOICE_ID },
+      include: { payments: true },
+    });
 
-    expect(response.status).toBe(400);
-    await expect(response.json()).resolves.toEqual({
-      error: "No email address is on file for this account.",
+    expect(response.status).toBe(200);
+    expect(payload.activity).toMatchObject({
+      customerId: COBALT_CUSTOMER_ID,
+      invoiceId: OVERDUE_INVOICE_ID,
+      type: NUDGE_SENT,
+      status: NUDGE_STATUS_FAILED,
+      channel: NUDGE_CHANNEL_EMAIL,
+      body: nudgeTemplate(invoice),
+      amountCents: PLAN_PRICE_CENTS.SCALE,
+      actorName: DEMO_OPERATOR.name,
+      occurredOn: DEMO_AS_OF.toISOString(),
+      to: email,
     });
     expect(recordedNudges()).toEqual([]);
-    expect(await prisma.activity.count({ where: { invoiceId: OVERDUE_INVOICE_ID } })).toBe(0);
+    expect(invoice.status).toBe("OVERDUE");
+
+    const account = await getCustomer(COBALT_CUSTOMER_ID);
+    expect(account?.activities[0]).toMatchObject({
+      type: NUDGE_SENT,
+      status: NUDGE_STATUS_FAILED,
+      channel: NUDGE_CHANNEL_EMAIL,
+      actorName: DEMO_OPERATOR.name,
+      invoice: { number: invoice.number },
+    });
   });
 
   it("does not log a sent nudge when the transport refuses the message", async () => {

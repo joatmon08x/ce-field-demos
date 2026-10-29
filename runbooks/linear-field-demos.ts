@@ -228,7 +228,7 @@ Change existing token values in \`app/globals.css\` (\`:root\` and \`.dark\`) un
 ## Acceptance
 
 - \`npm run test:a11y\` passes.
-- \`npm test\` stays 1 failed / 56 passed.
+- \`npm test\` stays 1 failed / 57 passed.
 - \`test:a11y\` stays out of \`npm test\`, the environment start command, and \`scripts/demo-reset.ts\`.
 
 ## Paths

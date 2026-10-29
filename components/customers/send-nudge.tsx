@@ -4,6 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
+function nudgeActivityStatus(payload: unknown): string | null {
+  if (!payload || typeof payload !== "object" || !("activity" in payload)) return null;
+  const activity = payload.activity;
+  if (!activity || typeof activity !== "object" || !("status" in activity)) return null;
+  return typeof activity.status === "string" ? activity.status : null;
+}
+
 type SendNudgeProps = {
   invoiceId: string | null;
   invoiceNumber: string | null;
@@ -26,18 +33,18 @@ export function SendNudge({
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
+  const [outcome, setOutcome] = useState<"sent" | "failed" | null>(null);
   const unavailable = disabled || !invoiceId;
 
   async function send() {
     if (unavailable || pending || !invoiceId) return;
     setPending(true);
     setError(null);
-    setSent(false);
+    setOutcome(null);
     try {
       const response = await fetch(`/api/invoices/${invoiceId}/nudge`, { method: "POST" });
+      const payload: unknown = await response.json().catch(() => null);
       if (!response.ok) {
-        const payload: unknown = await response.json().catch(() => null);
         const message =
           payload &&
           typeof payload === "object" &&
@@ -49,7 +56,8 @@ export function SendNudge({
         setPending(false);
         return;
       }
-      setSent(true);
+      const status = nudgeActivityStatus(payload);
+      setOutcome(status === "failed" ? "failed" : "sent");
       setPending(false);
       router.refresh();
     } catch {
@@ -80,7 +88,12 @@ export function SendNudge({
           {error}
         </p>
       ) : null}
-      {sent && !error ? (
+      {outcome === "failed" && !error ? (
+        <p role="status" className="text-xs text-danger">
+          Failed.
+        </p>
+      ) : null}
+      {outcome === "sent" && !error ? (
         <p role="status" className="text-xs text-muted-foreground">
           Sent.
         </p>

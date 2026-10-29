@@ -64,7 +64,11 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                       </time>
                     </TableCell>
                     <TableCell className="font-mono text-[13px]">{activity.type}</TableCell>
-                    <TableCell>{activity.status}</TableCell>
+                    <TableCell
+                      className={activity.status === "failed" ? "font-medium text-danger" : undefined}
+                    >
+                      {activity.status}
+                    </TableCell>
                     <TableCell>{activity.channel ?? "—"}</TableCell>
                     <TableCell className="font-mono text-[13px]">
                       {activity.invoice?.number ?? "—"}

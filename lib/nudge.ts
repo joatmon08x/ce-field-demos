@@ -8,6 +8,7 @@ import { prisma } from "@/lib/prisma";
 export const NUDGE_SENT = "NUDGE_SENT";
 export const NUDGE_CHANNEL_EMAIL = "email";
 export const NUDGE_STATUS_SENT = "sent";
+export const NUDGE_STATUS_FAILED = "failed";
 
 const ON_FILE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -81,6 +82,36 @@ export type NudgeActivity = {
 
 type NudgeFailure = { ok: false; status: 400 | 404; error: string };
 
+type NudgeTarget = {
+  id: string;
+  customerId: string;
+  number: string;
+  dueOn: Date;
+  totalCents: number;
+  payments: readonly { amountCents: number }[];
+};
+
+async function recordNudgeActivity(
+  invoice: NudgeTarget,
+  body: string,
+  status: typeof NUDGE_STATUS_SENT | typeof NUDGE_STATUS_FAILED,
+) {
+  return prisma.activity.create({
+    data: {
+      id: `act_${crypto.randomUUID()}`,
+      customerId: invoice.customerId,
+      invoiceId: invoice.id,
+      type: NUDGE_SENT,
+      status,
+      channel: NUDGE_CHANNEL_EMAIL,
+      body,
+      amountCents: outstandingCents(invoice),
+      actorName: DEMO_OPERATOR.name,
+      occurredOn: DEMO_AS_OF,
+    },
+  });
+}
+
 export async function sendInvoiceNudge(
   invoiceId: string,
   transport: NudgeTransport = recordingNudgeTransport,
@@ -101,43 +132,26 @@ export async function sendInvoiceNudge(
 
   const body = nudgeTemplate(invoice);
   const email = invoice.customer.email;
-  const deliverable = isOnFileEmail(email);
-  const delivery = deliverable
-    ? await transport.send({
-        to: email.trim(),
-        channel: NUDGE_CHANNEL_EMAIL,
-        subject: nudgeSubject(invoice.number),
-        body,
-        invoiceId: invoice.id,
-      })
-    : { ok: false as const, reason: "undeliverable" };
-
-  // Delivery problems return without an activity. A later slice records status "failed" here.
-  if (!delivery.ok) {
+  if (!isOnFileEmail(email)) {
+    const activity = await recordNudgeActivity(invoice, body, NUDGE_STATUS_FAILED);
     return {
-      ok: false,
-      status: 400,
-      error: deliverable
-        ? "Nudge was not sent."
-        : "No email address is on file for this account.",
+      ok: true,
+      activity: { ...activity, to: email.trim() },
     };
   }
 
-  const activity = await prisma.activity.create({
-    data: {
-      id: `act_${crypto.randomUUID()}`,
-      customerId: invoice.customerId,
-      invoiceId: invoice.id,
-      type: NUDGE_SENT,
-      status: NUDGE_STATUS_SENT,
-      channel: NUDGE_CHANNEL_EMAIL,
-      body,
-      amountCents: outstandingCents(invoice),
-      actorName: DEMO_OPERATOR.name,
-      occurredOn: DEMO_AS_OF,
-    },
+  const delivery = await transport.send({
+    to: email.trim(),
+    channel: NUDGE_CHANNEL_EMAIL,
+    subject: nudgeSubject(invoice.number),
+    body,
+    invoiceId: invoice.id,
   });
+  if (!delivery.ok) {
+    return { ok: false, status: 400, error: "Nudge was not sent." };
+  }
 
+  const activity = await recordNudgeActivity(invoice, body, NUDGE_STATUS_SENT);
   return {
     ok: true,
     activity: { ...activity, to: email.trim() },
