@@ -145,6 +145,24 @@ export async function getWorkspace() {
   return prisma.workspace.findUniqueOrThrow({ where: { id: "ws_fieldnote" } });
 }
 
+const customerAccountInclude = {
+  invoices: true,
+} as const;
+
+export async function getCustomers() {
+  return prisma.customer.findMany({
+    include: customerAccountInclude,
+    orderBy: { name: "asc" },
+  });
+}
+
+export async function getCustomer(id: string) {
+  return prisma.customer.findUnique({
+    where: { id },
+    include: customerAccountInclude,
+  });
+}
+
 export function isInvoiceStatus(value: string): value is InvoiceStatus {
   return ["DRAFT", "OPEN", "PAID", "OVERDUE", "VOID"].includes(value);
 }
