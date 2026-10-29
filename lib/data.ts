@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import {
   DASHBOARD_WINDOWS,
@@ -15,6 +16,7 @@ const invoiceInclude = {
   customer: true,
   lines: true,
   disputes: true,
+  payments: { orderBy: { recordedAt: "desc" as const } },
 } as const;
 
 const disputeInclude = {
@@ -145,13 +147,28 @@ export async function getWorkspace() {
   return prisma.workspace.findUniqueOrThrow({ where: { id: "ws_fieldnote" } });
 }
 
-const customerAccountInclude = {
-  invoices: true,
+const customerInvoiceInclude = {
+  payments: { orderBy: { recordedAt: "desc" as const } },
 } as const;
+
+const customerListInclude = {
+  invoices: { include: customerInvoiceInclude },
+} as const;
+
+const customerAccountInclude = {
+  invoices: { include: customerInvoiceInclude },
+  activities: {
+    orderBy: [
+      { occurredOn: "desc" as const },
+      { createdAt: "desc" as const },
+    ] satisfies Prisma.ActivityOrderByWithRelationInput[],
+    include: { invoice: { select: { number: true } } },
+  },
+} satisfies Prisma.CustomerInclude;
 
 export async function getCustomers() {
   return prisma.customer.findMany({
-    include: customerAccountInclude,
+    include: customerListInclude,
     orderBy: { name: "asc" },
   });
 }

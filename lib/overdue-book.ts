@@ -12,15 +12,30 @@ export type OverdueBookInvoice = {
   issuedOn: Date;
   dueOn: Date;
   totalCents: number;
+  payments?: readonly { amountCents: number }[];
 };
 
 export function daysPastDue(dueOn: Date, asOf: Date = DEMO_AS_OF): number {
   return Math.max(0, daysBetween(asOf, dueOn));
 }
 
-/** Outstanding balance is the invoice total until a later slice records payments. */
-export function outstandingCents(invoice: { totalCents: number }): number {
-  return invoice.totalCents;
+/** Outstanding balance is the invoice total minus recorded payments. */
+export function outstandingCents(invoice: {
+  totalCents: number;
+  payments?: readonly { amountCents: number }[];
+}): number {
+  const paid = sumCents((invoice.payments ?? []).map((payment) => payment.amountCents));
+  return Math.max(0, invoice.totalCents - paid);
+}
+
+export function lastActivityOn(activities: readonly { occurredOn: Date }[]): Date | null {
+  let latest: Date | null = null;
+  for (const activity of activities) {
+    if (!latest || activity.occurredOn.getTime() > latest.getTime()) {
+      latest = activity.occurredOn;
+    }
+  }
+  return latest;
 }
 
 export function overdueBook<T extends OverdueBookInvoice>(

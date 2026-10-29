@@ -4,6 +4,7 @@ import { PLAN_PRICE_CENTS } from "@/lib/plans";
 import {
   NO_ACTIVITY_LABEL,
   daysPastDue,
+  lastActivityOn,
   outstandingCents,
   overdueBook,
   overdueTotals,
@@ -14,6 +15,7 @@ function invoice(
   partial: Pick<OverdueBookInvoice, "id" | "number" | "status" | "totalCents"> & {
     issuedOn: string;
     dueOn: string;
+    payments?: OverdueBookInvoice["payments"];
   },
 ): OverdueBookInvoice {
   return {
@@ -23,6 +25,7 @@ function invoice(
     issuedOn: demoDay(partial.issuedOn),
     dueOn: demoDay(partial.dueOn),
     totalCents: partial.totalCents,
+    payments: partial.payments,
   };
 }
 
@@ -131,5 +134,37 @@ describe("overdue book", () => {
 
   it("uses an em dash when the account has no activity", () => {
     expect(NO_ACTIVITY_LABEL).toBe("\u2014");
+    expect(lastActivityOn([])).toBeNull();
+  });
+
+  it("subtracts recorded payments from the outstanding balance", () => {
+    const paid = invoice({
+      id: "inv_1043",
+      number: "INV-1043",
+      status: "OVERDUE",
+      issuedOn: "2026-07-10",
+      dueOn: "2026-08-09",
+      totalCents: PLAN_PRICE_CENTS.SCALE,
+      payments: [{ amountCents: 1000 }],
+    });
+
+    expect(outstandingCents(paid)).toBe(PLAN_PRICE_CENTS.SCALE - 1000);
+    expect(overdueTotals([paid])).toEqual({
+      count: 1,
+      balanceCents: PLAN_PRICE_CENTS.SCALE - 1000,
+    });
+    expect(
+      outstandingCents({
+        totalCents: PLAN_PRICE_CENTS.SCALE,
+        payments: [{ amountCents: PLAN_PRICE_CENTS.SCALE }],
+      }),
+    ).toBe(0);
+  });
+
+  it("uses the latest activity date once a payment is recorded", () => {
+    const occurredOn = demoDay("2026-08-23");
+    expect(
+      lastActivityOn([{ occurredOn: demoDay("2026-08-01") }, { occurredOn }])?.toISOString(),
+    ).toBe(occurredOn.toISOString());
   });
 });

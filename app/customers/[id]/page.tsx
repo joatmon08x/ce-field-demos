@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { AccountActivity } from "@/components/customers/account-activity";
 import { OverdueBook } from "@/components/customers/overdue-book";
 import { PageHeader } from "@/components/page-header";
 import { getCustomer } from "@/lib/data";
@@ -32,7 +33,8 @@ export default async function CustomerAccountPage({
         title={customer.name}
         description={`${accountPlan(customer.plan)} · ${customer.contactName} · ${customer.email}`}
       />
-      <OverdueBook invoices={customer.invoices} />
+      <OverdueBook invoices={customer.invoices} activities={customer.activities} />
+      <AccountActivity activities={customer.activities} />
     </div>
   );
 }

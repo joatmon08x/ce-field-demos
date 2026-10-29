@@ -14,13 +14,21 @@ import { formatUsd } from "@/lib/money";
 import {
   NO_ACTIVITY_LABEL,
   daysPastDue,
+  lastActivityOn,
   outstandingCents,
   overdueBook,
   type OverdueBookInvoice,
 } from "@/lib/overdue-book";
 
-export function OverdueBook({ invoices }: { invoices: readonly OverdueBookInvoice[] }) {
+export function OverdueBook({
+  invoices,
+  activities,
+}: {
+  invoices: readonly OverdueBookInvoice[];
+  activities: readonly { occurredOn: Date }[];
+}) {
   const rows = overdueBook(invoices);
+  const lastActivity = lastActivityOn(activities);
 
   return (
     <section aria-labelledby="overdue-book-heading" className="flex flex-col gap-3">
@@ -76,8 +84,14 @@ export function OverdueBook({ invoices }: { invoices: readonly OverdueBookInvoic
                       {formatUsd(outstandingCents(invoice))}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      <span aria-hidden="true">{NO_ACTIVITY_LABEL}</span>
-                      <span className="sr-only">No activity</span>
+                      {lastActivity ? (
+                        <time dateTime={lastActivity.toISOString()}>{formatDate(lastActivity)}</time>
+                      ) : (
+                        <>
+                          <span aria-hidden="true">{NO_ACTIVITY_LABEL}</span>
+                          <span className="sr-only">No activity</span>
+                        </>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

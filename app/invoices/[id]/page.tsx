@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { RecordPayment } from "@/components/invoices/record-payment";
 import { PageHeader } from "@/components/page-header";
 import { InvoiceStatusBadge, DisputeStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,11 @@ import { DEMO_AS_OF } from "@/lib/clock";
 import { getInvoice } from "@/lib/data";
 import { daysBetween, formatDate } from "@/lib/dates";
 import { formatUsd } from "@/lib/money";
+import { outstandingCents } from "@/lib/overdue-book";
+import { canRecordPayment, paymentMethodLabel } from "@/lib/payments";
 import { isPlanId, planLabel } from "@/lib/plans";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -27,6 +32,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
   const daysPastDue =
     invoice.status === "OVERDUE" ? Math.max(0, daysBetween(DEMO_AS_OF, invoice.dueOn)) : 0;
+  const balanceCents = outstandingCents(invoice);
   const noteDraft = draftCollectionNote({
     customerName: invoice.customer.name,
     daysPastDue,
@@ -38,7 +44,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       <PageHeader
         eyebrow={invoice.number}
         title={invoice.customer.name}
-        description={`${planLabel(invoice.plan)} · issued ${formatDate(invoice.issuedOn)} · due ${formatDate(invoice.dueOn)}`}
+        description={`${planLabel(invoice.plan)} · issued ${formatDate(invoice.issuedOn)} · due ${formatDate(invoice.dueOn)}${invoice.paidOn ? ` · paid ${formatDate(invoice.paidOn)}` : ""}`}
         actions={<InvoiceStatusBadge status={invoice.status} />}
       />
 
@@ -82,6 +88,12 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
                 <dt>Total</dt>
                 <dd>{formatUsd(invoice.totalCents)}</dd>
               </div>
+              {invoice.status === "OPEN" || invoice.status === "OVERDUE" ? (
+                <div className="flex justify-between font-medium">
+                  <dt>Outstanding</dt>
+                  <dd>{formatUsd(balanceCents)}</dd>
+                </div>
+              ) : null}
             </dl>
           </CardContent>
         </Card>
@@ -118,6 +130,54 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
           ) : null}
         </div>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Payments</CardTitle>
+          <CardDescription>
+            Full outstanding balance only. Confirm the amount before it is recorded.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {invoice.payments.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No payments recorded.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[28rem] text-sm">
+                <thead>
+                  <tr className="border-y border-border text-left text-xs tracking-wide text-muted-foreground uppercase">
+                    <th className="py-2 font-medium">Amount</th>
+                    <th className="py-2 font-medium">Method</th>
+                    <th className="py-2 font-medium">Recorded by</th>
+                    <th className="py-2 font-medium">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {invoice.payments.map((payment) => (
+                    <tr key={payment.id} className="border-b border-border">
+                      <td className="py-3 font-medium">{formatUsd(payment.amountCents)}</td>
+                      <td className="py-3">{paymentMethodLabel(payment.method)}</td>
+                      <td className="py-3">{payment.recordedBy}</td>
+                      <td className="py-3">
+                        <time dateTime={payment.recordedAt.toISOString()}>
+                          {formatDate(payment.recordedAt)}
+                        </time>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {canRecordPayment(invoice) ? (
+            <RecordPayment
+              invoiceId={invoice.id}
+              invoiceNumber={invoice.number}
+              amountCents={balanceCents}
+            />
+          ) : null}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

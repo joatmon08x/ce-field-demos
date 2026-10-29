@@ -27,6 +27,7 @@ model Customer {
   plan        String
   createdAt   DateTime  @default(now())
   invoices    Invoice[]
+  activities  Activity[]
 }
 
 model Invoice {
@@ -48,6 +49,8 @@ model Invoice {
   collectionNote  String?
   lines           InvoiceLine[]
   disputes        Dispute[]
+  payments        Payment[]
+  activities      Activity[]
 }
 
 model InvoiceLine {
@@ -72,4 +75,35 @@ model Dispute {
   disputedAmountCents  Int
   suggestedCreditCents Int
   reviewerNote         String?
+}
+
+model Payment {
+  id          String   @id
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  amountCents Int
+  method      String
+  recordedBy  String
+  recordedAt  DateTime
+
+  @@index([invoiceId])
+}
+
+/// Account activity feed. Later collections slices append rows here.
+model Activity {
+  id          String   @id
+  customerId  String
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  invoiceId   String?
+  invoice     Invoice? @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  type        String
+  status      String
+  amountCents Int?
+  method      String?
+  actorName   String
+  occurredOn  DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([customerId, occurredOn])
+  @@index([invoiceId])
 }
