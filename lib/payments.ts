@@ -37,7 +37,15 @@ export function canRecordPayment(invoice: {
 
 type PaymentFailure = { ok: false; status: 400 | 404; error: string };
 
-export async function recordFullPayment(invoiceId: string, method: unknown) {
+function suppliedAmountMatchesOutstanding(value: unknown, outstanding: number): boolean {
+  return typeof value === "number" && Number.isSafeInteger(value) && value === outstanding;
+}
+
+export async function recordFullPayment(
+  invoiceId: string,
+  method: unknown,
+  suppliedAmount?: { amountCents: unknown },
+) {
   if (!isPaymentMethod(method)) {
     return {
       ok: false as const,
@@ -80,6 +88,16 @@ export async function recordFullPayment(invoiceId: string, method: unknown) {
     }
 
     const amountCents = outstandingCents(invoice);
+    if (
+      suppliedAmount &&
+      !suppliedAmountMatchesOutstanding(suppliedAmount.amountCents, amountCents)
+    ) {
+      return {
+        ok: false,
+        status: 400,
+        error: "Amount must equal the outstanding balance.",
+      };
+    }
     if (amountCents === 0) {
       return { ok: false, status: 400, error: "Outstanding balance is 0." };
     }

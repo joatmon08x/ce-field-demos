@@ -92,13 +92,38 @@ describe("record full payment", () => {
     },
   );
 
-  it("records the outstanding balance and ignores a client-supplied amount", async () => {
+  it("returns 400 when amountCents is not the outstanding balance and stores nothing", async () => {
     const response = await post(OVERDUE_INVOICE_ID, { method: "check", amountCents: 100 });
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toEqual({
+      error: "Amount must equal the outstanding balance.",
+    });
+
+    const invoice = await prisma.invoice.findUniqueOrThrow({ where: { id: OVERDUE_INVOICE_ID } });
+    expect(invoice.status).toBe("OVERDUE");
+    expect(invoice.paidOn).toBeNull();
+    expect(await prisma.payment.count({ where: { invoiceId: OVERDUE_INVOICE_ID } })).toBe(0);
+    expect(await prisma.activity.count({ where: { invoiceId: OVERDUE_INVOICE_ID } })).toBe(0);
+  });
+
+  it("records a payment when amountCents equals the outstanding balance", async () => {
+    const response = await post(OVERDUE_INVOICE_ID, {
+      method: "check",
+      amountCents: PLAN_PRICE_CENTS.GROWTH,
+    });
     const body = await response.json();
 
     expect(response.status).toBe(200);
     expect(body.payment.amountCents).toBe(PLAN_PRICE_CENTS.GROWTH);
-    expect(body.activity.amountCents).toBe(PLAN_PRICE_CENTS.GROWTH);
+
+    const invoice = await prisma.invoice.findUniqueOrThrow({
+      where: { id: OVERDUE_INVOICE_ID },
+      include: { payments: true },
+    });
+    expect(invoice.status).toBe("PAID");
+    expect(invoice.payments).toHaveLength(1);
+    expect(invoice.payments[0]?.amountCents).toBe(PLAN_PRICE_CENTS.GROWTH);
   });
 
   it("returns 400 when the outstanding balance is already 0 and leaves the status unchanged", async () => {
