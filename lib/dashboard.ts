@@ -1,6 +1,6 @@
 import { DEMO_AS_OF, DEMO_PRIOR_END, DEMO_PRIOR_START, DEMO_WINDOW_START } from "@/lib/clock";
 import { sumCents } from "@/lib/money";
-import { planPriceCents } from "@/lib/plans";
+import { isPlanId, planPriceCents } from "@/lib/plans";
 
 type InvoiceLike = {
   status: string;
@@ -101,3 +101,49 @@ export const DASHBOARD_WINDOWS = {
   priorStart: DEMO_PRIOR_START,
   priorEnd: DEMO_PRIOR_END,
 };
+
+const MS_PER_DAY = 86_400_000;
+
+/**
+ * Overdue balance is the catalog price of each OVERDUE invoice.
+ * A stored total above that price does not raise it, and a plan outside
+ * Starter, Growth, and Scale contributes nothing to the total.
+ */
+export function collectionsOverdue(invoices: readonly { status: string; plan: string }[]): {
+  overdueCount: number;
+  overdueCents: number;
+} {
+  const overdue = invoices.filter((invoice) => invoice.status === "OVERDUE");
+  return {
+    overdueCount: overdue.length,
+    overdueCents: sumCents(
+      overdue.map((invoice) => (isPlanId(invoice.plan) ? planPriceCents(invoice.plan) : 0)),
+    ),
+  };
+}
+
+/** UTC calendar window: the demo day, and the 7 days ending that day. */
+export function collectionsActivityWindow(asOf: Date = DEMO_AS_OF) {
+  const dayStart = Date.UTC(asOf.getUTCFullYear(), asOf.getUTCMonth(), asOf.getUTCDate());
+  return {
+    dayStart,
+    dayEnd: dayStart + MS_PER_DAY,
+    weekStart: dayStart - 6 * MS_PER_DAY,
+  };
+}
+
+/** Counts every activity row in the window. Later slices add types; this does not list them. */
+export function collectionsActivityCounts(
+  activities: readonly { occurredOn: Date }[],
+  asOf: Date = DEMO_AS_OF,
+): { today: number; week: number } {
+  const { dayStart, dayEnd, weekStart } = collectionsActivityWindow(asOf);
+  let today = 0;
+  let week = 0;
+  for (const activity of activities) {
+    const occurred = new Date(activity.occurredOn).getTime();
+    if (occurred >= weekStart && occurred < dayEnd) week += 1;
+    if (occurred >= dayStart && occurred < dayEnd) today += 1;
+  }
+  return { today, week };
+}

@@ -3,7 +3,7 @@ import { AlertTriangle, CalendarRange, CircleDollarSign, FileText, TrendingUp } 
 import { DisputeDonut } from "@/components/charts/dispute-donut";
 import { RevenueChart } from "@/components/charts/revenue-chart";
 import { InvoiceTable } from "@/components/invoice-table";
-import { KpiCard } from "@/components/kpi-card";
+import { CollectionsKpiCard, KpiCard } from "@/components/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboard } from "@/lib/data";
 import { formatUsd } from "@/lib/money";
@@ -12,7 +12,7 @@ export const metadata = {
   title: "Dashboard",
 };
 
-// Read the seed at request time so `next start` reflects a reseed.
+// Request-time read so a reseed, note, nudge, or payment shows up on the next load.
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
@@ -65,6 +65,12 @@ export default async function DashboardPage() {
           change={kpis.collectedChange}
           icon={CircleDollarSign}
           tone="success"
+        />
+        <CollectionsKpiCard
+          overdue={formatUsd(kpis.collections.overdueCents)}
+          overdueCount={kpis.collections.overdueCount}
+          activitiesToday={kpis.collections.activitiesToday}
+          activitiesWeek={kpis.collections.activitiesWeek}
         />
       </section>
 
