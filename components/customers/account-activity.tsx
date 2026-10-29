@@ -15,6 +15,8 @@ export type AccountActivityRow = {
   id: string;
   type: string;
   status: string;
+  channel: string | null;
+  body: string | null;
   amountCents: number | null;
   method: string | null;
   actorName: string;
@@ -45,10 +47,12 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                   <TableHead>When</TableHead>
                   <TableHead>Activity</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Channel</TableHead>
                   <TableHead>Invoice</TableHead>
                   <TableHead className="text-right">Amount</TableHead>
                   <TableHead>Method</TableHead>
                   <TableHead>By</TableHead>
+                  <TableHead>Message</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -61,6 +65,7 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                     </TableCell>
                     <TableCell className="font-mono text-[13px]">{activity.type}</TableCell>
                     <TableCell>{activity.status}</TableCell>
+                    <TableCell>{activity.channel ?? "—"}</TableCell>
                     <TableCell className="font-mono text-[13px]">
                       {activity.invoice?.number ?? "—"}
                     </TableCell>
@@ -69,6 +74,9 @@ export function AccountActivity({ activities }: { activities: readonly AccountAc
                     </TableCell>
                     <TableCell>{activity.method ? paymentMethodLabel(activity.method) : "—"}</TableCell>
                     <TableCell>{activity.actorName}</TableCell>
+                    <TableCell className="max-w-sm whitespace-normal text-muted-foreground">
+                      {activity.body ?? "—"}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

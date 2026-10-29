@@ -98,6 +98,10 @@ model Activity {
   invoice     Invoice? @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   type        String
   status      String
+  /// Reminder channel. "email" on a nudge; null on other activity.
+  channel     String?
+  /// Rendered nudge template. Null on other activity.
+  body        String?
   amountCents Int?
   method      String?
   actorName   String

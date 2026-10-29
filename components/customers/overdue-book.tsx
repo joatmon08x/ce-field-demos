@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SendNudge } from "@/components/customers/send-nudge";
 import { EmptyState } from "@/components/empty-state";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -60,6 +61,9 @@ export function OverdueBook({
                   <TableHead className="text-right">Days past due</TableHead>
                   <TableHead className="text-right">Outstanding</TableHead>
                   <TableHead>Last activity</TableHead>
+                  <TableHead>
+                    <span className="sr-only">Nudge</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -68,7 +72,7 @@ export function OverdueBook({
                     <TableCell>
                       <Link
                         href={`/invoices/${invoice.id}`}
-                        className="font-mono text-[13px] font-medium after:absolute after:inset-0 after:content-[''] hover:underline"
+                        className="font-mono text-[13px] font-medium after:absolute after:inset-0 after:z-0 after:content-[''] hover:underline"
                       >
                         {invoice.number}
                       </Link>
@@ -92,6 +96,15 @@ export function OverdueBook({
                           <span className="sr-only">No activity</span>
                         </>
                       )}
+                    </TableCell>
+                    <TableCell className="relative z-10">
+                      <SendNudge
+                        invoiceId={invoice.id}
+                        invoiceNumber={invoice.number}
+                        scope="invoice"
+                        variant="outline"
+                        size="sm"
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

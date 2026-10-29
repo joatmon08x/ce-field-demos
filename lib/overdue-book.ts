@@ -38,6 +38,14 @@ export function lastActivityOn(activities: readonly { occurredOn: Date }[]): Dat
   return latest;
 }
 
+/** The account Nudge targets this invoice: first row of the Overdue Book. */
+export function mostPastDueOverdue<T extends OverdueBookInvoice>(
+  invoices: readonly T[],
+  asOf: Date = DEMO_AS_OF,
+): T | null {
+  return overdueBook(invoices, asOf)[0] ?? null;
+}
+
 export function overdueBook<T extends OverdueBookInvoice>(
   invoices: readonly T[],
   asOf: Date = DEMO_AS_OF,

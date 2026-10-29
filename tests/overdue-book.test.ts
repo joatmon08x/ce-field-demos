@@ -5,6 +5,7 @@ import {
   NO_ACTIVITY_LABEL,
   daysPastDue,
   lastActivityOn,
+  mostPastDueOverdue,
   outstandingCents,
   overdueBook,
   overdueTotals,
@@ -159,6 +160,53 @@ describe("overdue book", () => {
         payments: [{ amountCents: PLAN_PRICE_CENTS.SCALE }],
       }),
     ).toBe(0);
+  });
+
+  it("targets the most past-due OVERDUE invoice for the account nudge", () => {
+    const target = mostPastDueOverdue([
+      invoice({
+        id: "inv_1047",
+        number: "INV-1047",
+        status: "OVERDUE",
+        issuedOn: "2026-07-13",
+        dueOn: "2026-08-12",
+        totalCents: PLAN_PRICE_CENTS.GROWTH,
+      }),
+      invoice({
+        id: "inv_older",
+        number: "INV-1099",
+        status: "OVERDUE",
+        issuedOn: "2026-06-01",
+        dueOn: "2026-07-01",
+        totalCents: PLAN_PRICE_CENTS.SCALE,
+      }),
+      invoice({
+        id: "inv_open_older",
+        number: "INV-1001",
+        status: "OPEN",
+        issuedOn: "2026-05-01",
+        dueOn: "2026-06-01",
+        totalCents: PLAN_PRICE_CENTS.STARTER,
+      }),
+    ]);
+
+    expect(target?.id).toBe("inv_older");
+    expect(target?.number).toBe("INV-1099");
+  });
+
+  it("has no account nudge target when nothing is overdue", () => {
+    expect(
+      mostPastDueOverdue([
+        invoice({
+          id: "inv_1042",
+          number: "INV-1042",
+          status: "PAID",
+          issuedOn: "2026-07-08",
+          dueOn: "2026-08-07",
+          totalCents: PLAN_PRICE_CENTS.STARTER,
+        }),
+      ]),
+    ).toBeNull();
   });
 
   it("uses the latest activity date once a payment is recorded", () => {
