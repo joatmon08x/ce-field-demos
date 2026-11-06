@@ -22,10 +22,10 @@ const FILTERS = [
 export default async function InvoicesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string }>;
+  searchParams: Promise<{ status?: string; state?: string; q?: string }>;
 }) {
   const params = await searchParams;
-  const status = params.status ?? "ALL";
+  const status = params.state ?? params.status ?? "ALL";
   const q = params.q ?? "";
   const invoices = await getInvoices({ status, q });
 
